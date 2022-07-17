@@ -45,8 +45,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function tipo_usuario(){
-        return $this->belongsToMany('App\Models\Tipo_usuario');
+    public function tipoUsuario(){
+        return $this->belongsToMany('App\Models\TipoUsuario');
     }
 
     public function unidade(){

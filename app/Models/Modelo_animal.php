@@ -22,8 +22,8 @@ class Modelo_animal extends Model
         return $this->hasOne('App\Models\Perfil');
     }
 
-    public function condicoes_animal(){
-        return $this->hasOne('App\Models\Condicoes_animal');
+    public function condicoesAnimal(){
+        return $this->hasOne('App\Models\CondicoesAnimal');
     }
 
     public function planejamento(){

@@ -39,8 +39,8 @@ class Solicitacao extends Model
         return $this->hasOne('App\Models\Procedimento');
     }
 
-    public function modelo_animal(){
-        return $this->hasOne('App\Models\Modelo_animal');
+    public function modeloAnimal(){
+        return $this->hasOne('App\Models\ModeloAnimal');
     }
 
     public function user(){
