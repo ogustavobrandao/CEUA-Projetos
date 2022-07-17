@@ -13,6 +13,7 @@
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
             crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
@@ -28,14 +29,9 @@
 <body>
 <div class="mx-4" id="app">
     @include('layouts.navbar2')
-
-    @yield('login')
-    <div class="row my-5">
-        <div class="col-md-2"></div>
-        <div class="col-sm-8 shadow-lg p-3 bg-white rounded" style="min-height: 28rem">
-            @yield('content')
-        </div>
-        <div class="col-md-2"></div>
+    <div style="min-height: 27rem">
+        @yield('login')
+        @yield('content')
     </div>
     @include('layouts.footer')
 </div>

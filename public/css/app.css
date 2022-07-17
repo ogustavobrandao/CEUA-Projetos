@@ -10959,6 +10959,10 @@ a.text-dark:focus {
     border-bottom: 2px solid black;
 }
 
+.borda-top{
+    border-top: 2px solid black;
+}
+
 .alinhamento-vertical
 {
     margin: 0;
