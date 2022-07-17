@@ -20,13 +20,9 @@ return new class extends Migration
             $table->text('justificativa');
             $table->boolean('geneticamente_modificado');
             $table->string('procedencia');
-            $table->unsignedBigInteger('planejamento_id')->nullable();
-            $table->unsignedBigInteger('condicoes_id')->nullable();
-            $table->unsignedBigInteger('perfil_id')->nullable();
+            $table->unsignedBigInteger('solicitacao_id');
 
-            $table->foreign('planejamento_id')->references('id')->on('planejamentos');
-            $table->foreign('condicoes_id')->references('id')->on('condicoes');
-            $table->foreign('perfil_id')->references('id')->on('perfis');
+            $table->foreign('solicitacao_id')->references('id')->on('solicitacaos')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -17,6 +17,11 @@ return new class extends Migration
             $table->id();
             $table->string('email');
             $table->string('telefone');
+            $table->unsignedBigInteger('colaborador_id')->nullable();
+            $table->unsignedBigInteger('responsavel_id')->nullable();
+
+            $table->foreign('responsavel_id')->references('id')->on('responsavels')->onDelete('cascade');
+            $table->foreign('colaborador_id')->references('id')->on('colaboradors')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -21,10 +21,8 @@ return new class extends Migration
             $table->string('nivel_academico');
             $table->unsignedBigInteger('instituicao_id');
             $table->unsignedBigInteger('responsavel_id');
-            $table->unsignedBigInteger('contato_id')->nullable();
 
-            $table->foreign('contato_id')->references('id')->on('contatos');
-            $table->foreign('responsavel_id')->references('id')->on('responsavels');
+            $table->foreign('responsavel_id')->references('id')->on('responsavels')->onDelete('cascade');
             $table->foreign('instituicao_id')->references('id')->on('instituicaos');
             $table->timestamps();
         });

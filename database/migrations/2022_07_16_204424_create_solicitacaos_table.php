@@ -26,14 +26,8 @@ return new class extends Migration
             $table->string('titulo_pt');
             $table->string('area_conhecimento');
             $table->unsignedBigInteger('usuario_id');
-            $table->unsignedBigInteger('resultado_id')->nullable();
-            $table->unsignedBigInteger('responsavel_id')->nullable();
-            $table->unsignedBigInteger('modelo_animal_id')->nullable();
 
-            $table->foreign('usuario_id')->references('id')->on('users');
-            $table->foreign('resultado_id')->references('id')->on('resultados');
-            $table->foreign('responsavel_id')->references('id')->on('responsavels');
-            $table->foreign('modelo_animal_id')->references('id')->on('modelo_animals');
+            $table->foreign('usuario_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

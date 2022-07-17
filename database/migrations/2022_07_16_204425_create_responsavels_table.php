@@ -20,10 +20,11 @@ return new class extends Migration
             $table->boolean('experiencia_previa');
             $table->string('vinculo_instituicao');
             $table->unsignedBigInteger('departamento_id');
-            $table->unsignedBigInteger('contato_id')->nullable();
+            $table->unsignedBigInteger('solicitacao_id');
 
-            $table->foreign('contato_id')->references('id')->on('contatos');
+            $table->foreign('solicitacao_id')->references('id')->on('solicitacaos')->onDelete('cascade');
             $table->foreign('departamento_id')->references('id')->on('departamentos');
+
             $table->timestamps();
         });
     }

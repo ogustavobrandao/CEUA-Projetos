@@ -20,7 +20,9 @@ return new class extends Migration
             $table->text('destino');
             $table->text('descricao');
             $table->text('metodo');
+            $table->unsignedBigInteger('procedimento_id');
 
+            $table->foreign('procedimento_id')->references('id')->on('procedimentos')->onDelete('cascade');
             $table->timestamps();
         });
     }

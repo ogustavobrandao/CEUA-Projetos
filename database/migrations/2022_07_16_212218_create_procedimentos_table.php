@@ -24,11 +24,9 @@ return new class extends Migration
             $table->boolean('inoculacao_substancia');
             $table->boolean('restricao_hidrica');
             $table->boolean('extracao');
-            $table->unsignedBigInteger('operacao_id')->nullable();
-            $table->unsignedBigInteger('eutanasia_id')->nullable();
+            $table->unsignedBigInteger('solicitacao_id');
 
-            $table->foreign('operacao_id')->references('id')->on('operacaos');
-            $table->foreign('eutanasia_id')->references('id')->on('eutanasias');
+            $table->foreign('solicitacao_id')->references('id')->on('solicitacaos')->onDelete('cascade');
             $table->timestamps();
         });
     }

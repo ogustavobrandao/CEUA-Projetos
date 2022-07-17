@@ -23,6 +23,9 @@ return new class extends Migration
             $table->string('machos');
             $table->string('femeas');
             $table->string('total');
+            $table->unsignedBigInteger('modelo_animal_id');
+
+            $table->foreign('modelo_animal_id')->references('id')->on('modelo_animals')->onDelete('cascade');
             $table->timestamps();
         });
     }

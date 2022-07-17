@@ -24,6 +24,9 @@ return new class extends Migration
             $table->text('criterios');
             $table->text('desc_materiais_metodos');
             $table->string('num_animais_grupo');
+            $table->unsignedBigInteger('modelo_animal_id');
+
+            $table->foreign('modelo_animal_id')->references('id')->on('modelo_animals')->onDelete('cascade');
             $table->timestamps();
         });
     }
