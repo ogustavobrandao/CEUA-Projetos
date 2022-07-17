@@ -22,7 +22,9 @@ return new class extends Migration
             $table->rememberToken();
             $table->string('cpf');
             $table->unsignedBigInteger('tipo_usuario_id');
+            $table->unsignedBigInteger('unidade_id');
 
+            $table->foreign('unidade_id')->references('id')->on('unidades');
             $table->foreign('tipo_usuario_id')->references('id')->on('tipo_usuarios');
             $table->timestamps();
         });

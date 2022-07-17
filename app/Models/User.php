@@ -21,6 +21,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'cpf',
+        'unidade_id',
+        'tipo_usuario_id',
     ];
 
     /**
@@ -41,4 +44,21 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function tipo_usuario(){
+        return $this->belongsToMany('App\Models\Tipo_usuario');
+    }
+
+    public function unidade(){
+        return $this->belongsToMany('App\Models\Unidade');
+    }
+
+    public function avaliacoes(){
+        return $this->hasMany('App\Models\Avaliacao');
+    }
+
+    public function solicitacoes(){
+        return $this->hasMany('App\Models\Solicitacao');
+    }
+
 }

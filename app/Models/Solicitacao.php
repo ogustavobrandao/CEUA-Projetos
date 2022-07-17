@@ -8,4 +8,42 @@ use Illuminate\Database\Eloquent\Model;
 class Solicitacao extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'relevancia',
+        'titulo_en',
+        'titulo_pt',
+        'inicio',
+        'fim',
+        'tipo',
+        'justificativa',
+        'objetivos',
+        'resumo',
+        'area_conhecimento',
+        'usuario_id',
+    ];
+
+    public function avaliacoes(){
+        return $this->hasMany('App\Models\Avaliacao');
+    }
+
+    public function responsavel(){
+        return $this->hasOne('App\Models\Responsavel');
+    }
+
+    public function resultado(){
+        return $this->hasOne('App\Models\Resultado');
+    }
+
+    public function procedimento(){
+        return $this->hasOne('App\Models\Procedimento');
+    }
+
+    public function modelo_animal(){
+        return $this->hasOne('App\Models\Modelo_animal');
+    }
+
+    public function user(){
+        return $this->belongsToMany('App\Models\User');
+    }
 }

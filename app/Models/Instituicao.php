@@ -8,4 +8,17 @@ use Illuminate\Database\Eloquent\Model;
 class Instituicao extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'nome',
+    ];
+
+    public function unidades(){
+        return $this->hasMany('App\Models\Unidade');
+    }
+
+    public function colaboradores(){
+        return $this->hasMany('App\Models\Colaborador');
+    }
+
 }
