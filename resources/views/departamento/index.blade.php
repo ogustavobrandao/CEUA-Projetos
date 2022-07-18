@@ -121,7 +121,7 @@
                 "info": "Exibindo página _PAGE_ de _PAGES_",
                 "search": "Pesquisar",
                 "infoEmpty": "",
-                "zeroRecords": "Selecione um depósito no campo direito superior",
+                "zeroRecords": "Nenhum Departamento Cadastrado nesta Unidade.",
                 "paginate": {
                     "previous": "Anterior",
                     "next": "Próximo"
