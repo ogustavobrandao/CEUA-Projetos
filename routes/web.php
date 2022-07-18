@@ -26,3 +26,5 @@ Route::get('/unidade/{unidade_id}/delete', [App\Http\Controllers\UnidadeControll
 
 Route::get('/unidade/{unidade_id}/departamento/index', [App\Http\Controllers\DepartamentoController::class, 'index'])->name('departamento.index');
 
+Route::post('/unidades/',[App\Http\Controllers\UnidadeController::class, 'consulta'])->name('unidade.consulta');
+

@@ -45,4 +45,10 @@ class UnidadeController extends Controller
         $unidade->delete();
         return redirect()->back();
     }
+
+    public function consulta(Request $request){
+        $instituicao = json_decode($request->instituicao) ;
+        $unidades = Unidade::where('instituicao_id', $instituicao)->orderBy('nome')->get();
+        return response()->json($unidades);
+    }
 }
