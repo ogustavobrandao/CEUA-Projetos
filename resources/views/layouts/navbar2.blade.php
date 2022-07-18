@@ -12,18 +12,8 @@
         <ul class="navbar-nav me-auto">
             @auth()
                 @if(Auth::user()->tipo_usuario_id == 1)
-                    <li class="nav-item dropdown">
-                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v- style="color: black">
-                            Instituição
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{{ route('instituicao.index') }}">
-                                {{ __('Lista') }}
-                            </a>
-                            <a class="dropdown-item" href="{{ route('instituicao.create') }}">
-                                {{ __('Cadastrar') }}
-                            </a>
-                        </div>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('instituicao.index') }}" style="color: black;">{{ __('Instituições') }}</a>
                     </li>
                 @endif
             @endauth
@@ -46,7 +36,7 @@
             @else
                 <li class="nav-item dropdown">
                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v- style="color: black">
-                        {{ 'Olá,'. Auth::user()->name }}
+                        <span class="font-weight-bolder">Olá, </span>{{ Auth::user()->name }}
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
