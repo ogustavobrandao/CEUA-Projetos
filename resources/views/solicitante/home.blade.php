@@ -14,7 +14,7 @@
                 </div>
                 <div class="col-4">
                     <div class="text-center p-5 shadow caixaSelecao" style="background-color: #131833">
-                        <a href="#">
+                        <a href="{{route('solicitacao.form')}}">
                             <div class="col-md-12 pt-4">
                                 <div class="text-center">
                                     <img class="pb-3" src="images/solicitacao.svg" height="120px">

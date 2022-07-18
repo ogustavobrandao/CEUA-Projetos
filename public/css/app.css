@@ -10993,3 +10993,12 @@ label{
     font-weight: 600;
     font-size: 23px;
 }
+
+.subtitulo{
+    color: #143BC2;
+    text-decoration: underline #143BC2;
+    font-weight: bolder;
+    font-size: 24px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}

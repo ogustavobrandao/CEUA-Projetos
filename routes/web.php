@@ -30,6 +30,8 @@ Route::post('/departamento/store', [App\Http\Controllers\DepartamentoController:
 Route::post('/departamento/update', [App\Http\Controllers\DepartamentoController::class, 'update'])->name('departamento.update');
 Route::get('/departamento/{departamento_id}/delete', [App\Http\Controllers\DepartamentoController::class, 'delete'])->name('departamento.delete');
 
+Route::get('/formulario', [App\Http\Controllers\SolicitacaoController::class, 'form'])->name('solicitacao.form');
+
 
 Route::post('/unidades/',[App\Http\Controllers\UnidadeController::class, 'consulta'])->name('unidade.consulta');
 
