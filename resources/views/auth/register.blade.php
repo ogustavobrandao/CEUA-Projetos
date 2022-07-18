@@ -84,7 +84,6 @@
                     {{ __('Cadastrar') }}
                 </button>
             </div>
-
         </div>
     </form>
 @endsection

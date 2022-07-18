@@ -10,7 +10,23 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <!-- Left Side Of Navbar -->
         <ul class="navbar-nav me-auto">
-
+            @auth()
+                @if(Auth::user()->tipo_usuario_id == 1)
+                    <li class="nav-item dropdown">
+                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v- style="color: black">
+                            Instituição
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{{ route('instituicao.index') }}">
+                                {{ __('Lista') }}
+                            </a>
+                            <a class="dropdown-item" href="{{ route('instituicao.create') }}">
+                                {{ __('Cadastrar') }}
+                            </a>
+                        </div>
+                    </li>
+                @endif
+            @endauth
         </ul>
 
         <!-- Right Side Of Navbar -->
