@@ -14,20 +14,10 @@ class InstituicaoController extends Controller
         return view('instituicao.index',  compact('instituicaos'));
     }
 
-    public function create(){
-        return view('instituicao.create');
-    }
-
     public function store(Request $request){
         $instituicao = Instituicao::create($request->all());
 
         return redirect()->route('instituicao.index')->with('success', 'Instituição Cadastrada com Sucesso!');
-    }
-
-    public function edit($id){
-        $instituicao = Instituicao::find($id);
-
-        return view('instituicao.edit', compact('instituicao'));
     }
 
     public function update(Request $request){
@@ -35,7 +25,14 @@ class InstituicaoController extends Controller
         $instituicao->nome = $request->nome;
         $instituicao->update();
 
-        return redirect()->route('instituicao.index');
+        return redirect()->back()->with('success', 'Instituição Alterada com Sucesso!');
+    }
+
+    public function delete($instituicao_id)
+    {
+        $instituicao = Instituicao::find($instituicao_id);
+        $instituicao->delete();
+        return redirect()->back();
     }
 
 }

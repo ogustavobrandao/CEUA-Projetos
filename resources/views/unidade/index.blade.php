@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="row mt-4 borda-bottom">
+    <div class="row my-4 borda-bottom">
         <div class="col-md-9">
             <h3 class="text-center">Unidades - {{$instituicao->nome}}</h3>
         </div>
@@ -12,7 +12,7 @@
         </div>
     </div>
 
-    <table class="table table-hover mt-4">
+    <table class="table table-hover">
         <thead>
         <tr>
             <th scope="col">Nome</th>
@@ -24,10 +24,10 @@
             <tr>
                 <td>{{$unidade->nome}}</td>
                 <td class="text-center">
-                <td class="text-center">
-                    <a class="btn btn-group" href="{{route('departamento.index', ['unidade_id' => $unidade->id])}}"><i class="fa-solid fa-up-right-from-square"></i></a></td>
+                    <a class="btn btn-group" href="{{route('departamento.index', ['unidade_id' => $unidade->id])}}"><i class="fa-solid fa-up-right-from-square"></i></a>
                     <button class="btn btn-group" type="button" data-toggle="modal" data-target="#editModal_{{$unidade->id}}"><i class="fa-solid fa-pen-to-square"></i></button>
-                    <a class="btn btn-group text-danger" href="{{route('unidade.delete', ['unidade_id' => $unidade->id])}}"><i class="fa-solid fa-trash"></i></a></td>
+                    <a class="btn btn-group text-danger" href="{{route('unidade.delete', ['unidade_id' => $unidade->id])}}"><i class="fa-solid fa-trash"></i></a>
+                </td>
             </tr>
         @endforeach
         </tbody>
@@ -114,4 +114,26 @@
             </div>
         </div>
     @endforeach
+
+    <script>
+        $('.table').DataTable({
+            searching: true,
+            "language": {
+                "lengthMenu": "Mostrar _MENU_ registros por página",
+                "info": "Exibindo página _PAGE_ de _PAGES_",
+                "search": "Pesquisar",
+                "infoEmpty": "",
+                "zeroRecords": "Selecione um depósito no campo direito superior",
+                "paginate": {
+                    "previous": "Anterior",
+                    "next": "Próximo"
+                }
+            },
+            "order": [],
+            "columnDefs": [{
+                "targets": [0, 1],
+                "orderable": false
+            }]
+        });
+    </script>
 @endsection
