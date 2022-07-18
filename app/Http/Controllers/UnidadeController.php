@@ -30,4 +30,10 @@ class UnidadeController extends Controller
 
         return redirect()->route('unidade.index');
     }
+
+    public function consulta(Request $request){
+        $instituicao = json_decode($request->instituicao) ;
+        $unidades = Unidade::where('instituicao_id', $instituicao)->orderBy('nome')->get();
+        return response()->json($unidades);
+    }
 }

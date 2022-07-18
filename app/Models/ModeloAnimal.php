@@ -27,7 +27,7 @@ class ModeloAnimal extends Model
     }
 
     public function planejamento(){
-        return $this->hasOne('App\Models\Planejamneto');
+        return $this->hasOne('App\Models\Planejamento');
     }
 
     public function solicitacao(){
