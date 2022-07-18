@@ -15,20 +15,10 @@ class DepartamentoController extends Controller
         return view('departamento.index', compact('unidade', 'departamentos'));
     }
 
-    public function create(){
-        return view('departamento.create');
-    }
-
     public function store(Request $request){
         $departamento = Departamento::create($request->all());
 
-        return redirect()->route('departamento.index');
-    }
-
-    public function edit($id){
-        $departamento = Departamento::find($id);
-
-        return view('departamento.edit', compact('departamento'));
+        return redirect()->back();
     }
 
     public function update(Request $request){
@@ -36,6 +26,13 @@ class DepartamentoController extends Controller
         $departamento->nome = $request->nome;
         $departamento->update();
 
-        return redirect()->route('departamento.index');
+        return redirect()->back();
+    }
+
+    public function delete($departamento_id)
+    {
+        $departamento = Departamento::find($departamento_id);
+        $departamento->delete();
+        return redirect()->back();
     }
 }
