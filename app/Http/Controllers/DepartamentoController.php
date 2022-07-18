@@ -3,10 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\Departamento;
+use App\Models\Unidade;
 use Illuminate\Http\Request;
 
 class DepartamentoController extends Controller
 {
+    public function index($unidade_id)
+    {
+        $unidade = Unidade::find($unidade_id);
+        $departamentos = Departamento::where('unidade_id', $unidade->id)->get();
+        return view('departamento.index', compact('unidade', 'departamentos'));
+    }
+
     public function create(){
         return view('departamento.create');
     }
