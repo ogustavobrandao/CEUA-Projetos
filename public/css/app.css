@@ -10976,3 +10976,20 @@ label{
     font-weight: bold;
 }
 
+.caixaSelecao{
+    border-radius: 1rem;
+    width: 250px;
+    height: 300px;
+}
+
+.titulo{
+    color: #131833;
+    font-size: 40px;
+    font-weight: 700;
+}
+
+.textoCaixa{
+    color: white;
+    font-weight: 600;
+    font-size: 23px;
+}

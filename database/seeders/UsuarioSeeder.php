@@ -19,11 +19,15 @@ class UsuarioSeeder extends Seeder
         ]);
 
         \App\Models\User::factory(1)->create([
-            'email' => 'solicitante@solicitante.com'
+            'email' => 'avaliador@avaliador.com',
+            'tipo_usuario_id' => 2
+
         ]);
 
         \App\Models\User::factory(1)->create([
-            'email' => 'avaliador@avaliador.com'
+            'email' => 'solicitante@solicitante.com',
+            'tipo_usuario_id' => 3
         ]);
+
     }
 }
