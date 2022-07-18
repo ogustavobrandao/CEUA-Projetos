@@ -8,6 +8,12 @@ use Illuminate\Http\Request;
 class InstituicaoController extends Controller
 {
 
+    public function index()
+    {
+        $instituicaos = Instituicao::all();
+        return view('instituicao.index',  compact('instituicaos'));
+    }
+
     public function create(){
         return view('instituicao.create');
     }
@@ -15,7 +21,7 @@ class InstituicaoController extends Controller
     public function store(Request $request){
         $instituicao = Instituicao::create($request->all());
 
-        return redirect()->route('instituicao.index');
+        return redirect()->route('instituicao.index')->with('success', 'Instituição Cadastrada com Sucesso!');
     }
 
     public function edit($id){
