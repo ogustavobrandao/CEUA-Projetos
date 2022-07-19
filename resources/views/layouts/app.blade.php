@@ -46,3 +46,41 @@
 </div>
 </body>
 </html>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+<script>
+    function unidades() {
+        var instituicao = $('#instituicao').val();
+        $.ajax({
+            type: 'POST',
+            url: '{{ route('unidade.consulta') }}',
+            data: 'instituicao=' + instituicao,
+            headers:
+                {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+            success: (dados) => {
+                if (dados.length > 0) {
+                    $.each(dados, function (i, obj) {
+                        if("{{old('unidade')}}" == obj.id){
+                            option += '<option selected value="' + obj.id + '">' + obj.nome + '</option>';
+                        }else{
+                            option += '<option value="' + obj.id + '">' + obj.nome + '</option>';
+                        }
+                    })
+                } else {
+                    var option = "<option selected disabled>Não possui unidade</option>";
+                }
+                $('#unidade').html(option).show();
+            },
+            error: (data) => {
+                console.log(data);
+            }
+
+        })
+    }
+
+    $(document).ready(function () {
+        unidades();
+    });
+
+</script>

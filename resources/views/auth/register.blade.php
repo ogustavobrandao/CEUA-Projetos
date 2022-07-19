@@ -64,16 +64,16 @@
         <div class="row justify-content-center mt-2">
             <div class="col-sm-5">
                 <label for="instituicao">{{ __('Instituição') }}</label>
-                <select class="form-control" id="instituicao" name="instituicao_id" onchange="unidades()">
+                <select class="form-control" id="instituicao" name="instituicao" onchange="unidades()">
                     <option selected disabled style="font-weight: bolder">
-                        Escolha uma Instituição
+                        Selecione uma Instituição
                     </option>
                     @foreach($instituicaos as $instituicao)
-                        <option @if(old('instituicao_id') == $instituicao->id) selected @endif value="{{$instituicao->id}}">{{$instituicao->nome}}</option>
+                        <option @if(old('instituicao') == $instituicao->id) selected @endif value="{{$instituicao->id}}">{{$instituicao->nome}}</option>
                     @endforeach
 
                 </select>
-                @error('password')
+                @error('instituicao')
                 <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -81,9 +81,9 @@
             </div>
             <div class="col-sm-5">
                 <label for="unidade">{{ __('Unidade') }}</label>
-                <select class="form-control" id="unidade" name="unidade_id">
+                <select class="form-control" id="unidade" name="unidade">
                     <option selected disabled>
-                        Escolha uma Unidade
+                        Selecione uma Unidade
                     </option>
                 </select>
             </div>
@@ -98,41 +98,3 @@
         </div>
     </form>
 @endsection
-<script>
-
-    function unidades() {
-        var instituicao = $('#instituicao').val();
-        $.ajax({
-            type: 'POST',
-            url: '{{ route('unidade.consulta') }}',
-            data: 'instituicao=' + instituicao,
-            headers:
-                {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-            success: (dados) => {
-                if (dados.length > 0) {
-                    $.each(dados, function (i, obj) {
-                        if("{{old('unidade_id')}}" == obj.id){
-                            option += '<option selected value="' + obj.id + '">' + obj.nome + '</option>';
-                        }else{
-                            option += '<option value="' + obj.id + '">' + obj.nome + '</option>';
-                        }
-                    })
-                } else {
-                    var option = "<option selected disabled>Não possui unidade</option>";
-                }
-                $('#unidade').html(option).show();
-            },
-            error: (data) => {
-                console.log(data);
-            }
-
-        })
-    }
-
-    $(document).ready(function () {
-        unidades();
-    });
-
-</script>
