@@ -33,5 +33,6 @@ Route::get('/departamento/{departamento_id}/delete', [App\Http\Controllers\Depar
 Route::get('/formulario', [App\Http\Controllers\SolicitacaoController::class, 'form'])->name('solicitacao.form');
 
 
-Route::post('/unidades/',[App\Http\Controllers\UnidadeController::class, 'consulta'])->name('unidade.consulta');
+Route::post('/unidades',[App\Http\Controllers\UnidadeController::class, 'consulta'])->name('unidade.consulta');
+Route::post('/departamentos',[App\Http\Controllers\DepartamentoController::class, 'consulta'])->name('departamento.consulta');
 

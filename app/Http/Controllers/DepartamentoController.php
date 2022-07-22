@@ -35,4 +35,11 @@ class DepartamentoController extends Controller
         $departamento->delete();
         return redirect()->back();
     }
+
+    public function consulta(Request $request){
+        $unidade = json_decode($request->unidade) ;
+        $departamentos = Departamento::where('unidade_id', $unidade)->orderBy('nome')->get();
+        return response()->json($departamentos);
+    }
+
 }

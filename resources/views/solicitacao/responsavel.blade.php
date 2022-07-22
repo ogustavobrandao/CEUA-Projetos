@@ -44,7 +44,7 @@
         <div class="row">
             <div class="col-sm-6">
                 <label for="instituicao">Instituicão:</label>
-                <select class="form-control" id="instituicao" name="instituicao">
+                <select class="form-control" id="instituicao" name="instituicao" onchange="unidades()">
                     <option disabled selected>Selecione uma Instituição</option>
                     @foreach($instituicaos as $instituicao)
                         <option value="{{$instituicao->id}}">{{$instituicao->nome}}</option>
@@ -56,13 +56,17 @@
                 <label for="vinculo_instituicao">Vinculo:</label>
                 <select class="form-control" id="vinculo_instituicao" name="vinculo_instituicao">
                     <option disabled selected>Selecione um Vinculo</option>
+                    <option @if(old('vinculo_instituicao') == 1) selected @endif value="1">Docente/Pesquisador</option>
+                    <option @if(old('vinculo_instituicao') == 2) selected @endif value="2">Pesquisador/Iniciação científica</option>
+                    <option @if(old('vinculo_instituicao') == 3) selected @endif value="3">Pesquisador/Pós - graduando</option>
+                    <option @if(old('vinculo_instituicao') == 4) selected @endif value="4">Pesquisador/Técnico Nível Superior</option>
                 </select>
             </div>
         </div>
         <div class="row mt-2">
             <div class="col-sm-6">
                 <label for="unidade">Unidade:</label>
-                <select class="form-control" id="unidade" name="unidade">
+                <select class="form-control" id="unidade" name="unidade" onchange="departamentos()">
                     <option disabled selected>Selecione uma Unidade</option>
                 </select>
             </div>
