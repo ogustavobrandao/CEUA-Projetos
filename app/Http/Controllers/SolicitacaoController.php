@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Models\CondicoesAnimal;
 use App\Models\Contato;
 use App\Models\Instituicao;
 use App\Models\ModeloAnimal;
+use App\Models\Perfil;
+use App\Models\Planejamento;
 use App\Models\Responsavel;
 use App\Models\Solicitacao;
 use Illuminate\Http\Request;
@@ -87,6 +90,76 @@ class SolicitacaoController extends Controller
         $modelo_animal->procedencia = $request->procedencia;
         $modelo_animal->geneticamente_modificado = $request->geneticamente_modificado;
         $modelo_animal->save();
+
+        $solicitacao->estado_pagina = 1;
+        $solicitacao->update();
+
+        return redirect(route('solicitacao.form', ['solicitacao_id' => $request->solicitacao_id]));
+    }
+
+    public function criar_perfil(Request $request)
+    {
+        $solicitacao = Solicitacao::find($request->solicitacao_id);
+        $modelo_animal = ModeloAnimal::where('solicitacao_id', $solicitacao->id)->first();
+
+        $perfil = new Perfil();
+        $perfil->grupo_animal = $request->grupo_animal;
+        $perfil->linhagem = $request->linhagem;
+        $perfil->idade = $request->idade;
+        $perfil->peso = $request->peso;
+        $perfil->machos = $request->machos;
+        $perfil->femeas = $request->femeas;
+        $perfil->quantidade = $request->quantidade;
+        $perfil->modelo_animal_id = $modelo_animal->id;
+        $perfil->total = $request->quantidade; //Verificar depois com o pessoal da CEUA
+        $perfil->save();
+
+        $solicitacao->estado_pagina = 1;
+        $solicitacao->update();
+
+        return redirect(route('solicitacao.form', ['solicitacao_id' => $request->solicitacao_id]));
+    }
+
+    public function criar_condicoes_animal(Request $request)
+    {
+        $solicitacao = Solicitacao::find($request->solicitacao_id);
+        $modelo_animal = ModeloAnimal::where('solicitacao_id', $solicitacao->id)->first();
+
+        $condicoes_animal = new CondicoesAnimal();
+        $condicoes_animal->condicoes_particulares = $request->condicoes_particulares;
+        $condicoes_animal->local = $request->local;
+        $condicoes_animal->ambiente_alojamento = $request->ambiente_alojamento;
+        $condicoes_animal->tipo_cama = $request->tipo_cama;
+        $condicoes_animal->num_animais_ambiente = $request->num_animais_ambiente;
+        $condicoes_animal->dimensoes_ambiente = $request->dimensoes_ambiente;
+        $condicoes_animal->periodo = $request->periodo;
+        $condicoes_animal->profissional_responsavel = $request->profissional_responsavel;
+        $condicoes_animal->email_responsavel = $request->email_responsavel;
+        $condicoes_animal->modelo_animal_id = $modelo_animal->id;
+        $condicoes_animal->save();
+
+        $solicitacao->estado_pagina = 1;
+        $solicitacao->update();
+
+        return redirect(route('solicitacao.form', ['solicitacao_id' => $request->solicitacao_id]));
+    }
+
+    public function criar_planejamento(Request $request)
+    {
+        $solicitacao = Solicitacao::find($request->solicitacao_id);
+        $modelo_animal = ModeloAnimal::where('solicitacao_id', $solicitacao->id)->first();
+
+        $planejamento = new Planejamento();
+        $planejamento->modelo_animal_id = $modelo_animal->id;
+        $planejamento->num_animais_grupo = $request->num_animais_grupo;
+        $planejamento->especificar_grupo = $request->especificar_grupo;
+        $planejamento->criterios = $request->criterios;
+        $planejamento->anexo_formula = $request->anexo_formula;
+        $planejamento->desc_materiais_metodos = $request->desc_materiais_metodos;
+        $planejamento->analise_estatistica = $request->analise_estatistica;
+        $planejamento->outras_infos = $request->outras_infos;
+        $planejamento->grau_invasividade = $request->grau_invasividade;
+        $planejamento->save();
 
         $solicitacao->estado_pagina = 1;
         $solicitacao->update();
