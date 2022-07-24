@@ -2,6 +2,6 @@
 
 @section('content')
     @if($solicitacao->estado_pagina == 0)
-        @include('solicitacao.solicitacao')
+        @include('solicitacao.responsavel')
     @endif
 @endsection

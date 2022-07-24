@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Models\Contato;
 use App\Models\Instituicao;
+use App\Models\Responsavel;
 use App\Models\Solicitacao;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,7 +15,8 @@ class SolicitacaoController extends Controller
     public function form($solicitacao_id)
     {
         $solicitacao = Solicitacao::find($solicitacao_id);
-        return view('solicitante.formulario', compact('solicitacao'));
+        $instituicaos = Instituicao::all();
+        return view('solicitante.formulario', compact('solicitacao', 'instituicaos'));
     }
 
     public function inicio(Request $request)
@@ -40,5 +44,32 @@ class SolicitacaoController extends Controller
         $solicitacao->update();
 
         return redirect(route('solicitacao.form', ['solicitacao_id' => $request->solicitacao_id]));
+    }
+
+    public function criar_responsavel(Request $request)
+    {
+
+        $solicitacao = Solicitacao::find($request->solicitacao_id);
+
+        $responsavel = new Responsavel();
+        $responsavel->solicitacao_id = $request->solicitacao_id;
+        $responsavel->nome = $request->nome;
+        $responsavel->departamento_id = $request->departamento_id;
+        $responsavel->experiencia_previa = $request->experiencia_previa;
+        $responsavel->vinculo_instituicao = $request->vinculo_instituicao;
+        $responsavel->treinamento = $request->treinamento;
+        $responsavel->save();
+
+        $contato = new Contato();
+        $contato->email = $request->email;
+        $contato->telefone = $request->telefone;
+        $contato->responsavel_id = $responsavel->id;
+        $contato->save();
+
+        $solicitacao->estado_pagina = 1;
+        $solicitacao->update();
+
+        return redirect(route('solicitacao.form', ['solicitacao_id' => $request->solicitacao_id]));
+
     }
 }
