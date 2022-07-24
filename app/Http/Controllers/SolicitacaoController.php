@@ -9,10 +9,13 @@ use App\Models\Instituicao;
 use App\Models\ModeloAnimal;
 use App\Models\Perfil;
 use App\Models\Planejamento;
+use App\Models\Procedimento;
 use App\Models\Responsavel;
+use App\Models\Resultado;
 use App\Models\Solicitacao;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use PhpParser\Node\Expr\AssignOp\Mod;
 
 class SolicitacaoController extends Controller
 {
@@ -82,14 +85,7 @@ class SolicitacaoController extends Controller
 
         $solicitacao = Solicitacao::find($request->solicitacao_id);
 
-        $modelo_animal = new ModeloAnimal();
-        $modelo_animal->solicitacao_id = $solicitacao->id;
-        $modelo_animal->nome_cientifico = $request->nome_cientifico;
-        $modelo_animal->nome_vulgar = $request->nome_vulgar;
-        $modelo_animal->justificativa = $request->justificativa;
-        $modelo_animal->procedencia = $request->procedencia;
-        $modelo_animal->geneticamente_modificado = $request->geneticamente_modificado;
-        $modelo_animal->save();
+        $modelo_animal = ModeloAnimal::create($request->all());
 
         $solicitacao->estado_pagina = 1;
         $solicitacao->update();
@@ -160,6 +156,32 @@ class SolicitacaoController extends Controller
         $planejamento->outras_infos = $request->outras_infos;
         $planejamento->grau_invasividade = $request->grau_invasividade;
         $planejamento->save();
+
+        $solicitacao->estado_pagina = 1;
+        $solicitacao->update();
+
+        return redirect(route('solicitacao.form', ['solicitacao_id' => $request->solicitacao_id]));
+    }
+
+    public function criar_procedimento(Request $request)
+    {
+
+        $solicitacao = Solicitacao::find($request->solicitacao_id);
+
+        Procedimento::create($request->all());
+
+        $solicitacao->estado_pagina = 1;
+        $solicitacao->update();
+
+        return redirect(route('solicitacao.form', ['solicitacao_id' => $request->solicitacao_id]));
+    }
+
+    public function criar_resultado(Request $request)
+    {
+
+        $solicitacao = Solicitacao::find($request->solicitacao_id);
+
+        Resultado::create($request->all());
 
         $solicitacao->estado_pagina = 1;
         $solicitacao->update();
