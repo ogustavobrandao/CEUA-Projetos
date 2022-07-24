@@ -7,6 +7,7 @@ use App\Models\CondicoesAnimal;
 use App\Models\Contato;
 use App\Models\Instituicao;
 use App\Models\ModeloAnimal;
+use App\Models\Operacao;
 use App\Models\Perfil;
 use App\Models\Planejamento;
 use App\Models\Procedimento;
@@ -182,6 +183,26 @@ class SolicitacaoController extends Controller
         $solicitacao = Solicitacao::find($request->solicitacao_id);
 
         Resultado::create($request->all());
+
+        $solicitacao->estado_pagina = 1;
+        $solicitacao->update();
+
+        return redirect(route('solicitacao.form', ['solicitacao_id' => $request->solicitacao_id]));
+    }
+
+    public function criar_operacao(Request $request)
+    {
+        $solicitacao = Solicitacao::find($request->solicitacao_id);
+        if ($request->cirurgia == 'on') {
+            $procedimento = Procedimento::where('solicitacao_id', $solicitacao->id)->first();
+
+            $operacao = new Operacao();
+            $operacao->observacao_recuperacao = $request->observacao_recuperacao;
+            $operacao->outros_cuidados_recuperacao = $request->outros_cuidados_recuperacao;
+            $operacao->analgesia_recuperacao = $request->analgesia_recuperacao;
+            $operacao->procedimento_id = $procedimento->id;
+            $operacao->save();
+        }
 
         $solicitacao->estado_pagina = 1;
         $solicitacao->update();

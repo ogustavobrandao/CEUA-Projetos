@@ -40,6 +40,7 @@ Route::post('/solicitacao/criar_condicoes_animal', [App\Http\Controllers\Solicit
 Route::post('/solicitacao/criar_planejamento', [App\Http\Controllers\SolicitacaoController::class, 'criar_planejamento'])->name('solicitacao.planejamento.criar');
 Route::post('/solicitacao/criar_procedimento', [App\Http\Controllers\SolicitacaoController::class, 'criar_procedimento'])->name('solicitacao.procedimento.criar');
 Route::post('/solicitacao/criar_resultado', [App\Http\Controllers\SolicitacaoController::class, 'criar_resultado'])->name('solicitacao.resultado.criar');
+Route::post('/solicitacao/criar_operacao', [App\Http\Controllers\SolicitacaoController::class, 'criar_operacao'])->name('solicitacao.operacao.criar');
 
 Route::post('/unidades',[App\Http\Controllers\UnidadeController::class, 'consulta'])->name('unidade.consulta');
 Route::post('/departamentos',[App\Http\Controllers\DepartamentoController::class, 'consulta'])->name('departamento.consulta');
