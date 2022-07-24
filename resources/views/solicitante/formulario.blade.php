@@ -1,5 +1,7 @@
 @extends('layouts.formulario')
 
 @section('content')
-    @include('solicitacao.condicoes_animais')
+    @if($solicitacao->estado_pagina == 0)
+        @include('solicitacao.solicitacao')
+    @endif
 @endsection

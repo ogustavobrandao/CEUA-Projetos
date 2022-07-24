@@ -15,19 +15,20 @@ return new class extends Migration
     {
         Schema::create('solicitacaos', function (Blueprint $table) {
             $table->id();
-            $table->text('relevancia');
+            $table->text('relevancia')->nullable();
             $table->string('titulo_en')->nullable();
-            $table->dateTime('inicio');
-            $table->dateTime('fim');
-            $table->string('tipo');
-            $table->text('justificativa');
-            $table->text('objetivos');
-            $table->text('resumo');
-            $table->string('titulo_pt');
-            $table->string('area_conhecimento');
-            $table->unsignedBigInteger('usuario_id');
+            $table->dateTime('inicio')->nullable();
+            $table->dateTime('fim')->nullable();
+            $table->string('tipo')->nullable();
+            $table->text('justificativa')->nullable();
+            $table->text('objetivos')->nullable();
+            $table->text('resumo')->nullable();
+            $table->string('titulo_pt')->nullable();
+            $table->string('area_conhecimento')->nullable();
+            $table->string('estado_pagina');
+            $table->unsignedBigInteger('user_id');
 
-            $table->foreign('usuario_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }
