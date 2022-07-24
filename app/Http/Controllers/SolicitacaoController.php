@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Models\Contato;
 use App\Models\Instituicao;
+use App\Models\ModeloAnimal;
 use App\Models\Responsavel;
 use App\Models\Solicitacao;
 use Illuminate\Http\Request;
@@ -71,5 +72,25 @@ class SolicitacaoController extends Controller
 
         return redirect(route('solicitacao.form', ['solicitacao_id' => $request->solicitacao_id]));
 
+    }
+
+    public function criar_modelo_animal(Request $request)
+    {
+
+        $solicitacao = Solicitacao::find($request->solicitacao_id);
+
+        $modelo_animal = new ModeloAnimal();
+        $modelo_animal->solicitacao_id = $solicitacao->id;
+        $modelo_animal->nome_cientifico = $request->nome_cientifico;
+        $modelo_animal->nome_vulgar = $request->nome_vulgar;
+        $modelo_animal->justificativa = $request->justificativa;
+        $modelo_animal->procedencia = $request->procedencia;
+        $modelo_animal->geneticamente_modificado = $request->geneticamente_modificado;
+        $modelo_animal->save();
+
+        $solicitacao->estado_pagina = 1;
+        $solicitacao->update();
+
+        return redirect(route('solicitacao.form', ['solicitacao_id' => $request->solicitacao_id]));
     }
 }

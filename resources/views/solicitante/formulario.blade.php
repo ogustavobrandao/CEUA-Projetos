@@ -2,6 +2,6 @@
 
 @section('content')
     @if($solicitacao->estado_pagina == 0)
-        @include('solicitacao.responsavel')
+        @include('solicitacao.modelo_animal')
     @endif
 @endsection

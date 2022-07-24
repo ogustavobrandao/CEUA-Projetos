@@ -34,7 +34,7 @@ Route::get('/formulario/{solicitacao_id}', [App\Http\Controllers\SolicitacaoCont
 Route::post('/solicitacao/inicio', [App\Http\Controllers\SolicitacaoController::class, 'inicio'])->name('solicitacao.inicio');
 Route::post('/solicitacao/criar', [App\Http\Controllers\SolicitacaoController::class, 'criar'])->name('solicitacao.criar');
 Route::post('/solicitacao/criar_responsavel', [App\Http\Controllers\SolicitacaoController::class, 'criar_responsavel'])->name('solicitacao.responsavel.criar');
-
+Route::post('/solicitacao/criar_modelo_animal', [App\Http\Controllers\SolicitacaoController::class, 'criar_modelo_animal'])->name('solicitacao.modelo_animal.criar');
 
 Route::post('/unidades',[App\Http\Controllers\UnidadeController::class, 'consulta'])->name('unidade.consulta');
 Route::post('/departamentos',[App\Http\Controllers\DepartamentoController::class, 'consulta'])->name('departamento.consulta');

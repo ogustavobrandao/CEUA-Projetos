@@ -122,6 +122,7 @@
         </div>
 
         @include('component.botoes_form')
+
     </form>
 
 </div>
