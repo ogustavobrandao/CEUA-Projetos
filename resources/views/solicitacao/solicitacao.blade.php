@@ -78,6 +78,16 @@
                 <label for="area_conhecimento">Área de conhecimento:</label>
                 <select class="form-control" id="area_conhecimento" name="area_conhecimento">
                     <option disabled selected>Selecione a Área de Conhecimento</option>
+                    <option value="ciencias_agrarias">Ciências Agrárias</option>
+                    <option value="ciencias_biologicas">Ciências Biológicas</option>
+                    <option value="ciencias_saude">Ciências da Saúde</option>
+                    <option value="ciencias_exatas_terra">Ciências Exatas e da Terra</option>
+                    <option value="ciencias_humanas">Ciências Humanas</option>
+                    <option value="ciencias_sociais_aplicadas">Ciências Sociais Aplicadas</option>
+                    <option value="engenharias">Engenharias</option>
+                    <option value="linguistica_letras_artes">Linguística,Letras e Artes</option>
+                    <option value="outras">Outras</option>
+
                 </select>
             </div>
         </div>

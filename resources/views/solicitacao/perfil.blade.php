@@ -14,7 +14,16 @@
                 <label for="grupo_animal">Grupo Animal:</label>
                 <select class="form-control" id="grupo_animal" name="grupo_animal" onchange="unidades()">
                     <option disabled selected>Selecione o Grupo Animal</option>
-                    <option value="1">Grupo Animal 1</option>
+                    <option value="anfibio">Anfíbio</option>
+                    <option value="ave">Ave</option>
+                    <option value="bovino">Bovino</option>
+                    <option value="bubalino">Bubalino</option>
+                    <option value="canino">Canino</option>
+                    <option value="caprino">Caprino</option>
+                    <option value="outro">Outro a especificar</option>
+                    <option value="ovino">Ovino</option>
+                    <option value="peixes">Peixes</option>
+                    <option value="roedores">Roedores</option>
                 </select>
             </div>
 

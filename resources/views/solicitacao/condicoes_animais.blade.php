@@ -48,7 +48,11 @@
                 <label for="ambiente_alojamento">Ambiente de alojamento:</label>
                 <select class="form-control" id="ambiente_alojamento" name="ambiente_alojamento">
                     <option disabled selected>Selecione o Ambiente de Alojamento</option>
-                    <option value="1">Ambiente 1</option>
+                    <option value="baia">Baia</option>
+                    <option value="gaiola">Gaiola</option>
+                    <option value="galpao">Galpão</option>
+                    <option value="jaula">Jaula</option>
+                    <option value="outro">Outro</option>
                 </select>
             </div>
 
@@ -56,7 +60,9 @@
                 <label for="tipo_cama">Tipo de cama:</label>
                 <select class="form-control" id="tipo_cama" name="tipo_cama">
                     <option disabled selected>Selecione o Tipo de Cama</option>
-                    <option value="1">Tipo de Cama 1</option>
+                    <option value="estrado">Estrado</option>
+                    <option value="maravalha">Maravalha</option>
+                    <option value="outra">Outra</option>
                 </select>
             </div>
         </div>

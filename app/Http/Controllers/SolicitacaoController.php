@@ -110,6 +110,20 @@ class SolicitacaoController extends Controller
         return redirect(route('solicitacao.form', ['solicitacao_id' => $request->solicitacao_id]));
     }
 
+    public function criar_solicitacao_fim(Request $request){
+        $solicitacao = Solicitacao::find($request->solicitacao_id);
+
+        $solicitacao->resumo = $request->resumo;
+        $solicitacao->justificativa = $request->justificativa;
+        $solicitacao->relevancia = $request->relevancia;
+        $solicitacao->objetivos = $request->objetivos;
+        $solicitacao->update();
+
+        $solicitacao->estado_pagina = 4;
+        $solicitacao->update();
+        return redirect(route('solicitacao.form', ['solicitacao_id' => $request->solicitacao_id]));
+    }
+
     public function criar_modelo_animal(Request $request)
     {
         $solicitacao = Solicitacao::find($request->solicitacao_id);

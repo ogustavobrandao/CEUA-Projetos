@@ -52,7 +52,14 @@
                     <label for="procedencia">Procedência:</label>
                     <select class="form-control" id="procedencia" name="procedencia" onchange="unidades()">
                         <option disabled selected>Selecione a Procedência</option>
-                        <option value="1">Procedência 1</option>
+                        <option value="animal_comprado">Animal comprado</option>
+                        <option value="animal_criacao">Animal de criação ou de casuística hospitalar</option>
+                        <option value="animal_doado">Animal doado</option>
+                        <option value="animal_silvestre">Animal Silvestre</option>
+                        <option value="aviario">Aviário</option>
+                        <option value="bioterio">Biotério</option>
+                        <option value="fazenda">Fazenda</option>
+                        <option value="outra_procedencia">Outra Procedência</option>
                     </select>
                 </div>
 

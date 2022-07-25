@@ -60,10 +60,10 @@
                     <label for="vinculo_instituicao">Vinculo:</label>
                     <select class="form-control" id="vinculo_instituicao" name="vinculo_instituicao">
                         <option disabled selected>Selecione um Vinculo</option>
-                        <option @if(old('vinculo_instituicao') == 1) selected @endif value="1">Docente/Pesquisador</option>
-                        <option @if(old('vinculo_instituicao') == 2) selected @endif value="2">Pesquisador/Iniciação científica</option>
-                        <option @if(old('vinculo_instituicao') == 3) selected @endif value="3">Pesquisador/Pós - graduando</option>
-                        <option @if(old('vinculo_instituicao') == 4) selected @endif value="4">Pesquisador/Técnico Nível Superior</option>
+                        <option @if(old('vinculo_instituicao') == "pesquisador_docente") selected @endif value="pesquisador_docente">Docente/Pesquisador</option>
+                        <option @if(old('vinculo_instituicao') == "pesquisador_ic") selected @endif value="pesquisador_ic">Pesquisador/Iniciação científica</option>
+                        <option @if(old('vinculo_instituicao') == "pesquisador_pos_graduando") selected @endif value="pesquisador_pos_graduando">Pesquisador/Pós - graduando</option>
+                        <option @if(old('vinculo_instituicao') == "pesquisador_tecnico_superior") selected @endif value="pesquisador_tecnico_superior">Pesquisador/Técnico Nível Superior</option>
                     </select>
                 </div>
             </div>
