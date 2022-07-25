@@ -15,11 +15,11 @@ return new class extends Migration
     {
         Schema::create('eutanasias', function (Blueprint $table) {
             $table->id();
-            $table->text('justificativa_metodo');
+            $table->text('justificativa_metodo')->nullable();
             $table->text('descarte');
             $table->text('destino');
-            $table->text('descricao');
-            $table->text('metodo');
+            $table->text('descricao')->nullable();
+            $table->text('metodo')->nullable();
             $table->unsignedBigInteger('procedimento_id');
 
             $table->foreign('procedimento_id')->references('id')->on('procedimentos')->onDelete('cascade');

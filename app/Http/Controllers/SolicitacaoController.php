@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Models\Colaborador;
 use App\Models\CondicoesAnimal;
 use App\Models\Contato;
+use App\Models\Eutanasia;
 use App\Models\Instituicao;
 use App\Models\ModeloAnimal;
 use App\Models\Operacao;
@@ -14,6 +16,7 @@ use App\Models\Procedimento;
 use App\Models\Responsavel;
 use App\Models\Resultado;
 use App\Models\Solicitacao;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use PhpParser\Node\Expr\AssignOp\Mod;
@@ -79,6 +82,32 @@ class SolicitacaoController extends Controller
 
         return redirect(route('solicitacao.form', ['solicitacao_id' => $request->solicitacao_id]));
 
+    }
+
+    public function criar_colaborador(Request $request)
+    {
+        $solicitacao = Solicitacao::find($request->solicitacao_id);
+
+        for ($i = 0; $i < count($request->nome); $i++) {
+            $colaborador = new Colaborador();
+            $colaborador->nome = $request->nome[$i];
+            $colaborador->instituicao_id = $request->instituicao_id[$i];
+            $colaborador->nivel_academico = $request->nivel_academico[$i];
+            $colaborador->experiencia_previa = $request->experiencia_previa[$i];
+            $colaborador->treinamento = $request->treinamento[$i];
+            $colaborador->responsavel_id = $solicitacao->responsavel->id;
+            $colaborador->save();
+
+            $contato = new Contato();
+            $contato->email = $request->email[$i];
+            $contato->telefone = $request->telefone[$i];
+            $contato->colaborador_id = $colaborador->id;
+            $contato->save();
+        }
+
+        $solicitacao->estado_pagina = 2;
+        $solicitacao->update();
+        return redirect(route('solicitacao.form', ['solicitacao_id' => $request->solicitacao_id]));
     }
 
     public function criar_modelo_animal(Request $request)
@@ -171,6 +200,25 @@ class SolicitacaoController extends Controller
         Procedimento::create($request->all());
 
         $solicitacao->estado_pagina = 1;
+        $solicitacao->update();
+
+        return redirect(route('solicitacao.form', ['solicitacao_id' => $request->solicitacao_id]));
+    }
+
+    public function criar_eutanasia(Request $request)
+    {
+        $solicitacao = Solicitacao::find($request->solicitacao_id);
+
+        $eutanasia = new Eutanasia();
+        $eutanasia->descricao = $request->descricao;
+        $eutanasia->metodo = $request->metodo;
+        $eutanasia->justificativa_metodo = $request->justificativa_metodo;
+        $eutanasia->destino = $request->destino;
+        $eutanasia->descarte = $request->descarte;
+        $eutanasia->procedimento_id = $solicitacao->procedimento->id;
+        $eutanasia->save();
+
+        $solicitacao->estado_pagina = 5;
         $solicitacao->update();
 
         return redirect(route('solicitacao.form', ['solicitacao_id' => $request->solicitacao_id]));
