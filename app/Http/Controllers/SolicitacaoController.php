@@ -77,7 +77,7 @@ class SolicitacaoController extends Controller
         $contato->responsavel_id = $responsavel->id;
         $contato->save();
 
-        $solicitacao->estado_pagina = 1;
+        $solicitacao->estado_pagina = 2;
         $solicitacao->update();
 
         return redirect(route('solicitacao.form', ['solicitacao_id' => $request->solicitacao_id]));
@@ -105,7 +105,7 @@ class SolicitacaoController extends Controller
             $contato->save();
         }
 
-        $solicitacao->estado_pagina = 2;
+        $solicitacao->estado_pagina = 3;
         $solicitacao->update();
         return redirect(route('solicitacao.form', ['solicitacao_id' => $request->solicitacao_id]));
     }
@@ -116,7 +116,7 @@ class SolicitacaoController extends Controller
 
         $modelo_animal = ModeloAnimal::create($request->all());
 
-        $solicitacao->estado_pagina = 1;
+        $solicitacao->estado_pagina = 5;
         $solicitacao->update();
 
         return redirect(route('solicitacao.form', ['solicitacao_id' => $request->solicitacao_id]));
@@ -139,7 +139,30 @@ class SolicitacaoController extends Controller
         $perfil->total = $request->quantidade; //Verificar depois com o pessoal da CEUA
         $perfil->save();
 
-        $solicitacao->estado_pagina = 1;
+        $solicitacao->estado_pagina = 6;
+        $solicitacao->update();
+
+        return redirect(route('solicitacao.form', ['solicitacao_id' => $request->solicitacao_id]));
+    }
+
+    public function criar_planejamento(Request $request)
+    {
+        $solicitacao = Solicitacao::find($request->solicitacao_id);
+        $modelo_animal = ModeloAnimal::where('solicitacao_id', $solicitacao->id)->first();
+
+        $planejamento = new Planejamento();
+        $planejamento->modelo_animal_id = $modelo_animal->id;
+        $planejamento->num_animais_grupo = $request->num_animais_grupo;
+        $planejamento->especificar_grupo = $request->especificar_grupo;
+        $planejamento->criterios = $request->criterios;
+        $planejamento->anexo_formula = $request->anexo_formula;
+        $planejamento->desc_materiais_metodos = $request->desc_materiais_metodos;
+        $planejamento->analise_estatistica = $request->analise_estatistica;
+        $planejamento->outras_infos = $request->outras_infos;
+        $planejamento->grau_invasividade = $request->grau_invasividade;
+        $planejamento->save();
+
+        $solicitacao->estado_pagina = 7;
         $solicitacao->update();
 
         return redirect(route('solicitacao.form', ['solicitacao_id' => $request->solicitacao_id]));
@@ -163,30 +186,7 @@ class SolicitacaoController extends Controller
         $condicoes_animal->modelo_animal_id = $modelo_animal->id;
         $condicoes_animal->save();
 
-        $solicitacao->estado_pagina = 1;
-        $solicitacao->update();
-
-        return redirect(route('solicitacao.form', ['solicitacao_id' => $request->solicitacao_id]));
-    }
-
-    public function criar_planejamento(Request $request)
-    {
-        $solicitacao = Solicitacao::find($request->solicitacao_id);
-        $modelo_animal = ModeloAnimal::where('solicitacao_id', $solicitacao->id)->first();
-
-        $planejamento = new Planejamento();
-        $planejamento->modelo_animal_id = $modelo_animal->id;
-        $planejamento->num_animais_grupo = $request->num_animais_grupo;
-        $planejamento->especificar_grupo = $request->especificar_grupo;
-        $planejamento->criterios = $request->criterios;
-        $planejamento->anexo_formula = $request->anexo_formula;
-        $planejamento->desc_materiais_metodos = $request->desc_materiais_metodos;
-        $planejamento->analise_estatistica = $request->analise_estatistica;
-        $planejamento->outras_infos = $request->outras_infos;
-        $planejamento->grau_invasividade = $request->grau_invasividade;
-        $planejamento->save();
-
-        $solicitacao->estado_pagina = 1;
+        $solicitacao->estado_pagina = 8;
         $solicitacao->update();
 
         return redirect(route('solicitacao.form', ['solicitacao_id' => $request->solicitacao_id]));
@@ -199,39 +199,7 @@ class SolicitacaoController extends Controller
 
         Procedimento::create($request->all());
 
-        $solicitacao->estado_pagina = 1;
-        $solicitacao->update();
-
-        return redirect(route('solicitacao.form', ['solicitacao_id' => $request->solicitacao_id]));
-    }
-
-    public function criar_eutanasia(Request $request)
-    {
-        $solicitacao = Solicitacao::find($request->solicitacao_id);
-
-        $eutanasia = new Eutanasia();
-        $eutanasia->descricao = $request->descricao;
-        $eutanasia->metodo = $request->metodo;
-        $eutanasia->justificativa_metodo = $request->justificativa_metodo;
-        $eutanasia->destino = $request->destino;
-        $eutanasia->descarte = $request->descarte;
-        $eutanasia->procedimento_id = $solicitacao->procedimento->id;
-        $eutanasia->save();
-
-        $solicitacao->estado_pagina = 5;
-        $solicitacao->update();
-
-        return redirect(route('solicitacao.form', ['solicitacao_id' => $request->solicitacao_id]));
-    }
-
-    public function criar_resultado(Request $request)
-    {
-
-        $solicitacao = Solicitacao::find($request->solicitacao_id);
-
-        Resultado::create($request->all());
-
-        $solicitacao->estado_pagina = 1;
+        $solicitacao->estado_pagina = 9;
         $solicitacao->update();
 
         return redirect(route('solicitacao.form', ['solicitacao_id' => $request->solicitacao_id]));
@@ -251,9 +219,42 @@ class SolicitacaoController extends Controller
             $operacao->save();
         }
 
-        $solicitacao->estado_pagina = 1;
+        $solicitacao->estado_pagina = 10;
         $solicitacao->update();
 
         return redirect(route('solicitacao.form', ['solicitacao_id' => $request->solicitacao_id]));
     }
+
+    public function criar_eutanasia(Request $request)
+    {
+        $solicitacao = Solicitacao::find($request->solicitacao_id);
+
+        $eutanasia = new Eutanasia();
+        $eutanasia->descricao = $request->descricao;
+        $eutanasia->metodo = $request->metodo;
+        $eutanasia->justificativa_metodo = $request->justificativa_metodo;
+        $eutanasia->destino = $request->destino;
+        $eutanasia->descarte = $request->descarte;
+        $eutanasia->procedimento_id = $solicitacao->procedimento->id;
+        $eutanasia->save();
+
+        $solicitacao->estado_pagina = 11;
+        $solicitacao->update();
+
+        return redirect(route('solicitacao.form', ['solicitacao_id' => $request->solicitacao_id]));
+    }
+
+    public function criar_resultado(Request $request)
+    {
+
+        $solicitacao = Solicitacao::find($request->solicitacao_id);
+
+        Resultado::create($request->all());
+
+        $solicitacao->estado_pagina = 12;
+        $solicitacao->update();
+
+        return redirect(route('solicitacao.form', ['solicitacao_id' => $request->solicitacao_id]));
+    }
+
 }
