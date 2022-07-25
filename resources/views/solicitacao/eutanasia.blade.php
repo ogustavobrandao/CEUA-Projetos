@@ -14,11 +14,11 @@
                 <label for="eutanasia">Eutanásia:</label>
                 <div class="row ml-1">
                     <div class="col-sm-2">
-                        <input class="form-check-input" type="radio" name="eutanasia" id="eutanasia" value="sim">
+                        <input class="form-check-input" type="radio" name="eutanasia" id="eutanasia_sim" value="sim" checked>
                         <label class="form-check-label" for="eutanasia">Sim</label>
                     </div>
                     <div class="col-sm-2">
-                        <input class="form-check-input" type="radio" name="eutanasia" id="eutanasia" value="nao" checked>
+                        <input class="form-check-input" type="radio" name="eutanasia" id="eutanasia_nao" value="nao">
                         <label class="form-check-label" for="eutanasia">
                             Não
                         </label>
@@ -26,38 +26,40 @@
                 </div>
             </div>
 
-            <div class="col-sm-12 mt-2">
-                <label for="descricao">Descrição:</label>
-                <textarea class="form-control @error('descricao') is-invalid @enderror" name="descricao" id="descricao"
-                          autocomplete="descricao" autofocus required disabled>{{old('descricao')}}</textarea>
-                @error('descricao')
-                <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-                @enderror
-            </div>
+            <div id="eutanasia_dados" class="col-sm-12">
+                <div class="col-sm-12 mt-2 pl-0">
+                    <label for="descricao">Descrição:</label>
+                    <textarea class="form-control @error('descricao') is-invalid @enderror" name="descricao" id="descricao"
+                              autocomplete="descricao" autofocus required>{{old('descricao')}}</textarea>
+                    @error('descricao')
+                    <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+                    @enderror
+                </div>
 
-            <div class="col-sm-12 mt-2">
-                <label for="metodo">Substância, dose, via:</label>
-                <textarea class="form-control @error('metodo') is-invalid @enderror" name="metodo" id="metodo"
-                          autocomplete="metodo" autofocus required disabled>{{old('metodo')}}</textarea>
-                @error('metodo')
-                <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-                @enderror
-            </div>
+                <div class="col-sm-12 mt-2 pl-0">
+                    <label for="metodo">Substância, dose, via:</label>
+                    <textarea class="form-control @error('metodo') is-invalid @enderror" name="metodo" id="metodo"
+                              autocomplete="metodo" autofocus required>{{old('metodo')}}</textarea>
+                    @error('metodo')
+                    <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+                    @enderror
+                </div>
 
-            <div class="col-sm-12 mt-2">
-                <label for="justificativa_metodo">Caso método restrito, justifique:</label>
-                <textarea class="form-control @error('justificativa_metodo') is-invalid @enderror"
-                          name="justificativa_metodo" id="justificativa_metodo" autocomplete="justificativa_metodo"
-                          autofocus required disabled>{{old('justificativa_metodo')}}</textarea>
-                @error('justificativa_metodo')
-                <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-                @enderror
+                <div class="col-sm-12 mt-2 pl-0">
+                    <label for="justificativa_metodo">Caso método restrito, justifique:</label>
+                    <textarea class="form-control @error('justificativa_metodo') is-invalid @enderror"
+                              name="justificativa_metodo" id="justificativa_metodo" autocomplete="justificativa_metodo"
+                              autofocus required>{{old('justificativa_metodo')}}</textarea>
+                    @error('justificativa_metodo')
+                    <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+                    @enderror
+                </div>
             </div>
 
             <h3 class="subtitulo">Outras informações</h3>
@@ -93,16 +95,12 @@
 <script>
     $(document).ready(function () {
 
-        $('input[type=radio][name=eutanasia]').on('change', function() {
-            if($(this).val() == 'sim') {
-                $('#descricao').removeAttr('disabled');
-                $('#justificativa_metodo').removeAttr('disabled');
-                $('#metodo').removeAttr('disabled');
-            }else {
-                $('#descricao').attr('disabled',true);
-                $('#justificativa_metodo').attr('disabled',true);
-                $('#metodo').attr('disabled',true);
-            }
+        $("#eutanasia_sim").click(function () {
+            $("#eutanasia_dados").show().find('input, textarea').prop('disabled', false);;
+        });
+
+        $("#eutanasia_nao").click(function () {
+            $("#eutanasia_dados").hide().find('input, textarea').prop('disabled', true);
         });
 
     });

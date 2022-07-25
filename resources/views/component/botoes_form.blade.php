@@ -7,6 +7,6 @@
     </div>
 
     <div class="col-3">
-        <button type="submit" class="btn btn-success w-100">Próximo</button>
+        <button type="submit" class="btn btn-success w-100">@if($solicitacao->estado_pagina == 11) Concluir @else Próximo @endif</button>
     </div>
 </div>

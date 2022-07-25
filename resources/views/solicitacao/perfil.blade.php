@@ -69,7 +69,7 @@
 
             <div class="col-sm-4">
                 <label for="machos">Quantidade de machos:</label>
-                <input class="form-control @error('machos') is-invalid @enderror" id="machos" type="text" name="machos" value="{{ old('machos') }}" required autocomplete="machos"
+                <input class="form-control @error('machos') is-invalid @enderror" id="machos" type="number" name="machos" value="{{ old('machos') }}" required autocomplete="machos"
                        autofocus>
                 @error('machos')
                 <span class="invalid-feedback" role="alert">
@@ -80,7 +80,7 @@
 
             <div class="col-sm-4">
                 <label for="femeas">Quantidade de fêmeas:</label>
-                <input class="form-control @error('femeas') is-invalid @enderror" id="femeas" type="text" name="femeas" value="{{ old('femeas') }}" required autocomplete="femeas"
+                <input class="form-control @error('femeas') is-invalid @enderror" id="femeas" type="number" name="femeas" value="{{ old('femeas') }}" required autocomplete="femeas"
                        autofocus>
                 @error('femeas')
                 <span class="invalid-feedback" role="alert">
@@ -91,7 +91,7 @@
 
             <div class="col-sm-4">
                 <label for="quantidade">Quantidade:</label>
-                <input class="form-control @error('quantidade') is-invalid @enderror" id="quantidade" type="text" name="quantidade" value="{{ old('quantidade') }}" required autocomplete="quantidade"
+                <input class="form-control @error('quantidade') is-invalid @enderror" id="quantidade" type="number" name="quantidade" value="{{ old('quantidade') }}" required autocomplete="quantidade"
                        autofocus>
                 @error('quantidade')
                 <span class="invalid-feedback" role="alert">
