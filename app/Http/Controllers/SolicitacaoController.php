@@ -265,10 +265,10 @@ class SolicitacaoController extends Controller
 
         Resultado::create($request->all());
 
-        $solicitacao->estado_pagina = 12;
+        $solicitacao->estado_pagina = 'nao_avaliado';
         $solicitacao->update();
 
-        return redirect(route('solicitacao.form', ['solicitacao_id' => $request->solicitacao_id]));
+        return redirect(route('home'));
     }
 
 }
