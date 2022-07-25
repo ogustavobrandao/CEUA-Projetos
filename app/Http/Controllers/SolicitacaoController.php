@@ -254,7 +254,7 @@ class SolicitacaoController extends Controller
         $solicitacao->estado_pagina = 'nao_avaliado';
         $solicitacao->update();
 
-        return redirect(route('solicitacao.form', ['solicitacao_id' => $request->solicitacao_id]));
+        return redirect(route('home'));
     }
 
 }
