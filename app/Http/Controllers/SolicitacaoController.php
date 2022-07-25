@@ -83,7 +83,6 @@ class SolicitacaoController extends Controller
 
     public function criar_modelo_animal(Request $request)
     {
-
         $solicitacao = Solicitacao::find($request->solicitacao_id);
 
         $modelo_animal = ModeloAnimal::create($request->all());
