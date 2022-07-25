@@ -86,23 +86,25 @@ class SolicitacaoController extends Controller
 
     public function criar_colaborador(Request $request)
     {
+
         $solicitacao = Solicitacao::find($request->solicitacao_id);
+        if(isset($request->colaborador)) {
+            foreach ($request->colaborador as $colab){
+                $colaborador = new Colaborador();
+                $colaborador->nome = $colab['nome'];
+                $colaborador->instituicao_id = $colab['instituicao_id'];
+                $colaborador->nivel_academico = $colab['nivel_academico'];
+                $colaborador->experiencia_previa = $colab['experiencia_previa'];
+                $colaborador->treinamento = $colab['treinamento'];
+                $colaborador->responsavel_id = $solicitacao->responsavel->id;
+                $colaborador->save();
 
-        for ($i = 0; $i < count($request->nome); $i++) {
-            $colaborador = new Colaborador();
-            $colaborador->nome = $request->nome[$i];
-            $colaborador->instituicao_id = $request->instituicao_id[$i];
-            $colaborador->nivel_academico = $request->nivel_academico[$i];
-            $colaborador->experiencia_previa = $request->experiencia_previa[$i];
-            $colaborador->treinamento = $request->treinamento[$i];
-            $colaborador->responsavel_id = $solicitacao->responsavel->id;
-            $colaborador->save();
-
-            $contato = new Contato();
-            $contato->email = $request->email[$i];
-            $contato->telefone = $request->telefone[$i];
-            $contato->colaborador_id = $colaborador->id;
-            $contato->save();
+                $contato = new Contato();
+                $contato->email = $colab['email'];
+                $contato->telefone = $colab['telefone'];
+                $contato->colaborador_id = $colaborador->id;
+                $contato->save();
+            }
         }
 
         $solicitacao->estado_pagina = 3;
