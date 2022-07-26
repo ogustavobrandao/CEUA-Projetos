@@ -30,6 +30,13 @@ class SolicitacaoController extends Controller
         return view('solicitante.formulario', compact('solicitacao', 'instituicaos'));
     }
 
+    public function index_solicitante()
+    {
+        $solicitante = Auth::user();
+        $solicitacoes = Solicitacao::where('user_id', $solicitante->id)->get();
+        return view('solicitante.minhas_solicitacoes', compact('solicitacoes'));
+    }
+
     public function inicio(Request $request)
     {
         $solicitacao = new Solicitacao();

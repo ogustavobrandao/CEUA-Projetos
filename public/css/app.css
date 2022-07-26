@@ -11002,3 +11002,16 @@ label{
     margin-top: 10px;
     margin-bottom: 10px;
 }
+
+.center {
+    margin: auto;
+    width: 50%;
+    padding: 10px;
+}
+
+.search-input{
+    height: 70%;
+    width: 90%;
+    border: none;
+    outline: none;
+}

@@ -30,7 +30,7 @@
                 </div>
                 <div class="col-4">
                     <div class="text-center p-5 shadow caixaSelecao" style="background-color: #143BC2">
-                        <a href="#">
+                        <a href="{{route('solicitacao.solicitante.index')}}">
                             <div class="text-center">
                                 <img class="pb-3" src="images/vertical_split.svg" height="120px">
                             </div>
