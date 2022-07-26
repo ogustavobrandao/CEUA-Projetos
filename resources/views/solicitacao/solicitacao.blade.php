@@ -21,7 +21,8 @@
 
             <div class="col-sm-4">
                 <label for="inicio">Inicio:</label>
-                <input class="form-control @error('inicio') is-invalid @enderror" id="inicio" type="datetime-local" name="inicio" value="{{ old('inicio') }}"
+                <input class="form-control @error('inicio') is-invalid @enderror" id="inicio" type="datetime-local" name="inicio"
+                       value="@if($solicitacao->inicio != null) {{$solicitacao->inicio}} @else {{ old('inicio') }} @endif"
                        required
                        autocomplete="inicio" autofocus>
                 @error('inicio')
@@ -32,8 +33,10 @@
             </div>
 
             <div class="col-sm-4">
+
                 <label for="inicio">Fim:</label>
-                <input class="form-control @error('fim') is-invalid @enderror" id="fim" type="datetime-local" name="fim" value="{{ old('fim') }}"
+                <input class="form-control @error('fim') is-invalid @enderror" id="fim" type="date" name="fim"
+                       value="@if($solicitacao->fim != null)06-06-2018 @else {{ old('fim') }} @endif"
                        required
                        autocomplete="fim" autofocus>
                 @error('fim')
@@ -52,7 +55,8 @@
         <div class="row">
             <div class="col-sm-4">
                 <label for="titulo_pt">Título em Português:</label>
-                <input class="form-control @error('titulo_pt') is-invalid @enderror" id="titulo_pt" type="text" name="titulo_pt" value="{{ old('titulo_pt') }}"
+                <input class="form-control @error('titulo_pt') is-invalid @enderror" id="titulo_pt" type="text" name="titulo_pt"
+                       value="@if($solicitacao->titulo_pt != null) {{$solicitacao->titulo_pt}} @else {{ old('titulo_pt') }} @endif"
                        required
                        autocomplete="titulo_pt" autofocus>
                 @error('titulo_pt')
@@ -64,7 +68,8 @@
 
             <div class="col-sm-4">
                 <label for="titulo_en">Titulo em Inglês (Apenas para projeto):</label>
-                <input class="form-control @error('titulo_en') is-invalid @enderror" id="titulo_en" type="text" name="titulo_en" value="{{ old('titulo_en') }}"
+                <input class="form-control @error('titulo_en') is-invalid @enderror" id="titulo_en" type="text" name="titulo_en"
+                       value="@if($solicitacao->titulo_en != null) {{$solicitacao->titulo_en}} @else {{ old('titulo_en') }} @endif"
                        required
                        autocomplete="titulo_en" autofocus>
                 @error('titulo_en')
@@ -78,16 +83,15 @@
                 <label for="area_conhecimento">Área de conhecimento:</label>
                 <select class="form-control" id="area_conhecimento" name="area_conhecimento">
                     <option disabled selected>Selecione a Área de Conhecimento</option>
-                    <option value="ciencias_agrarias">Ciências Agrárias</option>
-                    <option value="ciencias_biologicas">Ciências Biológicas</option>
-                    <option value="ciencias_saude">Ciências da Saúde</option>
-                    <option value="ciencias_exatas_terra">Ciências Exatas e da Terra</option>
-                    <option value="ciencias_humanas">Ciências Humanas</option>
-                    <option value="ciencias_sociais_aplicadas">Ciências Sociais Aplicadas</option>
-                    <option value="engenharias">Engenharias</option>
-                    <option value="linguistica_letras_artes">Linguística,Letras e Artes</option>
-                    <option value="outras">Outras</option>
-
+                    <option value="ciencias_agrarias" @if($solicitacao->area_conhecimento == 'ciencias_agrarias') selected @endif>Ciências Agrárias</option>
+                    <option value="ciencias_biologicas" @if($solicitacao->area_conhecimento == 'ciencias_biologicas') selected @endif>Ciências Biológicas</option>
+                    <option value="ciencias_saude" @if($solicitacao->area_conhecimento == 'ciencias_saude') selected @endif>Ciências da Saúde</option>
+                    <option value="ciencias_exatas_terra" @if($solicitacao->area_conhecimento == 'ciencias_exatas_terra') selected @endif>Ciências Exatas e da Terra</option>
+                    <option value="ciencias_humanas" @if($solicitacao->area_conhecimento == 'ciencias_humanas') selected @endif>Ciências Humanas</option>
+                    <option value="ciencias_sociais_aplicadas" @if($solicitacao->area_conhecimento == 'ciencias_sociais_aplicadas') selected @endif>Ciências Sociais Aplicadas</option>
+                    <option value="engenharias" @if($solicitacao->area_conhecimento == 'engenharias') selected @endif>Engenharias</option>
+                    <option value="linguistica_letras_artes" @if($solicitacao->area_conhecimento == 'linguistica_letras_artes') selected @endif>Linguística,Letras e Artes</option>
+                    <option value="outras" @if($solicitacao->area_conhecimento == 'outras') selected @endif>Outras</option>
                 </select>
             </div>
         </div>
