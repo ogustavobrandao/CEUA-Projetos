@@ -22,7 +22,7 @@
             <div class="col-sm-4">
                 <label for="inicio">Inicio:</label>
                 <input class="form-control @error('inicio') is-invalid @enderror" id="inicio" type="datetime-local" name="inicio"
-                       value="@if($solicitacao->inicio != null) {{$solicitacao->inicio}} @else {{ old('inicio') }} @endif"
+                       @if($solicitacao->inicio != null) value="{{$solicitacao->inicio}}" @else value="{{old('inicio')}}" @endif
                        required
                        autocomplete="inicio" autofocus>
                 @error('inicio')
@@ -35,8 +35,8 @@
             <div class="col-sm-4">
 
                 <label for="inicio">Fim:</label>
-                <input class="form-control @error('fim') is-invalid @enderror" id="fim" type="date" name="fim"
-                       value="@if($solicitacao->fim != null)06-06-2018 @else {{ old('fim') }} @endif"
+                <input class="form-control @error('fim') is-invalid @enderror" id="fim" type="datetime-local" name="fim"
+                       @if($solicitacao->fim != null) value="{{$solicitacao->fim}}" @else value="{{old('fim')}}" @endif
                        required
                        autocomplete="fim" autofocus>
                 @error('fim')
