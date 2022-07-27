@@ -23,7 +23,7 @@ class Unidade extends Model
     }
 
     public function instituicao(){
-        return $this->belongsToMany('App\Models\Instituicao');
+        return $this->belongsTo('App\Models\Instituicao');
     }
 
 }

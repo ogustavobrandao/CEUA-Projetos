@@ -19,7 +19,7 @@ class Departamento extends Model
     }
 
     public function unidade(){
-        return $this->belongsToMany('App\Models\Unidade');
+        return $this->belongsTo('App\Models\Unidade');
     }
 
 }

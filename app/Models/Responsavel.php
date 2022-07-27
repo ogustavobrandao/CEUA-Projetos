@@ -27,7 +27,7 @@ class Responsavel extends Model
     }
 
     public function departamento(){
-        return $this->belongsToMany('App\Models\Departamento');
+        return $this->belongsTo('App\Models\Departamento');
     }
 
     public function solicitacao(){
