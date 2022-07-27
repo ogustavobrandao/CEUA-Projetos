@@ -14,7 +14,7 @@
             <div class="col-sm-12 mt-2">
                 <label for="resumo">Resumo do Projeto de Pesquisa/de Extensão/de Aula Prática/de Treinamento:</label>
                 <textarea class="form-control @error('resumo') is-invalid @enderror" name="resumo" id="resumo" autocomplete="resumo" autofocus
-                          required>@if($solicitacao->resumo != null) {{$solicitacao->resumo}} @else {{old('resumo')}} @endif</textarea>
+                          required>@if(!empty($solicitacao) && $solicitacao->resumo != null){{$solicitacao->resumo}}@else{{old('resumo')}}@endif</textarea>
                 @error('resumo')
                 <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
@@ -25,7 +25,7 @@
             <div class="col-sm-12 mt-2">
                 <label for="objetivos">Objetivos(na íntegra):</label>
                 <textarea class="form-control @error('objetivos') is-invalid @enderror" name="objetivos" id="objetivos" autocomplete="objetivos" autofocus
-                          required>@if($solicitacao->objetivos != null) {{$solicitacao->objetivos}} @else {{old('objetivos')}}@endif</textarea>
+                          required>@if(!empty($solicitacao) && $solicitacao->objetivos != null){{$solicitacao->objetivos}}@else{{old('objetivos')}}@endif</textarea>
                 @error('objetivos')
                 <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
@@ -36,7 +36,7 @@
             <div class="col-sm-12 mt-2">
                 <label for="justificativa">Justificativa:</label>
                 <textarea class="form-control @error('justificativa') is-invalid @enderror" name="justificativa" id="justificativa" autocomplete="justificativa"
-                          autofocus required>@if($solicitacao->justificativa != null) {{$solicitacao->justificativa}} @else {{old('justificativa')}} @endif</textarea>
+                          autofocus required>@if(!empty($solicitacao) && $solicitacao->justificativa != null){{$solicitacao->justificativa}}@else{{old('justificativa')}}@endif</textarea>
                 @error('justificativa')
                 <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
@@ -47,7 +47,7 @@
             <div class="col-sm-12 mt-2">
                 <label for="relevancia">Relevância:</label>
                 <textarea class="form-control @error('relevancia') is-invalid @enderror" name="relevancia" id="relevancia" autocomplete="relevancia" autofocus
-                          required>@if($solicitacao->relevancia != null) {{$solicitacao->relevancia}} @else {{old('relevancia')}} @endif</textarea>
+                          required>@if(!empty($solicitacao) && $solicitacao->relevancia != null){{$solicitacao->relevancia}}@else{{old('relevancia')}}@endif</textarea>
                 @error('relevancia')
                 <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>

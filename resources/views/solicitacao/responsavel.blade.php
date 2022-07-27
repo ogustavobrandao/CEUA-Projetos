@@ -13,7 +13,8 @@
             <h3 class="subtitulo">Informações Pessoais/Contato</h3>
             <div class="col-sm-4">
                 <label for="nome">Nome Completo:</label>
-                <input class="form-control @error('nome') is-invalid @enderror" id="nome" type="text" name="nome" value="{{ old('nome') }}" required autocomplete="nome" autofocus>
+                <input class="form-control @error('nome') is-invalid @enderror" id="nome" type="text" name="nome"
+                       value="@if(!empty($responsavel) && $responsavel->nome != null){{$responsavel->nome}}@else{{old('nome')}}@endif" required autocomplete="nome" autofocus>
                 @error('nome')
                 <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
@@ -23,7 +24,8 @@
 
             <div class="col-sm-4">
                 <label for="nome">E-mail:</label>
-                <input class="form-control @error('email') is-invalid @enderror" id="email" type="email" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                <input class="form-control @error('email') is-invalid @enderror" id="email" type="email" name="email"
+                       value="@if(!empty($responsavel) && $responsavel->contato->email != null){{$responsavel->contato->email}} @else {{old('email')}} @endif" required autocomplete="email" autofocus>
                 @error('email')
                 <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
@@ -33,7 +35,8 @@
 
             <div class="col-sm-4">
                 <label for="telefone">Telefone:</label>
-                <input class="form-control @error('telefone') is-invalid @enderror" id="telefone" type="text" name="telefone" value="{{ old('telefone') }}" required autocomplete="telefone" autofocus>
+                <input class="form-control @error('telefone') is-invalid @enderror" id="telefone" type="text" name="telefone"
+                       value="@if(!empty($responsavel) && $responsavel->contato->telefone != null){{$responsavel->contato->telefone}} @else{{old('telefone') }} @endif" required autocomplete="telefone" autofocus>
                 @error('telefone')
                 <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
@@ -51,7 +54,7 @@
                     <select class="form-control" id="instituicao" name="instituicao_id" onchange="unidades()">
                         <option disabled selected>Selecione uma Instituição</option>
                         @foreach($instituicaos as $instituicao)
-                            <option value="{{$instituicao->id}}">{{$instituicao->nome}}</option>
+                            <option @if(!empty($responsavel) && $responsavel->departamento->unidade->instituicao->id == $instituicao->id) selected @endif value="{{$instituicao->id}}">{{$instituicao->nome}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -60,10 +63,10 @@
                     <label for="vinculo_instituicao">Vinculo:</label>
                     <select class="form-control" id="vinculo_instituicao" name="vinculo_instituicao">
                         <option disabled selected>Selecione um Vinculo</option>
-                        <option @if(old('vinculo_instituicao') == "pesquisador_docente") selected @endif value="pesquisador_docente">Docente/Pesquisador</option>
-                        <option @if(old('vinculo_instituicao') == "pesquisador_ic") selected @endif value="pesquisador_ic">Pesquisador/Iniciação científica</option>
-                        <option @if(old('vinculo_instituicao') == "pesquisador_pos_graduando") selected @endif value="pesquisador_pos_graduando">Pesquisador/Pós - graduando</option>
-                        <option @if(old('vinculo_instituicao') == "pesquisador_tecnico_superior") selected @endif value="pesquisador_tecnico_superior">Pesquisador/Técnico Nível Superior</option>
+                        <option @if(old('vinculo_instituicao') == "pesquisador_docente" || !empty($responsavel) && $responsavel->vinculo_instituicao == "pesquisador_docente") selected @endif value="pesquisador_docente">Docente/Pesquisador</option>
+                        <option @if(old('vinculo_instituicao') == "pesquisador_ic" || !empty($responsavel) && $responsavel->vinculo_instituicao == "pesquisador_ic") selected @endif value="pesquisador_ic">Pesquisador/Iniciação científica</option>
+                        <option @if(old('vinculo_instituicao') == "pesquisador_pos_graduando" || !empty($responsavel) && $responsavel->vinculo_instituicao == "pesquisador_pos_graduando") selected @endif value="pesquisador_pos_graduando">Pesquisador/Pós - graduando</option>
+                        <option @if(old('vinculo_instituicao') == "pesquisador_tecnico_superior" || !empty($responsavel) && $responsavel->vinculo_instituicao == "pesquisador_tecnico_superior") selected @endif value="pesquisador_tecnico_superior">Pesquisador/Técnico Nível Superior</option>
                     </select>
                 </div>
             </div>
@@ -72,6 +75,9 @@
                     <label for="unidade">Unidade:</label>
                     <select class="form-control" id="unidade" name="unidade_id" onchange="departamentos()">
                         <option disabled selected>Selecione uma Unidade</option>
+                        @if(isset($responsavel))
+                            <option value="{{$responsavel->departamento->unidade->id}}" selected>{{$responsavel->departamento->unidade->nome}}</option>
+                        @endif
                     </select>
                 </div>
 
@@ -79,6 +85,9 @@
                     <label for="departamento">Departamento:</label>
                     <select class="form-control" id="departamento" name="departamento_id">
                         <option disabled selected>Selecione um Departamento</option>
+                        @if(isset($responsavel))
+                            <option value="{{$responsavel->departamento->id}}" selected>{{$responsavel->departamento->nome}}</option>
+                        @endif
                     </select>
                 </div>
             </div>
@@ -91,11 +100,11 @@
                 <label for="experiencia">Experiência Previa:</label>
                 <div class="row ml-1">
                     <div class="col-sm-2">
-                        <input class="form-check-input" type="radio" name="experiencia_previa" id="experiencia_previa">
+                        <input class="form-check-input" type="radio" name="experiencia_previa" id="experiencia_previa" @if(!empty($responsavel) && $responsavel->experiencia_previa == true) checked @endif>
                         <label class="form-check-label" for="experiencia_previa">Sim</label>
                     </div>
                     <div class="col-sm-2">
-                        <input class="form-check-input" type="radio" name="experiencia_previa" id="experiencia_previa" checked>
+                        <input class="form-check-input" type="radio" name="experiencia_previa" id="experiencia_previa" @if(!empty($responsavel) && $responsavel->experiencia_previa == false || empty($responsavel)) checked @endif>
                         <label class="form-check-label" for="experiencia_previa">
                             Não
                         </label>
@@ -107,11 +116,11 @@
                 <label for="experiencia">Treinamento:</label>
                 <div class="row ml-1">
                     <div class="col-sm-2">
-                        <input class="form-check-input" type="radio" name="treinamento" id="treinamento">
+                        <input class="form-check-input" type="radio" name="treinamento" id="treinamento" @if(!empty($responsavel) && $responsavel->treinamento == true) checked @endif>
                         <label class="form-check-label" for="treinamento">Sim</label>
                     </div>
                     <div class="col-sm-2">
-                        <input class="form-check-input" type="radio" name="treinamento" id="treinamento" checked>
+                        <input class="form-check-input" type="radio" name="treinamento" id="treinamento" @if(!empty($responsavel) && $responsavel->treinamento == false || $responsavel == null) checked @endif>
                         <label class="form-check-label" for="treinamento">
                             Não
                         </label>
