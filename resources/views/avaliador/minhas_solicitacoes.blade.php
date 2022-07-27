@@ -43,7 +43,7 @@
                 "info": "Exibindo página _PAGE_ de _PAGES_",
                 "search": "Pesquisar",
                 "infoEmpty": "",
-                "zeroRecords": "Nenhuma Solicitacao Criada.",
+                "zeroRecords": "Você não possui solicitações.",
                 "paginate": {
                     "previous": "Anterior",
                     "next": "Próximo"
