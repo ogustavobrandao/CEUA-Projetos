@@ -105,5 +105,17 @@
         );
     }
 
+
+    @foreach($colaboradores as $key => $colab)
+        criarColaborador();
+        $('#colab'+{{$key+1}}).find('#nome').val("{{$colab->nome}}");
+        $('#colab'+{{$key+1}}).find('#email').val("{{$colab->contato->email}}");
+        $('#colab'+{{$key+1}}).find('#telefone').val("{{$colab->contato->telefone}}");
+        $('#colab'+{{$key+1}}).find('#nivel_academico').val("{{$colab->nivel_academico}}");
+        $('#colab'+{{$key+1}}).find('#treinamento').val("{{$colab->treinamento}}");
+        $('#colab'+{{$key+1}}).find('#experiencia_previa').val("{{$colab->experiencia_previa}}");
+        $('#colab'+{{$key+1}}).find('#instituicao').val("{{$colab->instituicao->id}}");
+    @endforeach
+
 </script>
 
