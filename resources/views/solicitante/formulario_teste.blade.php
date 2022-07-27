@@ -1,5 +1,5 @@
 @extends('layouts.formulario')
 
 @section('content')
-        @include('solicitacao.responsavel')
+        @include('solicitacao.procedimento')
 @endsection
