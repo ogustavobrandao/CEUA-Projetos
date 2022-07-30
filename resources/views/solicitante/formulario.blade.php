@@ -64,6 +64,7 @@
 
     @if(isset($disabled))
         <script>
+            $('form').attr('action', 'numdeuné')
             $('form').find('input, textarea, select, button').attr('disabled', 'disabled');
         </script>
     @endif

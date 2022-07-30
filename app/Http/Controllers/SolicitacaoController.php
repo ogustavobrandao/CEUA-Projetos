@@ -81,6 +81,16 @@ class SolicitacaoController extends Controller
             return view('solicitante.formulario', compact('solicitacao', 'instituicaos'));
     }
 
+    public function editForm($solicitacao_id)
+    {
+        $solicitacao = Solicitacao::find($solicitacao_id);
+
+        $solicitacao->estado_pagina = 0;
+        $solicitacao->update();
+
+        return redirect(route('solicitacao.form', ['solicitacao_id' => $solicitacao_id]));
+    }
+
     public function index_solicitante()
     {
         $solicitante = Auth::user();
