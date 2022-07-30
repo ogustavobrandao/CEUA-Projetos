@@ -3,7 +3,7 @@
 @section('content')
     <div class="row mb-4 borda-bottom">
         <div class="col-md-12">
-            <h3 class="text-center titulo">Minhas Solicitações</h3>
+            <h3 class="text-center titulo">Minhas Avaliações</h3>
         </div>
     </div>
 
@@ -18,17 +18,17 @@
         </tr>
         </thead>
         <tbody>
-        @foreach($solicitacoes as $solicitacao)
+        @foreach($avaliacoes as $avaliacao)
             <tr>
-                <td class="text-center">{{$solicitacao->user->name}}</td>
-                <td class="text-center">{{$solicitacao->titulo_pt}}</td>
-                <td class="text-center">{{$solicitacao->tipo}}</td>
-                <td class="text-center">@if($solicitacao->estado_pagina == 'nao_avaliado')Não Avaliado @else Solicitação em Andamento @endif</td>
+                <td class="text-center">{{$avaliacao->solicitacao->user->name}}</td>
+                <td class="text-center">{{$avaliacao->solicitacao->titulo_pt}}</td>
+                <td class="text-center">{{$avaliacao->solicitacao->tipo}}</td>
+                <td class="text-center">@if($avaliacao->status == 'nao_realizado')Não Avaliado @elseif($avaliacao->status == 'aprovado') Aprovado @else Recusado @endif</td>
                 <td class="text-center">
-                    @if($solicitacao->estado_pagina != 'nao_avaliado')
-                        <a class="btn" href="{{route('solicitacao.form', ['solicitacao_id' => $solicitacao->id])}}" style="border-color: orangered; background-color: #c0ddf6" title="Continuar Preenchendo Solicitação."><i class="fa-regular fa-file-lines" style="color: orangered"></i></a>
+                    @if($avaliacao->status == 'nao_realizado')
+                        <a href="#">Avaliar</a>
                     @else
-                    <a href="{{route('solicitacao.edit.form', ['solicitacao_id' => $solicitacao->id])}}"><i class="fa-solid fa-up-right-from-square"></i></a>
+                        <a href="#">Editar</a>
                     @endif
                 </td>
             </tr>
