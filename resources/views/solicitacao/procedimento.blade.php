@@ -5,7 +5,7 @@
         </div>
     </div>
 
-    <form method="POST" action="{{route('solicitacao.procedimento.criar')}}" enctype="multipart/form-data">
+    <form id="form" method="POST" action="{{route('solicitacao.procedimento.criar')}}" enctype="multipart/form-data">
         @csrf
         <input type="hidden" name="solicitacao_id" value="{{$solicitacao->id}}">
         <div class="row col-md-12">

@@ -52,6 +52,10 @@ Route::get('/solicitacao/index_admin', [App\Http\Controllers\SolicitacaoControll
 Route::post('/solicitacao/atribuir_avaliador', [App\Http\Controllers\AvaliadorController::class, 'atribuir'])->name('avaliador.atribuir');
 Route::get('/solicitacao/remover_avaliador/{solicitacao_id}', [App\Http\Controllers\AvaliadorController::class, 'remover'])->name('avaliador.remover');
 
+Route::post('/avaliador/aprovar', [App\Http\Controllers\SolicitacaoController::class, 'aprovarSolicitacao'])->name('avaliador.solicitacao.aprovar');
+Route::post('/avaliador/reprovar', [App\Http\Controllers\SolicitacaoController::class, 'reprovarSolicitacao'])->name('avaliador.solicitacao.reprovar');
+
+
 
 Route::post('/unidades',[App\Http\Controllers\UnidadeController::class, 'consulta'])->name('unidade.consulta');
 Route::post('/departamentos',[App\Http\Controllers\DepartamentoController::class, 'consulta'])->name('departamento.consulta');

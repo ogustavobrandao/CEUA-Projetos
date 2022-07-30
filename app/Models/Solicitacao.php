@@ -23,8 +23,8 @@ class Solicitacao extends Model
         'usuario_id',
     ];
 
-    public function avaliacoes(){
-        return $this->hasMany('App\Models\Avaliacao');
+    public function avaliacao(){
+        return $this->hasOne('App\Models\Avaliacao');
     }
 
     public function responsavel(){

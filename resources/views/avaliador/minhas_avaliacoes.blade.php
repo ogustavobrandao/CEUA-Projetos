@@ -23,10 +23,10 @@
                 <td class="text-center">{{$avaliacao->solicitacao->user->name}}</td>
                 <td class="text-center">{{$avaliacao->solicitacao->titulo_pt}}</td>
                 <td class="text-center">{{$avaliacao->solicitacao->tipo}}</td>
-                <td class="text-center">@if($avaliacao->status == 'nao_realizado')Não Avaliado @elseif($avaliacao->status == 'aprovado') Aprovado @else Recusado @endif</td>
+                <td class="text-center">@if($avaliacao->status == 'nao_realizado')Não Avaliado @elseif($avaliacao->status == 'Aprovada') Aprovada @else Recusada @endif</td>
                 <td class="text-center">
                     @if($avaliacao->status == 'nao_realizado')
-                        <a href="#">Avaliar</a>
+                        <a href="{{route('solicitacao.form', ['solicitacao_id' => $avaliacao->solicitacao->id])}}">Avaliar</a>
                     @else
                         <a href="#">Editar</a>
                     @endif

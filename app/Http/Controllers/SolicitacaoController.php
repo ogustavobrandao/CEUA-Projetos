@@ -93,6 +93,28 @@ class SolicitacaoController extends Controller
         return redirect(route('solicitacao.form', ['solicitacao_id' => $solicitacao_id]));
     }
 
+    public function aprovarSolicitacao(Request $request)
+    {
+        $solicitacao = Solicitacao::find($request->solicitacao_id);
+        $avaliacao = $solicitacao->avaliacao;
+        $avaliacao->status = 'Aprovada';
+        $avaliacao->parecer = 'Solicitação Aprovada sem Pendências';
+        $avaliacao->update();
+
+        return redirect(route('solicitacao.avaliador.index'));
+    }
+
+    public function reprovarSolicitacao(Request $request)
+    {
+        $solicitacao = Solicitacao::find($request->solicitacao_id);
+        $avaliacao = $solicitacao->avaliacao;
+        $avaliacao->status = 'Reprovada';
+        $avaliacao->parecer = $request->parecer;
+        $avaliacao->update();
+
+        return redirect(route('solicitacao.avaliador.index'));
+    }
+
     public function index_solicitante()
     {
         $solicitante = Auth::user();
@@ -350,10 +372,11 @@ class SolicitacaoController extends Controller
         return redirect(route('home'));
     }
 
-    public function index_admin(){
-        $solicitacoes = Solicitacao::where('estado_pagina','nao_avaliado')->orWhere('estado_pagina','avaliado')->orWhere('estado_pagina','avaliando')->get();
-        $avaliadores =  User::where('tipo_usuario_id', '2')->get();
-        return view('admin.solicitacoes', compact('solicitacoes','avaliadores'));
+    public function index_admin()
+    {
+        $solicitacoes = Solicitacao::where('estado_pagina', 'nao_avaliado')->orWhere('estado_pagina', 'avaliado')->orWhere('estado_pagina', 'avaliando')->get();
+        $avaliadores = User::where('tipo_usuario_id', '2')->get();
+        return view('admin.solicitacoes', compact('solicitacoes', 'avaliadores'));
 
     }
 }
