@@ -23,11 +23,11 @@ class Colaborador extends Model
     }
 
     public function responsavel(){
-        return $this->belongsToMany('App\Models\Responsavel');
+        return $this->belongsTo('App\Models\Responsavel');
     }
 
     public function instituicao(){
-        return $this->belongsToMany('App\Models\Instituicao');
+        return $this->belongsTo('App\Models\Instituicao');
     }
 
 }

@@ -46,11 +46,11 @@ class User extends Authenticatable
     ];
 
     public function tipoUsuario(){
-        return $this->belongsToMany('App\Models\TipoUsuario');
+        return $this->belongsTo('App\Models\TipoUsuario');
     }
 
     public function unidade(){
-        return $this->belongsToMany('App\Models\Unidade');
+        return $this->belongsTo('App\Models\Unidade');
     }
 
     public function avaliacoes(){
