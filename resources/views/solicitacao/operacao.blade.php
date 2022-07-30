@@ -41,7 +41,7 @@
                         <label class="form-check-label" for="observacao_recuperacao">Sim</label>
                     </div>
                     <div class="col-sm-2">
-                        <input class="form-check-input" type="radio" name="observacao_recuperacao" id="observacao_recuperacao" value="false" @if($operacao != null || !($operacao->observacao_recuperacao)) checked @endif>
+                        <input class="form-check-input" type="radio" name="observacao_recuperacao" id="observacao_recuperacao" value="false" @if($operacao == null || ($operacao != null && !($operacao->observacao_recuperacao))) checked @endif>
                         <label class="form-check-label" for="observacao_recuperacao">
                             Não
                         </label>
@@ -57,7 +57,7 @@
                         <label class="form-check-label" for="analgesia_recuperacao">Sim</label>
                     </div>
                     <div class="col-sm-2">
-                        <input class="form-check-input" type="radio" name="analgesia_recuperacao" id="analgesia_recuperacao" value="false" @if($operacao != null || !($operacao->analgesia_recuperacao)) checked @endif>
+                        <input class="form-check-input" type="radio" name="analgesia_recuperacao" id="analgesia_recuperacao" value="false" @if($operacao == null || ($operacao != null || !($operacao->analgesia_recuperacao))) checked @endif>
                         <label class="form-check-label" for="analgesia_recuperacao">
                             Não
                         </label>
@@ -73,7 +73,7 @@
                         <label class="form-check-label" for="outros_cuidados_recuperacao">Sim</label>
                     </div>
                     <div class="col-sm-2">
-                        <input class="form-check-input" type="radio" name="outros_cuidados_recuperacao" id="outros_cuidados_recuperacao" value="false" @if($operacao != null || !($operacao->outros_cuidados_recuperacao)) checked @endif>
+                        <input class="form-check-input" type="radio" name="outros_cuidados_recuperacao" id="outros_cuidados_recuperacao" value="false" @if($operacao == null || ($operacao != null || !($operacao->outros_cuidados_recuperacao))) checked @endif>
                         <label class="form-check-label" for="outros_cuidados_recuperacao">
                             Não
                         </label>

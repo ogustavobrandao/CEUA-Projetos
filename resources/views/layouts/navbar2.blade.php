@@ -15,6 +15,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('instituicao.index') }}" style="color: black;">{{ __('Instituições') }}</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('solicitacao.admin.index')}}" style="color: black;">{{ __('Solicitações') }}</a>
+                    </li>
                 @endif
             @endauth
         </ul>

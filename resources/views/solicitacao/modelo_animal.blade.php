@@ -71,7 +71,7 @@
                             <label class="form-check-label" for="geneticamente_modificado">Sim</label>
                         </div>
                         <div class="col-sm-2">
-                            <input class="form-check-input" type="radio" name="geneticamente_modificado" id="geneticamente_modificado" value="false" @if($modelo_animal != null || !($modelo_animal->geneticamente_modificado) ) checked @endif>
+                            <input class="form-check-input" type="radio" name="geneticamente_modificado" id="geneticamente_modificado" value="false" @if($modelo_animal == null || ($modelo_animal != null && !($modelo_animal->geneticamente_modificado))) checked @endif>
                             <label class="form-check-label" for="geneticamente_modificado">
                                 Não
                             </label>

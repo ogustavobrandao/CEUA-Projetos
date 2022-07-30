@@ -15,12 +15,12 @@ return new class extends Migration
     {
         Schema::create('avaliacaos', function (Blueprint $table) {
             $table->id();
-            $table->text('parecer');
+            $table->text('parecer')->nullable();
             $table->string('status');
-            $table->unsignedBigInteger('usuario_id');
+            $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('solicitacao_id');
 
-            $table->foreign('usuario_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('solicitacao_id')->references('id')->on('solicitacaos')->onDelete('cascade');
             $table->timestamps();
         });

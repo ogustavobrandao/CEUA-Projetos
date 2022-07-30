@@ -47,6 +47,9 @@ Route::post('/solicitacao/criar_solicitacao_fim', [App\Http\Controllers\Solicita
 
 Route::get('/solicitacao/index_solicitante', [App\Http\Controllers\SolicitacaoController::class, 'index_solicitante'])->name('solicitacao.solicitante.index');
 Route::get('/solicitacao/index_avaliador', [App\Http\Controllers\SolicitacaoController::class, 'index_avaliador'])->name('solicitacao.avaliador.index');
+Route::get('/solicitacao/index_admin', [App\Http\Controllers\SolicitacaoController::class, 'index_admin'])->name('solicitacao.admin.index');
+Route::post('/solicitacao/atribuir_avaliador', [App\Http\Controllers\AvaliadorController::class, 'atribuir'])->name('avaliador.atribuir');
+Route::get('/solicitacao/remover_avaliador/{solicitacao_id}', [App\Http\Controllers\AvaliadorController::class, 'remover'])->name('avaliador.remover');
 
 
 Route::post('/unidades',[App\Http\Controllers\UnidadeController::class, 'consulta'])->name('unidade.consulta');

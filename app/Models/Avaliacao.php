@@ -12,7 +12,7 @@ class Avaliacao extends Model
     protected $fillable = [
         'parecer',
         'status',
-        'usuario_id',
+        'user_id',
         'solicitacao_id',
     ];
 

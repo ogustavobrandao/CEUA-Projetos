@@ -16,6 +16,7 @@ use App\Models\Procedimento;
 use App\Models\Responsavel;
 use App\Models\Resultado;
 use App\Models\Solicitacao;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -322,4 +323,10 @@ class SolicitacaoController extends Controller
         return redirect(route('home'));
     }
 
+    public function index_admin(){
+        $solicitacoes = Solicitacao::where('estado_pagina','nao_avaliado')->orWhere('estado_pagina','avaliado')->orWhere('estado_pagina','avaliando')->get();
+        $avaliadores =  User::where('tipo_usuario_id', '2')->get();
+        return view('admin.solicitacoes', compact('solicitacoes','avaliadores'));
+
+    }
 }
