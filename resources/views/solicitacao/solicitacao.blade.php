@@ -5,7 +5,7 @@
         </div>
     </div>
 
-    <form method="POST" action="{{route('solicitacao.criar')}}">
+    <form id="form" method="POST" action="{{route('solicitacao.criar')}}">
         @csrf
         <input type="hidden" name="solicitacao_id" value="{{$solicitacao->id}}">
         <div class="row">
@@ -88,9 +88,11 @@
                     <option value="ciencias_saude" @if(!empty($solicitacao) && $solicitacao->area_conhecimento == 'ciencias_saude') selected @endif>Ciências da Saúde</option>
                     <option value="ciencias_exatas_terra" @if(!empty($solicitacao) && $solicitacao->area_conhecimento == 'ciencias_exatas_terra') selected @endif>Ciências Exatas e da Terra</option>
                     <option value="ciencias_humanas" @if(!empty($solicitacao) && $solicitacao->area_conhecimento == 'ciencias_humanas') selected @endif>Ciências Humanas</option>
-                    <option value="ciencias_sociais_aplicadas" @if(!empty($solicitacao) && $solicitacao->area_conhecimento == 'ciencias_sociais_aplicadas') selected @endif>Ciências Sociais Aplicadas</option>
+                    <option value="ciencias_sociais_aplicadas" @if(!empty($solicitacao) && $solicitacao->area_conhecimento == 'ciencias_sociais_aplicadas') selected @endif>Ciências Sociais Aplicadas
+                    </option>
                     <option value="engenharias" @if(!empty($solicitacao) && $solicitacao->area_conhecimento == 'engenharias') selected @endif>Engenharias</option>
-                    <option value="linguistica_letras_artes" @if(!empty($solicitacao) && $solicitacao->area_conhecimento == 'linguistica_letras_artes') selected @endif>Linguística,Letras e Artes</option>
+                    <option value="linguistica_letras_artes" @if(!empty($solicitacao) && $solicitacao->area_conhecimento == 'linguistica_letras_artes') selected @endif>Linguística,Letras e Artes
+                    </option>
                     <option value="outras" @if(!empty($solicitacao) && $solicitacao->area_conhecimento == 'outras') selected @endif>Outras</option>
                 </select>
             </div>
@@ -100,4 +102,3 @@
     </form>
 
 </div>
-
