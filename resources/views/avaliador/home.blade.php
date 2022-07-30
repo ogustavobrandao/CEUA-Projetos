@@ -1,6 +1,6 @@
 <div class="container">
     <div class="row" style="border-bottom: #131833 2px solid">
-        <span class="titulo text-center">Solicitações</span>
+        <span class="titulo text-center">Avaliações</span>
     </div>
 </div>
 
@@ -17,7 +17,7 @@
                                 <img class="pb-3" src="images/vertical_split.svg" height="120px">
                             </div>
                             <div class="text-center">
-                                <div style="color: white" class="textoCaixa">Minhas Solicitações</div>
+                                <div style="color: white" class="textoCaixa">Minhas Avaliações</div>
                             </div>
                         </a>
                     </div>

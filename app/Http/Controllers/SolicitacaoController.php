@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Models\Avaliacao;
 use App\Models\Colaborador;
 use App\Models\CondicoesAnimal;
 use App\Models\Contato;
@@ -101,9 +102,8 @@ class SolicitacaoController extends Controller
 
     public function index_avaliador()
     {
-        $solicitante = Auth::user();
-        $solicitacoes = Solicitacao::where('user_id', $solicitante->id)->get();
-        return view('avaliador.minhas_solicitacoes', compact('solicitacoes'));
+        $avaliacoes = Avaliacao::where('user_id', Auth::user()->id)->get();
+        return view('avaliador.minhas_avaliacoes', compact('avaliacoes'));
     }
 
     public function inicio(Request $request)
