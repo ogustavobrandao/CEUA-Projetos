@@ -28,7 +28,8 @@
                     @if($solicitacao->estado_pagina != 'nao_avaliado')
                         <a class="btn" href="{{route('solicitacao.form', ['solicitacao_id' => $solicitacao->id])}}" style="border-color: orangered; background-color: #c0ddf6" title="Continuar Preenchendo Solicitação."><i class="fa-regular fa-file-lines" style="color: orangered"></i></a>
                     @else
-                    <a href="#"><i class="fa-solid fa-up-right-from-square"></i></a>@endif
+                    <a href="{{route('solicitacao.edit.form', ['solicitacao_id' => $solicitacao->id])}}"><i class="fa-solid fa-up-right-from-square"></i></a>
+                    @endif
                 </td>
             </tr>
         @endforeach

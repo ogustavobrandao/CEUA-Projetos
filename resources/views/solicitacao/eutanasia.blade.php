@@ -26,8 +26,8 @@
                 </div>
             </div>
 
-            <div id="eutanasia_dados" class="col-sm-12">
-                <div class="col-sm-12 mt-2 pl-0">
+            <div id="eutanasia_dados" class="row">
+                <div class="col-sm-12 mt-2">
                     <label for="descricao">Descrição:</label>
                     <textarea class="form-control @error('descricao') is-invalid @enderror" name="descricao" id="descricao"
                               autocomplete="descricao" autofocus required>@if($eutanasia != null && $eutanasia->descricao != null){{$eutanasia->descricao}}@else{{old('descricao')}}@endif</textarea>
@@ -38,7 +38,7 @@
                     @enderror
                 </div>
 
-                <div class="col-sm-12 mt-2 pl-0">
+                <div class="col-sm-12 mt-2">
                     <label for="metodo">Substância, dose, via:</label>
                     <textarea class="form-control @error('metodo') is-invalid @enderror" name="metodo" id="metodo"
                               autocomplete="metodo" autofocus required>@if($eutanasia != null && $eutanasia->metodo != null){{$eutanasia->metodo}}@else{{old('metodo')}}@endif</textarea>
@@ -49,11 +49,12 @@
                     @enderror
                 </div>
 
-                <div class="col-sm-12 mt-2 pl-0">
+                <div class="col-sm-12 mt-2">
                     <label for="justificativa_metodo">Caso método restrito, justifique:</label>
                     <textarea class="form-control @error('justificativa_metodo') is-invalid @enderror"
                               name="justificativa_metodo" id="justificativa_metodo" autocomplete="justificativa_metodo"
-                              autofocus required>@if($eutanasia != null &&  $eutanasia->justificativa_metodo != null){{$eutanasia->justificativa_metodo}}@else{{old('justificativa_metodo')}}@endif</textarea>
+                              autofocus
+                              required>@if($eutanasia != null &&  $eutanasia->justificativa_metodo != null){{$eutanasia->justificativa_metodo}}@else{{old('justificativa_metodo')}}@endif</textarea>
                     @error('justificativa_metodo')
                     <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -94,12 +95,16 @@
 
 <script>
     $(document).ready(function () {
-        if($("#descricao").val() == ""){
-            $("#eutanasia_nao").attr( 'checked', true );
+        if ($("#descricao").val() == "") {
+            $("#eutanasia_nao").attr('checked', true);
             $("#eutanasia_dados").hide().find('input, textarea').prop('disabled', true);
-        }else{
-            $("#eutanasia_sim").attr( 'checked', true );
+        } else {
+            $("#eutanasia_sim").attr('checked', true);
+            @if(!isset($disabled))
             $("#eutanasia_dados").show().find('input, textarea').prop('disabled', false);
+            @else
+            $("#eutanasia_dados").show().find('input, textarea');
+            @endif
         }
 
         $("#eutanasia_sim").click(function () {

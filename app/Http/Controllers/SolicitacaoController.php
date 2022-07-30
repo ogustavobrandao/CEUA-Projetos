@@ -29,6 +29,23 @@ class SolicitacaoController extends Controller
         $solicitacao = Solicitacao::find($solicitacao_id);
         $instituicaos = Instituicao::all();
 
+        if ($solicitacao->estado_pagina == 'avaliado' || in_array(Auth::user()->tipo_usuario_id, [1, 2])) {
+            $disabled = true;
+            $responsavel = $solicitacao->responsavel;
+            $colaboradores = $solicitacao->responsavel->colaboradores;
+            $modelo_animal = $solicitacao->modeloAnimal;
+            $perfil = $solicitacao->modeloAnimal->perfil;
+            $planejamento = $solicitacao->modeloAnimal->planejamento;
+            $condicoes_animal = $solicitacao->modeloAnimal->condicoesAnimal;
+            $procedimento = $solicitacao->procedimento;
+            $operacao = $solicitacao->procedimento->operacao;
+            $eutanasia = $solicitacao->procedimento->eutanasia;
+            $resultado = $solicitacao->resultado;
+            return view('solicitante.formulario', compact('disabled', 'solicitacao',
+                'instituicaos', 'responsavel', 'colaboradores', 'modelo_animal', 'perfil', 'planejamento',
+                'condicoes_animal', 'procedimento', 'operacao', 'eutanasia', 'resultado'));
+        }
+
         if ($solicitacao->estado_pagina == 1) {
             $responsavel = $solicitacao->responsavel;
             return view('solicitante.formulario', compact('solicitacao', 'instituicaos', 'responsavel'));
@@ -63,6 +80,16 @@ class SolicitacaoController extends Controller
             return view('solicitante.formulario', compact('solicitacao', 'instituicaos', 'resultado'));
         } else
             return view('solicitante.formulario', compact('solicitacao', 'instituicaos'));
+    }
+
+    public function editForm($solicitacao_id)
+    {
+        $solicitacao = Solicitacao::find($solicitacao_id);
+
+        $solicitacao->estado_pagina = 0;
+        $solicitacao->update();
+
+        return redirect(route('solicitacao.form', ['solicitacao_id' => $solicitacao_id]));
     }
 
     public function index_solicitante()
