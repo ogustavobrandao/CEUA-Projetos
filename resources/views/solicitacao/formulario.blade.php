@@ -117,8 +117,10 @@
 
     @if(isset($disabled))
         <script>
-            $('#form').attr('action', 'numdeuné')
-            $('#form').find('input, textarea, select, button').attr('disabled', 'disabled');
+            @for($i = 0; $i < 12; $i++)
+            $('#form{{$i}}').attr('action', 'numdeuné')
+            $('#form{{$i}}').find('input, textarea, select, button').attr('disabled', 'disabled');
+            @endfor
         </script>
     @endif
 @endsection

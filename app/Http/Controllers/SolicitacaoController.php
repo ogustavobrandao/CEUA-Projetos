@@ -42,45 +42,45 @@ class SolicitacaoController extends Controller
             $operacao = $solicitacao->procedimento->operacao;
             $eutanasia = $solicitacao->procedimento->eutanasia;
             $resultado = $solicitacao->resultado;
-            return view('solicitante.formulario', compact('disabled', 'solicitacao',
+            return view('solicitacao.formulario', compact('disabled', 'solicitacao',
                 'instituicaos', 'responsavel', 'colaboradores', 'modelo_animal', 'perfil', 'planejamento',
                 'condicoes_animal', 'procedimento', 'operacao', 'eutanasia', 'resultado'));
         }
 
         if ($solicitacao->estado_pagina == 1) {
             $responsavel = $solicitacao->responsavel;
-            return view('solicitante.formulario', compact('solicitacao', 'instituicaos', 'responsavel'));
+            return view('solicitacao.formulario', compact('solicitacao', 'instituicaos', 'responsavel'));
         } elseif ($solicitacao->estado_pagina == 2) {
             $colaboradores = $solicitacao->responsavel->colaboradores;
-            return view('solicitante.formulario', compact('solicitacao', 'instituicaos', 'colaboradores'));
+            return view('solicitacao.formulario', compact('solicitacao', 'instituicaos', 'colaboradores'));
         } elseif ($solicitacao->estado_pagina == 3) {
-            return view('solicitante.formulario', compact('solicitacao', 'instituicaos'));
+            return view('solicitacao.formulario', compact('solicitacao', 'instituicaos'));
         } elseif ($solicitacao->estado_pagina == 4) {
             $modelo_animal = $solicitacao->modeloAnimal;
-            return view('solicitante.formulario', compact('solicitacao', 'instituicaos', 'modelo_animal'));
+            return view('solicitacao.formulario', compact('solicitacao', 'instituicaos', 'modelo_animal'));
         } elseif ($solicitacao->estado_pagina == 5) {
             $perfil = $solicitacao->modeloAnimal->perfil;
-            return view('solicitante.formulario', compact('solicitacao', 'instituicaos', 'perfil'));
+            return view('solicitacao.formulario', compact('solicitacao', 'instituicaos', 'perfil'));
         } elseif ($solicitacao->estado_pagina == 6) {
             $planejamento = $solicitacao->modeloAnimal->planejamento;
-            return view('solicitante.formulario', compact('solicitacao', 'instituicaos', 'planejamento'));
+            return view('solicitacao.formulario', compact('solicitacao', 'instituicaos', 'planejamento'));
         } elseif ($solicitacao->estado_pagina == 7) {
             $condicoes_animal = $solicitacao->modeloAnimal->condicoesAnimal;
-            return view('solicitante.formulario', compact('solicitacao', 'instituicaos', 'condicoes_animal'));
+            return view('solicitacao.formulario', compact('solicitacao', 'instituicaos', 'condicoes_animal'));
         } elseif ($solicitacao->estado_pagina == 8) {
             $procedimento = $solicitacao->procedimento;
-            return view('solicitante.formulario', compact('solicitacao', 'instituicaos', 'procedimento'));
+            return view('solicitacao.formulario', compact('solicitacao', 'instituicaos', 'procedimento'));
         } elseif ($solicitacao->estado_pagina == 9) {
             $operacao = $solicitacao->procedimento->operacao;
-            return view('solicitante.formulario', compact('solicitacao', 'instituicaos', 'operacao'));
+            return view('solicitacao.formulario', compact('solicitacao', 'instituicaos', 'operacao'));
         } elseif ($solicitacao->estado_pagina == 10) {
             $eutanasia = $solicitacao->procedimento->eutanasia;
-            return view('solicitante.formulario', compact('solicitacao', 'instituicaos', 'eutanasia'));
+            return view('solicitacao.formulario', compact('solicitacao', 'instituicaos', 'eutanasia'));
         } elseif ($solicitacao->estado_pagina == 11) {
             $resultado = $solicitacao->resultado;
-            return view('solicitante.formulario', compact('solicitacao', 'instituicaos', 'resultado'));
+            return view('solicitacao.formulario', compact('solicitacao', 'instituicaos', 'resultado'));
         } else
-            return view('solicitante.formulario', compact('solicitacao', 'instituicaos'));
+            return view('solicitacao.formulario', compact('solicitacao', 'instituicaos'));
     }
 
     public function editForm($solicitacao_id)

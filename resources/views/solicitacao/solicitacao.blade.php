@@ -5,7 +5,7 @@
         </div>
     </div>
 
-    <form id="form" method="POST" action="{{route('solicitacao.criar')}}">
+    <form id="form0" method="POST" action="{{route('solicitacao.criar')}}">
         @csrf
         <input type="hidden" name="solicitacao_id" value="{{$solicitacao->id}}">
         <div class="row">

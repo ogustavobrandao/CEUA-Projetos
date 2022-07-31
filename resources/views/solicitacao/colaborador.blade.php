@@ -10,7 +10,7 @@
         </div>
     </div>
 
-    <form id="form" method="POST" action="{{route('solicitacao.colaborador.criar')}}">
+    <form id="form2" method="POST" action="{{route('solicitacao.colaborador.criar')}}">
         @csrf
         <input type="hidden" name="solicitacao_id" value="{{$solicitacao->id}}">
         <div id="listaColaborador">

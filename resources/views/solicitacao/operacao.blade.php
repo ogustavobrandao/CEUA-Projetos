@@ -5,7 +5,7 @@
         </div>
     </div>
 
-    <form id="form" method="POST" action="{{route('solicitacao.operacao.criar')}}">
+    <form id="form9" method="POST" action="{{route('solicitacao.operacao.criar')}}">
         @csrf
         <input type="hidden" name="solicitacao_id" value="{{$solicitacao->id}}">
         <input type="hidden" name="operacao_flag" @if($operacao != null) value="1" @else value="2" @endif>
