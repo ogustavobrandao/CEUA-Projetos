@@ -6,46 +6,36 @@
 
 <div class="container text-center">
     <div class="row justify-content-center mt-5">
-        <div class="col-1">
-        </div>
-        <div class="col-10">
+        <div class="col-9">
             <div class="row justify-content-center">
-                <div class="col-1">
-                </div>
-                <div class="col-4">
-                    <div class="text-center p-5 shadow caixaSelecao" style="background-color: #131833">
-                        <a data-toggle="modal" data-target="#solicitacaoModal">
-                            <div class="col-md-12 pt-4">
-                                <div class="text-center">
-                                    <img class="pb-3" src="images/solicitacao.svg" height="120px">
-                                </div>
+
+                <div class="col-5">
+                    <a data-toggle="modal" data-target="#solicitacaoModal" href="#">
+                        <div class="text-center p-5 shadow caixaSelecao justify-content-center clickable" style="background-color: #131833">
+                            <div class="pt-4">
+                                <img class="pb-3" src="images/solicitacao.svg" height="120px">
                                 <div class="text-center align-middle">
                                     <div class="textoCaixa">Solicitar</div>
                                 </div>
                             </div>
-                        </a>
-                    </div>
+                        </div>
+                    </a>
                 </div>
+
                 <div class="col-2">
                 </div>
-                <div class="col-4">
-                    <div class="text-center p-5 shadow caixaSelecao" style="background-color: #143BC2">
-                        <a href="{{route('solicitacao.solicitante.index')}}">
-                            <div class="text-center">
+
+                <div class="col-5">
+                    <a href="{{route('solicitacao.solicitante.index')}}">
+                        <div class="text-center p-5 shadow caixaSelecao justify-content-center clickable" style="background-color: #143BC2;">
+                            <div class="pt-4">
                                 <img class="pb-3" src="images/vertical_split.svg" height="120px">
+                                <div style="color: white" class="textoCaixa w-100">Minhas Solicitações</div>
                             </div>
-                            <div class="text-center">
-                                <div style="color: white" class="textoCaixa">Minhas Solicitações</div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-1">
+                        </div>
+                    </a>
                 </div>
             </div>
-        </div>
-        <div class="col-1">
-
         </div>
 
     </div>
@@ -56,10 +46,10 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header text-center pb-0">
-                    <h5 class="modal-title w-100 titulo" id="solicitacaoModalTitle" style="font-size: 24px">Criar Solicitação</h5>
-                    <button type="button" class="close " data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                <h5 class="modal-title w-100 titulo" id="solicitacaoModalTitle" style="font-size: 24px">Criar Solicitação</h5>
+                <button type="button" class="close " data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <form method="POST" action="{{route('solicitacao.inicio')}}">
                 @csrf

@@ -23,12 +23,14 @@
                 <td class="text-center">{{$solicitacao->user->name}}</td>
                 <td class="text-center">{{$solicitacao->titulo_pt}}</td>
                 <td class="text-center">{{$solicitacao->tipo}}</td>
-                <td class="text-center">@if($solicitacao->estado_pagina == 'nao_avaliado')Não Avaliado @else Solicitação em Andamento @endif</td>
+                <td class="text-center">@if($solicitacao->status == 'nao_avaliado')Não Avaliado @else Solicitação em Andamento @endif</td>
                 <td class="text-center">
-                    @if($solicitacao->estado_pagina != 'nao_avaliado')
+                    @if($solicitacao->estado_pagina != 12)
                         <a class="btn" href="{{route('solicitacao.form', ['solicitacao_id' => $solicitacao->id])}}" style="border-color: orangered; background-color: #c0ddf6" title="Continuar Preenchendo Solicitação."><i class="fa-regular fa-file-lines" style="color: orangered"></i></a>
-                    @else
+                    @elseif($solicitacao->status == 'nao_avaliado')
                         <a class="btn" href="{{route('solicitacao.edit.form', ['solicitacao_id' => $solicitacao->id])}}" style="border-color: #1B1C42; background-color: #c0ddf6" title="Editar Solicitação."><i class="fa-solid fa-up-right-from-square"></i></a>
+                    @else
+                        <a class="btn" href="{{route('solicitacao.form', ['solicitacao_id' => $solicitacao->id])}}" style="border-color: #1d68a7; color: #1d68a7; background-color: #c0ddf6" title="Continuar Preenchendo Solicitação."><i class="fa-solid fa-file"></i></a>
                     @endif
                 </td>
             </tr>

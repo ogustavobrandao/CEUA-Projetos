@@ -30,7 +30,7 @@ class SolicitacaoController extends Controller
         $solicitacao = Solicitacao::find($solicitacao_id);
         $instituicaos = Instituicao::all();
 
-        if ($solicitacao->estado_pagina == 'avaliado' || in_array(Auth::user()->tipo_usuario_id, [1, 2])) {
+        if ($solicitacao->status != 'nao_avaliado' || in_array(Auth::user()->tipo_usuario_id, [1, 2])) {
             $disabled = true;
             $responsavel = $solicitacao->responsavel;
             $colaboradores = $solicitacao->responsavel->colaboradores;
@@ -362,11 +362,14 @@ class SolicitacaoController extends Controller
     public function criar_resultado(Request $request)
     {
 
+
+
         $solicitacao = Solicitacao::find($request->solicitacao_id);
 
         Resultado::create($request->all());
 
-        $solicitacao->estado_pagina = 'nao_avaliado';
+        $solicitacao->estado_pagina = 12;
+        $solicitacao->status = 'nao_avaliado';
         $solicitacao->update();
 
         return redirect(route('home'));
@@ -374,9 +377,8 @@ class SolicitacaoController extends Controller
 
     public function index_admin()
     {
-        $solicitacoes = Solicitacao::where('estado_pagina', 'nao_avaliado')->orWhere('estado_pagina', 'avaliado')->orWhere('estado_pagina', 'avaliando')->get();
+        $solicitacoes = Solicitacao::where('status', 'nao_avaliado')->get();
         $avaliadores = User::where('tipo_usuario_id', '2')->get();
         return view('admin.solicitacoes', compact('solicitacoes', 'avaliadores'));
-
     }
 }

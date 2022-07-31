@@ -16,14 +16,14 @@ class AvaliadorController extends Controller
         $avalicao->status = "nao_realizado";
         $avalicao->save();
         $solicitacao = Solicitacao::find($request->solicitacao_id);
-        $solicitacao->estado_pagina = "avaliando";
+        $solicitacao->status = "avaliando";
         $solicitacao->update();
         return redirect()->back();
     }
 
     public function remover($solicitacao_id){
         $solicitacao = Solicitacao::find($solicitacao_id);
-        $solicitacao->estado_pagina = "nao_avaliado";
+        $solicitacao->status = "nao_avaliado";
         $avaliacao = $solicitacao->avaliacoes()->first();
 
         $avaliacao->delete();

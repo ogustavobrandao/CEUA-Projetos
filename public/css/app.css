@@ -10977,9 +10977,14 @@ label{
 }
 
 .caixaSelecao{
+    left: 0;
+    top: 0;
+    position: absolute;
+    z-index: 1;
     border-radius: 1rem;
-    width: 250px;
+    width: 100%;
     height: 300px;
+    max-width: 280px;
 }
 
 .titulo{
