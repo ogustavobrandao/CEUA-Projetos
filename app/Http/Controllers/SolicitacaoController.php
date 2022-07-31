@@ -30,7 +30,7 @@ class SolicitacaoController extends Controller
         $solicitacao = Solicitacao::find($solicitacao_id);
         $instituicaos = Instituicao::all();
 
-        if ($solicitacao->status != 'nao_avaliado' || in_array(Auth::user()->tipo_usuario_id, [1, 2])) {
+        if ($solicitacao->status != null && ($solicitacao->status != 'nao_avaliado' || in_array(Auth::user()->tipo_usuario_id, [1, 2]))) {
             $disabled = true;
             $responsavel = $solicitacao->responsavel;
             $colaboradores = $solicitacao->responsavel->colaboradores;
@@ -323,7 +323,7 @@ class SolicitacaoController extends Controller
     public function criar_operacao(Request $request)
     {
         $solicitacao = Solicitacao::find($request->solicitacao_id);
-        if ($request->cirurgia == 'on') {
+        if ($request->cirurgia == "true") {
             $procedimento = Procedimento::where('solicitacao_id', $solicitacao->id)->first();
 
             $operacao = new Operacao();
@@ -333,7 +333,6 @@ class SolicitacaoController extends Controller
             $operacao->procedimento_id = $procedimento->id;
             $operacao->save();
         }
-
         $solicitacao->estado_pagina = 10;
         $solicitacao->update();
 

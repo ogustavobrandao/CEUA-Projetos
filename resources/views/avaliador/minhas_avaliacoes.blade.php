@@ -44,7 +44,7 @@
                 "info": "Exibindo página _PAGE_ de _PAGES_",
                 "search": "Pesquisar",
                 "infoEmpty": "",
-                "zeroRecords": "Você não possui solicitações.",
+                "zeroRecords": "Você não possui avaliações.",
                 "paginate": {
                     "previous": "Anterior",
                     "next": "Próximo"

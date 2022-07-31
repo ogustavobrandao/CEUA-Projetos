@@ -8,19 +8,17 @@
     <form id="form" method="POST" action="{{route('solicitacao.operacao.criar')}}">
         @csrf
         <input type="hidden" name="solicitacao_id" value="{{$solicitacao->id}}">
-        <input type="hidden" name="operacao_flag" @if($operacao != null) value="1" @else value="2" @endif>
         <div class="row">
             <h3 class="subtitulo">Informações</h3>
-
             <div class="col-sm-6 mt-2">
                 <label for="cirurgia">Cirurgia:</label>
                 <div class="row ml-1">
                     <div class="col-sm-2">
-                        <input class="form-check-input" type="radio" name="cirurgia" id="cirurgia_sim" value="sim" checked>
+                        <input class="form-check-input" type="radio" name="cirurgia" id="cirurgia_sim" value="true">
                         <label class="form-check-label" for="cirurgia">Sim</label>
                     </div>
                     <div class="col-sm-2">
-                        <input class="form-check-input" type="radio" name="cirurgia" id="cirurgia_nao" value="false">
+                        <input class="form-check-input" type="radio" name="cirurgia" id="cirurgia_nao" value="false" checked>
                         <label class="form-check-label" for="cirurgia">
                             Não
                         </label>
@@ -91,12 +89,14 @@
 <script>
     $(document).ready(function(){
 
-        if($("#operacao_flag").val() == 1){
+        console.log("{{isset($operacao)}}");
+
+        if("{{isset($operacao)}}" != ""){
             $("#eutanasia_sim").attr( 'checked', true );
-            $("#eutanasia_dados").show().find('input, textarea').prop('disabled', false);
+            $("#pos_operatorio").show().find('input, textarea').prop('disabled', false);
         }else{
             $("#eutanasia_nao").attr( 'checked', true );
-            $("#eutanasia_dados").hide().find('input, textarea').prop('disabled', true);
+            $("#pos_operatorio").hide().find('input, textarea').prop('disabled', true);
         }
 
         $("#cirurgia_sim").click(function () {

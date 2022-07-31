@@ -14,11 +14,11 @@
                 <label for="eutanasia">Eutanásia:</label>
                 <div class="row ml-1">
                     <div class="col-sm-2">
-                        <input class="form-check-input" type="radio" name="eutanasia" id="eutanasia_sim" value="sim">
+                        <input class="form-check-input" type="radio" name="eutanasia" id="eutanasia_sim" value="true">
                         <label class="form-check-label" for="eutanasia">Sim</label>
                     </div>
                     <div class="col-sm-2">
-                        <input class="form-check-input" type="radio" name="eutanasia" id="eutanasia_nao" value="nao">
+                        <input class="form-check-input" type="radio" name="eutanasia" id="eutanasia_nao" value="false">
                         <label class="form-check-label" for="eutanasia">
                             Não
                         </label>
@@ -95,7 +95,7 @@
 
 <script>
     $(document).ready(function () {
-        if ($("#descricao").val() == "") {
+        if ("{{$eutanasia->descricao}}" == null) {
             $("#eutanasia_nao").attr('checked', true);
             $("#eutanasia_dados").hide().find('input, textarea').prop('disabled', true);
         } else {
