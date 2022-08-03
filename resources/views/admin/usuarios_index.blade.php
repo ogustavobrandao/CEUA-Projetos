@@ -155,6 +155,7 @@
                         @csrf
                         <div class="modal-body">
                             @csrf
+                            <input type="hidden" name="usuario_id" value="{{$usuario->id}}">
                             <div class="row justify-content-center mt-2">
                                 <div class="col-sm-5">
                                     <label for="name">Nome:</label>
