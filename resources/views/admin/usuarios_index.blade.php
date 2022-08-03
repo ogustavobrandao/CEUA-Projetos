@@ -38,10 +38,10 @@
     </table>
 
     <div class="modal fade" id="cadastroModal" tabindex="-1" role="dialog" aria-labelledby="cadastroModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="cadastroModalLabel">Cadastrar Unidade</h5>
+                    <h5 class="modal-title" id="cadastroModalLabel">Cadastrar Usuário</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -51,7 +51,7 @@
                     <div class="modal-body">
                         @csrf
                         <div class="row justify-content-center mt-2">
-                            <div class="col-sm-4">
+                            <div class="col-sm-5">
                                 <label for="name">Nome:</label>
                                 <input class="form-control @error('name') is-invalid @enderror" id="name" type="text" name="name" value="{{ old('name') }}" required autocomplete="name"
                                        autofocus>
@@ -62,7 +62,7 @@
                                 @enderror
                             </div>
 
-                            <div class="col-sm-4">
+                            <div class="col-sm-5">
                                 <label for="email">E-mail:</label>
                                 <input class="form-control @error('email') is-invalid @enderror" id="email" type="email" name="email" value="{{ old('email') }}" required autocomplete="email"
                                        autofocus>
@@ -72,9 +72,11 @@
                                     </span>
                                 @enderror
                             </div>
+                        </div>
 
-                            <div class="col-sm-2">
-                                <label for="name">CPF:</label>
+                        <div class="row justify-content-center mt-2">
+                            <div class="col-sm-5">
+                                <label for="cpf">CPF:</label>
                                 <input class="form-control @error('cpf') is-invalid @enderror" id="cpf" type="text" name="cpf" value="{{ old('cpf') }}" required autocomplete="cpf"
                                        autofocus>
                                 @error('cpf')
@@ -83,23 +85,24 @@
                                     </span>
                                 @enderror
                             </div>
+
+                            <div class="col-sm-5">
+                                <label for="tipo">Tipo do Usuário:</label>
+                                <select class="form-control" name="tipo">
+                                    <option value="1">
+                                        Administrador
+                                    </option>
+                                    <option value="2">
+                                        Avaliador
+                                    </option>
+                                    <option value="3">
+                                        Solicitante
+                                    </option>
+                                </select>
+                            </div>
                         </div>
 
-                        <div class="row justify-content-center mt-2">
-                            <div class="col-sm-5">
-                                <label for="password">{{ __('Senha') }}</label>
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-                                @error('password')
-                                <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                            <div class="col-sm-5">
-                                <label for="password-confirm">{{ __('Confirmar Senha') }}</label>
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                            </div>
-                        </div>
+                        <input id="password" type="hidden" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" value="password">
 
                         <div class="row justify-content-center mt-2">
                             <div class="col-sm-5">

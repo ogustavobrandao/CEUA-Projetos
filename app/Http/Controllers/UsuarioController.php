@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Instituicao;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -10,7 +11,8 @@ class UsuarioController extends Controller
 {
     public function index(){
         $usuarios = User::all();
-        return view('admin.usuarios_index', compact('usuarios'));
+        $instituicaos = Instituicao::all();
+        return view('admin.usuarios_index', compact('usuarios', 'instituicaos'));
     }
 
     public function store(Request $request){
@@ -21,6 +23,7 @@ class UsuarioController extends Controller
         $usuario->password = Hash::make($request->senha);
         $usuario->unidade_id = $request->unidade;
         $usuario->tipo_usuario_id = $request->tipo;
+        $usuario->save();
 
         return redirect(route('usuarios.index'));
     }
