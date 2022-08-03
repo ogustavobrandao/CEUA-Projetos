@@ -211,7 +211,7 @@
                             <div class="row justify-content-center mt-2">
                                 <div class="col-sm-5">
                                     <label for="password">{{ __('Senha') }}</label>
-                                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" value="{{$usuario->password}}">
+                                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
                                     @error('password')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -220,7 +220,7 @@
                                 </div>
                                 <div class="col-sm-5">
                                     <label for="password-confirm">{{ __('Confirmar Senha') }}</label>
-                                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password" value="{{$usuario->password}}">
+                                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
                                 </div>
                             </div>
 
