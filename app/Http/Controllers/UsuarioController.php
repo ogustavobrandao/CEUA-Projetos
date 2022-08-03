@@ -15,10 +15,10 @@ class UsuarioController extends Controller
 
     public function store(Request $request){
         $usuario = new User();
-        $usuario->name = $request->nome;
+        $usuario->name = $request->name;
         $usuario->email = $request->email;
         $usuario->cpf = $request->cpf;
-        $usuario->password = Hash::make($request->senha);
+        $usuario->password = Hash::make($request->password);
         $usuario->unidade_id = $request->unidade;
         $usuario->tipo_usuario_id = $request->tipo;
 
