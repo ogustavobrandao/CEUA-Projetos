@@ -24,6 +24,7 @@ Route::group(['middleware' => 'checkAdministrador'], function () {
 
     Route::get('/usuarios', [App\Http\Controllers\UsuarioController::class, 'index'])->name('usuarios.index');
     Route::post('/usuario/store', [App\Http\Controllers\UsuarioController::class, 'store'])->name('usuario.store');
+    Route::post('/usuario/update', [App\Http\Controllers\UsuarioController::class, 'update'])->name('usuario.update');
 
     Route::get('/instituicao/{instituicao_id}/unidade/index', [App\Http\Controllers\UnidadeController::class, 'index'])->name('unidade.index');
     Route::post('/unidade/store', [App\Http\Controllers\UnidadeController::class, 'store'])->name('unidade.store');
