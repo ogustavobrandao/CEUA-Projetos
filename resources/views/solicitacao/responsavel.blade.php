@@ -51,7 +51,7 @@
             <div class="row">
                 <div class="col-sm-6">
                     <label for="instituicao">Instituicão:</label>
-                    <select class="form-control" id="instituicao" name="instituicao_id" onchange="unidades()">
+                    <select class="form-control" id="instituicao" name="instituicao_id" onchange="unidades('')">
                         <option disabled selected>Selecione uma Instituição</option>
                         @foreach($instituicaos as $instituicao)
                             <option @if(!empty($responsavel) && $responsavel->departamento->unidade->instituicao->id == $instituicao->id) selected @endif value="{{$instituicao->id}}">{{$instituicao->nome}}</option>
