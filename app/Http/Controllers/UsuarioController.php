@@ -28,4 +28,17 @@ class UsuarioController extends Controller
         return redirect(route('usuarios.index'));
     }
 
+    public function update(Request $request){
+        $usuario = User::find($request->usuario_id);
+        $usuario->name = $request->name;
+        $usuario->email = $request->email;
+        $usuario->cpf = $request->cpf;
+        $usuario->password = Hash::make($request->password);
+        $usuario->unidade_id = $request->unidade;
+        $usuario->tipo_usuario_id = $request->tipo;
+        $usuario->update();
+
+        return redirect(route('usuarios.index'));
+    }
+
 }
