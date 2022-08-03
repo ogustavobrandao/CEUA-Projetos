@@ -31,4 +31,13 @@ class AvaliadorController extends Controller
         return redirect()->back();
     }
 
+    public function avaliar(Request $request){
+        $avaliacao = Avaliacao::find($request->id);
+        $avaliacao->parecer = $request->parecer;
+        $avaliacao->status = $request->status;
+        $avaliacao->update();
+
+        return redirect(route('solicitacao.avaliador.index'));
+    }
+
 }
