@@ -29,7 +29,8 @@
 
             <div class="col-sm-6">
                 <label for="linhagem">Linhagem:</label>
-                <input class="form-control @error('linhagem') is-invalid @enderror" id="linhagem" type="text" name="linhagem" @if($perfil !=null && $perfil->linhagem !=null) value="{{$perfil->linhagem}}" @else value="{{old('linhagem')}}" @endif required autocomplete="linhagem"
+                <input class="form-control @error('linhagem') is-invalid @enderror" id="linhagem" type="text" name="linhagem"
+                       @if($perfil !=null && $perfil->linhagem !=null) value="{{$perfil->linhagem}}" @else value="{{old('linhagem')}}" @endif required autocomplete="linhagem"
                        autofocus>
                 @error('linhagem')
                 <span class="invalid-feedback" role="alert">
@@ -43,8 +44,8 @@
         <div class="row mt-2">
             <div class="col-sm-6">
                 <label for="idade">Idade:</label>
-                <input class="form-control @error('idade') is-invalid @enderror" id="idade" type="text" name="idade" @if($perfil !=null && $perfil->idade !=null) value="{{$perfil->idade}}" @else value="{{old('idade')}}" @endif required autocomplete="idade"
-                       autofocus>
+                <input class="form-control @error('idade') is-invalid @enderror" id="idade" type="text" name="idade" @if($perfil !=null && $perfil->idade !=null)
+                value="{{$perfil->idade}}" @else value="{{old('idade')}}" @endif required autocomplete="idade" placeholder="Exemplo1: 30 dias / Exemplo2: 4 anos / etc" autofocus>
                 @error('idade')
                 <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
@@ -54,7 +55,8 @@
 
             <div class="col-sm-6">
                 <label for="peso">Peso Aproximado:</label>
-                <input class="form-control @error('peso') is-invalid @enderror" id="peso" type="text" name="peso" @if($perfil !=null && $perfil->peso !=null) value="{{$perfil->peso}}" @else value="{{old('peso')}}" @endif required autocomplete="peso"
+                <input class="form-control @error('peso') is-invalid @enderror" id="peso" type="text" name="peso" @if($perfil !=null && $perfil->peso !=null) value="{{$perfil->peso}}"
+                       @else value="{{old('peso')}}" @endif required autocomplete="peso"
                        autofocus>
                 @error('peso')
                 <span class="invalid-feedback" role="alert">
@@ -69,7 +71,8 @@
 
             <div class="col-sm-4">
                 <label for="machos">Quantidade de machos:</label>
-                <input class="form-control @error('machos') is-invalid @enderror" id="machos" type="number" name="machos" @if($perfil !=null && $perfil->machos !=null) value="{{$perfil->machos}}" @else value="{{old('machos')}}" @endif required autocomplete="machos"
+                <input class="form-control @error('machos') is-invalid @enderror" id="machos" type="number" name="machos" @if($perfil !=null && $perfil->machos !=null) value="{{$perfil->machos}}"
+                       @else value="{{old('machos')}}" @endif required autocomplete="machos"
                        autofocus>
                 @error('machos')
                 <span class="invalid-feedback" role="alert">
@@ -80,7 +83,8 @@
 
             <div class="col-sm-4">
                 <label for="femeas">Quantidade de fêmeas:</label>
-                <input class="form-control @error('femeas') is-invalid @enderror" id="femeas" type="number" name="femeas" @if($perfil !=null && $perfil->femeas !=null) value="{{$perfil->femeas}}" @else value="{{old('femeas')}}" @endif required autocomplete="femeas"
+                <input class="form-control @error('femeas') is-invalid @enderror" id="femeas" type="number" name="femeas" @if($perfil !=null && $perfil->femeas !=null) value="{{$perfil->femeas}}"
+                       @else value="{{old('femeas')}}" @endif required autocomplete="femeas"
                        autofocus>
                 @error('femeas')
                 <span class="invalid-feedback" role="alert">
@@ -91,7 +95,8 @@
 
             <div class="col-sm-4">
                 <label for="quantidade">Quantidade:</label>
-                <input class="form-control @error('quantidade') is-invalid @enderror" id="quantidade" type="number" name="quantidade" @if($perfil !=null && $perfil->quantidade !=null) value="{{$perfil->quantidade}}" @else value="{{old('quantidade')}}" @endif required autocomplete="quantidade"
+                <input class="form-control @error('quantidade') is-invalid @enderror" id="quantidade" type="number" name="quantidade"
+                       @if($perfil !=null && $perfil->quantidade !=null) value="{{$perfil->quantidade}}" @else value="{{old('quantidade')}}" @endif required autocomplete="quantidade"
                        autofocus>
                 @error('quantidade')
                 <span class="invalid-feedback" role="alert">
