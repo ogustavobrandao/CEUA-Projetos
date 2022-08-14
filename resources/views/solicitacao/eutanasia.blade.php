@@ -93,28 +93,4 @@
     </form>
 </div>
 
-<script>
-    $(document).ready(function () {
-        if ("{{$eutanasia->descricao}}" == null) {
-            $("#eutanasia_nao").attr('checked', true);
-            $("#eutanasia_dados").hide().find('input, textarea').prop('disabled', true);
-        } else {
-            $("#eutanasia_sim").attr('checked', true);
-            @if(!isset($disabled))
-            $("#eutanasia_dados").show().find('input, textarea').prop('disabled', false);
-            @else
-            $("#eutanasia_dados").show().find('input, textarea');
-            @endif
-        }
-
-        $("#eutanasia_sim").click(function () {
-            $("#eutanasia_dados").show().find('input, textarea').prop('disabled', false);
-        });
-
-        $("#eutanasia_nao").click(function () {
-            $("#eutanasia_dados").hide().find('input, textarea').prop('disabled', true);
-        });
-
-    });
-</script>
 

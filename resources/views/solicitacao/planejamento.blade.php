@@ -110,12 +110,22 @@
                 <div class="col-auto mt-3" style="margin-left: -20px">
                     <span style="font-weight: lighter!important; font-size: 14px!important; color: dimgray; text-decoration: none!important;">(1,2,3 ou 4)</span>
                 </div>
-                <div class="col-auto mt-2" style="margin-left: -20px">
-                    <a target="_blank" class="btn btn-primary"
-                       href="https://www2.dti.ufv.br/ceua/scripts/grau-invasividade.html">Consultar Grau</a>
-                </div>
             </div>
             <div class="col-sm-12">
+                <label for="grau_select">Grau de Invasividade:
+                    <a target="_blank"
+                       href="https://www2.dti.ufv.br/ceua/scripts/grau-invasividade.html" title="Informações sobre o grau de invasividade" style="color: darkred">
+                        <i class="fa-solid fa-circle-info fa-lg"></i>
+                    </a>
+                </label>
+                <select class="form-control" name="grau_select" id="grau_select">
+                    <option value="GI1" @if($planejamento != null && $planejamento->grau_select == "GI1") selected @endif>GI1 = Experimentos que causam pouco ou nenhum desconforto ou estresse</option>
+                    <option value="GI2" @if($planejamento != null && $planejamento->grau_select == "GI2") selected @endif>GI2 = Experimentos que causam estresse, desconforto ou dor, de leve intensidade</option>
+                    <option value="GI3" @if($planejamento != null && $planejamento->grau_select == "GI3") selected @endif>GI3 = Experimentos que causam estresse, desconforto ou dor, de intensidade intermediária</option>
+                    <option value="GI4" @if($planejamento != null && $planejamento->grau_select == "GI4") selected @endif>GI4 = Experimentos que causam dor de alta intensidade</option>
+                </select>
+            </div>
+            <div class="col-sm-12 mt-2">
                 <label for="grau_invasividade">Os materiais biológicos destes exemplares serão usados em outros projetos? Quais? Se já aprovado pela CEUA, mencionar o número do protocolo.</label>
                 <textarea class="form-control @error('grau_invasividade') is-invalid @enderror" id="grau_invasividade" name="grau_invasividade" required autocomplete="grau_invasividade"
                           autofocus>@if(!empty($planejamento) && $planejamento->grau_invasividade != null){{$planejamento->grau_invasividade}}@else{{ old('grau_invasividade')}}@endif</textarea>
