@@ -48,8 +48,8 @@
 </html>
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
 <script>
-    function unidades() {
-        var instituicao = $('#instituicao').val();
+    function unidades(id) {
+        var instituicao = $('#instituicao'+id).val();
         $.ajax({
             type: 'POST',
             url: '{{ route('unidade.consulta') }}',
@@ -70,7 +70,7 @@
                 } else {
                     var option = "<option selected disabled>Não possui unidade</option>";
                 }
-                $('#unidade').html(option).show();
+                $('#unidade'+id).html(option).show();
             },
             error: (data) => {
                 console.log(data);

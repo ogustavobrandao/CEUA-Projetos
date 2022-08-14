@@ -107,7 +107,7 @@
                         <div class="row justify-content-center mt-2">
                             <div class="col-sm-5">
                                 <label for="instituicao">{{ __('Instituição') }}</label>
-                                <select class="form-control" id="instituicao" name="instituicao" onchange="unidades()">
+                                <select class="form-control" id="instituicao_create" name="instituicao" onchange="unidades('_create')">
                                     <option selected disabled style="font-weight: bolder">
                                         Selecione uma Instituição
                                     </option>
@@ -124,7 +124,7 @@
                             </div>
                             <div class="col-sm-5">
                                 <label for="unidade">{{ __('Unidade') }}</label>
-                                <select class="form-control" id="unidade" name="unidade">
+                                <select class="form-control" id="unidade_create" name="unidade">
                                     <option selected disabled>
                                         Selecione uma Unidade
                                     </option>
@@ -227,7 +227,7 @@
                             <div class="row justify-content-center mt-2">
                                 <div class="col-sm-5">
                                     <label for="instituicao">{{ __('Instituição') }}</label>
-                                    <select class="form-control" id="instituicao" name="instituicao" onchange="unidades()">
+                                    <select class="form-control" id="instituicao{{$usuario->id}}" name="instituicao" onchange="unidades('{{$usuario->id}}')">
                                         <option selected disabled style="font-weight: bolder">
                                             Selecione uma Instituição
                                         </option>
@@ -244,7 +244,7 @@
                                 </div>
                                 <div class="col-sm-5">
                                     <label for="unidade">{{ __('Unidade') }}</label>
-                                    <select class="form-control" id="unidade" name="unidade">
+                                    <select class="form-control" id="unidade{{$usuario->id}}" name="unidade">
                                         <option selected disabled>
                                             Selecione uma Unidade
                                         </option>

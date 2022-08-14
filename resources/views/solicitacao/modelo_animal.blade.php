@@ -50,7 +50,7 @@
             <div class="row">
                 <div class="col-sm-6">
                     <label for="procedencia">Procedência:</label>
-                    <select class="form-control" id="procedencia" name="procedencia" onchange="unidades()">
+                    <select class="form-control" id="procedencia" name="procedencia">
                         <option disabled selected>Selecione a Procedência</option>
                         <option @if($modelo_animal != null && $modelo_animal->procedencia == "animal_comprado") selected @endif value="animal_comprado">Animal comprado</option>
                         <option @if($modelo_animal != null && $modelo_animal->procedencia == "animal_criacao") selected @endif value="animal_criacao">Animal de criação ou de casuística hospitalar</option>

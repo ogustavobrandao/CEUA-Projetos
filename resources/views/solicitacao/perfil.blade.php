@@ -12,7 +12,7 @@
             <h3 class="subtitulo">Tipo e Característica</h3>
             <div class="col-sm-6">
                 <label for="grupo_animal">Grupo Animal:</label>
-                <select class="form-control" id="grupo_animal" name="grupo_animal" onchange="unidades()">
+                <select class="form-control" id="grupo_animal" name="grupo_animal">
                     <option disabled selected>Selecione o Grupo Animal</option>
                     <option @if($perfil !=null && $perfil->grupo_animal == "anfibio") selected @endif value="anfibio">Anfíbio</option>
                     <option @if($perfil !=null && $perfil->grupo_animal == "ave") selected @endif value="ave">Ave</option>

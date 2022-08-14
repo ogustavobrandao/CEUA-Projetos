@@ -64,7 +64,7 @@
         <div class="row justify-content-center mt-2">
             <div class="col-sm-5">
                 <label for="instituicao">{{ __('Instituição') }}</label>
-                <select class="form-control" id="instituicao" name="instituicao" onchange="unidades()">
+                <select class="form-control" id="instituicao" name="instituicao" onchange="unidades('')">
                     <option selected disabled style="font-weight: bolder">
                         Selecione uma Instituição
                     </option>
