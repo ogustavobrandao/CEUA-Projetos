@@ -35,11 +35,11 @@
                 <label for="observacao_recuperacao">Observação da recuperação:</label>
                 <div class="row ml-1">
                     <div class="col-sm-2">
-                        <input class="form-check-input" type="radio" name="observacao_recuperacao" id="observacao_recuperacao" value="true" @if($operacao != null && $operacao->observacao_recuperacao) checked @endif>
+                        <input class="form-check-input" type="radio" name="observacao_recuperacao" id="observacao_recuperacao_sim" value="true" @if(!empty($operacao) && $operacao->observacao_recuperacao) checked @endif>
                         <label class="form-check-label" for="observacao_recuperacao">Sim</label>
                     </div>
                     <div class="col-sm-2">
-                        <input class="form-check-input" type="radio" name="observacao_recuperacao" id="observacao_recuperacao" value="false" @if($operacao == null || ($operacao != null && !($operacao->observacao_recuperacao))) checked @endif>
+                        <input class="form-check-input" type="radio" name="observacao_recuperacao" id="observacao_recuperacao_nao" value="false" @if(!empty($operacao) && !($operacao->observacao_recuperacao)) checked @endif>
                         <label class="form-check-label" for="observacao_recuperacao">
                             Não
                         </label>
@@ -51,11 +51,11 @@
                 <label for="analgesia_recuperacao">Uso de analgesia:</label>
                 <div class="row ml-1">
                     <div class="col-sm-2">
-                        <input class="form-check-input" type="radio" name="analgesia_recuperacao" id="analgesia_recuperacao" value="true" @if($operacao != null && $operacao->analgesia_recuperacao) checked @endif>
+                        <input class="form-check-input" type="radio" name="analgesia_recuperacao" id="analgesia_recuperacao_sim" value="true" @if(!empty($operacao) && $operacao->analgesia_recuperacao) checked @endif>
                         <label class="form-check-label" for="analgesia_recuperacao">Sim</label>
                     </div>
                     <div class="col-sm-2">
-                        <input class="form-check-input" type="radio" name="analgesia_recuperacao" id="analgesia_recuperacao" value="false" @if($operacao == null || ($operacao != null || !($operacao->analgesia_recuperacao))) checked @endif>
+                        <input class="form-check-input" type="radio" name="analgesia_recuperacao" id="analgesia_recuperacao_nao" value="false" @if(!empty($operacao) && !($operacao->analgesia_recuperacao)) checked @endif>
                         <label class="form-check-label" for="analgesia_recuperacao">
                             Não
                         </label>
@@ -67,11 +67,11 @@
                 <label for="outros_cuidados_recuperacao">Outros cuidados pós-operatórios:</label>
                 <div class="row ml-1">
                     <div class="col-sm-2">
-                        <input class="form-check-input" type="radio" name="outros_cuidados_recuperacao" id="outros_cuidados_recuperacao" value="true" @if($operacao != null && $operacao->outros_cuidados_recuperacao) checked @endif>
+                        <input class="form-check-input" type="radio" name="outros_cuidados_recuperacao" id="outros_cuidados_recuperacao_sim" value="true" @if(!empty($operacao) && $operacao->outros_cuidados_recuperacao) checked @endif>
                         <label class="form-check-label" for="outros_cuidados_recuperacao">Sim</label>
                     </div>
                     <div class="col-sm-2">
-                        <input class="form-check-input" type="radio" name="outros_cuidados_recuperacao" id="outros_cuidados_recuperacao" value="false" @if($operacao == null || ($operacao != null || !($operacao->outros_cuidados_recuperacao))) checked @endif>
+                        <input class="form-check-input" type="radio" name="outros_cuidados_recuperacao" id="outros_cuidados_recuperacao_nao" value="false" @if(!empty($operacao) && !($operacao->outros_cuidados_recuperacao)) checked @endif>
                         <label class="form-check-label" for="outros_cuidados_recuperacao">
                             Não
                         </label>
@@ -89,18 +89,19 @@
 <script>
     $(document).ready(function(){
 
-        console.log("{{isset($operacao)}}");
-
-        if("{{isset($operacao)}}" != ""){
-            $("#eutanasia_sim").attr( 'checked', true );
+        @if(isset($operacao))
+            $("#cirurgia_sim").attr( 'checked', true );
             $("#pos_operatorio").show().find('input, textarea').prop('disabled', false);
-        }else{
-            $("#eutanasia_nao").attr( 'checked', true );
+        @else
+            $("#cirurgia_nao").attr( 'checked', true );
             $("#pos_operatorio").hide().find('input, textarea').prop('disabled', true);
-        }
+        @endif
 
         $("#cirurgia_sim").click(function () {
             $("#pos_operatorio").show().find('input, radio').prop('disabled', false);
+            $("#outros_cuidados_recuperacao_nao").attr( 'checked', true );
+            $("#analgesia_recuperacao_nao").attr( 'checked', true );
+            $("#observacao_recuperacao_nao").attr( 'checked', true );
         });
 
         $("#cirurgia_nao").click(function () {
