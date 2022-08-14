@@ -312,7 +312,11 @@ class SolicitacaoController extends Controller
 
         $solicitacao = Solicitacao::find($request->solicitacao_id);
 
-        Procedimento::create($request->all());
+        if(isset($solicitacao->procedimento)){
+            Procedimento::find($solicitacao->procedimento->id)->update($request->all());
+        }else{
+            Procedimento::create($request->all());
+        }
 
         $solicitacao->estado_pagina = 9;
         $solicitacao->update();
@@ -326,12 +330,19 @@ class SolicitacaoController extends Controller
         if ($request->cirurgia == "true") {
             $procedimento = Procedimento::where('solicitacao_id', $solicitacao->id)->first();
 
-            $operacao = new Operacao();
+            if(isset($solicitacao->procedimento->operacao)){
+                $operacao = $solicitacao->procedimento->operacao;
+            }else{
+                $operacao = new Operacao();
+            }
+
             $operacao->observacao_recuperacao = $request->observacao_recuperacao;
             $operacao->outros_cuidados_recuperacao = $request->outros_cuidados_recuperacao;
             $operacao->analgesia_recuperacao = $request->analgesia_recuperacao;
             $operacao->procedimento_id = $procedimento->id;
             $operacao->save();
+        }elseif(isset($solicitacao->procedimento->operacao)){
+            $solicitacao->procedimento->operacao->delete();
         }
         $solicitacao->estado_pagina = 10;
         $solicitacao->update();
@@ -343,15 +354,26 @@ class SolicitacaoController extends Controller
     {
         $solicitacao = Solicitacao::find($request->solicitacao_id);
 
-        $eutanasia = new Eutanasia();
-        $eutanasia->descricao = $request->descricao;
-        $eutanasia->metodo = $request->metodo;
-        $eutanasia->justificativa_metodo = $request->justificativa_metodo;
+        if(isset($solicitacao->procedimento->eutanasia)){
+            $eutanasia = $solicitacao->procedimento->eutanasia;
+        }else{
+            $eutanasia = new Eutanasia();
+        }
+
+        if($request->eutanasia == "true"){
+            $eutanasia->descricao = $request->descricao;
+            $eutanasia->metodo = $request->metodo;
+            $eutanasia->justificativa_metodo = $request->justificativa_metodo;
+        }else{
+            $eutanasia->descricao = null;
+            $eutanasia->metodo = null;
+            $eutanasia->justificativa_metodo = null;
+        }
+
         $eutanasia->destino = $request->destino;
         $eutanasia->descarte = $request->descarte;
         $eutanasia->procedimento_id = $solicitacao->procedimento->id;
         $eutanasia->save();
-
         $solicitacao->estado_pagina = 11;
         $solicitacao->update();
 
