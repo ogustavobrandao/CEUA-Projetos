@@ -38,7 +38,7 @@ Route::group(['middleware' => 'checkAdministrador'], function () {
 
     Route::get('/solicitacao/index_admin', [App\Http\Controllers\SolicitacaoController::class, 'index_admin'])->name('solicitacao.admin.index');
     Route::post('/solicitacao/atribuir_avaliador', [App\Http\Controllers\AvaliadorController::class, 'atribuir'])->name('avaliador.atribuir');
-    Route::get('/solicitacao/remover_avaliador/{solicitacao_id}', [App\Http\Controllers\AvaliadorController::class, 'remover'])->name('avaliador.remover');
+    Route::post('/solicitacao/remover_avaliador', [App\Http\Controllers\AvaliadorController::class, 'remover'])->name('avaliador.remover');
 });
 
 Route::group(['middleware' => 'checkProprietarioAvaliador'], function () {
