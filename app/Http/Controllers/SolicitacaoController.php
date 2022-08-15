@@ -30,6 +30,12 @@ class SolicitacaoController extends Controller
         $solicitacao = Solicitacao::find($solicitacao_id);
         $instituicaos = Instituicao::all();
 
+        //Alterando o estado máximo da pagina para a navegação no formulário
+        if($solicitacao->estado_pagina > $solicitacao->estado_pagina_maximo){
+            $solicitacao->estado_pagina_maximo = $solicitacao->estado_pagina;
+            $solicitacao->update();
+        }
+
         if ($solicitacao->status != null && ($solicitacao->status != 'nao_avaliado' || in_array(Auth::user()->tipo_usuario_id, [1, 2]))) {
             $disabled = true;
             $responsavel = $solicitacao->responsavel;
@@ -96,7 +102,6 @@ class SolicitacaoController extends Controller
     public function alterarPagina($solicitacao_id, $num_pagina)
     {
         $solicitacao = Solicitacao::find($solicitacao_id);
-
         $solicitacao->estado_pagina = $num_pagina;
         $solicitacao->update();
 
@@ -144,6 +149,7 @@ class SolicitacaoController extends Controller
         $solicitacao->tipo = $request->tipo;
         $solicitacao->user_id = Auth::user()->id;
         $solicitacao->estado_pagina = 0;
+        $solicitacao->estado_pagina_maximo = 0;
 
         $solicitacao->save();
 

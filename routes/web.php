@@ -48,10 +48,9 @@ Route::group(['middleware' => 'checkProprietarioAvaliador'], function () {
 
 Route::group(['middleware' => 'checkProprietario'], function () {
     Route::get('/solicitacao/index_solicitante', [App\Http\Controllers\SolicitacaoController::class, 'index_solicitante'])->name('solicitacao.solicitante.index');
-
     Route::post('/solicitacao/inicio', [App\Http\Controllers\SolicitacaoController::class, 'inicio'])->name('solicitacao.inicio');
     Route::post('/solicitacao/criar', [App\Http\Controllers\SolicitacaoController::class, 'criar'])->name('solicitacao.criar');
-    Route::get('/formulario/edit/{solicitacao_id}', [App\Http\Controllers\SolicitacaoController::class, 'editForm'])->name('solicitacao.edit.form');
+    Route::get('/formularioE/edit/{solicitacao_id}', [App\Http\Controllers\SolicitacaoController::class, 'editForm'])->name('solicitacao.edit.form');
     Route::post('/solicitacao/criar_responsavel', [App\Http\Controllers\SolicitacaoController::class, 'criar_responsavel'])->name('solicitacao.responsavel.criar');
     Route::post('/solicitacao/criar_colaborador', [App\Http\Controllers\SolicitacaoController::class, 'criar_colaborador'])->name('solicitacao.colaborador.criar');
     Route::post('/solicitacao/criar_eutanasia', [App\Http\Controllers\SolicitacaoController::class, 'criar_eutanasia'])->name('solicitacao.eutanasia.criar');
