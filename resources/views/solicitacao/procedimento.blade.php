@@ -19,7 +19,7 @@
                         <label class="form-check-label" for="estresse">Sim</label>
                     </div>
                     <div class="col-sm-2">
-                        <input class="form-check-input" type="radio" name="estresse" id="estresse" value="false" @if(!empty($procedimento) && $procedimento->estresse == false || $procedimento == null) checked @endif>
+                        <input class="form-check-input" type="radio" name="estresse" id="estresse" value="false" @if((!empty($procedimento) && $procedimento->estresse == false) || empty($procedimento)) checked @endif>
                         <label class="form-check-label" for="estresse">
                             Não
                         </label>
@@ -35,7 +35,7 @@
                         <label class="form-check-label" for="anestesico">Sim</label>
                     </div>
                     <div class="col-sm-2">
-                        <input class="form-check-input" type="radio" name="anestesico" id="anestesico" value="false" @if(!empty($procedimento) && $procedimento->anestesico == false || $procedimento == null) checked @endif>
+                        <input class="form-check-input" type="radio" name="anestesico" id="anestesico" value="false" @if((!empty($procedimento) && $procedimento->anestesico == false) || empty($procedimento)) checked @endif>
                         <label class="form-check-label" for="anestesico">
                             Não
                         </label>
@@ -51,7 +51,7 @@
                         <label class="form-check-label" for="relaxante">Sim</label>
                     </div>
                     <div class="col-sm-2">
-                        <input class="form-check-input" type="radio" name="relaxante" id="relaxante" value="false" @if(!empty($procedimento) && $procedimento->relaxante == false || $procedimento == null) checked @endif>
+                        <input class="form-check-input" type="radio" name="relaxante" id="relaxante" value="false" @if((!empty($procedimento) && $procedimento->relaxante == false) || empty($procedimento)) checked @endif>
                         <label class="form-check-label" for="relaxante">
                             Não
                         </label>
@@ -63,11 +63,11 @@
                 <label for="analgesico">Uso de fármacos analgésicos:</label>
                 <div class="row ml-1">
                     <div class="col-sm-2">
-                        <input class="form-check-input" type="radio" name="analgesico" id="analgesico" @if(!empty($procedimento) && $procedimento->anestesico == true) checked @endif>
+                        <input class="form-check-input" type="radio" name="analgesico" id="analgesico" @if(!empty($procedimento) && $procedimento->analgesico == true) checked @endif>
                         <label class="form-check-label" for="analgesico">Sim</label>
                     </div>
                     <div class="col-sm-2">
-                        <input class="form-check-input" type="radio" name="analgesico" id="analgesico" value="false" @if(!empty($procedimento) && $procedimento->anestesico == false || $procedimento == null) checked @endif>
+                        <input class="form-check-input" type="radio" name="analgesico" id="analgesico" value="false" @if((!empty($procedimento) && $procedimento->analgesico == false) || empty($procedimento)) checked @endif>
                         <label class="form-check-label" for="analgesico">
                             Não
                         </label>
@@ -83,7 +83,7 @@
                         <label class="form-check-label" for="imobilizacao">Sim</label>
                     </div>
                     <div class="col-sm-2">
-                        <input class="form-check-input" type="radio" name="imobilizacao" id="imobilizacao" value="false" @if(!empty($procedimento) && $procedimento->imobilizacao == false || $procedimento == null) checked @endif>
+                        <input class="form-check-input" type="radio" name="imobilizacao" id="imobilizacao" value="false" @if((!empty($procedimento) && $procedimento->imobilizacao == false) || empty($procedimento)) checked @endif>
                         <label class="form-check-label" for="imobilizacao">
                             Não
                         </label>
@@ -99,7 +99,7 @@
                         <label class="form-check-label" for="inoculacao_substancia">Sim</label>
                     </div>
                     <div class="col-sm-2">
-                        <input class="form-check-input" type="radio" name="inoculacao_substancia" id="inoculacao_substancia" value="false" @if(!empty($procedimento) && $procedimento->inoculacao_substancia == false || $procedimento == null) checked @endif>
+                        <input class="form-check-input" type="radio" name="inoculacao_substancia" id="inoculacao_substancia" value="false" @if((!empty($procedimento) && $procedimento->inoculacao_substancia == false) || empty($procedimento)) checked @endif>
                         <label class="form-check-label" for="inoculacao_substancia">
                             Não
                         </label>
@@ -115,7 +115,7 @@
                         <label class="form-check-label" for="extracao">Sim</label>
                     </div>
                     <div class="col-sm-2">
-                        <input class="form-check-input" type="radio" name="extracao" id="extracao" value="false" @if(!empty($procedimento) && $procedimento->extracao == false || $procedimento == null) checked @endif>
+                        <input class="form-check-input" type="radio" name="extracao" id="extracao" value="false" @if((!empty($procedimento) && $procedimento->extracao == false) || empty($procedimento)) checked @endif>
                         <label class="form-check-label" for="extracao">
                             Não
                         </label>
@@ -133,7 +133,7 @@
                         <label class="form-check-label" for="jejum">Sim</label>
                     </div>
                     <div class="col-sm-2">
-                        <input class="form-check-input" type="radio" name="jejum" id="jejum" value="false" @if(!empty($procedimento) && $procedimento->jejum == false || $procedimento == null) checked @endif>
+                        <input class="form-check-input" type="radio" name="jejum" id="jejum" value="false" @if((!empty($procedimento) && $procedimento->jejum == false) || empty($procedimento)) checked @endif>
                         <label class="form-check-label" for="jejum">
                             Não
                         </label>
@@ -149,7 +149,7 @@
                         <label class="form-check-label" for="restricao_hidrica">Sim</label>
                     </div>
                     <div class="col-sm-2">
-                        <input class="form-check-input" type="radio" name="restricao_hidrica" id="restricao_hidrica"  value="false" @if(!empty($procedimento) && $procedimento->restricao_hidrica == false || $procedimento == null) checked @endif>
+                        <input class="form-check-input" type="radio" name="restricao_hidrica" id="restricao_hidrica"  value="false" @if((!empty($procedimento) && $procedimento->restricao_hidrica == false) || empty($procedimento)) checked @endif>
                         <label class="form-check-label" for="restricao_hidrica">
                             Não
                         </label>
