@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('titulo_pt')->nullable();
             $table->string('area_conhecimento')->nullable();
             $table->integer('estado_pagina');
+            $table->integer('estado_pagina_maximo');
             $table->string('status')->nullable();
             $table->unsignedBigInteger('user_id');
 

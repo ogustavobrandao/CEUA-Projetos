@@ -93,6 +93,16 @@ class SolicitacaoController extends Controller
         return redirect(route('solicitacao.form', ['solicitacao_id' => $solicitacao_id]));
     }
 
+    public function alterarPagina($solicitacao_id, $num_pagina)
+    {
+        $solicitacao = Solicitacao::find($solicitacao_id);
+
+        $solicitacao->estado_pagina = $num_pagina;
+        $solicitacao->update();
+
+        return redirect(route('solicitacao.form', ['solicitacao_id' => $solicitacao_id]));
+    }
+
     public function aprovarSolicitacao(Request $request)
     {
         $solicitacao = Solicitacao::find($request->solicitacao_id);

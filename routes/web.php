@@ -43,6 +43,7 @@ Route::group(['middleware' => 'checkAdministrador'], function () {
 
 Route::group(['middleware' => 'checkProprietarioAvaliador'], function () {
     Route::get('/formulario/{solicitacao_id}', [App\Http\Controllers\SolicitacaoController::class, 'form'])->name('solicitacao.form');
+    Route::get('/formulario/{solicitacao_id}/{num_pagina}', [App\Http\Controllers\SolicitacaoController::class, 'alterarPagina'])->name('solicitacao.alterar.pagina');
 });
 
 Route::group(['middleware' => 'checkProprietario'], function () {

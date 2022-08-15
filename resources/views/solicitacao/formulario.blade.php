@@ -1,6 +1,17 @@
 @extends('layouts.formulario')
 
 @section('content')
+    <style>
+        .cellNav {
+            width: 8%;
+            color: white;
+        }
+
+        .disabled
+        {
+            color: white !important;
+        }
+    </style>
     @if(isset($disabled))
         <div class="mb-4">
             @include('solicitacao.solicitacao')
@@ -89,29 +100,198 @@
                 </div>
             </div>
         @endif
+
     @elseif($solicitacao->estado_pagina == 0)
+        <nav class="nav w-100 justify-content-between mb-2">
+            <a class="nav-link btn btn-info active cellNav" href="#">1</a>
+            <a class="nav-link btn btn-secondary disabled cellNav" href="#">2</a>
+            <a class="nav-link btn btn-secondary disabled cellNav" href="#">3</a>
+            <a class="nav-link btn btn-secondary disabled cellNav" href="#">4</a>
+            <a class="nav-link btn btn-secondary disabled cellNav" href="#">5</a>
+            <a class="nav-link btn btn-secondary disabled cellNav" href="#">6</a>
+            <a class="nav-link btn btn-secondary disabled cellNav" href="#">7</a>
+            <a class="nav-link btn btn-secondary disabled cellNav" href="#">8</a>
+            <a class="nav-link btn btn-secondary disabled cellNav" href="#">9</a>
+            <a class="nav-link btn btn-secondary disabled cellNav" href="#">10</a>
+            <a class="nav-link btn btn-secondary disabled cellNav" href="#">11</a>
+            <a class="nav-link btn btn-secondary disabled cellNav" href="#">12</a>
+        </nav>
         @include('solicitacao.solicitacao')
     @elseif($solicitacao->estado_pagina == 1)
+        <nav class="nav w-100 justify-content-between mb-2">
+            <a class="nav-link btn btn-info cellNav" href="{{route('solicitacao.alterar.pagina', ['solicitacao_id' => $solicitacao->id, 'num_pagina' => 0])}}">1</a>
+            <a class="nav-link btn btn-info active cellNav" href="#">2</a>
+            <a class="nav-link btn btn-secondary disabled cellNav" href="#">3</a>
+            <a class="nav-link btn btn-secondary disabled cellNav" href="#">4</a>
+            <a class="nav-link btn btn-secondary disabled cellNav" href="#">5</a>
+            <a class="nav-link btn btn-secondary disabled cellNav" href="#">6</a>
+            <a class="nav-link btn btn-secondary disabled cellNav" href="#">7</a>
+            <a class="nav-link btn btn-secondary disabled cellNav" href="#">8</a>
+            <a class="nav-link btn btn-secondary disabled cellNav" href="#">9</a>
+            <a class="nav-link btn btn-secondary disabled cellNav" href="#">10</a>
+            <a class="nav-link btn btn-secondary disabled cellNav" href="#">11</a>
+            <a class="nav-link btn btn-secondary disabled cellNav" href="#">12</a>
+        </nav>
         @include('solicitacao.responsavel')
     @elseif($solicitacao->estado_pagina == 2)
+        <nav class="nav w-100 justify-content-between mb-2">
+            <a class="nav-link btn btn-info cellNav" href="{{route('solicitacao.alterar.pagina', ['solicitacao_id' => $solicitacao->id, 'num_pagina' => 0])}}">1</a>
+            <a class="nav-link btn btn-info cellNav" href="{{route('solicitacao.alterar.pagina', ['solicitacao_id' => $solicitacao->id, 'num_pagina' => 1])}}">2</a>
+            <a class="nav-link btn btn-info active cellNav" href="#">3</a>
+            <a class="nav-link btn btn-secondary disabled cellNav" href="#">4</a>
+            <a class="nav-link btn btn-secondary disabled cellNav" href="#">5</a>
+            <a class="nav-link btn btn-secondary disabled cellNav" href="#">6</a>
+            <a class="nav-link btn btn-secondary disabled cellNav" href="#">7</a>
+            <a class="nav-link btn btn-secondary disabled cellNav" href="#">8</a>
+            <a class="nav-link btn btn-secondary disabled cellNav" href="#">9</a>
+            <a class="nav-link btn btn-secondary disabled cellNav" href="#">10</a>
+            <a class="nav-link btn btn-secondary disabled cellNav" href="#">11</a>
+            <a class="nav-link btn btn-secondary disabled cellNav" href="#">12</a>
+        </nav>
         @include('solicitacao.colaborador')
     @elseif($solicitacao->estado_pagina == 3)
+        <nav class="nav w-100 justify-content-between mb-2">
+            <a class="nav-link btn btn-info cellNav" href="{{route('solicitacao.alterar.pagina', ['solicitacao_id' => $solicitacao->id, 'num_pagina' => 0])}}">1</a>
+            <a class="nav-link btn btn-info cellNav" href="{{route('solicitacao.alterar.pagina', ['solicitacao_id' => $solicitacao->id, 'num_pagina' => 1])}}">2</a>
+            <a class="nav-link btn btn-info cellNav" href="{{route('solicitacao.alterar.pagina', ['solicitacao_id' => $solicitacao->id, 'num_pagina' => 2])}}">3</a>
+            <a class="nav-link btn btn-info active cellNav" href="#">4</a>
+            <a class="nav-link btn btn-secondary disabled cellNav" href="#">5</a>
+            <a class="nav-link btn btn-secondary disabled cellNav" href="#">6</a>
+            <a class="nav-link btn btn-secondary disabled cellNav" href="#">7</a>
+            <a class="nav-link btn btn-secondary disabled cellNav" href="#">8</a>
+            <a class="nav-link btn btn-secondary disabled cellNav" href="#">9</a>
+            <a class="nav-link btn btn-secondary disabled cellNav" href="#">10</a>
+            <a class="nav-link btn btn-secondary disabled cellNav" href="#">11</a>
+            <a class="nav-link btn btn-secondary disabled cellNav" href="#">12</a>
+        </nav>
         @include('solicitacao.solicitacao_fim')
     @elseif($solicitacao->estado_pagina == 4)
+        <nav class="nav w-100 justify-content-between mb-2">
+            <a class="nav-link btn btn-info cellNav" href="{{route('solicitacao.alterar.pagina', ['solicitacao_id' => $solicitacao->id, 'num_pagina' => 0])}}">1</a>
+            <a class="nav-link btn btn-info cellNav" href="{{route('solicitacao.alterar.pagina', ['solicitacao_id' => $solicitacao->id, 'num_pagina' => 1])}}">2</a>
+            <a class="nav-link btn btn-info cellNav" href="{{route('solicitacao.alterar.pagina', ['solicitacao_id' => $solicitacao->id, 'num_pagina' => 2])}}">3</a>
+            <a class="nav-link btn btn-info cellNav" href="{{route('solicitacao.alterar.pagina', ['solicitacao_id' => $solicitacao->id, 'num_pagina' => 3])}}">4</a>
+            <a class="nav-link btn btn-info active cellNav" href="#">5</a>
+            <a class="nav-link btn btn-secondary disabled cellNav" href="#">6</a>
+            <a class="nav-link btn btn-secondary disabled cellNav" href="#">7</a>
+            <a class="nav-link btn btn-secondary disabled cellNav" href="#">8</a>
+            <a class="nav-link btn btn-secondary disabled cellNav" href="#">9</a>
+            <a class="nav-link btn btn-secondary disabled cellNav" href="#">10</a>
+            <a class="nav-link btn btn-secondary disabled cellNav" href="#">11</a>
+            <a class="nav-link btn btn-secondary disabled cellNav" href="#">12</a>
+        </nav>
         @include('solicitacao.modelo_animal')
     @elseif($solicitacao->estado_pagina == 5)
+        <nav class="nav w-100 justify-content-between mb-2">
+            <a class="nav-link btn btn-info cellNav" href="{{route('solicitacao.alterar.pagina', ['solicitacao_id' => $solicitacao->id, 'num_pagina' => 0])}}">1</a>
+            <a class="nav-link btn btn-info cellNav" href="{{route('solicitacao.alterar.pagina', ['solicitacao_id' => $solicitacao->id, 'num_pagina' => 1])}}">2</a>
+            <a class="nav-link btn btn-info cellNav" href="{{route('solicitacao.alterar.pagina', ['solicitacao_id' => $solicitacao->id, 'num_pagina' => 2])}}">3</a>
+            <a class="nav-link btn btn-info cellNav" href="{{route('solicitacao.alterar.pagina', ['solicitacao_id' => $solicitacao->id, 'num_pagina' => 3])}}">4</a>
+            <a class="nav-link btn btn-info cellNav" href="{{route('solicitacao.alterar.pagina', ['solicitacao_id' => $solicitacao->id, 'num_pagina' => 4])}}">5</a>
+            <a class="nav-link btn btn-info active cellNav" href="#">6</a>
+            <a class="nav-link btn btn-secondary disabled cellNav" href="#">7</a>
+            <a class="nav-link btn btn-secondary disabled cellNav" href="#">8</a>
+            <a class="nav-link btn btn-secondary disabled cellNav" href="#">9</a>
+            <a class="nav-link btn btn-secondary disabled cellNav" href="#">10</a>
+            <a class="nav-link btn btn-secondary disabled cellNav" href="#">11</a>
+            <a class="nav-link btn btn-secondary disabled cellNav" href="#">12</a>
+        </nav>
         @include('solicitacao.perfil')
     @elseif($solicitacao->estado_pagina == 6)
+        <nav class="nav w-100 justify-content-between mb-2">
+            <a class="nav-link btn btn-info cellNav" href="{{route('solicitacao.alterar.pagina', ['solicitacao_id' => $solicitacao->id, 'num_pagina' => 0])}}">1</a>
+            <a class="nav-link btn btn-info cellNav" href="{{route('solicitacao.alterar.pagina', ['solicitacao_id' => $solicitacao->id, 'num_pagina' => 1])}}">2</a>
+            <a class="nav-link btn btn-info cellNav" href="{{route('solicitacao.alterar.pagina', ['solicitacao_id' => $solicitacao->id, 'num_pagina' => 2])}}">3</a>
+            <a class="nav-link btn btn-info cellNav" href="{{route('solicitacao.alterar.pagina', ['solicitacao_id' => $solicitacao->id, 'num_pagina' => 3])}}">4</a>
+            <a class="nav-link btn btn-info cellNav" href="{{route('solicitacao.alterar.pagina', ['solicitacao_id' => $solicitacao->id, 'num_pagina' => 4])}}">5</a>
+            <a class="nav-link btn btn-info cellNav" href="{{route('solicitacao.alterar.pagina', ['solicitacao_id' => $solicitacao->id, 'num_pagina' => 5])}}">6</a>
+            <a class="nav-link btn btn-info active cellNav" href="#">7</a>
+            <a class="nav-link btn btn-secondary disabled cellNav" href="#">8</a>
+            <a class="nav-link btn btn-secondary disabled cellNav" href="#">9</a>
+            <a class="nav-link btn btn-secondary disabled cellNav" href="#">10</a>
+            <a class="nav-link btn btn-secondary disabled cellNav" href="#">11</a>
+            <a class="nav-link btn btn-secondary disabled cellNav" href="#">12</a>
+        </nav>
         @include('solicitacao.planejamento')
     @elseif($solicitacao->estado_pagina == 7)
+        <nav class="nav w-100 justify-content-between mb-2">
+            <a class="nav-link btn btn-info cellNav" href="{{route('solicitacao.alterar.pagina', ['solicitacao_id' => $solicitacao->id, 'num_pagina' => 0])}}">1</a>
+            <a class="nav-link btn btn-info cellNav" href="{{route('solicitacao.alterar.pagina', ['solicitacao_id' => $solicitacao->id, 'num_pagina' => 1])}}">2</a>
+            <a class="nav-link btn btn-info cellNav" href="{{route('solicitacao.alterar.pagina', ['solicitacao_id' => $solicitacao->id, 'num_pagina' => 2])}}">3</a>
+            <a class="nav-link btn btn-info cellNav" href="{{route('solicitacao.alterar.pagina', ['solicitacao_id' => $solicitacao->id, 'num_pagina' => 3])}}">4</a>
+            <a class="nav-link btn btn-info cellNav" href="{{route('solicitacao.alterar.pagina', ['solicitacao_id' => $solicitacao->id, 'num_pagina' => 4])}}">5</a>
+            <a class="nav-link btn btn-info cellNav" href="{{route('solicitacao.alterar.pagina', ['solicitacao_id' => $solicitacao->id, 'num_pagina' => 5])}}">6</a>
+            <a class="nav-link btn btn-info cellNav" href="{{route('solicitacao.alterar.pagina', ['solicitacao_id' => $solicitacao->id, 'num_pagina' => 6])}}">7</a>
+            <a class="nav-link btn btn-info active cellNav" href="#">8</a>
+            <a class="nav-link btn btn-secondary disabled cellNav" href="#">9</a>
+            <a class="nav-link btn btn-secondary disabled cellNav" href="#">10</a>
+            <a class="nav-link btn btn-secondary disabled cellNav" href="#">11</a>
+            <a class="nav-link btn btn-secondary disabled cellNav" href="#">12</a>
+        </nav>
         @include('solicitacao.condicoes_animais')
     @elseif($solicitacao->estado_pagina == 8)
+        <nav class="nav w-100 justify-content-between mb-2">
+            <a class="nav-link btn btn-info cellNav" href="{{route('solicitacao.alterar.pagina', ['solicitacao_id' => $solicitacao->id, 'num_pagina' => 0])}}">1</a>
+            <a class="nav-link btn btn-info cellNav" href="{{route('solicitacao.alterar.pagina', ['solicitacao_id' => $solicitacao->id, 'num_pagina' => 1])}}">2</a>
+            <a class="nav-link btn btn-info cellNav" href="{{route('solicitacao.alterar.pagina', ['solicitacao_id' => $solicitacao->id, 'num_pagina' => 2])}}">3</a>
+            <a class="nav-link btn btn-info cellNav" href="{{route('solicitacao.alterar.pagina', ['solicitacao_id' => $solicitacao->id, 'num_pagina' => 3])}}">4</a>
+            <a class="nav-link btn btn-info cellNav" href="{{route('solicitacao.alterar.pagina', ['solicitacao_id' => $solicitacao->id, 'num_pagina' => 4])}}">5</a>
+            <a class="nav-link btn btn-info cellNav" href="{{route('solicitacao.alterar.pagina', ['solicitacao_id' => $solicitacao->id, 'num_pagina' => 5])}}">6</a>
+            <a class="nav-link btn btn-info cellNav" href="{{route('solicitacao.alterar.pagina', ['solicitacao_id' => $solicitacao->id, 'num_pagina' => 6])}}">7</a>
+            <a class="nav-link btn btn-info cellNav" href="{{route('solicitacao.alterar.pagina', ['solicitacao_id' => $solicitacao->id, 'num_pagina' => 7])}}">8</a>
+            <a class="nav-link btn btn-info active cellNav" href="#">9</a>
+            <a class="nav-link btn btn-secondary disabled cellNav" href="#">10</a>
+            <a class="nav-link btn btn-secondary disabled cellNav" href="#">11</a>
+            <a class="nav-link btn btn-secondary disabled cellNav" href="#">12</a>
+        </nav>
         @include('solicitacao.procedimento')
     @elseif($solicitacao->estado_pagina == 9)
+        <nav class="nav w-100 justify-content-between mb-2">
+            <a class="nav-link btn btn-info cellNav" href="{{route('solicitacao.alterar.pagina', ['solicitacao_id' => $solicitacao->id, 'num_pagina' => 0])}}">1</a>
+            <a class="nav-link btn btn-info cellNav" href="{{route('solicitacao.alterar.pagina', ['solicitacao_id' => $solicitacao->id, 'num_pagina' => 1])}}">2</a>
+            <a class="nav-link btn btn-info cellNav" href="{{route('solicitacao.alterar.pagina', ['solicitacao_id' => $solicitacao->id, 'num_pagina' => 2])}}">3</a>
+            <a class="nav-link btn btn-info cellNav" href="{{route('solicitacao.alterar.pagina', ['solicitacao_id' => $solicitacao->id, 'num_pagina' => 3])}}">4</a>
+            <a class="nav-link btn btn-info cellNav" href="{{route('solicitacao.alterar.pagina', ['solicitacao_id' => $solicitacao->id, 'num_pagina' => 4])}}">5</a>
+            <a class="nav-link btn btn-info cellNav" href="{{route('solicitacao.alterar.pagina', ['solicitacao_id' => $solicitacao->id, 'num_pagina' => 5])}}">6</a>
+            <a class="nav-link btn btn-info cellNav" href="{{route('solicitacao.alterar.pagina', ['solicitacao_id' => $solicitacao->id, 'num_pagina' => 6])}}">7</a>
+            <a class="nav-link btn btn-info cellNav" href="{{route('solicitacao.alterar.pagina', ['solicitacao_id' => $solicitacao->id, 'num_pagina' => 7])}}">8</a>
+            <a class="nav-link btn btn-info cellNav" href="{{route('solicitacao.alterar.pagina', ['solicitacao_id' => $solicitacao->id, 'num_pagina' => 8])}}">9</a>
+            <a class="nav-link btn btn-info active cellNav" href="#">10</a>
+            <a class="nav-link btn btn-secondary disabled cellNav" href="#">11</a>
+            <a class="nav-link btn btn-secondary disabled cellNav" href="#">12</a>
+        </nav>
         @include('solicitacao.operacao')
     @elseif($solicitacao->estado_pagina == 10)
+        <nav class="nav w-100 justify-content-between mb-2">
+            <a class="nav-link btn btn-info cellNav" href="{{route('solicitacao.alterar.pagina', ['solicitacao_id' => $solicitacao->id, 'num_pagina' => 0])}}">1</a>
+            <a class="nav-link btn btn-info cellNav" href="{{route('solicitacao.alterar.pagina', ['solicitacao_id' => $solicitacao->id, 'num_pagina' => 1])}}">2</a>
+            <a class="nav-link btn btn-info cellNav" href="{{route('solicitacao.alterar.pagina', ['solicitacao_id' => $solicitacao->id, 'num_pagina' => 2])}}">3</a>
+            <a class="nav-link btn btn-info cellNav" href="{{route('solicitacao.alterar.pagina', ['solicitacao_id' => $solicitacao->id, 'num_pagina' => 3])}}">4</a>
+            <a class="nav-link btn btn-info cellNav" href="{{route('solicitacao.alterar.pagina', ['solicitacao_id' => $solicitacao->id, 'num_pagina' => 4])}}">5</a>
+            <a class="nav-link btn btn-info cellNav" href="{{route('solicitacao.alterar.pagina', ['solicitacao_id' => $solicitacao->id, 'num_pagina' => 5])}}">6</a>
+            <a class="nav-link btn btn-info cellNav" href="{{route('solicitacao.alterar.pagina', ['solicitacao_id' => $solicitacao->id, 'num_pagina' => 6])}}">7</a>
+            <a class="nav-link btn btn-info cellNav" href="{{route('solicitacao.alterar.pagina', ['solicitacao_id' => $solicitacao->id, 'num_pagina' => 7])}}">8</a>
+            <a class="nav-link btn btn-info cellNav" href="{{route('solicitacao.alterar.pagina', ['solicitacao_id' => $solicitacao->id, 'num_pagina' => 8])}}">9</a>
+            <a class="nav-link btn btn-info cellNav" href="{{route('solicitacao.alterar.pagina', ['solicitacao_id' => $solicitacao->id, 'num_pagina' => 9])}}">10</a>
+            <a class="nav-link btn btn-info active cellNav" href="#">11</a>
+            <a class="nav-link btn btn-secondary disabled cellNav" href="#">12</a>
+        </nav>
         @include('solicitacao.eutanasia')
     @elseif($solicitacao->estado_pagina == 11)
+        <nav class="nav w-100 justify-content-between mb-2">
+            <a class="nav-link btn btn-info cellNav" href="{{route('solicitacao.alterar.pagina', ['solicitacao_id' => $solicitacao->id, 'num_pagina' => 0])}}">1</a>
+            <a class="nav-link btn btn-info cellNav" href="{{route('solicitacao.alterar.pagina', ['solicitacao_id' => $solicitacao->id, 'num_pagina' => 1])}}">2</a>
+            <a class="nav-link btn btn-info cellNav" href="{{route('solicitacao.alterar.pagina', ['solicitacao_id' => $solicitacao->id, 'num_pagina' => 2])}}">3</a>
+            <a class="nav-link btn btn-info cellNav" href="{{route('solicitacao.alterar.pagina', ['solicitacao_id' => $solicitacao->id, 'num_pagina' => 3])}}">4</a>
+            <a class="nav-link btn btn-info cellNav" href="{{route('solicitacao.alterar.pagina', ['solicitacao_id' => $solicitacao->id, 'num_pagina' => 4])}}">5</a>
+            <a class="nav-link btn btn-info cellNav" href="{{route('solicitacao.alterar.pagina', ['solicitacao_id' => $solicitacao->id, 'num_pagina' => 5])}}">6</a>
+            <a class="nav-link btn btn-info cellNav" href="{{route('solicitacao.alterar.pagina', ['solicitacao_id' => $solicitacao->id, 'num_pagina' => 6])}}">7</a>
+            <a class="nav-link btn btn-info cellNav" href="{{route('solicitacao.alterar.pagina', ['solicitacao_id' => $solicitacao->id, 'num_pagina' => 7])}}">8</a>
+            <a class="nav-link btn btn-info cellNav" href="{{route('solicitacao.alterar.pagina', ['solicitacao_id' => $solicitacao->id, 'num_pagina' => 8])}}">9</a>
+            <a class="nav-link btn btn-info cellNav" href="{{route('solicitacao.alterar.pagina', ['solicitacao_id' => $solicitacao->id, 'num_pagina' => 9])}}">10</a>
+            <a class="nav-link btn btn-info cellNav" href="{{route('solicitacao.alterar.pagina', ['solicitacao_id' => $solicitacao->id, 'num_pagina' => 10])}}">11</a>
+            <a class="nav-link btn btn-info active cellNav" href="#">12</a>
+        </nav>
         @include('solicitacao.resultado')
     @endif
 
