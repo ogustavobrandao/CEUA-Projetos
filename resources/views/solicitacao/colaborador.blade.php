@@ -34,6 +34,7 @@
         $('#listaColaborador').prepend('<div id="colab' + cont + '" class="mt-2"><div class="row"><div class="col-auto"><h3 style="font-weight: bold;">Colaborador ' + cont + '</h3></div> <div class="col-auto">@if(!isset($disabled))<a type="button" id="remover' + cont + '" onclick="removerColaborador(' + cont + ')"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fe0303" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg></a> </div></div><div id="colaboradorDados' + cont + '">@endif' +
             '<div id="colaboradorDados"> <div class="row"> <h3 class="subtitulo">Informações Pessoais/Contato</h3>' +
             '<div class="col-sm-4">' +
+            '<input type="hidden" id="colab_id" name="colaborador[' + cont + '][colab_id]" value="">' +
             '<label for="nome">Nome Completo:</label>' +
             '<input class="form-control @error('nome') is-invalid @enderror" id="nome" type="text" name="colaborador[' + cont + '][nome]" value="{{ old('nome') }}" required autocomplete="nome" autofocus>' +
             '@error('nome')' +
@@ -110,6 +111,7 @@
 
     @foreach($colaboradores as $key => $colab)
     criarColaborador();
+    $('#colab' + {{$key+1}}).find('#colab_id').val("{{$colab->id}}");
     $('#colab' + {{$key+1}}).find('#nome').val("{{$colab->nome}}");
     $('#colab' + {{$key+1}}).find('#email').val("{{$colab->contato->email}}");
     $('#colab' + {{$key+1}}).find('#telefone').val("{{$colab->contato->telefone}}");
