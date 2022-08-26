@@ -24,7 +24,7 @@ class Solicitacao extends Model
     ];
 
     public function avaliacao(){
-        return $this->hasOne('App\Models\Avaliacao');
+        return $this->hasMany('App\Models\Avaliacao');
     }
 
     public function responsavel(){

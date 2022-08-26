@@ -28,6 +28,7 @@ return new class extends Migration
             $table->integer('estado_pagina');
             $table->integer('estado_pagina_maximo');
             $table->string('status')->nullable();
+            $table->bigInteger('avaliador_atual_id')->nullable();
             $table->unsignedBigInteger('user_id');
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

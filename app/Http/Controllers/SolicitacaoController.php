@@ -18,6 +18,7 @@ use App\Models\Responsavel;
 use App\Models\Resultado;
 use App\Models\Solicitacao;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -109,6 +110,29 @@ class SolicitacaoController extends Controller
         return redirect(route('solicitacao.form', ['solicitacao_id' => $solicitacao_id]));
     }
 
+    public function avaliarSolicitacao($solicitacao_id)
+    {
+        $solicitacao = Solicitacao::find($solicitacao_id);
+        $instituicaos = Instituicao::all();
+
+        $disabled = true;
+        $responsavel = $solicitacao->responsavel;
+        $colaboradores = $solicitacao->responsavel->colaboradores;
+        $modelo_animal = $solicitacao->modeloAnimal;
+        $perfil = $solicitacao->modeloAnimal->perfil;
+        $planejamento = $solicitacao->modeloAnimal->planejamento;
+        $condicoes_animal = $solicitacao->modeloAnimal->condicoesAnimal;
+        $procedimento = $solicitacao->procedimento;
+        $operacao = $solicitacao->procedimento->operacao;
+        $eutanasia = $solicitacao->procedimento->eutanasia;
+        $resultado = $solicitacao->resultado;
+        $solicitacao->avaliador_atual_id = Auth::user()->id;
+        $solicitacao->update();
+        return view('solicitacao.formulario', compact('disabled', 'solicitacao',
+            'instituicaos', 'responsavel', 'colaboradores', 'modelo_animal', 'perfil', 'planejamento',
+            'condicoes_animal', 'procedimento', 'operacao', 'eutanasia', 'resultado'));
+    }
+
     public function aprovarSolicitacao(Request $request)
     {
         $solicitacao = Solicitacao::find($request->solicitacao_id);
@@ -141,7 +165,8 @@ class SolicitacaoController extends Controller
     public function index_avaliador()
     {
         $avaliacoes = Avaliacao::where('user_id', Auth::user()->id)->get();
-        return view('avaliador.minhas_avaliacoes', compact('avaliacoes'));
+        $horario = Carbon::now('UTC')->toDateTime();
+        return view('avaliador.minhas_avaliacoes', compact('avaliacoes', 'horario'));
     }
 
     public function inicio(Request $request)
@@ -177,20 +202,40 @@ class SolicitacaoController extends Controller
 
         $solicitacao = Solicitacao::find($request->solicitacao_id);
 
-        $responsavel = new Responsavel();
+        if (isset($solicitacao->responsavel)) {
+            $responsavel = $solicitacao->responsavel;
+        } else {
+            $responsavel = new Responsavel();
+        }
+
         $responsavel->solicitacao_id = $request->solicitacao_id;
         $responsavel->nome = $request->nome;
         $responsavel->departamento_id = $request->departamento_id;
         $responsavel->experiencia_previa = $request->experiencia_previa;
         $responsavel->vinculo_instituicao = $request->vinculo_instituicao;
         $responsavel->treinamento = $request->treinamento;
-        $responsavel->save();
 
-        $contato = new Contato();
+        if (isset($solicitacao->responsavel)) {
+            $responsavel->update();
+        } else {
+            $responsavel->save();
+        }
+
+        if (isset($responsavel->contato)) {
+            $contato = $responsavel->contato;
+        } else {
+            $contato = new Contato();
+        }
+
         $contato->email = $request->email;
         $contato->telefone = $request->telefone;
         $contato->responsavel_id = $responsavel->id;
-        $contato->save();
+
+        if (isset($responsavel->contato)) {
+            $contato->update();
+        } else {
+            $contato->save();
+        }
 
         $solicitacao->estado_pagina = 2;
         $solicitacao->update();
@@ -201,26 +246,45 @@ class SolicitacaoController extends Controller
 
     public function criar_colaborador(Request $request)
     {
-
         $solicitacao = Solicitacao::find($request->solicitacao_id);
+        $listaColab = [];
+
         if (isset($request->colaborador)) {
             foreach ($request->colaborador as $colab) {
-                $colaborador = new Colaborador();
+                if ($colab['colab_id'] != null) {
+                    $colaborador = Colaborador::find($colab['colab_id']);
+                } else {
+                    $colaborador = new Colaborador();
+                }
                 $colaborador->nome = $colab['nome'];
                 $colaborador->instituicao_id = $colab['instituicao_id'];
                 $colaborador->nivel_academico = $colab['nivel_academico'];
                 $colaborador->experiencia_previa = $colab['experiencia_previa'];
                 $colaborador->treinamento = $colab['treinamento'];
                 $colaborador->responsavel_id = $solicitacao->responsavel->id;
-                $colaborador->save();
 
-                $contato = new Contato();
+                if ($colab['colab_id'] != null) {
+                    $colaborador->update();
+                    $contato = $colaborador->contato;
+                } else {
+                    $colaborador->save();
+                    $contato = new Contato();;
+                }
+
+                array_push($listaColab, $colaborador->id);
                 $contato->email = $colab['email'];
                 $contato->telefone = $colab['telefone'];
                 $contato->colaborador_id = $colaborador->id;
-                $contato->save();
+
+                if ($colab['colab_id'] != null) {
+                    $contato->update();
+                } else {
+                    $contato->save();
+                }
             }
         }
+        //Deletar colaboradores não fornecidos no formulário
+        Colaborador::where('responsavel_id', $solicitacao->responsavel->id)->whereNotIn('id', $listaColab)->delete();
 
         $solicitacao->estado_pagina = 3;
         $solicitacao->update();
@@ -246,7 +310,11 @@ class SolicitacaoController extends Controller
     {
         $solicitacao = Solicitacao::find($request->solicitacao_id);
 
-        $modelo_animal = ModeloAnimal::create($request->all());
+        if (isset($solicitacao->modeloAnimal)) {
+            ModeloAnimal::find($solicitacao->modeloAnimal->id)->update($request->all());
+        } else {
+            ModeloAnimal::create($request->all());
+        }
 
         $solicitacao->estado_pagina = 5;
         $solicitacao->update();
@@ -259,7 +327,12 @@ class SolicitacaoController extends Controller
         $solicitacao = Solicitacao::find($request->solicitacao_id);
         $modelo_animal = ModeloAnimal::where('solicitacao_id', $solicitacao->id)->first();
 
-        $perfil = new Perfil();
+        if (isset($modelo_animal->perfil)) {
+            $perfil = $modelo_animal->perfil;
+        } else {
+            $perfil = new Perfil();
+        }
+
         $perfil->grupo_animal = $request->grupo_animal;
         $perfil->linhagem = $request->linhagem;
         $perfil->idade = $request->idade;
@@ -269,7 +342,12 @@ class SolicitacaoController extends Controller
         $perfil->quantidade = $request->quantidade;
         $perfil->modelo_animal_id = $modelo_animal->id;
         $perfil->total = $request->quantidade; //Verificar depois com o pessoal da CEUA
-        $perfil->save();
+
+        if (isset($modelo_animal->perfil)) {
+            $perfil->update();
+        } else {
+            $perfil->save();
+        }
 
         $solicitacao->estado_pagina = 6;
         $solicitacao->update();
@@ -309,6 +387,11 @@ class SolicitacaoController extends Controller
         }
 
 
+        if (isset($modelo_animal->planejamento)) {
+            $planejamento = $modelo_animal->planejamento;
+        } else {
+            $planejamento = new Planejamento();
+        }
         $planejamento->modelo_animal_id = $modelo_animal->id;
         $planejamento->num_animais_grupo = $request->num_animais_grupo;
         $planejamento->especificar_grupo = $request->especificar_grupo;
@@ -318,7 +401,8 @@ class SolicitacaoController extends Controller
         $planejamento->outras_infos = $request->outras_infos;
         $planejamento->grau_invasividade = $request->grau_invasividade;
         $planejamento->grau_select = $request->grau_select;
-        if (isset($solicitacao->modeloAnimal->planejamento)) {
+
+        if (isset($modelo_animal->planejamento)) {
             $planejamento->update();
         } else {
             $planejamento->save();
@@ -335,7 +419,12 @@ class SolicitacaoController extends Controller
         $solicitacao = Solicitacao::find($request->solicitacao_id);
         $modelo_animal = ModeloAnimal::where('solicitacao_id', $solicitacao->id)->first();
 
-        $condicoes_animal = new CondicoesAnimal();
+        if (isset($modelo_animal->condicoesAnimal)) {
+            $condicoes_animal = $modelo_animal->condicoesAnimal;
+        } else {
+            $condicoes_animal = new CondicoesAnimal();
+        }
+
         $condicoes_animal->condicoes_particulares = $request->condicoes_particulares;
         $condicoes_animal->local = $request->local;
         $condicoes_animal->ambiente_alojamento = $request->ambiente_alojamento;
@@ -346,7 +435,12 @@ class SolicitacaoController extends Controller
         $condicoes_animal->profissional_responsavel = $request->profissional_responsavel;
         $condicoes_animal->email_responsavel = $request->email_responsavel;
         $condicoes_animal->modelo_animal_id = $modelo_animal->id;
-        $condicoes_animal->save();
+
+        if (isset($modelo_animal->condicoesAnimal)) {
+            $condicoes_animal->update();
+        } else {
+            $condicoes_animal->save();
+        }
 
         $solicitacao->estado_pagina = 8;
         $solicitacao->update();
@@ -377,9 +471,9 @@ class SolicitacaoController extends Controller
         if ($request->cirurgia == "true") {
             $procedimento = Procedimento::where('solicitacao_id', $solicitacao->id)->first();
 
-            if (isset($solicitacao->procedimento->operacao)) {
+            if(isset($solicitacao->procedimento->operacao)){
                 $operacao = $solicitacao->procedimento->operacao;
-            } else {
+            }else{
                 $operacao = new Operacao();
             }
 
@@ -387,8 +481,13 @@ class SolicitacaoController extends Controller
             $operacao->outros_cuidados_recuperacao = $request->outros_cuidados_recuperacao;
             $operacao->analgesia_recuperacao = $request->analgesia_recuperacao;
             $operacao->procedimento_id = $procedimento->id;
-            $operacao->save();
-        } elseif (isset($solicitacao->procedimento->operacao)) {
+            if(isset($solicitacao->procedimento->operacao)){
+                $operacao->update();
+            }else {
+                $operacao->save();
+            }
+
+        }elseif(isset($solicitacao->procedimento->operacao)){
             $solicitacao->procedimento->operacao->delete();
         }
         $solicitacao->estado_pagina = 10;
@@ -420,7 +519,11 @@ class SolicitacaoController extends Controller
         $eutanasia->destino = $request->destino;
         $eutanasia->descarte = $request->descarte;
         $eutanasia->procedimento_id = $solicitacao->procedimento->id;
-        $eutanasia->save();
+        if (isset($solicitacao->procedimento->eutanasia)) {
+            $eutanasia->update();
+        } else {
+            $eutanasia->save();
+        }
         $solicitacao->estado_pagina = 11;
         $solicitacao->update();
 
@@ -430,10 +533,13 @@ class SolicitacaoController extends Controller
     public function criar_resultado(Request $request)
     {
 
-
         $solicitacao = Solicitacao::find($request->solicitacao_id);
 
-        Resultado::create($request->all());
+        if (isset($solicitacao->resultado)) {
+            Resultado::find($solicitacao->resultado->id)->update($request->all());
+        } else {
+            Resultado::create($request->all());
+        }
 
         $solicitacao->estado_pagina = 12;
         $solicitacao->status = 'nao_avaliado';
@@ -444,7 +550,7 @@ class SolicitacaoController extends Controller
 
     public function index_admin()
     {
-        $solicitacoes = Solicitacao::where('status', 'nao_avaliado')->get();
+        $solicitacoes = Solicitacao::where('estado_pagina', '12')->get();
         $avaliadores = User::where('tipo_usuario_id', '2')->get();
         return view('admin.solicitacoes', compact('solicitacoes', 'avaliadores'));
     }

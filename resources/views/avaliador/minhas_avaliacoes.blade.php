@@ -25,10 +25,14 @@
                 <td class="text-center">{{$avaliacao->solicitacao->tipo}}</td>
                 <td class="text-center">@if($avaliacao->status == 'nao_realizado')Não Avaliado @elseif($avaliacao->status == 'Aprovada') Aprovada @else Recusada @endif</td>
                 <td class="text-center">
-                    @if($avaliacao->status == 'nao_realizado')
-                        <a href="{{route('solicitacao.form', ['solicitacao_id' => $avaliacao->solicitacao->id])}}">Avaliar</a>
+                    @if(($avaliacao->solicitacao->updated_at->diffInHours($horario) >= 2 && $avaliacao->solicitacao->updated_at < $horario) || $avaliacao->solicitacao->avaliador_atual_id == Auth::user()->id)
+                        @if($avaliacao->status == 'nao_realizado')
+                            <a href="{{route('avaliador.solicitacao.avaliar', ['solicitacao_id' => $avaliacao->solicitacao->id])}}">Avaliar</a>
+                        @else
+                            <a href="#">Editar</a>
+                        @endif
                     @else
-                        <a href="#">Editar</a>
+                        <a style="color: red; font-weight: bold">Em avaliação</a>
                     @endif
                 </td>
             </tr>
