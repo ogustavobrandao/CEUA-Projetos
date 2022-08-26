@@ -68,8 +68,8 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'checkProprietarioAvaliador' => CheckProprietarioAvaliador::class,
-        'checkProprietario' => CheckProprietario::class,
         'checkAdministrador' => CheckAdministrador::class,
         'checkAvaliador' => CheckAvaliador::class,
+        'checkProprietario' => CheckProprietario::class,
     ];
 }

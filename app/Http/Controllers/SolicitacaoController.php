@@ -31,6 +31,12 @@ class SolicitacaoController extends Controller
         $solicitacao = Solicitacao::find($solicitacao_id);
         $instituicaos = Instituicao::all();
 
+        //Alterando o estado máximo da pagina para a navegação no formulário
+        if($solicitacao->estado_pagina > $solicitacao->estado_pagina_maximo){
+            $solicitacao->estado_pagina_maximo = $solicitacao->estado_pagina;
+            $solicitacao->update();
+        }
+
         if ($solicitacao->status != null && ($solicitacao->status != 'nao_avaliado' || in_array(Auth::user()->tipo_usuario_id, [1, 2]))) {
             $disabled = true;
             $responsavel = $solicitacao->responsavel;
@@ -94,6 +100,15 @@ class SolicitacaoController extends Controller
         return redirect(route('solicitacao.form', ['solicitacao_id' => $solicitacao_id]));
     }
 
+    public function alterarPagina($solicitacao_id, $num_pagina)
+    {
+        $solicitacao = Solicitacao::find($solicitacao_id);
+        $solicitacao->estado_pagina = $num_pagina;
+        $solicitacao->update();
+
+        return redirect(route('solicitacao.form', ['solicitacao_id' => $solicitacao_id]));
+    }
+
     public function avaliarSolicitacao($solicitacao_id){
         $solicitacao = Solicitacao::find($solicitacao_id);
         $instituicaos = Instituicao::all();
@@ -112,10 +127,9 @@ class SolicitacaoController extends Controller
         $solicitacao->avaliador_atual_id = Auth::user()->id;
         $solicitacao->update();
         return view('solicitacao.formulario', compact('disabled', 'solicitacao',
-                'instituicaos', 'responsavel', 'colaboradores', 'modelo_animal', 'perfil', 'planejamento',
-                'condicoes_animal', 'procedimento', 'operacao', 'eutanasia', 'resultado'));
+            'instituicaos', 'responsavel', 'colaboradores', 'modelo_animal', 'perfil', 'planejamento',
+            'condicoes_animal', 'procedimento', 'operacao', 'eutanasia', 'resultado'));
     }
-
 
     public function aprovarSolicitacao(Request $request)
     {
@@ -159,6 +173,7 @@ class SolicitacaoController extends Controller
         $solicitacao->tipo = $request->tipo;
         $solicitacao->user_id = Auth::user()->id;
         $solicitacao->estado_pagina = 0;
+        $solicitacao->estado_pagina_maximo = 0;
 
         $solicitacao->save();
 

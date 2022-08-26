@@ -1,6 +1,16 @@
 @extends('layouts.formulario')
 
 @section('content')
+    <style>
+        .cellNav {
+            width: 8%;
+            color: white;
+        }
+
+        .disabled {
+            color: white !important;
+        }
+    </style>
     @if(isset($disabled))
         <div class="mb-4">
             @include('solicitacao.solicitacao')
@@ -89,30 +99,33 @@
                 </div>
             </div>
         @endif
-    @elseif($solicitacao->estado_pagina == 0)
-        @include('solicitacao.solicitacao')
-    @elseif($solicitacao->estado_pagina == 1)
-        @include('solicitacao.responsavel')
-    @elseif($solicitacao->estado_pagina == 2)
-        @include('solicitacao.colaborador')
-    @elseif($solicitacao->estado_pagina == 3)
-        @include('solicitacao.solicitacao_fim')
-    @elseif($solicitacao->estado_pagina == 4)
-        @include('solicitacao.modelo_animal')
-    @elseif($solicitacao->estado_pagina == 5)
-        @include('solicitacao.perfil')
-    @elseif($solicitacao->estado_pagina == 6)
-        @include('solicitacao.planejamento')
-    @elseif($solicitacao->estado_pagina == 7)
-        @include('solicitacao.condicoes_animais')
-    @elseif($solicitacao->estado_pagina == 8)
-        @include('solicitacao.procedimento')
-    @elseif($solicitacao->estado_pagina == 9)
-        @include('solicitacao.operacao')
-    @elseif($solicitacao->estado_pagina == 10)
-        @include('solicitacao.eutanasia')
-    @elseif($solicitacao->estado_pagina == 11)
-        @include('solicitacao.resultado')
+    @else
+        @include('component.nav_formulario')
+        @if($solicitacao->estado_pagina == 0)
+            @include('solicitacao.solicitacao')
+        @elseif($solicitacao->estado_pagina == 1)
+            @include('solicitacao.responsavel')
+        @elseif($solicitacao->estado_pagina == 2)
+            @include('solicitacao.colaborador')
+        @elseif($solicitacao->estado_pagina == 3)
+            @include('solicitacao.solicitacao_fim')
+        @elseif($solicitacao->estado_pagina == 4)
+            @include('solicitacao.modelo_animal')
+        @elseif($solicitacao->estado_pagina == 5)
+            @include('solicitacao.perfil')
+        @elseif($solicitacao->estado_pagina == 6)
+            @include('solicitacao.planejamento')
+        @elseif($solicitacao->estado_pagina == 7)
+            @include('solicitacao.condicoes_animais')
+        @elseif($solicitacao->estado_pagina == 8)
+            @include('solicitacao.procedimento')
+        @elseif($solicitacao->estado_pagina == 9)
+            @include('solicitacao.operacao')
+        @elseif($solicitacao->estado_pagina == 10)
+            @include('solicitacao.eutanasia')
+        @elseif($solicitacao->estado_pagina == 11)
+            @include('solicitacao.resultado')
+        @endif
     @endif
 
     @if(isset($disabled))
