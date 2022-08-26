@@ -2,7 +2,7 @@
     <div class="row justify-content-between  my-2">
         <div class="col-md-4 text-center py-1">
             <a class="navbar-brand mx-3" href="">
-                <img width="120px" src="{{asset('images/logo.png')}}">
+                <img class="img-fluid" width="120px" src="{{asset('images/logo.png')}}">
             </a>
         </div>
 
@@ -15,18 +15,22 @@
             <div class="form-row">
                 <div class="col-md-12" style="margin-bottom: 1rem;">
                     <div class="row justify-content-between">
-                        <div class="col-md-2"></div>
                         <div class="col-md-3">
-                            <a href="http://ufape.edu.br/" target="_blank"><img
+                            <a href="http://ufape.edu.br/" target="_blank"><img class="img-fluid"
                                     src="{{ asset('images/logo_ufape_blue.png') }}" alt="Logo" width="30px;"
                                     style="float: right"></a>
                         </div>
                         <div class="col-md-5">
-                            <a href="http://lmts.uag.ufrpe.br/" target="_blank"><img
+                            <a href="http://lmts.uag.ufrpe.br/" target="_blank"><img class="img-fluid"
                                     src="{{ asset('images/logo_ufape_color.png') }}" alt="Logo" width="160px;"
+                                    style="border-left: 1px rgba(0, 0, 255, 0.274) solid; padding-left: 15px"></a>
+                        </div>
+                        <div class="col-md-4">
+                            <a href="http://lmts.uag.ufrpe.br/" target="_blank"><img class="img-fluid"
+                                    src="{{ asset('images/logo_secSaude.png') }}" alt="Logo" width="120px;"
                                     style="border-left: 1px rgba(0, 0, 255, 0.274) solid; padding-left: 15px;"></a>
                         </div>
-                        <div class="col-md-2"></div>
+
                     </div>
                 </div>
             </div>
