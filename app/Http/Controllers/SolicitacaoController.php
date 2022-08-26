@@ -21,6 +21,7 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use PhpParser\Node\Expr\AssignOp\Mod;
 
 class SolicitacaoController extends Controller
@@ -31,7 +32,7 @@ class SolicitacaoController extends Controller
         $instituicaos = Instituicao::all();
 
         //Alterando o estado máximo da pagina para a navegação no formulário
-        if($solicitacao->estado_pagina > $solicitacao->estado_pagina_maximo){
+        if ($solicitacao->estado_pagina > $solicitacao->estado_pagina_maximo) {
             $solicitacao->estado_pagina_maximo = $solicitacao->estado_pagina;
             $solicitacao->update();
         }
@@ -276,23 +277,52 @@ class SolicitacaoController extends Controller
         return redirect(route('solicitacao.form', ['solicitacao_id' => $request->solicitacao_id]));
     }
 
+    public function downloadFormula($planejamento_id)
+    {
+        $planejamento = Planejamento::find($planejamento_id);
+        return Storage::download('formulas/' . $planejamento->anexo_formula);
+    }
+
     public function criar_planejamento(Request $request)
     {
         $solicitacao = Solicitacao::find($request->solicitacao_id);
         $modelo_animal = ModeloAnimal::where('solicitacao_id', $solicitacao->id)->first();
+        if (isset($solicitacao->modeloAnimal->planejamento)) {
+            $planejamento = $solicitacao->modeloAnimal->planejamento;
 
-        $planejamento = new Planejamento();
+            if (($request->hasFile('anexo_formula') && $request->file('anexo_formula')->isValid())) {
+                $nomeAnexo = $planejamento->anexo_formula;
+                $request->anexo_formula->storeAs('formulas/', $nomeAnexo);
+            }
+
+        } else {
+            $planejamento = new Planejamento();
+
+            if (($request->hasFile('anexo_formula') && $request->file('anexo_formula')->isValid())) {
+
+                $anexo = $request->anexo_formula->extension();
+                $nomeAnexo = "formula_" . date('Ymd') . date('His') . '.' . $anexo;
+                $planejamento->anexo_formula = $nomeAnexo;
+                $request->anexo_formula->storeAs('formulas/', $nomeAnexo);
+                $request->anexo_formula = $nomeAnexo;
+            }
+        }
+
+
         $planejamento->modelo_animal_id = $modelo_animal->id;
         $planejamento->num_animais_grupo = $request->num_animais_grupo;
         $planejamento->especificar_grupo = $request->especificar_grupo;
         $planejamento->criterios = $request->criterios;
-        $planejamento->anexo_formula = $request->anexo_formula;
         $planejamento->desc_materiais_metodos = $request->desc_materiais_metodos;
         $planejamento->analise_estatistica = $request->analise_estatistica;
         $planejamento->outras_infos = $request->outras_infos;
         $planejamento->grau_invasividade = $request->grau_invasividade;
         $planejamento->grau_select = $request->grau_select;
-        $planejamento->save();
+        if (isset($solicitacao->modeloAnimal->planejamento)) {
+            $planejamento->update();
+        } else {
+            $planejamento->save();
+        }
 
         $solicitacao->estado_pagina = 7;
         $solicitacao->update();
@@ -329,9 +359,9 @@ class SolicitacaoController extends Controller
 
         $solicitacao = Solicitacao::find($request->solicitacao_id);
 
-        if(isset($solicitacao->procedimento)){
+        if (isset($solicitacao->procedimento)) {
             Procedimento::find($solicitacao->procedimento->id)->update($request->all());
-        }else{
+        } else {
             Procedimento::create($request->all());
         }
 
@@ -347,9 +377,9 @@ class SolicitacaoController extends Controller
         if ($request->cirurgia == "true") {
             $procedimento = Procedimento::where('solicitacao_id', $solicitacao->id)->first();
 
-            if(isset($solicitacao->procedimento->operacao)){
+            if (isset($solicitacao->procedimento->operacao)) {
                 $operacao = $solicitacao->procedimento->operacao;
-            }else{
+            } else {
                 $operacao = new Operacao();
             }
 
@@ -358,7 +388,7 @@ class SolicitacaoController extends Controller
             $operacao->analgesia_recuperacao = $request->analgesia_recuperacao;
             $operacao->procedimento_id = $procedimento->id;
             $operacao->save();
-        }elseif(isset($solicitacao->procedimento->operacao)){
+        } elseif (isset($solicitacao->procedimento->operacao)) {
             $solicitacao->procedimento->operacao->delete();
         }
         $solicitacao->estado_pagina = 10;
@@ -371,17 +401,17 @@ class SolicitacaoController extends Controller
     {
         $solicitacao = Solicitacao::find($request->solicitacao_id);
 
-        if(isset($solicitacao->procedimento->eutanasia)){
+        if (isset($solicitacao->procedimento->eutanasia)) {
             $eutanasia = $solicitacao->procedimento->eutanasia;
-        }else{
+        } else {
             $eutanasia = new Eutanasia();
         }
 
-        if($request->eutanasia == "true"){
+        if ($request->eutanasia == "true") {
             $eutanasia->descricao = $request->descricao;
             $eutanasia->metodo = $request->metodo;
             $eutanasia->justificativa_metodo = $request->justificativa_metodo;
-        }else{
+        } else {
             $eutanasia->descricao = null;
             $eutanasia->metodo = null;
             $eutanasia->justificativa_metodo = null;
@@ -399,7 +429,6 @@ class SolicitacaoController extends Controller
 
     public function criar_resultado(Request $request)
     {
-
 
 
         $solicitacao = Solicitacao::find($request->solicitacao_id);
