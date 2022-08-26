@@ -245,6 +245,8 @@ class SolicitacaoController extends Controller
     public function criar_colaborador(Request $request)
     {
         $solicitacao = Solicitacao::find($request->solicitacao_id);
+        $listaColab = [];
+
         if (isset($request->colaborador)) {
             foreach ($request->colaborador as $colab) {
                 if($colab['colab_id'] != null){
@@ -267,6 +269,7 @@ class SolicitacaoController extends Controller
                     $contato = new Contato();;
                 }
 
+                array_push($listaColab, $colaborador->id);
                 $contato->email = $colab['email'];
                 $contato->telefone = $colab['telefone'];
                 $contato->colaborador_id = $colaborador->id;
@@ -276,9 +279,10 @@ class SolicitacaoController extends Controller
                 }else{
                     $contato->save();
                 }
-
             }
         }
+        //Deletar colaboradores não fornecidos no formulário
+        Colaborador::where('responsavel_id', $solicitacao->responsavel->id)->whereNotIn('id',$listaColab)->delete();
 
         $solicitacao->estado_pagina = 3;
         $solicitacao->update();
