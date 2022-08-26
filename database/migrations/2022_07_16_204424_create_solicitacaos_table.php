@@ -27,6 +27,7 @@ return new class extends Migration
             $table->string('area_conhecimento')->nullable();
             $table->integer('estado_pagina');
             $table->string('status')->nullable();
+            $table->bigInteger('avaliador_atual_id')->nullable();
             $table->unsignedBigInteger('user_id');
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

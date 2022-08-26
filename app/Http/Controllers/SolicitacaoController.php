@@ -18,6 +18,7 @@ use App\Models\Responsavel;
 use App\Models\Resultado;
 use App\Models\Solicitacao;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -93,6 +94,29 @@ class SolicitacaoController extends Controller
         return redirect(route('solicitacao.form', ['solicitacao_id' => $solicitacao_id]));
     }
 
+    public function avaliarSolicitacao($solicitacao_id){
+        $solicitacao = Solicitacao::find($solicitacao_id);
+        $instituicaos = Instituicao::all();
+
+        $disabled = true;
+        $responsavel = $solicitacao->responsavel;
+        $colaboradores = $solicitacao->responsavel->colaboradores;
+        $modelo_animal = $solicitacao->modeloAnimal;
+        $perfil = $solicitacao->modeloAnimal->perfil;
+        $planejamento = $solicitacao->modeloAnimal->planejamento;
+        $condicoes_animal = $solicitacao->modeloAnimal->condicoesAnimal;
+        $procedimento = $solicitacao->procedimento;
+        $operacao = $solicitacao->procedimento->operacao;
+        $eutanasia = $solicitacao->procedimento->eutanasia;
+        $resultado = $solicitacao->resultado;
+        $solicitacao->avaliador_atual_id = Auth::user()->id;
+        $solicitacao->update();
+        return view('solicitacao.formulario', compact('disabled', 'solicitacao',
+                'instituicaos', 'responsavel', 'colaboradores', 'modelo_animal', 'perfil', 'planejamento',
+                'condicoes_animal', 'procedimento', 'operacao', 'eutanasia', 'resultado'));
+    }
+
+
     public function aprovarSolicitacao(Request $request)
     {
         $solicitacao = Solicitacao::find($request->solicitacao_id);
@@ -125,7 +149,8 @@ class SolicitacaoController extends Controller
     public function index_avaliador()
     {
         $avaliacoes = Avaliacao::where('user_id', Auth::user()->id)->get();
-        return view('avaliador.minhas_avaliacoes', compact('avaliacoes'));
+        $horario = Carbon::now('UTC')->toDateTime();
+        return view('avaliador.minhas_avaliacoes', compact('avaliacoes','horario'));
     }
 
     public function inicio(Request $request)
@@ -399,7 +424,7 @@ class SolicitacaoController extends Controller
 
     public function index_admin()
     {
-        $solicitacoes = Solicitacao::where('status', 'nao_avaliado')->get();
+        $solicitacoes = Solicitacao::where('estado_pagina', '12')->get();
         $avaliadores = User::where('tipo_usuario_id', '2')->get();
         return view('admin.solicitacoes', compact('solicitacoes', 'avaliadores'));
     }
