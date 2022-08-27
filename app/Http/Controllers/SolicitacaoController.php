@@ -134,9 +134,28 @@ class SolicitacaoController extends Controller
     public function aprovarSolicitacao(Request $request)
     {
         $solicitacao = Solicitacao::find($request->solicitacao_id);
-        $avaliacao = $solicitacao->avaliacao;
-        $avaliacao->status = 'Aprovada';
+        $avaliador = User::find($request->avaliador_id);
+        Avaliacao::where('solicitacao_id',$solicitacao->id)->where('user_id', '!=', $avaliador->id)->delete();
+        $avaliacao = $solicitacao->avaliacao->first();
+        $avaliacao->status = 'aprovada';
         $avaliacao->parecer = 'Solicitação Aprovada sem Pendências';
+        $solicitacao->status = 'avaliado';
+        $solicitacao->update();
+        $avaliacao->update();
+
+        return redirect(route('solicitacao.avaliador.index'));
+    }
+
+    public function aprovarPendenciaSolicitacao(Request $request)
+    {
+        $solicitacao = Solicitacao::find($request->solicitacao_id);
+        $avaliador = User::find($request->avaliador_id);
+        Avaliacao::where('solicitacao_id',$solicitacao->id)->where('user_id', '!=', $avaliador->id)->delete();
+        $avaliacao = $solicitacao->avaliacao->first();
+        $avaliacao->status = 'aprovadaPendencia';
+        $avaliacao->parecer = $request->parecer;
+        $solicitacao->status = 'avaliado';
+        $solicitacao->update();
         $avaliacao->update();
 
         return redirect(route('solicitacao.avaliador.index'));
@@ -145,9 +164,13 @@ class SolicitacaoController extends Controller
     public function reprovarSolicitacao(Request $request)
     {
         $solicitacao = Solicitacao::find($request->solicitacao_id);
-        $avaliacao = $solicitacao->avaliacao;
-        $avaliacao->status = 'Reprovada';
+        $avaliador = User::find($request->avaliador_id);
+        Avaliacao::where('solicitacao_id',$solicitacao->id)->where('user_id', '!=', $avaliador->id)->delete();
+        $avaliacao = $solicitacao->avaliacao->first();
+        $avaliacao->status = 'reprovada';
         $avaliacao->parecer = $request->parecer;
+        $solicitacao->status = 'avaliado';
+        $solicitacao->update();
         $avaliacao->update();
 
         return redirect(route('solicitacao.avaliador.index'));
