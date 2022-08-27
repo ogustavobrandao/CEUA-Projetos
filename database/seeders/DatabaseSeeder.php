@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Departamento;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -17,6 +18,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             InstituicaoSeeder::class,
             UnidadeSeeder::class,
+            DepartamentoSeeder::class,
             TipoUsuarioSeeder::class,
             UsuarioSeeder::class
         ]);
