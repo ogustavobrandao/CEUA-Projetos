@@ -53,16 +53,33 @@
                     Quando não for o caso, justifique.</label>
             </div>
             <div class="col-sm-6">
-                <input class="form-control @error('anexo_formula') is-invalid @enderror" id="anexo_formula" type="file" name="anexo_formula"
-                       value="@if(!empty($planejamento) && $planejamento->anexo_formula != null){{$planejamento->anexo_formula}}@else{{old('anexo_formula')}}@endif" required
-                       autocomplete="anexo_formula" autofocus>
-                @error('anexo_formula')
-                <span class="invalid-feedback" role="alert">
+                @if(isset($disabled))
+                    <a class="btn btn-primary" href="{{route('planejamento.formula.download', ['planejamento_id' => $planejamento->id])}}">Baixar Fórmula</a>
+                @else
+                    @if(!empty($planejamento))
+                        <input class="form-control @error('anexo_formula') is-invalid @enderror" id="anexo_formula" type="file" name="anexo_formula"
+                               value="@if($planejamento->anexo_formula != null){{$planejamento->anexo_formula}}@endif" autocomplete="anexo_formula" autofocus style="width: 135px">
+                        @error('anexo_formula')
+                        <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
             </span>
-                @enderror
+                        @enderror
+
+                        <span
+                            style="border: 1px gray solid; border-radius: 10px; text-align: center; width: 250px; position: absolute; bottom: 0px; left: 155px; height: 38px; padding-top: 5px; background-color: #dcfadf">Um Arquivo Já Foi Selecionado</span>
+                    @else
+                        <input class="form-control @error('anexo_formula') is-invalid @enderror" id="anexo_formula" type="file" name="anexo_formula"
+                               value="{{old('anexo_formula')}}" required autocomplete="anexo_formula" autofocus>
+                        @error('anexo_formula')
+                        <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+                        @enderror
+                    @endif
+                @endif
             </div>
         </div>
+
 
         <div class="row mt-2">
             <div class="col-sm-6">
@@ -120,8 +137,12 @@
                 </label>
                 <select class="form-control" name="grau_select" id="grau_select">
                     <option value="GI1" @if($planejamento != null && $planejamento->grau_select == "GI1") selected @endif>GI1 = Experimentos que causam pouco ou nenhum desconforto ou estresse</option>
-                    <option value="GI2" @if($planejamento != null && $planejamento->grau_select == "GI2") selected @endif>GI2 = Experimentos que causam estresse, desconforto ou dor, de leve intensidade</option>
-                    <option value="GI3" @if($planejamento != null && $planejamento->grau_select == "GI3") selected @endif>GI3 = Experimentos que causam estresse, desconforto ou dor, de intensidade intermediária</option>
+                    <option value="GI2" @if($planejamento != null && $planejamento->grau_select == "GI2") selected @endif>GI2 = Experimentos que causam estresse, desconforto ou dor, de leve
+                        intensidade
+                    </option>
+                    <option value="GI3" @if($planejamento != null && $planejamento->grau_select == "GI3") selected @endif>GI3 = Experimentos que causam estresse, desconforto ou dor, de intensidade
+                        intermediária
+                    </option>
                     <option value="GI4" @if($planejamento != null && $planejamento->grau_select == "GI4") selected @endif>GI4 = Experimentos que causam dor de alta intensidade</option>
                 </select>
             </div>

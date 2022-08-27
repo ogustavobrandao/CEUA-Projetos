@@ -44,6 +44,7 @@ Route::group(['middleware' => 'checkAdministrador'], function () {
 Route::group(['middleware' => 'checkProprietarioAvaliador'], function () {
     Route::get('/formulario/{solicitacao_id}', [App\Http\Controllers\SolicitacaoController::class, 'form'])->name('solicitacao.form');
     Route::get('/formulario/{solicitacao_id}/{num_pagina}', [App\Http\Controllers\SolicitacaoController::class, 'alterarPagina'])->name('solicitacao.alterar.pagina');
+    Route::get('/formula/{planejamento_id}/download', [App\Http\Controllers\SolicitacaoController::class, 'downloadFormula'])->name('planejamento.formula.download');
 });
 
 Route::group(['middleware' => 'checkProprietario'], function () {

@@ -22,6 +22,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use PhpParser\Node\Expr\AssignOp\Mod;
 
 class SolicitacaoController extends Controller
@@ -32,7 +33,7 @@ class SolicitacaoController extends Controller
         $instituicaos = Instituicao::all();
 
         //Alterando o estado máximo da pagina para a navegação no formulário
-        if($solicitacao->estado_pagina > $solicitacao->estado_pagina_maximo){
+        if ($solicitacao->estado_pagina > $solicitacao->estado_pagina_maximo) {
             $solicitacao->estado_pagina_maximo = $solicitacao->estado_pagina;
             $solicitacao->update();
         }
@@ -109,7 +110,8 @@ class SolicitacaoController extends Controller
         return redirect(route('solicitacao.form', ['solicitacao_id' => $solicitacao_id]));
     }
 
-    public function avaliarSolicitacao($solicitacao_id){
+    public function avaliarSolicitacao($solicitacao_id)
+    {
         $solicitacao = Solicitacao::find($solicitacao_id);
         $instituicaos = Instituicao::all();
 
@@ -187,7 +189,7 @@ class SolicitacaoController extends Controller
     {
         $avaliacoes = Avaliacao::where('user_id', Auth::user()->id)->get();
         $horario = Carbon::now('UTC')->toDateTime();
-        return view('avaliador.minhas_avaliacoes', compact('avaliacoes','horario'));
+        return view('avaliador.minhas_avaliacoes', compact('avaliacoes', 'horario'));
     }
 
     public function inicio(Request $request)
@@ -223,9 +225,9 @@ class SolicitacaoController extends Controller
 
         $solicitacao = Solicitacao::find($request->solicitacao_id);
 
-        if(isset($solicitacao->responsavel)){
+        if (isset($solicitacao->responsavel)) {
             $responsavel = $solicitacao->responsavel;
-        }else{
+        } else {
             $responsavel = new Responsavel();
         }
 
@@ -236,15 +238,15 @@ class SolicitacaoController extends Controller
         $responsavel->vinculo_instituicao = $request->vinculo_instituicao;
         $responsavel->treinamento = $request->treinamento;
 
-        if(isset($solicitacao->responsavel)){
+        if (isset($solicitacao->responsavel)) {
             $responsavel->update();
-        }else{
+        } else {
             $responsavel->save();
         }
 
-        if(isset($responsavel->contato)){
+        if (isset($responsavel->contato)) {
             $contato = $responsavel->contato;
-        }else{
+        } else {
             $contato = new Contato();
         }
 
@@ -252,9 +254,9 @@ class SolicitacaoController extends Controller
         $contato->telefone = $request->telefone;
         $contato->responsavel_id = $responsavel->id;
 
-        if(isset($responsavel->contato)){
+        if (isset($responsavel->contato)) {
             $contato->update();
-        }else{
+        } else {
             $contato->save();
         }
 
@@ -272,9 +274,9 @@ class SolicitacaoController extends Controller
 
         if (isset($request->colaborador)) {
             foreach ($request->colaborador as $colab) {
-                if($colab['colab_id'] != null){
+                if ($colab['colab_id'] != null) {
                     $colaborador = Colaborador::find($colab['colab_id']);
-                }else{
+                } else {
                     $colaborador = new Colaborador();
                 }
                 $colaborador->nome = $colab['nome'];
@@ -284,10 +286,10 @@ class SolicitacaoController extends Controller
                 $colaborador->treinamento = $colab['treinamento'];
                 $colaborador->responsavel_id = $solicitacao->responsavel->id;
 
-                if($colab['colab_id'] != null){
+                if ($colab['colab_id'] != null) {
                     $colaborador->update();
                     $contato = $colaborador->contato;
-                }else{
+                } else {
                     $colaborador->save();
                     $contato = new Contato();;
                 }
@@ -297,15 +299,15 @@ class SolicitacaoController extends Controller
                 $contato->telefone = $colab['telefone'];
                 $contato->colaborador_id = $colaborador->id;
 
-                if($colab['colab_id'] != null){
+                if ($colab['colab_id'] != null) {
                     $contato->update();
-                }else{
+                } else {
                     $contato->save();
                 }
             }
         }
         //Deletar colaboradores não fornecidos no formulário
-        Colaborador::where('responsavel_id', $solicitacao->responsavel->id)->whereNotIn('id',$listaColab)->delete();
+        Colaborador::where('responsavel_id', $solicitacao->responsavel->id)->whereNotIn('id', $listaColab)->delete();
 
         $solicitacao->estado_pagina = 3;
         $solicitacao->update();
@@ -331,9 +333,9 @@ class SolicitacaoController extends Controller
     {
         $solicitacao = Solicitacao::find($request->solicitacao_id);
 
-        if(isset($solicitacao->modeloAnimal)){
+        if (isset($solicitacao->modeloAnimal)) {
             ModeloAnimal::find($solicitacao->modeloAnimal->id)->update($request->all());
-        }else{
+        } else {
             ModeloAnimal::create($request->all());
         }
 
@@ -348,9 +350,9 @@ class SolicitacaoController extends Controller
         $solicitacao = Solicitacao::find($request->solicitacao_id);
         $modelo_animal = ModeloAnimal::where('solicitacao_id', $solicitacao->id)->first();
 
-        if(isset($modelo_animal->perfil)){
+        if (isset($modelo_animal->perfil)) {
             $perfil = $modelo_animal->perfil;
-        }else{
+        } else {
             $perfil = new Perfil();
         }
 
@@ -364,9 +366,9 @@ class SolicitacaoController extends Controller
         $perfil->modelo_animal_id = $modelo_animal->id;
         $perfil->total = $request->quantidade; //Verificar depois com o pessoal da CEUA
 
-        if(isset($modelo_animal->perfil)){
+        if (isset($modelo_animal->perfil)) {
             $perfil->update();
-        }else{
+        } else {
             $perfil->save();
         }
 
@@ -376,31 +378,56 @@ class SolicitacaoController extends Controller
         return redirect(route('solicitacao.form', ['solicitacao_id' => $request->solicitacao_id]));
     }
 
+    public function downloadFormula($planejamento_id)
+    {
+        $planejamento = Planejamento::find($planejamento_id);
+        return Storage::download('formulas/' . $planejamento->anexo_formula);
+    }
+
     public function criar_planejamento(Request $request)
     {
         $solicitacao = Solicitacao::find($request->solicitacao_id);
         $modelo_animal = ModeloAnimal::where('solicitacao_id', $solicitacao->id)->first();
+        if (isset($solicitacao->modeloAnimal->planejamento)) {
+            $planejamento = $solicitacao->modeloAnimal->planejamento;
 
-        if(isset($modelo_animal->planejamento)){
-            $planejamento = $modelo_animal->planejamento;
-        }else{
+            if (($request->hasFile('anexo_formula') && $request->file('anexo_formula')->isValid())) {
+                $nomeAnexo = $planejamento->anexo_formula;
+                $request->anexo_formula->storeAs('formulas/', $nomeAnexo);
+            }
+
+        } else {
             $planejamento = new Planejamento();
+
+            if (($request->hasFile('anexo_formula') && $request->file('anexo_formula')->isValid())) {
+
+                $anexo = $request->anexo_formula->extension();
+                $nomeAnexo = "formula_" . date('Ymd') . date('His') . '.' . $anexo;
+                $planejamento->anexo_formula = $nomeAnexo;
+                $request->anexo_formula->storeAs('formulas/', $nomeAnexo);
+                $request->anexo_formula = $nomeAnexo;
+            }
         }
 
+
+        if (isset($modelo_animal->planejamento)) {
+            $planejamento = $modelo_animal->planejamento;
+        } else {
+            $planejamento = new Planejamento();
+        }
         $planejamento->modelo_animal_id = $modelo_animal->id;
         $planejamento->num_animais_grupo = $request->num_animais_grupo;
         $planejamento->especificar_grupo = $request->especificar_grupo;
         $planejamento->criterios = $request->criterios;
-        $planejamento->anexo_formula = $request->anexo_formula;
         $planejamento->desc_materiais_metodos = $request->desc_materiais_metodos;
         $planejamento->analise_estatistica = $request->analise_estatistica;
         $planejamento->outras_infos = $request->outras_infos;
         $planejamento->grau_invasividade = $request->grau_invasividade;
         $planejamento->grau_select = $request->grau_select;
 
-        if(isset($modelo_animal->planejamento)){
+        if (isset($modelo_animal->planejamento)) {
             $planejamento->update();
-        }else{
+        } else {
             $planejamento->save();
         }
 
@@ -415,9 +442,9 @@ class SolicitacaoController extends Controller
         $solicitacao = Solicitacao::find($request->solicitacao_id);
         $modelo_animal = ModeloAnimal::where('solicitacao_id', $solicitacao->id)->first();
 
-        if(isset($modelo_animal->condicoesAnimal)){
+        if (isset($modelo_animal->condicoesAnimal)) {
             $condicoes_animal = $modelo_animal->condicoesAnimal;
-        }else{
+        } else {
             $condicoes_animal = new CondicoesAnimal();
         }
 
@@ -432,9 +459,9 @@ class SolicitacaoController extends Controller
         $condicoes_animal->email_responsavel = $request->email_responsavel;
         $condicoes_animal->modelo_animal_id = $modelo_animal->id;
 
-        if(isset($modelo_animal->condicoesAnimal)){
+        if (isset($modelo_animal->condicoesAnimal)) {
             $condicoes_animal->update();
-        }else{
+        } else {
             $condicoes_animal->save();
         }
 
@@ -449,9 +476,9 @@ class SolicitacaoController extends Controller
 
         $solicitacao = Solicitacao::find($request->solicitacao_id);
 
-        if(isset($solicitacao->procedimento)){
+        if (isset($solicitacao->procedimento)) {
             Procedimento::find($solicitacao->procedimento->id)->update($request->all());
-        }else{
+        } else {
             Procedimento::create($request->all());
         }
 
@@ -496,17 +523,17 @@ class SolicitacaoController extends Controller
     {
         $solicitacao = Solicitacao::find($request->solicitacao_id);
 
-        if(isset($solicitacao->procedimento->eutanasia)){
+        if (isset($solicitacao->procedimento->eutanasia)) {
             $eutanasia = $solicitacao->procedimento->eutanasia;
-        }else{
+        } else {
             $eutanasia = new Eutanasia();
         }
 
-        if($request->eutanasia == "true"){
+        if ($request->eutanasia == "true") {
             $eutanasia->descricao = $request->descricao;
             $eutanasia->metodo = $request->metodo;
             $eutanasia->justificativa_metodo = $request->justificativa_metodo;
-        }else{
+        } else {
             $eutanasia->descricao = null;
             $eutanasia->metodo = null;
             $eutanasia->justificativa_metodo = null;
@@ -515,9 +542,9 @@ class SolicitacaoController extends Controller
         $eutanasia->destino = $request->destino;
         $eutanasia->descarte = $request->descarte;
         $eutanasia->procedimento_id = $solicitacao->procedimento->id;
-        if(isset($solicitacao->procedimento->eutanasia)){
+        if (isset($solicitacao->procedimento->eutanasia)) {
             $eutanasia->update();
-        }else{
+        } else {
             $eutanasia->save();
         }
         $solicitacao->estado_pagina = 11;
@@ -528,11 +555,12 @@ class SolicitacaoController extends Controller
 
     public function criar_resultado(Request $request)
     {
+
         $solicitacao = Solicitacao::find($request->solicitacao_id);
 
-        if(isset($solicitacao->resultado)){
+        if (isset($solicitacao->resultado)) {
             Resultado::find($solicitacao->resultado->id)->update($request->all());
-        }else{
+        } else {
             Resultado::create($request->all());
         }
 
