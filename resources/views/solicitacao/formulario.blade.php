@@ -13,50 +13,50 @@
     </style>
     @if(isset($disabled))
         <div class="mb-4">
-            <button class="btn btn-primary w-25 pendencia" data-toggle="modal" data-target="#pendenciaModal">Pendência</button>
+            <a type="button" class="pendencia btn btn-info" data-toggle="modal" data-target="#pendenciaModal" title="Pendência" title="Pendência"><img src="{{asset('images/pendencia.svg')}}" width="30px"></a>
             @include('solicitacao.solicitacao')
         </div>
         <div class="mb-4">
-            <button class="btn btn-primary w-25 pendencia" data-toggle="modal" data-target="#pendenciaModal">Pendência</button>
+            <a type="button" class="pendencia btn btn-info" data-toggle="modal" data-target="#pendenciaModal" title="Pendência"><img src="{{asset('images/pendencia.svg')}}" width="30px"></a>
             @include('solicitacao.responsavel')
         </div>
         <div class="mb-4">
-            <button class="btn btn-primary w-25 pendencia" data-toggle="modal" data-target="#pendenciaModal">Pendência</button>
+            <a type="button" class="pendencia btn btn-info" data-toggle="modal" data-target="#pendenciaModal" title="Pendência"><img src="{{asset('images/pendencia.svg')}}" width="30px"></a>
             @include('solicitacao.colaborador')
         </div>
         <div class="mb-4">
-            <button class="btn btn-primary w-25 pendencia" data-toggle="modal" data-target="#pendenciaModal">Pendência</button>
+            <a type="button" class="pendencia btn btn-info" data-toggle="modal" data-target="#pendenciaModal" title="Pendência"><img src="{{asset('images/pendencia.svg')}}" width="30px"></a>
             @include('solicitacao.solicitacao_fim')
         </div>
         <div class="mb-4">
-            <button class="btn btn-primary w-25 pendencia" data-toggle="modal" data-target="#pendenciaModal">Pendência</button>
+            <a type="button" class="pendencia btn btn-info" data-toggle="modal" data-target="#pendenciaModal" title="Pendência"><img src="{{asset('images/pendencia.svg')}}" width="30px"></a>
             @include('solicitacao.modelo_animal')
         </div>
         <div class="mb-4">
-            <button class="btn btn-primary w-25 pendencia" data-toggle="modal" data-target="#pendenciaModal">Pendência</button>
+            <a type="button" class="pendencia btn btn-info" data-toggle="modal" data-target="#pendenciaModal" title="Pendência"><img src="{{asset('images/pendencia.svg')}}" width="30px"></a>
             @include('solicitacao.perfil')
         </div>
         <div class="mb-4">
-            <button class="btn btn-primary w-25 pendencia" data-toggle="modal" data-target="#pendenciaModal">Pendência</button>
+            <a type="button" class="pendencia btn btn-info" data-toggle="modal" data-target="#pendenciaModal" title="Pendência"><img src="{{asset('images/pendencia.svg')}}" width="30px"></a>
             @include('solicitacao.planejamento')
         </div>
         <div class="mb-4">
-            <button class="btn btn-primary w-25 pendencia" data-toggle="modal" data-target="#pendenciaModal">Pendência</button>
+            <a type="button" class="pendencia btn btn-info" data-toggle="modal" data-target="#pendenciaModal" title="Pendência"><img src="{{asset('images/pendencia.svg')}}" width="30px"></a>
             @include('solicitacao.condicoes_animais')
         </div>
         <div class="mb-4">
-            <button class="btn btn-primary w-25 pendencia" data-toggle="modal" data-target="#pendenciaModal">Pendência</button>
+            <a type="button" class="pendencia btn btn-info" data-toggle="modal" data-target="#pendenciaModal" title="Pendência"><img src="{{asset('images/pendencia.svg')}}" width="30px"></a>
             @include('solicitacao.procedimento')
         </div>
         <div class="mb-4">
-            <button class="btn btn-primary w-25 pendencia" data-toggle="modal" data-target="#pendenciaModal">Pendência</button>
+            <a type="button" class="pendencia btn btn-info" data-toggle="modal" data-target="#pendenciaModal" title="Pendência"><img src="{{asset('images/pendencia.svg')}}" width="30px"></a>
             @include('solicitacao.operacao')
         </div>
         <div class="mb-4">
-            <button class="btn btn-primary w-25 pendencia" data-toggle="modal" data-target="#pendenciaModal">Pendência</button>
+            <a type="button" class="pendencia btn btn-info" data-toggle="modal" data-target="#pendenciaModal" title="Pendência"><img src="{{asset('images/pendencia.svg')}}" width="30px"></a>
             @include('solicitacao.eutanasia')
         </div>
-        <button class="btn btn-primary w-25 pendencia" data-toggle="modal" data-target="#pendenciaModal">Pendência</button>
+        <a type="button" class="pendencia btn btn-info" data-toggle="modal" data-target="#pendenciaModal" title="Pendência"><img src="{{asset('images/pendencia.svg')}}" width="30px"></a>
         @include('solicitacao.resultado')
         @if(Auth::user()->tipo_usuario_id == 2)
             <div id="btn-avaliacao" class="row align-content-between mt-4">
@@ -64,10 +64,10 @@
                     <a class="btn btn-secondary w-100" href="#">Voltar</a>
                 </div>
                 <div class="col-3">
-                    <a class="btn btn-danger w-100" data-toggle="modal" data-target="#reprovarModal">Reprovar</a>
+                    <a id="reprovar" class="btn btn-danger w-100" data-toggle="modal" data-target="#reprovarModal">Reprovar</a>
                 </div>
                 <div class="col-3">
-                    <a id="aprovarPendencia" class="btn btn-primary w-100" data-toggle="modal" data-target="#pendenciaModal">Aprovar com pendência</a>
+                    <a id="aprovarPendencia" class="btn btn-primary w-100" data-toggle="modal" data-target="#pendenciaModal" title="Pendência">Aprovar com pendência</a>
                 </div>
                 <div class="col-3">
                     <form id="formAvaliacao" method="POST" action="{{route('avaliador.solicitacao.aprovar')}}">
@@ -126,7 +126,7 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <form method="POST" action="{{route('avaliador.solicitacao.reprovar')}}">
+                        <form method="POST" action="{{route('avaliador.solicitacao.aprovarPendencia')}}">
                             @csrf
                             <input type="hidden" name="solicitacao_id" value="{{$solicitacao->id}}">
                             <input type="hidden" name="avaliador_id" value="{{Auth::user()->id}}">
@@ -193,8 +193,18 @@
                 $('#parecerPendencia').val('');
             });
 
-            $('.fon').click(function (){
-                $('#parecerPendencia').val('');
+            $('#reprovar').click(function (){
+                $('#parecerReprovacao').val($('#parecerPendencia').val());
+            });
+
+            $('.pendencia').click(function (){
+                $('#submitAprovacaoPendencia').attr('hidden',true);
+                $('#cleanParecer').removeAttr('hidden');
+            });
+
+            $('#aprovarPendencia').click(function (){
+                $('#cleanParecer').attr('hidden',true);
+                $('#submitAprovacaoPendencia').removeAttr('hidden');
             });
 
         </script>
