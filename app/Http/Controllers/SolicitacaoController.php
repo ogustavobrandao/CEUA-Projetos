@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Mail\SendNotificacaoSolicitacao;
+use App\Mail\SendSolicitacaoStatus;
+use App\Mail\SendSolicitacaoReprovada;
 use App\Models\Avaliacao;
 use App\Models\Colaborador;
 use App\Models\CondicoesAnimal;
@@ -22,6 +25,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use PhpParser\Node\Expr\AssignOp\Mod;
 
@@ -145,6 +149,8 @@ class SolicitacaoController extends Controller
         $solicitacao->update();
         $avaliacao->update();
 
+        Mail::to($solicitacao->responsavel->contato->email)->send(new SendSolicitacaoStatus($solicitacao->responsavel, $avaliacao));
+
         return redirect(route('solicitacao.avaliador.index'));
     }
 
@@ -160,6 +166,8 @@ class SolicitacaoController extends Controller
         $solicitacao->update();
         $avaliacao->update();
 
+        Mail::to($solicitacao->responsavel->contato->email)->send(new SendSolicitacaoStatus($solicitacao->responsavel, $avaliacao));
+
         return redirect(route('solicitacao.avaliador.index'));
     }
 
@@ -174,6 +182,8 @@ class SolicitacaoController extends Controller
         $solicitacao->status = 'avaliado';
         $solicitacao->update();
         $avaliacao->update();
+
+        Mail::to($solicitacao->responsavel->contato->email)->send(new SendSolicitacaoStatus($solicitacao->responsavel, $avaliacao));
 
         return redirect(route('solicitacao.avaliador.index'));
     }
@@ -562,6 +572,12 @@ class SolicitacaoController extends Controller
             Resultado::find($solicitacao->resultado->id)->update($request->all());
         } else {
             Resultado::create($request->all());
+
+            $admins = User::where('tipo_usuario_id', 1)->get();
+            foreach ($admins as $admin)
+            {
+                Mail::to($admin->email)->send(new SendNotificacaoSolicitacao($admin));
+            }
         }
 
         $solicitacao->estado_pagina = 12;
