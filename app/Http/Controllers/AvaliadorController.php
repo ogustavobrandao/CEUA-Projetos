@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\SendAvaliadorAtribuido;
 use App\Models\Avaliacao;
 use App\Models\Solicitacao;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use App\Models\User;
 
 class AvaliadorController extends Controller
 {
@@ -12,11 +15,13 @@ class AvaliadorController extends Controller
     public function atribuir(Request $request){
         if(isset($request->avaliadores_id)){
             foreach($request->avaliadores_id as $avaliador){
-                $avalicao = new Avaliacao();
-                $avalicao->user_id = $avaliador;
-                $avalicao->solicitacao_id = $request->solicitacao_id;
-                $avalicao->status = "nao_realizado";
-                $avalicao->save();
+                $avaliacao = new Avaliacao();
+                $avaliacao->user_id = $avaliador;
+                $avaliacao->solicitacao_id = $request->solicitacao_id;
+                $avaliacao->status = "nao_realizado";
+                $avaliacao->save();
+                $user = User::find($avaliador);
+                Mail::to($user->email)->send(new SendAvaliadorAtribuido($user));
             }
         }else{
             return redirect()->back()->withErrors('Nenhum avaliador foi selecionado.');
@@ -32,8 +37,8 @@ class AvaliadorController extends Controller
         $solicitacao = Solicitacao::find($request->solicitacao_id);
         if(isset($request->avaliadores_id)){
             foreach($request->avaliadores_id as $avaliador){
-                $avalicao = Avaliacao::where('solicitacao_id',$request->solicitacao_id)->where('user_id',$avaliador)->first();
-                $avalicao->delete();
+                $avaliacao = Avaliacao::where('solicitacao_id',$request->solicitacao_id)->where('user_id',$avaliador)->first();
+                $avaliacao->delete();
             }
 
             if(empty($solicitacao->avaliacao->all())){

@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class SendNotificacaoSolicitacao extends Mailable
+class SendAvaliadorAtribuido extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -29,8 +29,8 @@ class SendNotificacaoSolicitacao extends Mailable
     public function build()
     {
         $user = $this->user;
-        return $this->subject('Nova Solicitação de Projeto - CEUA')
+        return $this->subject('Nova Avaliação Atribuida - CEUA')
             ->from('naoresponder.lmts@gmail.com', 'Ceua - LMTS')
-            ->view('mail.notificacaoSolicitacao', compact('user'));
+            ->view('mail.avaliadorAtribuido', compact('user'));
     }
 }
