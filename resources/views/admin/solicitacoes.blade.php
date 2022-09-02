@@ -30,6 +30,7 @@
         </thead>
         <tbody>
         @foreach($solicitacoes as $solicitacao)
+            @if(!($solicitacao->avaliacao->first() != null && $solicitacao->avaliacao->first()->status == "aprovadaPendencia"))
             <tr>
                 <td>{{$solicitacao->titulo_pt}}</td>
                 <td>{{$solicitacao->user->name}}</td>
@@ -47,6 +48,7 @@
                     @endif
                 </td>
             </tr>
+            @endif
 
                 {{--Modal de adição de avaliador--}}
                 <div class="modal fade" id="addAvaliador_{{$solicitacao->id}}" tabindex="-1" role="dialog" aria-labelledby="cadastroModalLabel" aria-hidden="true">

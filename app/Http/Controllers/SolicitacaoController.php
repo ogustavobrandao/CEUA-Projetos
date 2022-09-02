@@ -9,6 +9,7 @@ use App\Models\CondicoesAnimal;
 use App\Models\Contato;
 use App\Models\Eutanasia;
 use App\Models\Instituicao;
+use App\Models\Licenca;
 use App\Models\ModeloAnimal;
 use App\Models\Operacao;
 use App\Models\Perfil;
@@ -23,6 +24,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Phalcon\Forms\Element\Date;
 use PhpParser\Node\Expr\AssignOp\Mod;
 
 class SolicitacaoController extends Controller
@@ -38,21 +41,24 @@ class SolicitacaoController extends Controller
             $solicitacao->update();
         }
 
-        if ($solicitacao->status != null && ($solicitacao->status != 'nao_avaliado' || in_array(Auth::user()->tipo_usuario_id, [1, 2]))) {
-            $disabled = true;
-            $responsavel = $solicitacao->responsavel;
-            $colaboradores = $solicitacao->responsavel->colaboradores;
-            $modelo_animal = $solicitacao->modeloAnimal;
-            $perfil = $solicitacao->modeloAnimal->perfil;
-            $planejamento = $solicitacao->modeloAnimal->planejamento;
-            $condicoes_animal = $solicitacao->modeloAnimal->condicoesAnimal;
-            $procedimento = $solicitacao->procedimento;
-            $operacao = $solicitacao->procedimento->operacao;
-            $eutanasia = $solicitacao->procedimento->eutanasia;
-            $resultado = $solicitacao->resultado;
-            return view('solicitacao.formulario', compact('disabled', 'solicitacao',
-                'instituicaos', 'responsavel', 'colaboradores', 'modelo_animal', 'perfil', 'planejamento',
-                'condicoes_animal', 'procedimento', 'operacao', 'eutanasia', 'resultado'));
+        if($solicitacao->status == 'avaliado' && $solicitacao->avaliacao->first()->status != 'aprovadaPendencia'){
+            if (($solicitacao->status != null && ($solicitacao->status != 'nao_avaliado' || in_array(Auth::user()->tipo_usuario_id, [1, 2])))
+                ) {
+                $disabled = true;
+                $responsavel = $solicitacao->responsavel;
+                $colaboradores = $solicitacao->responsavel->colaboradores;
+                $modelo_animal = $solicitacao->modeloAnimal;
+                $perfil = $solicitacao->modeloAnimal->perfil;
+                $planejamento = $solicitacao->modeloAnimal->planejamento;
+                $condicoes_animal = $solicitacao->modeloAnimal->condicoesAnimal;
+                $procedimento = $solicitacao->procedimento;
+                $operacao = $solicitacao->procedimento->operacao;
+                $eutanasia = $solicitacao->procedimento->eutanasia;
+                $resultado = $solicitacao->resultado;
+                return view('solicitacao.formulario', compact('disabled', 'solicitacao',
+                    'instituicaos', 'responsavel', 'colaboradores', 'modelo_animal', 'perfil', 'planejamento',
+                    'condicoes_animal', 'procedimento', 'operacao', 'eutanasia', 'resultado'));
+            }
         }
 
         if ($solicitacao->estado_pagina == 1) {
@@ -128,9 +134,10 @@ class SolicitacaoController extends Controller
         $resultado = $solicitacao->resultado;
         $solicitacao->avaliador_atual_id = Auth::user()->id;
         $solicitacao->update();
+        $avaliacao = Avaliacao::where('solicitacao_id',$solicitacao_id)->where('user_id',Auth::user()->id)->first();
         return view('solicitacao.formulario', compact('disabled', 'solicitacao',
             'instituicaos', 'responsavel', 'colaboradores', 'modelo_animal', 'perfil', 'planejamento',
-            'condicoes_animal', 'procedimento', 'operacao', 'eutanasia', 'resultado'));
+            'condicoes_animal', 'procedimento', 'operacao', 'eutanasia', 'resultado', 'avaliacao'));
     }
 
     public function aprovarSolicitacao(Request $request)
@@ -144,6 +151,13 @@ class SolicitacaoController extends Controller
         $solicitacao->status = 'avaliado';
         $solicitacao->update();
         $avaliacao->update();
+        //Criação da licença
+        $licenca = new Licenca();
+        $licenca->inicio = $request->inicio;
+        $licenca->fim = $request->fim;
+        $licenca->codigo = Str::random(10);
+        $licenca->avaliacao_id = $avaliacao->id;
+        $licenca->save();
 
         return redirect(route('solicitacao.avaliador.index'));
     }
@@ -181,7 +195,7 @@ class SolicitacaoController extends Controller
     public function index_solicitante()
     {
         $solicitante = Auth::user();
-        $solicitacoes = Solicitacao::where('user_id', $solicitante->id)->get();
+        $solicitacoes = Solicitacao::where('user_id', $solicitante->id)->orderByDesc("created_at")->get();
         return view('solicitante.minhas_solicitacoes', compact('solicitacoes'));
     }
 
@@ -555,7 +569,6 @@ class SolicitacaoController extends Controller
 
     public function criar_resultado(Request $request)
     {
-
         $solicitacao = Solicitacao::find($request->solicitacao_id);
 
         if (isset($solicitacao->resultado)) {
@@ -573,7 +586,7 @@ class SolicitacaoController extends Controller
 
     public function index_admin()
     {
-        $solicitacoes = Solicitacao::where('estado_pagina', '12')->get();
+        $solicitacoes = Solicitacao::where('status','!=','avaliado')->get();
         $avaliadores = User::where('tipo_usuario_id', '2')->get();
         return view('admin.solicitacoes', compact('solicitacoes', 'avaliadores'));
     }

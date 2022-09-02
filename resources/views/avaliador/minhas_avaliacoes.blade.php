@@ -23,15 +23,24 @@
                 <td class="text-center">{{$avaliacao->solicitacao->user->name}}</td>
                 <td class="text-center">{{$avaliacao->solicitacao->titulo_pt}}</td>
                 <td class="text-center">{{$avaliacao->solicitacao->tipo}}</td>
-                <td class="text-center">@if($avaliacao->status == 'nao_realizado')Não Avaliado @elseif($avaliacao->status == 'Aprovada') Aprovada @else Recusada @endif</td>
+                <td class="text-center">
+                    @if($avaliacao->status == 'nao_realizado')Não Avaliado
+                    @elseif($avaliacao->status == 'aprovada') Aprovada
+                    @elseif($avaliacao->solicitacao->status == "avaliado" && $avaliacao->status == 'aprovadaPendencia') Aprovada com pendência
+                    @elseif($avaliacao->solicitacao->status == "nao_avaliado" && $avaliacao->status == "aprovadaPendencia") Re-Avaliar
+                    @else Recusada @endif</td>
                 <td class="text-center">
                     @if(($avaliacao->solicitacao->updated_at->diffInHours($horario) >= 2 && $avaliacao->solicitacao->updated_at < $horario)
                         || $avaliacao->solicitacao->avaliador_atual_id == Auth::user()->id
                         || $avaliacao->solicitacao->avaliador_atual_id == null)
                         @if($avaliacao->status == 'nao_realizado')
                             <a href="{{route('avaliador.solicitacao.avaliar', ['solicitacao_id' => $avaliacao->solicitacao->id])}}">Avaliar</a>
-                        @else
-                            <a href="#">Editar</a>
+                        @elseif(($avaliacao->solicitacao->status == "nao_avaliado" && $avaliacao->status == "aprovadaPendencia"))
+                            <a href="{{route('avaliador.solicitacao.avaliar', ['solicitacao_id' => $avaliacao->solicitacao->id])}}">Re-Avaliar</a>
+                        @elseif($avaliacao->status == 'aprovada')
+                            <a style="color: forestgreen; font-weight: bold">Aprovada</a>
+                        @elseif($avaliacao->status == 'reprovada')
+                            <a style="color: red; font-weight: bold">Reprovada</a>
                         @endif
                     @else
                         <a style="color: red; font-weight: bold">Em avaliação</a>
