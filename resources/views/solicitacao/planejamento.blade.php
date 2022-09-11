@@ -69,7 +69,7 @@
                             style="border: 1px gray solid; border-radius: 10px; text-align: center; width: 250px; position: absolute; bottom: 0px; left: 155px; height: 38px; padding-top: 5px; background-color: #dcfadf">Um Arquivo Já Foi Selecionado</span>
                     @else
                         <input class="form-control @error('anexo_formula') is-invalid @enderror" id="anexo_formula" type="file" name="anexo_formula"
-                               value="{{old('anexo_formula')}}" required autocomplete="anexo_formula" autofocus>
+                               value="{{old('anexo_formula')}}" autocomplete="anexo_formula" autofocus>
                         @error('anexo_formula')
                         <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
