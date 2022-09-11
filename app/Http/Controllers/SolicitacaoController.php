@@ -114,6 +114,19 @@ class SolicitacaoController extends Controller
         return redirect(route('solicitacao.form', ['solicitacao_id' => $solicitacao_id]));
     }
 
+    public function voltarPagina($solicitacao_id)
+    {
+        $solicitacao = Solicitacao::find($solicitacao_id);
+        if ($solicitacao->estado_pagina > 0) {
+            $solicitacao->estado_pagina = ($solicitacao->estado_pagina - 1);
+            $solicitacao->update();
+        } else {
+            return redirect(route('home'));
+        }
+
+        return redirect(route('solicitacao.form', ['solicitacao_id' => $solicitacao_id]));
+    }
+
     public function avaliarSolicitacao($solicitacao_id)
     {
         $solicitacao = Solicitacao::find($solicitacao_id);
@@ -141,7 +154,7 @@ class SolicitacaoController extends Controller
     {
         $solicitacao = Solicitacao::find($request->solicitacao_id);
         $avaliador = User::find($request->avaliador_id);
-        Avaliacao::where('solicitacao_id',$solicitacao->id)->where('user_id', '!=', $avaliador->id)->delete();
+        Avaliacao::where('solicitacao_id', $solicitacao->id)->where('user_id', '!=', $avaliador->id)->delete();
         $avaliacao = $solicitacao->avaliacao->first();
         $avaliacao->status = 'aprovada';
         $avaliacao->parecer = 'Solicitação Aprovada sem Pendências';
@@ -158,7 +171,7 @@ class SolicitacaoController extends Controller
     {
         $solicitacao = Solicitacao::find($request->solicitacao_id);
         $avaliador = User::find($request->avaliador_id);
-        Avaliacao::where('solicitacao_id',$solicitacao->id)->where('user_id', '!=', $avaliador->id)->delete();
+        Avaliacao::where('solicitacao_id', $solicitacao->id)->where('user_id', '!=', $avaliador->id)->delete();
         $avaliacao = $solicitacao->avaliacao->first();
         $avaliacao->status = 'aprovadaPendencia';
         $avaliacao->parecer = $request->parecer;
@@ -175,7 +188,7 @@ class SolicitacaoController extends Controller
     {
         $solicitacao = Solicitacao::find($request->solicitacao_id);
         $avaliador = User::find($request->avaliador_id);
-        Avaliacao::where('solicitacao_id',$solicitacao->id)->where('user_id', '!=', $avaliador->id)->delete();
+        Avaliacao::where('solicitacao_id', $solicitacao->id)->where('user_id', '!=', $avaliador->id)->delete();
         $avaliacao = $solicitacao->avaliacao->first();
         $avaliacao->status = 'reprovada';
         $avaliacao->parecer = $request->parecer;
@@ -504,9 +517,9 @@ class SolicitacaoController extends Controller
         if ($request->cirurgia == "true") {
             $procedimento = Procedimento::where('solicitacao_id', $solicitacao->id)->first();
 
-            if(isset($solicitacao->procedimento->operacao)){
+            if (isset($solicitacao->procedimento->operacao)) {
                 $operacao = $solicitacao->procedimento->operacao;
-            }else{
+            } else {
                 $operacao = new Operacao();
             }
 
@@ -514,13 +527,13 @@ class SolicitacaoController extends Controller
             $operacao->outros_cuidados_recuperacao = $request->outros_cuidados_recuperacao;
             $operacao->analgesia_recuperacao = $request->analgesia_recuperacao;
             $operacao->procedimento_id = $procedimento->id;
-            if(isset($solicitacao->procedimento->operacao)){
+            if (isset($solicitacao->procedimento->operacao)) {
                 $operacao->update();
-            }else {
+            } else {
                 $operacao->save();
             }
 
-        }elseif(isset($solicitacao->procedimento->operacao)){
+        } elseif (isset($solicitacao->procedimento->operacao)) {
             $solicitacao->procedimento->operacao->delete();
         }
         $solicitacao->estado_pagina = 10;
@@ -574,8 +587,7 @@ class SolicitacaoController extends Controller
             Resultado::create($request->all());
 
             $admins = User::where('tipo_usuario_id', 1)->get();
-            foreach ($admins as $admin)
-            {
+            foreach ($admins as $admin) {
                 Mail::to($admin->email)->send(new SendNotificacaoSolicitacao($admin));
             }
         }

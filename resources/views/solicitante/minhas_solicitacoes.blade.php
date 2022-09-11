@@ -30,7 +30,7 @@
                     @elseif($solicitacao->status == 'nao_avaliado')
                         <a class="btn" href="{{route('solicitacao.edit.form', ['solicitacao_id' => $solicitacao->id])}}" style="border-color: #1B1C42; background-color: #c0ddf6" title="Editar Solicitação."><i class="fa-solid fa-up-right-from-square"></i></a>
                     @else
-                        <a class="btn" href="{{route('solicitacao.form', ['solicitacao_id' => $solicitacao->id])}}" style="border-color: #1d68a7; color: #1d68a7; background-color: #c0ddf6" title="Continuar Preenchendo Solicitação."><i class="fa-solid fa-file"></i></a>
+                        <a class="btn" href="{{route('solicitacao.form', ['solicitacao_id' => $solicitacao->id])}}" style="border-color: #1d68a7; color: #1d68a7; background-color: #c0ddf6" title="Ver Solicitação."><i class="fa-solid fa-file"></i></a>
                     @endif
                 </td>
             </tr>

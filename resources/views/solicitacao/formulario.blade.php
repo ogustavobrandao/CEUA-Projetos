@@ -61,7 +61,7 @@
         @if(Auth::user()->tipo_usuario_id == 2)
             <div id="btn-avaliacao" class="row align-content-between mt-4">
                 <div class="col-3">
-                    <a class="btn btn-secondary w-100" href="#">Voltar</a>
+                    <a class="btn btn-secondary w-100" href="">Voltar</a>
                 </div>
                 <div class="col-3">
                     <a class="btn btn-danger w-100" data-toggle="modal" data-target="#reprovarModal">Reprovar</a>

@@ -1,7 +1,7 @@
 @if(!isset($disabled))
     <div class="row mt-4">
         <div class="col-3">
-            <a class="btn btn-secondary w-100" href="#">Voltar</a>
+            <a class="btn btn-secondary w-100" href="{{route('solicitacao.voltar.pagina', ['solicitacao_id' => $solicitacao->id])}}">Voltar</a>
         </div>
 
         <div class="col-6">
