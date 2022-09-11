@@ -93,10 +93,10 @@
             </div>
             <div class="col-sm-4">
                 <label for="periodo">Período total de manutenção dos animais no experimento:</label>
-                <input class="form-control @error('periodo') is-invalid @enderror" id="periodo" type="number" name="periodo"
+                <input class="form-control @error('periodo') is-invalid @enderror" id="periodo" type="text" name="periodo"
                        @if($condicoes_animal != null && $condicoes_animal->periodo != null) value="{{$condicoes_animal->periodo}}" @else value="{{old('periodo')}}" @endif
                        required
-                       autocomplete="periodo" autofocus>
+                       autocomplete="periodo" placeholder="Exemplo1: 30 dias / Exemplo2: 4 anos / etc" autofocus>
                 @error('periodo')
                 <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
