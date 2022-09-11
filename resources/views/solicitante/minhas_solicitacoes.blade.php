@@ -23,17 +23,75 @@
                 <td class="text-center">{{$solicitacao->user->name}}</td>
                 <td class="text-center">{{$solicitacao->titulo_pt}}</td>
                 <td class="text-center">{{$solicitacao->tipo}}</td>
-                <td class="text-center">@if($solicitacao->status == 'nao_avaliado')Não Avaliado @else Solicitação em Andamento @endif</td>
                 <td class="text-center">
-                    @if($solicitacao->estado_pagina != 12)
-                        <a class="btn" href="{{route('solicitacao.form', ['solicitacao_id' => $solicitacao->id])}}" style="border-color: orangered; background-color: #c0ddf6" title="Continuar Preenchendo Solicitação."><i class="fa-regular fa-file-lines" style="color: orangered"></i></a>
-                    @elseif($solicitacao->status == 'nao_avaliado')
-                        <a class="btn" href="{{route('solicitacao.edit.form', ['solicitacao_id' => $solicitacao->id])}}" style="border-color: #1B1C42; background-color: #c0ddf6" title="Editar Solicitação."><i class="fa-solid fa-up-right-from-square"></i></a>
-                    @else
-                        <a class="btn" href="{{route('solicitacao.form', ['solicitacao_id' => $solicitacao->id])}}" style="border-color: #1d68a7; color: #1d68a7; background-color: #c0ddf6" title="Ver Solicitação."><i class="fa-solid fa-file"></i></a>
+
+                    @if($solicitacao->status == null)Em progresso
+                    @elseif($solicitacao->status == 'nao_avaliado')Não Avaliado
+                    @elseif($solicitacao->avaliacao->first()->status == "aprovada")Aprovado
+                    @elseif($solicitacao->avaliacao->first()->status == "reprovada")Reprovado
+                    @else Aprovado com pendência
                     @endif
                 </td>
+                <td class="text-center">
+                    @if($solicitacao->status == null)
+                        <a class="btn" href="{{route('solicitacao.form', ['solicitacao_id' => $solicitacao->id])}}" style="border-color: #1d68a7; color: #1d68a7; background-color: #c0ddf6"
+                           title="Continuar Preenchendo Solicitação."><i class="fa-solid fa-file"></i></a>
+                    @elseif(($solicitacao->status == "nao_avaliado" && $solicitacao->avaliacao->first() == null) ||
+                            ($solicitacao->status == "avaliado" && $solicitacao->avaliacao->first()->status == "aprovadaPendencia"))
+                        <a class="btn" href="{{route('solicitacao.edit.form', ['solicitacao_id' => $solicitacao->id])}}" style="border-color: #1B1C42; background-color: #c0ddf6"
+                           title="Editar Solicitação."><i class="fa-solid fa-up-right-from-square"></i></a>
+                    @elseif(($solicitacao->avaliacao->first()->status == "reprovada") ||
+                            ($solicitacao->avaliacao->first()->status == "aprovada") ||
+                            ($solicitacao->status == "nao_avaliado" && $solicitacao->avaliacao->first()->status == "aprovadaPendencia"))
+                        <a class="btn" href="{{route('solicitacao.edit.form', ['solicitacao_id' => $solicitacao->id])}}" style="border-color: #1B1C42; background-color: #c0ddf6"
+                           title="Visualizar Solicitação."><i class="fa-solid fa-up-right-from-square"></i></a>
+                        @if($solicitacao->avaliacao->first()->status == "aprovada")
+                            <a class="btn" style="border-color: #1B1C42; background-color: #c0ddf6" data-toggle="modal" data-target="#licencaModal{{$solicitacao->id}}" title="Licença."><i
+                                    class="fa-regular fa-id-card"></i></a>
+                        @endif
+                    @endif
+
+                </td>
             </tr>
+
+            @if($solicitacao->status == "avaliado" && $solicitacao->avaliacao->first()->status == "aprovada")
+                <!-- Modal Licença -->
+                <div class="modal fade" id="licencaModal{{$solicitacao->id}}" tabindex="-1" role="dialog" aria-labelledby="licencaModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="licencaModalLabel">Dados da Licença</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <label for="codigo">Código:</label>
+                                        <input class="form-control" disabled
+                                               value="{{$solicitacao->avaliacao->first()->licenca->codigo}}">
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <label for="inicio">Data de Início:</label>
+                                        <input class="form-control" type="date" disabled
+                                               value="{{$solicitacao->avaliacao->first()->licenca->inicio}}">
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <label for="fim">Data de Fim:</label>
+                                        <input class="form-control" type="date" disabled
+                                               value="{{$solicitacao->avaliacao->first()->licenca->fim}}">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
         @endforeach
         </tbody>
     </table>

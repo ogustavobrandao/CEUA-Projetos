@@ -24,4 +24,8 @@ class Avaliacao extends Model
         return $this->belongsTo('App\Models\Solicitacao');
     }
 
+    public function licenca(){
+        return $this->hasOne('App\Models\Licenca');
+    }
+
 }
