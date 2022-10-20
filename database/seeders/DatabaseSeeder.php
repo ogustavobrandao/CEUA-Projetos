@@ -20,7 +20,8 @@ class DatabaseSeeder extends Seeder
             UnidadeSeeder::class,
             DepartamentoSeeder::class,
             TipoUsuarioSeeder::class,
-            UsuarioSeeder::class
+            UsuarioSeeder::class,
+            SolicitacaoSeeder::class
         ]);
     }
 }
