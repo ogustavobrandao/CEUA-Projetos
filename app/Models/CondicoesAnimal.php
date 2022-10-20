@@ -22,8 +22,9 @@ class CondicoesAnimal extends Model
         'modelo_animal_id',
     ];
 
-    public function modeloAnimal(){
-        return $this->belongsTo('App\Models\ModeloAnimal');
+    public function planejamento()
+    {
+        return $this->belongsTo('App\Models\Planejamento');
     }
 
 }

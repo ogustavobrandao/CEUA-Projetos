@@ -21,8 +21,8 @@ return new class extends Migration
             $table->text('justificativa');
             $table->boolean('geneticamente_modificado');
             $table->string('procedencia');
-            $table->unsignedBigInteger('solicitacao_id');
 
+            $table->unsignedBigInteger('solicitacao_id');
             $table->foreign('solicitacao_id')->references('id')->on('solicitacaos')->onDelete('cascade');
             $table->timestamps();
         });

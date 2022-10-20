@@ -31,16 +31,12 @@ class Solicitacao extends Model
         return $this->hasOne('App\Models\Responsavel');
     }
 
-    public function resultado(){
-        return $this->hasOne('App\Models\Resultado');
-    }
-
-    public function procedimento(){
-        return $this->hasOne('App\Models\Procedimento');
-    }
-
     public function modeloAnimal(){
         return $this->hasOne('App\Models\ModeloAnimal');
+    }
+
+    public function planejamento(){
+        return $this->hasOne('App\Models\Planejamento');
     }
 
     public function user(){

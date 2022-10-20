@@ -24,9 +24,9 @@ return new class extends Migration
             $table->text('local');
             $table->string('dimensoes_ambiente');
             $table->string('tipo_cama');
-            $table->unsignedBigInteger('modelo_animal_id');
 
-            $table->foreign('modelo_animal_id')->references('id')->on('modelo_animals')->onDelete('cascade');
+            $table->unsignedBigInteger('planejamento_id');
+            $table->foreign('planejamento_id')->references('id')->on('planejamentos')->onDelete('cascade');
             $table->timestamps();
         });
     }
