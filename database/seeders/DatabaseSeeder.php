@@ -21,7 +21,9 @@ class DatabaseSeeder extends Seeder
             DepartamentoSeeder::class,
             TipoUsuarioSeeder::class,
             UsuarioSeeder::class,
-            SolicitacaoSeeder::class
+            SolicitacaoSeeder::class,
+            ModeloAnimalSeeder::class,
+            PerfilSeeder::class
         ]);
     }
 }
