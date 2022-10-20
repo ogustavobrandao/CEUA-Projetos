@@ -15,15 +15,15 @@ return new class extends Migration
     {
         Schema::create('procedimentos', function (Blueprint $table) {
             $table->id();
-            $table->boolean('relaxante');
-            $table->boolean('estresse');
-            $table->boolean('jejum');
-            $table->boolean('analgesico');
-            $table->boolean('anestesico');
-            $table->boolean('imobilizacao');
-            $table->boolean('inoculacao_substancia');
-            $table->boolean('restricao_hidrica');
-            $table->boolean('extracao');
+            $table->string('relaxante');
+            $table->string('estresse');
+            $table->string('jejum');
+            $table->string('analgesico');
+            $table->string('anestesico');
+            $table->string('imobilizacao');
+            $table->string('inoculacao_substancia');
+            $table->string('restricao_hidrica');
+            $table->string('extracao');
             $table->unsignedBigInteger('solicitacao_id');
 
             $table->foreign('solicitacao_id')->references('id')->on('solicitacaos')->onDelete('cascade');

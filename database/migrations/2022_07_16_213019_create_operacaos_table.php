@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('operacaos', function (Blueprint $table) {
             $table->id();
-            $table->boolean('observacao_recuperacao');
-            $table->boolean('outros_cuidados_recuperacao');
-            $table->boolean('analgesia_recuperacao');
+            $table->string('observacao_recuperacao');
+            $table->string('outros_cuidados_recuperacao');
+            $table->string('analgesia_recuperacao');
             $table->unsignedBigInteger('procedimento_id');
 
             $table->foreign('procedimento_id')->references('id')->on('procedimentos')->onDelete('cascade');
