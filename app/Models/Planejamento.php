@@ -22,8 +22,28 @@ class Planejamento extends Model
         'modelo_animal_id',
     ];
 
-    public function modeloAnimal(){
-        return $this->belongsTo('App\Models\ModeloAnimal');
+    public function solicitacao() {
+        return $this->belongsTo('App\Models\Solicitacao');
+    }
+
+    public function operacao(){
+        return $this->hasOne('App\Models\Operacao');
+    }
+
+    public function eutanasia(){
+        return $this->hasOne('App\Models\Eutanasia');
+    }
+
+    public function resultado(){
+        return $this->hasOne('App\Models\Resultado');
+    }
+
+    public function procedimento(){
+        return $this->hasOne('App\Models\Procedimento');
+    }
+
+    public function condicoesAnimal(){
+        return $this->hasOne('App\Models\CondicoesAnimal');
     }
 
 }

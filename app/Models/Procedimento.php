@@ -22,16 +22,9 @@ class Procedimento extends Model
         'solicitacao_id'
     ];
 
-    public function solicitacao(){
-        return $this->belongsTo('App\Models\Solicitacao');
-    }
-
-    public function eutanasia(){
-        return $this->hasOne('App\Models\Eutanasia');
-    }
-
-    public function operacao(){
-        return $this->hasOne('App\Models\Operacao');
+    public function planejamento()
+    {
+        return $this->belongsTo('App\Models\Planejamento');
     }
 
 }

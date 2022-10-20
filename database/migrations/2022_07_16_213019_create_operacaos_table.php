@@ -18,9 +18,9 @@ return new class extends Migration
             $table->boolean('observacao_recuperacao');
             $table->boolean('outros_cuidados_recuperacao');
             $table->boolean('analgesia_recuperacao');
-            $table->unsignedBigInteger('procedimento_id');
 
-            $table->foreign('procedimento_id')->references('id')->on('procedimentos')->onDelete('cascade');
+            $table->unsignedBigInteger('planejamento_id');
+            $table->foreign('planejamento_id')->references('id')->on('planejamentos')->onDelete('cascade');
             $table->timestamps();
         });
     }
