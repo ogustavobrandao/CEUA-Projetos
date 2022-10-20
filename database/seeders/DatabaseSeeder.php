@@ -23,7 +23,8 @@ class DatabaseSeeder extends Seeder
             UsuarioSeeder::class,
             SolicitacaoSeeder::class,
             ModeloAnimalSeeder::class,
-            PerfilSeeder::class
+            PerfilSeeder::class,
+            PlanejamentoSeeder::class
         ]);
     }
 }
