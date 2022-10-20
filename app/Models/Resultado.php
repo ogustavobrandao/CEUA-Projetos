@@ -18,8 +18,9 @@ class Resultado extends Model
         'solicitacao_id',
     ];
 
-    public function solicitacao(){
-        return $this->belongsTo('App\Models\Solicitacao');
+    public function planejamento()
+    {
+        return $this->belongsTo('App\Models\Planejamento');
     }
 
 }

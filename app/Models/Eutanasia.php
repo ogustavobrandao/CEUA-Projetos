@@ -18,8 +18,9 @@ class Eutanasia extends Model
         'procedimento_id',
     ];
 
-    public function procedimento(){
-        return $this->belongsTo('App\Models\Procedimento');
+    public function planejamento()
+    {
+        return $this->belongsTo('App\Models\Planejamento');
     }
 
 }
