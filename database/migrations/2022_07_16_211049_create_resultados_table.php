@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('resultados', function (Blueprint $table) {
             $table->id();
-            $table->boolean('abate');
+            $table->text('abate');
             $table->text('destino_animais');
             $table->text('justificativa_metodos');
             $table->text('resumo_procedimento');

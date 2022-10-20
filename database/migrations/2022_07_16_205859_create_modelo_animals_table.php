@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('modelo_animals', function (Blueprint $table) {
             $table->id();
             $table->string('nome_vulgar');
+            $table->string('tcle');
             $table->string('nome_cientifico');
             $table->text('justificativa');
             $table->boolean('geneticamente_modificado');

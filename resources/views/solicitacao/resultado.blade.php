@@ -18,16 +18,26 @@
                 <label for="abate">Abate:</label>
                 <div class="row ml-1">
                     <div class="col-sm-2">
-                        <input class="form-check-input" type="radio" name="abate" id="abate" value="true" @if(!empty($resultado) && $resultado->abate == true) checked @endif>
+                        <input class="form-check-input" type="radio" name="abate_radio" id="abate_sim" value="true" @if(!empty($resultado) && $resultado->abate != null) checked @endif>
                         <label class="form-check-label" for="abate">Sim</label>
                     </div>
                     <div class="col-sm-2">
-                        <input class="form-check-input" type="radio" name="abate" id="abate" value="false" @if(!empty($resultado) && $resultado->abate == false || empty($resultado)) checked @endif>
+                        <input class="form-check-input" type="radio" name="abate_radio" id="abate_nao" value="false" @if(!empty($resultado) && $resultado->abate == null) checked @endif>
                         <label class="form-check-label" for="abate">
                             Não
                         </label>
                     </div>
                 </div>
+            </div>
+            <div class="col-sm-12 mt-2" id="destino_animal_abatido" style="display: none;">
+                <label for="destino_animais">Destino dos animais abatidos:</label>
+                <textarea class="form-control @error('abate') is-invalid @enderror" name="abate" id="destino_animais" autocomplete="destino_animais" autofocus
+                          required disabled>@if(!empty($resultado) && $resultado->abate != null){{$resultado->abate}} @else{{old('abate')}}@endif</textarea>
+                @error('abate')
+                <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+                @enderror
             </div>
 
             <div class="col-sm-12 mt-2">
@@ -79,4 +89,23 @@
         @include('component.botoes_form')
     </form>
 </div>
+
+<script>
+
+    $(document).ready(function () {
+        @if(!empty($resultado) && $resultado->abate != null)
+            $("#abate_sim").attr('checked', true);
+            $("#abate_sim").click();
+        @else
+            $("#abate_nao").attr('checked', true);
+        @endif
+    });
+
+    $( "#abate_sim" ).click(function() {
+        $("#destino_animal_abatido").show().find('input, textarea').prop('disabled', false);
+    });
+    $( "#abate_nao" ).click(function() {
+        $("#destino_animal_abatido").hide().find('input, textarea').prop('disabled', true);
+    });
+</script>
 
