@@ -24,7 +24,12 @@ class DatabaseSeeder extends Seeder
             SolicitacaoSeeder::class,
             ModeloAnimalSeeder::class,
             PerfilSeeder::class,
-            PlanejamentoSeeder::class
+            PlanejamentoSeeder::class,
+            CondicoesAnimalSeeder::class,
+            EutanasiaSeeder::class,
+            OperacaoSeeder::class,
+            ProcedimentoSeeder::class,
+            ResultadoSeeder::class,
         ]);
     }
 }
