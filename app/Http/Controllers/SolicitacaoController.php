@@ -478,6 +478,7 @@ class SolicitacaoController extends Controller
     {
         $solicitacao = Solicitacao::find($request->solicitacao_id);
         $modelo_animal = ModeloAnimal::where('solicitacao_id', $solicitacao->id)->first();
+        $planejamento = Planejamento::where('modelo_animal_id', $modelo_animal->id)->first();
 
         if (isset($modelo_animal->condicoesAnimal)) {
             $condicoes_animal = $modelo_animal->condicoesAnimal;
@@ -494,9 +495,9 @@ class SolicitacaoController extends Controller
         $condicoes_animal->periodo = $request->periodo;
         $condicoes_animal->profissional_responsavel = $request->profissional_responsavel;
         $condicoes_animal->email_responsavel = $request->email_responsavel;
-        $condicoes_animal->modelo_animal_id = $modelo_animal->id;
+        $condicoes_animal->planejamento_id = $planejamento->id;
 
-        if (isset($modelo_animal->condicoesAnimal)) {
+        if (isset($planejamento->condicoesAnimal)) {
             $condicoes_animal->update();
         } else {
             $condicoes_animal->save();
