@@ -73,30 +73,6 @@ class SolicitacaoController extends Controller
             return view('solicitacao.formulario', compact('solicitacao', 'instituicaos', 'colaboradores'));
         } elseif ($solicitacao->estado_pagina == 3) {
             return view('solicitacao.formulario', compact('solicitacao', 'instituicaos'));
-        } elseif ($solicitacao->estado_pagina == 4) {
-            $modelo_animal = $solicitacao->modeloAnimal;
-            return view('solicitacao.formulario', compact('solicitacao', 'instituicaos', 'modelo_animal'));
-        } elseif ($solicitacao->estado_pagina == 5) {
-            $perfil = $solicitacao->modeloAnimal->perfil;
-            return view('solicitacao.formulario', compact('solicitacao', 'instituicaos', 'perfil'));
-        } elseif ($solicitacao->estado_pagina == 6) {
-            $planejamento = $solicitacao->modeloAnimal->planejamento;
-            return view('solicitacao.formulario', compact('solicitacao', 'instituicaos', 'planejamento'));
-        } elseif ($solicitacao->estado_pagina == 7) {
-            $condicoes_animal = $solicitacao->modeloAnimal->condicoesAnimal;
-            return view('solicitacao.formulario', compact('solicitacao', 'instituicaos', 'condicoes_animal'));
-        } elseif ($solicitacao->estado_pagina == 8) {
-            $procedimento = $solicitacao->procedimento;
-            return view('solicitacao.formulario', compact('solicitacao', 'instituicaos', 'procedimento'));
-        } elseif ($solicitacao->estado_pagina == 9) {
-            $operacao = $solicitacao->procedimento->operacao;
-            return view('solicitacao.formulario', compact('solicitacao', 'instituicaos', 'operacao'));
-        } elseif ($solicitacao->estado_pagina == 10) {
-            $eutanasia = $solicitacao->procedimento->eutanasia;
-            return view('solicitacao.formulario', compact('solicitacao', 'instituicaos', 'eutanasia'));
-        } elseif ($solicitacao->estado_pagina == 11) {
-            $resultado = $solicitacao->resultado;
-            return view('solicitacao.formulario', compact('solicitacao', 'instituicaos', 'resultado'));
         } else
             return view('solicitacao.formulario', compact('solicitacao', 'instituicaos'));
     }
@@ -359,11 +335,12 @@ class SolicitacaoController extends Controller
         $solicitacao->justificativa = $request->justificativa;
         $solicitacao->relevancia = $request->relevancia;
         $solicitacao->objetivos = $request->objetivos;
+        $solicitacao->status = 'nao_avaliado';
         $solicitacao->update();
 
         $solicitacao->estado_pagina = 4;
         $solicitacao->update();
-        return redirect(route('solicitacao.form', ['solicitacao_id' => $request->solicitacao_id]));
+        return redirect(route('home'));
     }
 
     public function criar_modelo_animal(Request $request)
