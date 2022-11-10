@@ -10,10 +10,10 @@
         <div class="col-3">
             @if($solicitacao->status == 'avaliado' && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia')
                 <input type="hidden" name="conclusaoPendencia" value="1">
-                <button type="submit" class="btn btn-success w-100" onclick="return confirm('Após concluir não será mais possivel modificar a solicitação.\nTem certeza que deseja concluir a solicitação?')"
-                >@if($solicitacao->estado_pagina == 11) Concluir @else Próximo @endif</button>
+                <button type="submit" class="btn btn-success w-100" onclick="return confirm('Após concluir não será mais possivel modificar os dados base da solicitação.\nTem certeza que deseja concluir a solicitação?')"
+                >@if($solicitacao->estado_pagina == 3) Concluir @else Próximo @endif</button>
             @else
-                <button type="submit" class="btn btn-success w-100">@if($solicitacao->estado_pagina == 11) Concluir @else Próximo @endif</button>
+                <button type="submit" class="btn btn-success w-100">@if($solicitacao->estado_pagina == 3) Concluir @else Próximo @endif</button>
 
             @endif
         </div>
