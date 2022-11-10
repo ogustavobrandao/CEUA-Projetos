@@ -15,6 +15,7 @@ class ModeloAnimal extends Model
         'nome_cientifico',
         'nome_vulgar',
         'procedencia',
+        'termo_consentimento',
         'solicitacao_id',
     ];
 
