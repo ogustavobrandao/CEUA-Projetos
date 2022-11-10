@@ -81,6 +81,17 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="col-sm-6 mt-2">
+                    <label for="termo_consentimento">Termo de Consentimento Livre e Esclarecido (TCLE):</label>
+                    <input class="form-control @error('termo_consentimento') is-invalid @enderror" id="termo_consentimento" type="file" name="termo_consentimento"
+                           value="{{old('termo_consentimento')}}" autocomplete="termo_consentimento" autofocus required>
+                    @error('termo_consentimento')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
+                </div>
             </div>
 
         </div>
