@@ -66,6 +66,7 @@ Route::group(['middleware' => 'checkProprietario'], function () {
     Route::post('/solicitacao/criar_resultado', [App\Http\Controllers\SolicitacaoController::class, 'criar_resultado'])->name('solicitacao.resultado.criar');
     Route::post('/solicitacao/criar_operacao', [App\Http\Controllers\SolicitacaoController::class, 'criar_operacao'])->name('solicitacao.operacao.criar');
     Route::post('/solicitacao/criar_solicitacao_fim', [App\Http\Controllers\SolicitacaoController::class, 'criar_solicitacao_fim'])->name('solicitacao.solicitacao_fim.criar');
+    Route::get('/solicitacao/{solicitacao_id}/index', [\App\Http\Controllers\SolicitacaoController::class, 'index_solicitacao'])->name('solicitacao.index');
 });
 
 Route::group(['middleware' => 'checkAvaliador'], function () {
