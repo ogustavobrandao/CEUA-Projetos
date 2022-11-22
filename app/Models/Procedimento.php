@@ -19,7 +19,7 @@ class Procedimento extends Model
         'imobilizacao',
         'inoculacao_substancia',
         'restricao_hidrica',
-        'solicitacao_id'
+        'planejamento_id'
     ];
 
     public function planejamento()

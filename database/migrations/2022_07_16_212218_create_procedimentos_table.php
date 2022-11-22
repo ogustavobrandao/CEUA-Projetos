@@ -15,15 +15,15 @@ return new class extends Migration
     {
         Schema::create('procedimentos', function (Blueprint $table) {
             $table->id();
-            $table->string('relaxante');
-            $table->string('estresse');
-            $table->string('jejum');
-            $table->string('analgesico');
-            $table->string('anestesico');
-            $table->string('imobilizacao');
-            $table->string('inoculacao_substancia');
-            $table->string('restricao_hidrica');
-            $table->string('extracao');
+            $table->string('relaxante')->nullable();
+            $table->string('estresse')->nullable();
+            $table->string('jejum')->nullable();
+            $table->string('analgesico')->nullable();
+            $table->string('anestesico')->nullable();
+            $table->string('imobilizacao')->nullable();
+            $table->string('inoculacao_substancia')->nullable();
+            $table->string('restricao_hidrica')->nullable();
+            $table->string('extracao')->nullable();
 
             $table->unsignedBigInteger('planejamento_id');
             $table->foreign('planejamento_id')->references('id')->on('planejamentos')->onDelete('cascade');
