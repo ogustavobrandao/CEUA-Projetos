@@ -93,36 +93,56 @@
 
         <div class="row">
             <h3 class="subtitulo">Informações Complementares</h3>
-            <div class="col-sm-6">
-                <label for="experiencia">Experiência Previa:</label>
-                <div class="row ml-1">
-                    <div class="col-sm-2">
-                        <input class="form-check-input" type="radio" name="experiencia_previa" id="experiencia_previa" @if(!empty($responsavel) && $responsavel->experiencia_previa == true) checked @endif>
+            <div class="col-sm-2">
+                <label for="experiencia">Experiência Prévia:</label>
+                <div class="row ml-1 mt-2">
+                    <div class="col-sm-6">
+                        <input class="form-check-input" type="radio" name="experiencia_previa_radio" id="experiencia_previa_sim" @if(!empty($responsavel) && $responsavel->experiencia_previa == true) checked @endif>
                         <label class="form-check-label" for="experiencia_previa">Sim</label>
                     </div>
-                    <div class="col-sm-2">
-                        <input class="form-check-input" type="radio" name="experiencia_previa" id="experiencia_previa" @if(!empty($responsavel) && $responsavel->experiencia_previa == false || empty($responsavel)) checked @endif>
+                    <div class="col-sm-6">
+                        <input class="form-check-input" type="radio" name="experiencia_previa_radio" id="experiencia_previa_nao" @if(!empty($responsavel) && $responsavel->experiencia_previa == false || empty($responsavel)) checked @endif>
                         <label class="form-check-label" for="experiencia_previa">
                             Não
                         </label>
                     </div>
                 </div>
             </div>
+            <div class="col-sm-4" id="anexo_experiencia" style="display: none;">
+                <label for="experiencia_previa">Anexo Experiência Prévia:</label>
+                <input class="form-control @error('experiencia_previa') is-invalid @enderror" id="anexo_experiencia_previa" type="file" name="experiencia_previa"
+                       value="{{old('experiencia_previa')}}" autocomplete="treinamento" autofocus disabled required>
+                @error('experiencia_previa')
+                <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+            </div>
 
-            <div class="col-sm-6">
+            <div class="col-sm-2">
                 <label for="experiencia">Treinamento:</label>
-                <div class="row ml-1">
-                    <div class="col-sm-2">
-                        <input class="form-check-input" type="radio" name="treinamento" id="treinamento" @if(!empty($responsavel) && $responsavel->treinamento == true) checked @endif>
+                <div class="row ml-1 mt-2">
+                    <div class="col-sm-6">
+                        <input class="form-check-input" type="radio" name="treinamento_radio" id="treinamento_sim" @if(!empty($responsavel) && $responsavel->treinamento == true) checked @endif>
                         <label class="form-check-label" for="treinamento">Sim</label>
                     </div>
-                    <div class="col-sm-2">
-                        <input class="form-check-input" type="radio" name="treinamento" id="treinamento" @if(!empty($responsavel) && $responsavel->treinamento == false || $responsavel == null) checked @endif>
+                    <div class="col-sm-6">
+                        <input class="form-check-input" type="radio" name="treinamento_radio" id="treinamento_nao" @if(!empty($responsavel) && $responsavel->treinamento == false || $responsavel == null) checked @endif>
                         <label class="form-check-label" for="treinamento">
                             Não
                         </label>
                     </div>
                 </div>
+            </div>
+            <div class="col-sm-4" id="anexo_treinamento" style="display: none;">
+                <label for="telefone">Anexo Treinamento:</label>
+                <input class="form-control @error('treinamento') is-invalid @enderror" id="treinamento" type="file" name="treinamento"
+                       value="{{old('treinamento')}}" autocomplete="treinamento" autofocus disabled required>
+                @error('treinamento')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
             </div>
 
         </div>
@@ -134,3 +154,35 @@
 </div>
 
 
+<script>
+
+    $(document).ready(function () {
+        @if(!empty($resultado) && $resultado->abate != null)
+            $("#treinamento_sim").attr('checked', true);
+            $("#treinamento_sim").click();
+        @else
+            $("#treinamento_nao").attr('checked', true);
+        @endif
+
+        @if(!empty($resultado) && $resultado->abate != null)
+        $("#experiencia_previa_sim").attr('checked', true);
+        $("#experiencia_previa_sim").click();
+        @else
+        $("#experiencia_previa_nao").attr('checked', true);
+        @endif
+    });
+
+    $( "#treinamento_sim" ).click(function() {
+        $("#anexo_treinamento").show().find('input, textarea').prop('disabled', false);
+    });
+    $( "#treinamento_nao" ).click(function() {
+        $("#anexo_treinamento").hide().find('input, textarea').prop('disabled', true);
+    });
+
+    $( "#experiencia_previa_sim" ).click(function() {
+        $("#anexo_experiencia").show().find('input, textarea').prop('disabled', false);
+    });
+    $( "#experiencia_previa_nao" ).click(function() {
+        $("#anexo_experiencia").hide().find('input, textarea').prop('disabled', true);
+    });
+</script>
