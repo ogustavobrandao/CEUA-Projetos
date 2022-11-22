@@ -35,9 +35,7 @@
 
     @yield('login')
     <div class="row my-5 justify-content-center">
-        <div class="col-md-8">
             @yield('content')
-        </div>
     </div>
     @include('layouts.footer')
 </div>
