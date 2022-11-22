@@ -34,6 +34,20 @@ use PhpParser\Node\Expr\AssignOp\Mod;
 
 class SolicitacaoController extends Controller
 {
+
+    public function index_solicitacao($solicitacao_id)
+    {
+        $solicitacao = Solicitacao::find($solicitacao_id);
+        $instituicaos = Instituicao::all();
+
+        $responsavel = $solicitacao->responsavel;
+        $colaboradores = $solicitacao->responsavel->colaboradores;
+
+        $disabled = true;
+
+        return view('solicitacao.index', compact('solicitacao', 'instituicaos', 'responsavel', 'colaboradores', 'disabled'));
+    }
+
     public function form($solicitacao_id)
     {
         $solicitacao = Solicitacao::find($solicitacao_id);
@@ -45,9 +59,9 @@ class SolicitacaoController extends Controller
             $solicitacao->update();
         }
 
-        if($solicitacao->status == 'avaliado' && $solicitacao->avaliacao->first()->status != 'aprovadaPendencia'){
+        if ($solicitacao->status == 'avaliado' && $solicitacao->avaliacao->first()->status != 'aprovadaPendencia') {
             if (($solicitacao->status != null && ($solicitacao->status != 'nao_avaliado' || in_array(Auth::user()->tipo_usuario_id, [1, 2])))
-                ) {
+            ) {
                 $disabled = true;
                 $responsavel = $solicitacao->responsavel;
                 $colaboradores = $solicitacao->responsavel->colaboradores;
@@ -127,7 +141,7 @@ class SolicitacaoController extends Controller
         $resultado = $solicitacao->resultado;
         $solicitacao->avaliador_atual_id = Auth::user()->id;
         $solicitacao->update();
-        $avaliacao = Avaliacao::where('solicitacao_id',$solicitacao_id)->where('user_id',Auth::user()->id)->first();
+        $avaliacao = Avaliacao::where('solicitacao_id', $solicitacao_id)->where('user_id', Auth::user()->id)->first();
         return view('solicitacao.formulario', compact('disabled', 'solicitacao',
             'instituicaos', 'responsavel', 'colaboradores', 'modelo_animal', 'perfil', 'planejamento',
             'condicoes_animal', 'procedimento', 'operacao', 'eutanasia', 'resultado', 'avaliacao'));
@@ -345,18 +359,8 @@ class SolicitacaoController extends Controller
 
     public function criar_modelo_animal(Request $request)
     {
-        $solicitacao = Solicitacao::find($request->solicitacao_id);
-
-        if (isset($solicitacao->modeloAnimal)) {
-            ModeloAnimal::find($solicitacao->modeloAnimal->id)->update($request->all());
-        } else {
-            ModeloAnimal::create($request->all());
-        }
-
-        $solicitacao->estado_pagina = 5;
-        $solicitacao->update();
-
-        return redirect(route('solicitacao.form', ['solicitacao_id' => $request->solicitacao_id]));
+        ModeloAnimal::create($request->all());
+        return redirect(route('solicitacao.index', ['solicitacao_id' => $request->solicitacao_id]));
     }
 
     public function criar_perfil(Request $request)
@@ -592,7 +596,7 @@ class SolicitacaoController extends Controller
 
     public function index_admin()
     {
-        $solicitacoes = Solicitacao::where('status','!=','avaliado')->get();
+        $solicitacoes = Solicitacao::where('status', '!=', 'avaliado')->get();
         $avaliadores = User::where('tipo_usuario_id', '2')->get();
         return view('admin.solicitacoes', compact('solicitacoes', 'avaliadores'));
     }

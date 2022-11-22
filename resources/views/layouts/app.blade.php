@@ -36,11 +36,9 @@
 
     @yield('login')
     <div class="row my-5">
-        <div class="col-md-2"></div>
-        <div class="col-sm-8 shadow-lg p-3 bg-white rounded" style="min-height: 28rem">
+        <div style="min-height: 28rem">
             @yield('content')
         </div>
-        <div class="col-md-2"></div>
     </div>
     @include('layouts.footer')
 </div>
