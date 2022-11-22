@@ -7,7 +7,7 @@
             <h1 class="borda-bottom text-center titulo">Solicitação - Modelo Animal</h1>
         </div>
     </div>
-    <form id="form4" method="POST" action="{{route('solicitacao.modelo_animal.criar')}}">
+    <form id="form4" method="POST" action="{{route('solicitacao.modelo_animal.criar')}}" enctype="multipart/form-data">
         @csrf
         <input type="hidden" name="solicitacao_id" value="{{$solicitacao->id}}">
         <div class="row">

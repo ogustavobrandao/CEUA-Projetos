@@ -492,11 +492,13 @@ class SolicitacaoController extends Controller
 
     public function criar_procedimento(Request $request)
     {
-
         $solicitacao = Solicitacao::find($request->solicitacao_id);
+        $modelo_animal = ModeloAnimal::where('solicitacao_id', $solicitacao->id)->first();
+        $planejamento = Planejamento::where('modelo_animal_id', $modelo_animal->id)->first();
+        $request['planejamento_id'] = $planejamento->id;
 
         if (isset($solicitacao->procedimento)) {
-            Procedimento::find($solicitacao->procedimento->id)->update($request->all());
+            Procedimento::find($planejamento->procedimento->id)->update($request->all());
         } else {
             Procedimento::create($request->all());
         }
