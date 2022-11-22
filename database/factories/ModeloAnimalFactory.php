@@ -19,7 +19,7 @@ class ModeloAnimalFactory extends Factory
     public function definition()
     {
         return [
-            'tcle' => 'asdasdas',
+            'termo_consentimento' => 'asdasdas',
             'nome_vulgar' => 'Gato',
             'nome_cientifico' => 'Gatuno',
             'justificativa' => 'Justificativa',

@@ -32,7 +32,7 @@ class Solicitacao extends Model
     }
 
     public function modeloAnimal(){
-        return $this->hasOne('App\Models\ModeloAnimal');
+        return $this->hasMany('App\Models\ModeloAnimal');
     }
 
     public function planejamento(){
