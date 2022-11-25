@@ -43,9 +43,11 @@ class SolicitacaoController extends Controller
         $responsavel = $solicitacao->responsavel;
         $colaboradores = $solicitacao->responsavel->colaboradores;
 
+        $modelo_animais = $solicitacao->modeloAnimal;
+
         $disabled = true;
 
-        return view('solicitacao.index', compact('solicitacao', 'instituicaos', 'responsavel', 'colaboradores', 'disabled'));
+        return view('solicitacao.index', compact('solicitacao', 'instituicaos', 'responsavel', 'colaboradores', 'disabled', 'modelo_animais'));
     }
 
     public function form($solicitacao_id)
@@ -359,7 +361,19 @@ class SolicitacaoController extends Controller
 
     public function criar_modelo_animal(Request $request)
     {
-        ModeloAnimal::create($request->all());
+        //dd($request->all());
+        $modelo_animal = ModeloAnimal::create($request->all());
+        $perfil = new Perfil();
+        $perfil->grupo_animal = $request->grupo_animal;
+        $perfil->linhagem = $request->linhagem;
+        $perfil->idade = $request->idade;
+        $perfil->peso = $request->peso;
+        $perfil->quantidade = $request->quantidade;
+        $perfil->machos = $request->machos;
+        $perfil->femeas = $request->femeas;
+        $perfil->total = $request->quantidade;
+        $perfil->modelo_animal_id = $modelo_animal->id;
+        $perfil->save();
         return redirect(route('solicitacao.index', ['solicitacao_id' => $request->solicitacao_id]));
     }
 

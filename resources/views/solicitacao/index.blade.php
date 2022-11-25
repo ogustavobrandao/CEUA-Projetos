@@ -90,26 +90,40 @@
                 </div>
                 <div class="col-sm-4"><a class="btn btn-primary float-right mb-1" data-toggle="modal" data-target="#modeloAnimalModal">Criar Modelo</a></div>
             </div>
-            <table class="table">
-                <thead>
-                <tr>
-                    <th scope="col">Nome Ciêntifico</th>
-                    <th scope="col">Procedência</th>
-                    <th scope="col">Linhagem</th>
-                    <th scope="col">Idade</th>
-                    <th scope="col">Ações</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <th>1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                    <td>@mdo</td>
-                </tr>
-                </tbody>
-            </table>
+            @if(isset($modelo_animais))
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Nome Ciêntifico</th>
+                        <th scope="col">Procedência</th>
+                        <th scope="col">Linhagem</th>
+                        <th scope="col">Idade</th>
+                        <th scope="col">Ações</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        @foreach($modelo_animais as $modelo_animal)
+                            <td>
+                                {{$modelo_animal->nome_cientifico}}
+                            </td>
+                            <td>
+                                {{$modelo_animal->procedencia}}
+                            </td>
+                            <td>
+                                {{$modelo_animal->perfil->linhagem}}
+                            </td>
+                            <td>
+                                {{$modelo_animal->perfil->idade}}
+                            </td>
+                            <td>
+                                <a class="btn btn-primary" href="#">Abrir</a>
+                            </td>
+                        @endforeach
+                    </tr>
+                    </tbody>
+                </table>
+            @endif
         </div>
     </div>
 
