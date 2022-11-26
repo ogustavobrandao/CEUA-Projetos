@@ -356,7 +356,7 @@ class SolicitacaoController extends Controller
 
         $solicitacao->estado_pagina = 4;
         $solicitacao->update();
-        return redirect(route('home'));
+        return redirect(route('solicitacao.index',['solicitacao_id'=> $solicitacao->id]));
     }
 
     public function criar_modelo_animal(Request $request)
@@ -423,11 +423,19 @@ class SolicitacaoController extends Controller
         $solicitacao = Solicitacao::find($modelo_animal->solicitacao_id);
 
         //Componentes que requerem ter Planejamento
-        $condicoes_animal = CondicoesAnimal::where('planejamento_id', $planejamento->id)->first();
-        $procedimento = Procedimento::where('planejamento_id', $planejamento->id)->first();
-        $operacao = Operacao::where('planejamento_id', $planejamento->id)->first();
-        $eutanasia = Eutanasia::where('planejamento_id', $planejamento->id)->first();
-        $resultado = Resultado::where('planejamento_id', $planejamento->id)->first();
+        if($planejamento != null){
+            $condicoes_animal = CondicoesAnimal::where('planejamento_id', $planejamento->id)->first();
+            $procedimento = Procedimento::where('planejamento_id', $planejamento->id)->first();
+            $operacao = Operacao::where('planejamento_id', $planejamento->id)->first();
+            $eutanasia = Eutanasia::where('planejamento_id', $planejamento->id)->first();
+            $resultado = Resultado::where('planejamento_id', $planejamento->id)->first();
+        }else{
+            $condicoes_animal = null;
+            $procedimento = null;
+            $operacao = null;
+            $eutanasia = null;
+            $resultado = null;
+        }
 
         return view('planejamento.index',
             compact('modelo_animal','planejamento','solicitacao','condicoes_animal','procedimento','operacao','eutanasia','resultado'));
@@ -489,6 +497,9 @@ class SolicitacaoController extends Controller
     public function criar_condicoes_animal(Request $request)
     {
         $planejamento = Planejamento::find($request->planejamento_id);
+        if($planejamento == null){
+            return redirect()->back()->with('fail', 'Necessária criação de um Planejamento');
+        }
 
         if (isset($planejamento->condicoesAnimal)) {
             $condicoes_animal = $planejamento->condicoesAnimal;
@@ -519,6 +530,9 @@ class SolicitacaoController extends Controller
     public function criar_procedimento(Request $request)
     {
         $planejamento = Planejamento::find($request->planejamento_id);
+        if($planejamento == null){
+            return redirect()->back()->with('fail', 'Necessária criação de um Planejamento');
+        }
 
         if (isset($planejamento->procedimento)) {
             $procedimento = $planejamento->procedimento;
@@ -535,6 +549,9 @@ class SolicitacaoController extends Controller
     public function criar_operacao(Request $request)
     {
         $planejamento = Planejamento::find($request->planejamento_id);
+        if($planejamento == null){
+            return redirect()->back()->with('fail', 'Necessária criação de um Planejamento');
+        }
 
         if ($request->cirurgia == "true") {
 
@@ -565,6 +582,9 @@ class SolicitacaoController extends Controller
     public function criar_eutanasia(Request $request)
     {
         $planejamento = Planejamento::find($request->planejamento_id);
+        if($planejamento == null){
+            return redirect()->back()->with('fail', 'Necessária criação de um Planejamento');
+        }
 
         if (isset($planejamento->eutanasia)) {
             $eutanasia = $planejamento->eutanasia;
@@ -598,6 +618,9 @@ class SolicitacaoController extends Controller
     public function criar_resultado(Request $request)
     {
         $planejamento = Planejamento::find($request->planejamento_id);
+        if($planejamento == null){
+            return redirect()->back()->with('fail', 'Necessária a criação de um Planejamento');
+        }
 
         if (isset($planejamento->resultado)) {
             $resultado = $planejamento->resultado;

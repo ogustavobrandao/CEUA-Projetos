@@ -5,7 +5,7 @@
 
     <form id="form10" method="POST" action="{{route('solicitacao.eutanasia.criar')}}">
         @csrf
-        <input type="hidden" name="planejamento_id" value="{{$planejamento->id}}">
+        <input type="hidden" name="planejamento_id" @if(!empty($planejamento)) value="{{$planejamento->id}}" @endif>
         <div class="row col-md-12">
             <h3 class="subtitulo">Especificação</h3>
 

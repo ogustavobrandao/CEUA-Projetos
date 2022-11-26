@@ -5,7 +5,7 @@
 
     <form id="form9" method="POST" action="{{route('solicitacao.operacao.criar')}}">
         @csrf
-        <input type="hidden" name="planejamento_id" value="{{$planejamento->id}}">
+        <input type="hidden" name="planejamento_id" @if(!empty($planejamento)) value="{{$planejamento->id}}" @endif>
         <div class="row">
             <h3 class="subtitulo">Informações</h3>
             <div class="col-sm-6 mt-2">
