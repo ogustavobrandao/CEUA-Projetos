@@ -483,7 +483,7 @@ class SolicitacaoController extends Controller
         $solicitacao->estado_pagina = 7;
         $solicitacao->update();
 
-        return redirect(route('solicitacao.form', ['solicitacao_id' => $request->solicitacao_id]));
+        return redirect(route('solicitacao.planejamento.index', ['modelo_animal_id' => $planejamento->modelo_animal->id]));
     }
 
     public function criar_condicoes_animal(Request $request)
@@ -513,7 +513,7 @@ class SolicitacaoController extends Controller
             $condicoes_animal->save();
         }
 
-        return redirect(route('solicitacao.planejamento.index.2', ['modelo_animal_id' => $planejamento->modelo_animal->id]));
+        return redirect(route('solicitacao.planejamento.index', ['modelo_animal_id' => $planejamento->modelo_animal->id]));
     }
 
     public function criar_procedimento(Request $request)
@@ -529,7 +529,7 @@ class SolicitacaoController extends Controller
             $procedimento->create($request->all());
         }
 
-        return redirect(route('solicitacao.planejamento.index.2', ['modelo_animal_id' => $planejamento->modelo_animal->id]));
+        return redirect(route('solicitacao.planejamento.index', ['modelo_animal_id' => $planejamento->modelo_animal->id]));
     }
 
     public function criar_operacao(Request $request)
@@ -559,7 +559,7 @@ class SolicitacaoController extends Controller
             $planejamento->operacao->delete();
         }
 
-        return redirect(route('solicitacao.planejamento.index.2', ['modelo_animal_id' => $planejamento->modelo_animal->id]));
+        return redirect(route('solicitacao.planejamento.index', ['modelo_animal_id' => $planejamento->modelo_animal->id]));
     }
 
     public function criar_eutanasia(Request $request)
@@ -592,7 +592,7 @@ class SolicitacaoController extends Controller
             $eutanasia->save();
         }
 
-        return redirect(route('solicitacao.planejamento.index.2', ['modelo_animal_id' => $planejamento->modelo_animal->id]));
+        return redirect(route('solicitacao.planejamento.index', ['modelo_animal_id' => $planejamento->modelo_animal->id]));
     }
 
     public function criar_resultado(Request $request)
@@ -615,7 +615,7 @@ class SolicitacaoController extends Controller
         }
         */
 
-        return redirect(route('solicitacao.planejamento.index.2', ['modelo_animal_id' => $planejamento->modelo_animal->id]));
+        return redirect(route('solicitacao.planejamento.index', ['modelo_animal_id' => $planejamento->modelo_animal->id]));
     }
 
     public function index_admin()
