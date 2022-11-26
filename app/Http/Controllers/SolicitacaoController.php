@@ -415,7 +415,7 @@ class SolicitacaoController extends Controller
         $planejamento = Planejamento::find($planejamento_id);
         return Storage::download('formulas/' . $planejamento->anexo_formula);
     }
-    
+
     public function index_planejamento($modelo_animal_id)
     {
         $modelo_animal = ModeloAnimal::find($modelo_animal_id);
@@ -488,14 +488,13 @@ class SolicitacaoController extends Controller
 
     public function criar_condicoes_animal(Request $request)
     {
-        $solicitacao = Solicitacao::find($request->solicitacao_id);
-        $modelo_animal = ModeloAnimal::where('solicitacao_id', $solicitacao->id)->first();
-        $planejamento = Planejamento::where('modelo_animal_id', $modelo_animal->id)->first();
+        $planejamento = Planejamento::find($request->planejamento_id);
 
-        if (isset($modelo_animal->condicoesAnimal)) {
-            $condicoes_animal = $modelo_animal->condicoesAnimal;
+        if (isset($planejamento->condicoesAnimal)) {
+            $condicoes_animal = $planejamento->condicoesAnimal;
         } else {
             $condicoes_animal = new CondicoesAnimal();
+            $condicoes_animal->planejamento_id = $planejamento->id;
         }
 
         $condicoes_animal->condicoes_particulares = $request->condicoes_particulares;
@@ -507,7 +506,6 @@ class SolicitacaoController extends Controller
         $condicoes_animal->periodo = $request->periodo;
         $condicoes_animal->profissional_responsavel = $request->profissional_responsavel;
         $condicoes_animal->email_responsavel = $request->email_responsavel;
-        $condicoes_animal->planejamento_id = $planejamento->id;
 
         if (isset($planejamento->condicoesAnimal)) {
             $condicoes_animal->update();
@@ -515,10 +513,7 @@ class SolicitacaoController extends Controller
             $condicoes_animal->save();
         }
 
-        $solicitacao->estado_pagina = 8;
-        $solicitacao->update();
-
-        return redirect(route('solicitacao.form', ['solicitacao_id' => $request->solicitacao_id]));
+        return redirect(route('solicitacao.planejamento.index.2', ['modelo_animal_id' => $planejamento->modelo_animal->id]));
     }
 
     public function criar_procedimento(Request $request)
