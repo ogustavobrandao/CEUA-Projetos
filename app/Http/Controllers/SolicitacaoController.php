@@ -564,12 +564,13 @@ class SolicitacaoController extends Controller
 
     public function criar_eutanasia(Request $request)
     {
-        $solicitacao = Solicitacao::find($request->solicitacao_id);
+        $planejamento = Planejamento::find($request->planejamento_id);
 
-        if (isset($solicitacao->procedimento->eutanasia)) {
-            $eutanasia = $solicitacao->procedimento->eutanasia;
+        if (isset($planejamento->eutanasia)) {
+            $eutanasia = $planejamento->eutanasia;
         } else {
             $eutanasia = new Eutanasia();
+            $eutanasia->planejamento_id = $planejamento->id;
         }
 
         if ($request->eutanasia == "true") {
@@ -584,16 +585,15 @@ class SolicitacaoController extends Controller
 
         $eutanasia->destino = $request->destino;
         $eutanasia->descarte = $request->descarte;
-        $eutanasia->procedimento_id = $solicitacao->procedimento->id;
-        if (isset($solicitacao->procedimento->eutanasia)) {
+
+        if (isset($planejamento->eutanasia)) {
             $eutanasia->update();
         } else {
             $eutanasia->save();
         }
-        $solicitacao->estado_pagina = 11;
-        $solicitacao->update();
 
-        return redirect(route('solicitacao.form', ['solicitacao_id' => $request->solicitacao_id]));
+
+        return redirect(route('solicitacao.planejamento.index.2', ['modelo_animal_id' => $planejamento->modelo_animal->id]));
     }
 
     public function criar_resultado(Request $request)
