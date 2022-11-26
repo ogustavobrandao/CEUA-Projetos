@@ -46,4 +46,8 @@ class Planejamento extends Model
         return $this->hasOne('App\Models\CondicoesAnimal');
     }
 
+    public function modelo_animal(){
+        return $this->belongsTo('App\Models\ModeloAnimal');
+    }
+
 }
