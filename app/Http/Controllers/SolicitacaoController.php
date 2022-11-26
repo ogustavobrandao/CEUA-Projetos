@@ -415,6 +415,23 @@ class SolicitacaoController extends Controller
         $planejamento = Planejamento::find($planejamento_id);
         return Storage::download('formulas/' . $planejamento->anexo_formula);
     }
+    
+    public function index_planejamento($modelo_animal_id)
+    {
+        $modelo_animal = ModeloAnimal::find($modelo_animal_id);
+        $planejamento = Planejamento::where('modelo_animal_id',$modelo_animal_id)->first();
+        $solicitacao = Solicitacao::find($modelo_animal->solicitacao_id);
+
+        //Componentes que requerem ter Planejamento
+        $condicoes_animal = CondicoesAnimal::where('planejamento_id', $planejamento->id)->first();
+        $procedimento = Procedimento::where('planejamento_id', $planejamento->id)->first();
+        $operacao = Operacao::where('planejamento_id', $planejamento->id)->first();
+        $eutanasia = Eutanasia::where('planejamento_id', $planejamento->id)->first();
+        $resultado = Resultado::where('planejamento_id', $planejamento->id)->first();
+
+        return view('planejamento.index',
+            compact('modelo_animal','planejamento','solicitacao','condicoes_animal','procedimento','operacao','eutanasia','resultado'));
+    }
 
     public function criar_planejamento(Request $request)
     {
