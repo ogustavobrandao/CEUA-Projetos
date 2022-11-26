@@ -102,8 +102,8 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        @foreach($modelo_animais as $modelo_animal)
+                    @foreach($modelo_animais as $modelo_animal)
+                        <tr>
                             <td>
                                 {{$modelo_animal->nome_cientifico}}
                             </td>
@@ -119,8 +119,8 @@
                             <td>
                                 <a class="btn btn-primary" href="{{route('solicitacao.planejamento.index', ['modelo_animal_id' => $modelo_animal->id])}}">Abrir</a>
                             </td>
-                        @endforeach
-                    </tr>
+                        </tr>
+                    @endforeach
                     </tbody>
                 </table>
             @endif
