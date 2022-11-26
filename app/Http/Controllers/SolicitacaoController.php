@@ -592,30 +592,30 @@ class SolicitacaoController extends Controller
             $eutanasia->save();
         }
 
-
         return redirect(route('solicitacao.planejamento.index.2', ['modelo_animal_id' => $planejamento->modelo_animal->id]));
     }
 
     public function criar_resultado(Request $request)
     {
-        $solicitacao = Solicitacao::find($request->solicitacao_id);
+        $planejamento = Planejamento::find($request->planejamento_id);
 
-        if (isset($solicitacao->resultado)) {
-            Resultado::find($solicitacao->resultado->id)->update($request->all());
+        if (isset($planejamento->resultado)) {
+            $resultado = $planejamento->resultado;
+            $resultado->update($request->all());
         } else {
-            Resultado::create($request->all());
-
-            $admins = User::where('tipo_usuario_id', 1)->get();
-            foreach ($admins as $admin) {
-                Mail::to($admin->email)->send(new SendNotificacaoSolicitacao($admin));
-            }
+            $resultado = new Resultado();
+            $resultado->planejamento_id = $planejamento->id;
+            $resultado->create($request->all());
         }
 
-        $solicitacao->estado_pagina = 12;
-        $solicitacao->status = 'nao_avaliado';
-        $solicitacao->update();
+        /* Envio de Email ao administrador
+        $admins = User::where('tipo_usuario_id', 1)->get();
+        foreach ($admins as $admin) {
+            Mail::to($admin->email)->send(new SendNotificacaoSolicitacao($admin));
+        }
+        */
 
-        return redirect(route('home'));
+        return redirect(route('solicitacao.planejamento.index.2', ['modelo_animal_id' => $planejamento->modelo_animal->id]));
     }
 
     public function index_admin()
