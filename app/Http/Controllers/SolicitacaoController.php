@@ -518,21 +518,18 @@ class SolicitacaoController extends Controller
 
     public function criar_procedimento(Request $request)
     {
-        $solicitacao = Solicitacao::find($request->solicitacao_id);
-        $modelo_animal = ModeloAnimal::where('solicitacao_id', $solicitacao->id)->first();
-        $planejamento = Planejamento::where('modelo_animal_id', $modelo_animal->id)->first();
-        $request['planejamento_id'] = $planejamento->id;
+        $planejamento = Planejamento::find($request->planejamento_id);
 
-        if (isset($solicitacao->procedimento)) {
-            Procedimento::find($planejamento->procedimento->id)->update($request->all());
+        if (isset($planejamento->procedimento)) {
+            $procedimento = $planejamento->procedimento;
+            $procedimento->update($request->all());
         } else {
-            Procedimento::create($request->all());
+            $procedimento = new Procedimento();
+            $procedimento->planejamento_id = $planejamento->id;
+            $procedimento->create($request->all());
         }
 
-        $solicitacao->estado_pagina = 9;
-        $solicitacao->update();
-
-        return redirect(route('solicitacao.form', ['solicitacao_id' => $request->solicitacao_id]));
+        return redirect(route('solicitacao.planejamento.index.2', ['modelo_animal_id' => $planejamento->modelo_animal->id]));
     }
 
     public function criar_operacao(Request $request)
