@@ -356,7 +356,7 @@ class SolicitacaoController extends Controller
 
         $solicitacao->estado_pagina = 4;
         $solicitacao->update();
-        return redirect(route('home'));
+        return redirect(route('solicitacao.index',['solicitacao_id'=> $solicitacao->id]));
     }
 
     public function criar_modelo_animal(Request $request)
