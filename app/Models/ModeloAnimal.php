@@ -23,4 +23,8 @@ class ModeloAnimal extends Model
         return $this->hasOne('App\Models\Perfil');
     }
 
+    public function planejamento(){
+        return $this->hasOne('App\Models\Planejamento');
+    }
+
 }

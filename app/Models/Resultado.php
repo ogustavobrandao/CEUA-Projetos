@@ -15,7 +15,7 @@ class Resultado extends Model
         'justificativa_metodos',
         'resumo_procedimento',
         'outras_infos',
-        'solicitacao_id',
+        'planejamento_id',
     ];
 
     public function planejamento()

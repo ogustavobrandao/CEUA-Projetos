@@ -416,6 +416,23 @@ class SolicitacaoController extends Controller
         return Storage::download('formulas/' . $planejamento->anexo_formula);
     }
 
+    public function index_planejamento($modelo_animal_id)
+    {
+        $modelo_animal = ModeloAnimal::find($modelo_animal_id);
+        $planejamento = Planejamento::where('modelo_animal_id',$modelo_animal_id)->first();
+        $solicitacao = Solicitacao::find($modelo_animal->solicitacao_id);
+
+        //Componentes que requerem ter Planejamento
+        $condicoes_animal = CondicoesAnimal::where('planejamento_id', $planejamento->id)->first();
+        $procedimento = Procedimento::where('planejamento_id', $planejamento->id)->first();
+        $operacao = Operacao::where('planejamento_id', $planejamento->id)->first();
+        $eutanasia = Eutanasia::where('planejamento_id', $planejamento->id)->first();
+        $resultado = Resultado::where('planejamento_id', $planejamento->id)->first();
+
+        return view('planejamento.index',
+            compact('modelo_animal','planejamento','solicitacao','condicoes_animal','procedimento','operacao','eutanasia','resultado'));
+    }
+
     public function criar_planejamento(Request $request)
     {
         $solicitacao = Solicitacao::find($request->solicitacao_id);
@@ -466,19 +483,18 @@ class SolicitacaoController extends Controller
         $solicitacao->estado_pagina = 7;
         $solicitacao->update();
 
-        return redirect(route('solicitacao.form', ['solicitacao_id' => $request->solicitacao_id]));
+        return redirect(route('solicitacao.planejamento.index', ['modelo_animal_id' => $planejamento->modelo_animal->id]));
     }
 
     public function criar_condicoes_animal(Request $request)
     {
-        $solicitacao = Solicitacao::find($request->solicitacao_id);
-        $modelo_animal = ModeloAnimal::where('solicitacao_id', $solicitacao->id)->first();
-        $planejamento = Planejamento::where('modelo_animal_id', $modelo_animal->id)->first();
+        $planejamento = Planejamento::find($request->planejamento_id);
 
-        if (isset($modelo_animal->condicoesAnimal)) {
-            $condicoes_animal = $modelo_animal->condicoesAnimal;
+        if (isset($planejamento->condicoesAnimal)) {
+            $condicoes_animal = $planejamento->condicoesAnimal;
         } else {
             $condicoes_animal = new CondicoesAnimal();
+            $condicoes_animal->planejamento_id = $planejamento->id;
         }
 
         $condicoes_animal->condicoes_particulares = $request->condicoes_particulares;
@@ -490,7 +506,6 @@ class SolicitacaoController extends Controller
         $condicoes_animal->periodo = $request->periodo;
         $condicoes_animal->profissional_responsavel = $request->profissional_responsavel;
         $condicoes_animal->email_responsavel = $request->email_responsavel;
-        $condicoes_animal->planejamento_id = $planejamento->id;
 
         if (isset($planejamento->condicoesAnimal)) {
             $condicoes_animal->update();
@@ -498,70 +513,64 @@ class SolicitacaoController extends Controller
             $condicoes_animal->save();
         }
 
-        $solicitacao->estado_pagina = 8;
-        $solicitacao->update();
-
-        return redirect(route('solicitacao.form', ['solicitacao_id' => $request->solicitacao_id]));
+        return redirect(route('solicitacao.planejamento.index', ['modelo_animal_id' => $planejamento->modelo_animal->id]));
     }
 
     public function criar_procedimento(Request $request)
     {
-        $solicitacao = Solicitacao::find($request->solicitacao_id);
-        $modelo_animal = ModeloAnimal::where('solicitacao_id', $solicitacao->id)->first();
-        $planejamento = Planejamento::where('modelo_animal_id', $modelo_animal->id)->first();
-        $request['planejamento_id'] = $planejamento->id;
+        $planejamento = Planejamento::find($request->planejamento_id);
 
-        if (isset($solicitacao->procedimento)) {
-            Procedimento::find($planejamento->procedimento->id)->update($request->all());
+        if (isset($planejamento->procedimento)) {
+            $procedimento = $planejamento->procedimento;
+            $procedimento->update($request->all());
         } else {
-            Procedimento::create($request->all());
+            $procedimento = new Procedimento();
+            $procedimento->planejamento_id = $planejamento->id;
+            $procedimento->create($request->all());
         }
 
-        $solicitacao->estado_pagina = 9;
-        $solicitacao->update();
-
-        return redirect(route('solicitacao.form', ['solicitacao_id' => $request->solicitacao_id]));
+        return redirect(route('solicitacao.planejamento.index', ['modelo_animal_id' => $planejamento->modelo_animal->id]));
     }
 
     public function criar_operacao(Request $request)
     {
-        $solicitacao = Solicitacao::find($request->solicitacao_id);
-        if ($request->cirurgia == "true") {
-            $procedimento = Procedimento::where('solicitacao_id', $solicitacao->id)->first();
+        $planejamento = Planejamento::find($request->planejamento_id);
 
-            if (isset($solicitacao->procedimento->operacao)) {
-                $operacao = $solicitacao->procedimento->operacao;
+        if ($request->cirurgia == "true") {
+
+            if (isset($planejamento->operacao)) {
+                $operacao = $planejamento->operacao;
             } else {
                 $operacao = new Operacao();
+                $operacao->planejamento_id = $planejamento->id;
             }
 
             $operacao->observacao_recuperacao = $request->observacao_recuperacao;
             $operacao->outros_cuidados_recuperacao = $request->outros_cuidados_recuperacao;
             $operacao->analgesia_recuperacao = $request->analgesia_recuperacao;
-            $operacao->procedimento_id = $procedimento->id;
-            if (isset($solicitacao->procedimento->operacao)) {
+
+            if (isset($planejamento->operacao)) {
                 $operacao->update();
             } else {
                 $operacao->save();
             }
 
-        } elseif (isset($solicitacao->procedimento->operacao)) {
-            $solicitacao->procedimento->operacao->delete();
+        } elseif (isset($planejamento->operacao)) {
+            $planejamento->operacao->delete();
         }
-        $solicitacao->estado_pagina = 10;
-        $solicitacao->update();
 
-        return redirect(route('solicitacao.form', ['solicitacao_id' => $request->solicitacao_id]));
+        return redirect(route('solicitacao.planejamento.index', ['modelo_animal_id' => $planejamento->modelo_animal->id]));
     }
 
     public function criar_eutanasia(Request $request)
     {
-        $solicitacao = Solicitacao::find($request->solicitacao_id);
+        $planejamento = Planejamento::find($request->planejamento_id);
 
-        if (isset($solicitacao->procedimento->eutanasia)) {
-            $eutanasia = $solicitacao->procedimento->eutanasia;
+        if (isset($planejamento->eutanasia)) {
+            $eutanasia = $planejamento->eutanasia;
         } else {
             $eutanasia = new Eutanasia();
+            $eutanasia->planejamento_id = $planejamento->id;
         }
 
         if ($request->eutanasia == "true") {
@@ -576,38 +585,37 @@ class SolicitacaoController extends Controller
 
         $eutanasia->destino = $request->destino;
         $eutanasia->descarte = $request->descarte;
-        $eutanasia->procedimento_id = $solicitacao->procedimento->id;
-        if (isset($solicitacao->procedimento->eutanasia)) {
+
+        if (isset($planejamento->eutanasia)) {
             $eutanasia->update();
         } else {
             $eutanasia->save();
         }
-        $solicitacao->estado_pagina = 11;
-        $solicitacao->update();
 
-        return redirect(route('solicitacao.form', ['solicitacao_id' => $request->solicitacao_id]));
+        return redirect(route('solicitacao.planejamento.index', ['modelo_animal_id' => $planejamento->modelo_animal->id]));
     }
 
     public function criar_resultado(Request $request)
     {
-        $solicitacao = Solicitacao::find($request->solicitacao_id);
+        $planejamento = Planejamento::find($request->planejamento_id);
 
-        if (isset($solicitacao->resultado)) {
-            Resultado::find($solicitacao->resultado->id)->update($request->all());
+        if (isset($planejamento->resultado)) {
+            $resultado = $planejamento->resultado;
+            $resultado->update($request->all());
         } else {
-            Resultado::create($request->all());
-
-            $admins = User::where('tipo_usuario_id', 1)->get();
-            foreach ($admins as $admin) {
-                Mail::to($admin->email)->send(new SendNotificacaoSolicitacao($admin));
-            }
+            $resultado = new Resultado();
+            $resultado->planejamento_id = $planejamento->id;
+            $resultado->create($request->all());
         }
 
-        $solicitacao->estado_pagina = 12;
-        $solicitacao->status = 'nao_avaliado';
-        $solicitacao->update();
+        /* Envio de Email ao administrador
+        $admins = User::where('tipo_usuario_id', 1)->get();
+        foreach ($admins as $admin) {
+            Mail::to($admin->email)->send(new SendNotificacaoSolicitacao($admin));
+        }
+        */
 
-        return redirect(route('home'));
+        return redirect(route('solicitacao.planejamento.index', ['modelo_animal_id' => $planejamento->modelo_animal->id]));
     }
 
     public function index_admin()

@@ -1,16 +1,11 @@
-<div class="card shadow-lg p-3 bg-white" style="border-radius: 10px">
+<div class="card shadow-lg p-3 bg-white" style="border-radius: 0px 0px 10px 10px">
     @if($solicitacao->status == 'avaliado' && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia')
         <a type="button" class="btn btn-info text-start" style="position: absolute;pointer-events: all;z-index:10;" data-toggle="modal" data-target="#pendenciaVisuModal" title="Pendência"><img src="{{asset('images/pendencia.svg')}}" width="30px"></a>
     @endif
-    <div class="row">
-        <div class="col-md-12">
-            <h1 class="borda-bottom text-center titulo">Solicitação - Resultado</h1>
-        </div>
-    </div>
 
     <form id="form11" method="POST" action="{{route('solicitacao.resultado.criar')}}">
         @csrf
-        <input type="hidden" name="solicitacao_id" value="{{$solicitacao->id}}">
+        <input type="hidden" name="planejamento_id" value="{{$planejamento->id}}">
         <div class="row col-md-12">
             <h3 class="subtitulo">Informações</h3>
 
@@ -86,7 +81,13 @@
 
 
         </div>
-        @include('component.botoes_form')
+
+        <div class="row mt-4 justify-content-end">
+            <div class="col-3">
+                <button type="submit" class="btn btn-success w-100">Salvar</button>
+            </div>
+        </div>
+
     </form>
 </div>
 
