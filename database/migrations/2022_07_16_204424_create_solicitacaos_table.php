@@ -15,14 +15,10 @@ return new class extends Migration
     {
         Schema::create('solicitacaos', function (Blueprint $table) {
             $table->id();
-            $table->text('relevancia')->nullable();
             $table->string('titulo_en')->nullable();
             $table->dateTime('inicio')->nullable();
             $table->dateTime('fim')->nullable();
             $table->string('tipo')->nullable();
-            $table->text('justificativa')->nullable();
-            $table->text('objetivos')->nullable();
-            $table->text('resumo')->nullable();
             $table->string('titulo_pt')->nullable();
             $table->string('area_conhecimento')->nullable();
             $table->integer('estado_pagina');

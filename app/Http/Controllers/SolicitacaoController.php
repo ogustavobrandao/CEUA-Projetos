@@ -10,6 +10,7 @@ use App\Models\Avaliacao;
 use App\Models\Colaborador;
 use App\Models\CondicoesAnimal;
 use App\Models\Contato;
+use App\Models\DadosComplementares;
 use App\Models\Eutanasia;
 use App\Models\Instituicao;
 use App\Models\Licenca;
@@ -236,6 +237,8 @@ class SolicitacaoController extends Controller
 
     public function criar(Request $request)
     {
+
+
         $solicitacao = Solicitacao::find($request->solicitacao_id);
         $solicitacao->titulo_pt = $request->titulo_pt;
         $solicitacao->titulo_en = $request->titulo_en;
@@ -345,15 +348,10 @@ class SolicitacaoController extends Controller
 
     public function criar_solicitacao_fim(Request $request)
     {
+        DadosComplementares::create($request->all());
+
         $solicitacao = Solicitacao::find($request->solicitacao_id);
-
-        $solicitacao->resumo = $request->resumo;
-        $solicitacao->justificativa = $request->justificativa;
-        $solicitacao->relevancia = $request->relevancia;
-        $solicitacao->objetivos = $request->objetivos;
         $solicitacao->status = 'nao_avaliado';
-        $solicitacao->update();
-
         $solicitacao->estado_pagina = 4;
         $solicitacao->update();
         return redirect(route('solicitacao.index',['solicitacao_id'=> $solicitacao->id]));

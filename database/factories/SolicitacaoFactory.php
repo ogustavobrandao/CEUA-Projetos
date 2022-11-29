@@ -17,14 +17,10 @@ class SolicitacaoFactory extends Factory
     public function definition()
     {
         return [
-            'relevancia' => 'Relevante',
             'titulo_en' => 'Titulo English',
             'fim' => today(),
             'user_id' => 3,
             'tipo' => 'Extensão',
-            'justificativa' => 'Justificativa',
-            'objetivos' => 'Objetivos',
-            'resumo' => 'Resumo',
             'titulo_pt' => 'Titulo Portugues',
             'inicio' => today(),
             'area_conhecimento' => 'Area de conhecimento',
