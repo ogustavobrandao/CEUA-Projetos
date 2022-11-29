@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\DadosComplementares;
 use App\Models\Departamento;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -22,6 +23,7 @@ class DatabaseSeeder extends Seeder
             TipoUsuarioSeeder::class,
             UsuarioSeeder::class,
             SolicitacaoSeeder::class,
+            DadosComplementaresSeeder::class,
             ModeloAnimalSeeder::class,
             PerfilSeeder::class,
             PlanejamentoSeeder::class,
