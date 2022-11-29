@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Mail\SendNotificacaoSolicitacao;
+use Illuminate\Support\Facades\Validator;
 use App\Mail\SendSolicitacaoStatus;
 use App\Mail\SendSolicitacaoReprovada;
 use App\Models\Avaliacao;
@@ -237,7 +238,7 @@ class SolicitacaoController extends Controller
 
     public function criar(Request $request)
     {
-
+        Validator::make($request->all(), Solicitacao::$rules, Solicitacao::$messages)->validate();
 
         $solicitacao = Solicitacao::find($request->solicitacao_id);
         $solicitacao->titulo_pt = $request->titulo_pt;

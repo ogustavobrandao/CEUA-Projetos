@@ -79,7 +79,7 @@
 
             <div class="col-sm-4">
                 <label for="area_conhecimento">Área de conhecimento:</label>
-                <select class="form-control" id="area_conhecimento" name="area_conhecimento">
+                <select class="form-control @error('area_conhecimento') is-invalid @enderror" id="area_conhecimento" name="area_conhecimento">
                     <option disabled selected>Selecione a Área de Conhecimento</option>
                     <option value="ciencias_agrarias" @if(!empty($solicitacao) && $solicitacao->area_conhecimento == 'ciencias_agrarias') selected @endif>Ciências Agrárias</option>
                     <option value="ciencias_biologicas" @if(!empty($solicitacao) && $solicitacao->area_conhecimento == 'ciencias_biologicas') selected @endif>Ciências Biológicas</option>
@@ -93,6 +93,11 @@
                     </option>
                     <option value="outras" @if(!empty($solicitacao) && $solicitacao->area_conhecimento == 'outras') selected @endif>Outras</option>
                 </select>
+                @error('area_conhecimento')
+                <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+                @enderror
             </div>
         </div>
 

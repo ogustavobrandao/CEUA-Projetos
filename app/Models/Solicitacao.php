@@ -20,7 +20,7 @@ class Solicitacao extends Model
     ];
 
     public static $rules = [
-        'titulo_en' => 'required|string|min:5',
+        'titulo_en' => 'string|min:5',
         'titulo_pt' => 'required|string|min:5',
         'inicio' => 'required|date',
         'fim' => 'required|date',
@@ -28,36 +28,14 @@ class Solicitacao extends Model
     ];
 
     public static $messages = [
-        'nome.required' => 'O nome é um campo obrigatório.',
-        'nome.min' => 'O nome deve ter no mínimo 5 caracteres.',
-        'nome.max' => 'O nome deve ter no máximo 100 caracteres.',
-        'email.required' => 'O e-mail é um campo obrigatório.',
-        'email.min' => 'O e-mail deve ter no mínimo 5 caracteres.',
-        'email.max' => 'O e-mail deve ter no máximo 100 caracteres.',
-        'email.unique' => 'Este e-mail já está sendo usado.',
-        'numTel.required' => 'O número de celular é um campo obrigatório.',
-        'numTel.integer' => 'O número de celular deve conter apenas números.',
-        'numTel.min' => 'O número de celular não pode ser um número negativo.',
-        'numTel.digits' => 'O número de celular deve ter 11 dígitos.',
-        'cpf.required' => 'O CPF é um campo obrigatório.',
-        'cpf.numeric' => 'O CPF deve conter apenas números.',
-        'cpf.min' => 'O CPF não pode ser um número negativo.',
-        'cpf.digits_between' => 'O CPF deve ter entre 10 e 11 dígitos.',
-        'cpf.unique' => 'O CPF já está cadastrado',
-        'rg.required' => 'O RG é um campo obrigatório.',
-        'rg.numeric' => 'O RG deve conter apenas números.',
-        'rg.min' => 'O RG não pode ser um número negativo.',
-        'rg.digits_between' => 'O RG deve ter entre 7 à 11 dígitos.',
-        'rg.unique' => 'O RG já está cadastrado',
-        'data_nascimento.required' => 'A data de nascimento é um campo obrigatório.',
-        'data_nascimento.date' => 'A data de nascimento deve ser no formato de data.',
-        'matricula.required' => 'A matricula é um campo obrigatório.',
-        'matricula.min' => 'A matricula deve conter pelo menos 1 dígito.',
-        'matricula.integer' => 'A matricula deve ser um número.',
-        'matricula.unique' => 'A matrícula já está cadastrada',
-        'password.required' => 'A senha é um campo obrigatório.',
-        'password.min' => 'A senha deve ter no mínimo 8 caracteres.',
-        'password.confirmed' => 'As senhas devem ser iguais.',
+        'titulo_pt.required' => 'O titulo em português é um campo obrigatório.',
+        'titulo_pt.string' => 'O titulo em português deve ser um texto',
+        'titulo_en.string' => 'O titulo em inglês deve ser um texto',
+        'titulo_pt.min' => 'O titulo em português deve possuir no minimo 5 caracteres',
+        'titulo_en.min' => 'O titulo em inglês deve possuir no minimo 5 caracteres',
+        'inicio.required' => 'A data de inicio é obrigatória',
+        'fim.required' => 'A data de fim é obrigatória',
+        'area_conhecimento.required' => 'A área de conhecimento é obrigatória',
     ];
 
     public function avaliacao()
