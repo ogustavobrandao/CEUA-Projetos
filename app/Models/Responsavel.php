@@ -21,6 +21,7 @@ class Responsavel extends Model
     public static $rules = [
         'nome' => 'required|string|min:5',
         'treinamento' => 'required',
+        'experiencia_previa' => 'required',
     ];
 
     public static $messages = [
@@ -28,6 +29,7 @@ class Responsavel extends Model
         'nome.string' => 'O nome deve ser um texto',
         'nome.min' => 'O nome deve possuir no minimo 5 caracteres',
         'treinamento.required' => 'O envio do treinamento é obrigatório',
+        'experiencia_previa.required' => 'O envio da experiência previa é obrigatório',
     ];
 
     public function colaboradores(){
