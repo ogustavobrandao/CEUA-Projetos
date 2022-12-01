@@ -534,9 +534,6 @@ class SolicitacaoController extends Controller
         Validator::make($request->all(), Procedimento::$rules, Procedimento::$messages)->validate();
 
         $planejamento = Planejamento::find($request->planejamento_id);
-        if($planejamento == null){
-            return redirect()->back()->with('fail', 'Necessária criação de um Planejamento');
-        }
 
         if (isset($planejamento->procedimento)) {
             $procedimento = $planejamento->procedimento;
@@ -552,10 +549,9 @@ class SolicitacaoController extends Controller
 
     public function criar_operacao(Request $request)
     {
+        Validator::make($request->all(), Operacao::$rules, Operacao::$messages)->validate();
+
         $planejamento = Planejamento::find($request->planejamento_id);
-        if($planejamento == null){
-            return redirect()->back()->with('fail', 'Necessária criação de um Planejamento');
-        }
 
         if ($request->cirurgia == "true") {
 
