@@ -616,10 +616,9 @@ class SolicitacaoController extends Controller
 
     public function criar_resultado(Request $request)
     {
+        Validator::make($request->all(), Resultado::$rules, Resultado::$messages)->validate();
+
         $planejamento = Planejamento::find($request->planejamento_id);
-        if($planejamento == null){
-            return redirect()->back()->with('fail', 'Necessária a criação de um Planejamento');
-        }
 
         if (isset($planejamento->resultado)) {
             $resultado = $planejamento->resultado;
