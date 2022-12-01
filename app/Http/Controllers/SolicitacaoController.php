@@ -444,6 +444,8 @@ class SolicitacaoController extends Controller
 
     public function criar_planejamento(Request $request)
     {
+        Validator::make($request->all(), Planejamento::$rules, Planejamento::$messages)->validate();
+
         $solicitacao = Solicitacao::find($request->solicitacao_id);
         $modelo_animal = ModeloAnimal::where('solicitacao_id', $solicitacao->id)->first();
         if (isset($solicitacao->modeloAnimal->planejamento)) {
