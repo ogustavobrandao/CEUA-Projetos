@@ -255,6 +255,8 @@ class SolicitacaoController extends Controller
 
     public function criar_responsavel(Request $request)
     {
+        Validator::make($request->all(), Responsavel::$rules, Responsavel::$messages)->validate();
+        Validator::make($request->all(), Contato::$rules, Contato::$messages)->validate();
 
         $solicitacao = Solicitacao::find($request->solicitacao_id);
 
