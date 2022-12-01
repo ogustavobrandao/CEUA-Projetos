@@ -499,6 +499,8 @@ class SolicitacaoController extends Controller
 
     public function criar_condicoes_animal(Request $request)
     {
+        Validator::make($request->all(), CondicoesAnimal::$rules, CondicoesAnimal::$messages)->validate();
+
         $planejamento = Planejamento::find($request->planejamento_id);
         if($planejamento == null){
             return redirect()->back()->with('fail', 'Necessária criação de um Planejamento');
