@@ -44,7 +44,7 @@
         <div class="row mt-2">
             <div class="col-sm-6">
                 <label for="ambiente_alojamento">Ambiente de alojamento:</label>
-                <select class="form-control" id="ambiente_alojamento" name="ambiente_alojamento">
+                <select class="form-control @error('ambiente_alojamento') is-invalid @enderror" id="ambiente_alojamento" name="ambiente_alojamento">
                     <option disabled selected>Selecione o Ambiente de Alojamento</option>
                     <option @if(!empty($condicoes_animal) && $condicoes_animal->ambiente_alojamento == "baia") selected @endif value="baia" >Baia</option>
                     <option @if(!empty($condicoes_animal) && $condicoes_animal->ambiente_alojamento == "gaiola") selected @endif value="gaiola">Gaiola</option>
@@ -52,16 +52,26 @@
                     <option @if(!empty($condicoes_animal) && $condicoes_animal->ambiente_alojamento == "jaula") selected @endif value="jaula">Jaula</option>
                     <option @if(!empty($condicoes_animal) && $condicoes_animal->ambiente_alojamento == "outro") selected @endif value="outro">Outro</option>
                 </select>
+                @error('ambiente_alojamento')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+                @enderror
             </div>
 
             <div class="col-sm-6">
                 <label for="tipo_cama">Tipo de cama:</label>
-                <select class="form-control" id="tipo_cama" name="tipo_cama">
+                <select class="form-control @error('tipo_cama') is-invalid @enderror" id="tipo_cama" name="tipo_cama">
                     <option disabled selected>Selecione o Tipo de Cama</option>
                     <option @if(!empty($condicoes_animal) && $condicoes_animal->tipo_cama == "estrado") selected @endif value="estrado">Estrado</option>
                     <option @if(!empty($condicoes_animal) && $condicoes_animal->tipo_cama == "maravalha") selected @endif value="maravalha">Maravalha</option>
                     <option @if(!empty($condicoes_animal) && $condicoes_animal->tipo_cama == "outra") selected @endif value="outra">Outra</option>
                 </select>
+                @error('tipo_cama')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+                @enderror
             </div>
         </div>
 

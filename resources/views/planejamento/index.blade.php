@@ -1,12 +1,12 @@
 @extends('layouts.formulario')
 
 @section('content')
-    @if(session()->has('fail'))
+    @error('planejamento_id')
         <div class="alert alert-danger alert-dismissible fade show">
-            <strong>{{session('fail')}}</strong>
+            <strong>{{ $message }}</strong>
             <button type="button" class="close" data-dismiss="alert">&times;</button>
         </div>
-    @endif
+    @enderror
     <h2 class="titulo_h2" id="expand_dados_solicitacao"><span class="titulo_spam">Planejamento</span></h2>
     <div id="dados_solicitacao" class="col-md-10 my-2">
         <div class="mb-4">
