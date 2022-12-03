@@ -304,6 +304,7 @@ class SolicitacaoController extends Controller
 
     public function criar_colaborador(Request $request)
     {
+        Validator::make($request->all(), Colaborador::$rules, Colaborador::$messages)->validate();
         $solicitacao = Solicitacao::find($request->solicitacao_id);
         $listaColab = [];
 
@@ -351,6 +352,8 @@ class SolicitacaoController extends Controller
 
     public function criar_solicitacao_fim(Request $request)
     {
+        Validator::make($request->all(), DadosComplementares::$rules, DadosComplementares::$messages)->validate();
+
         DadosComplementares::create($request->all());
 
         $solicitacao = Solicitacao::find($request->solicitacao_id);
@@ -362,7 +365,9 @@ class SolicitacaoController extends Controller
 
     public function criar_modelo_animal(Request $request)
     {
-        //dd($request->all());
+        Validator::make($request->all(), ModeloAnimal::$rules, ModeloAnimal::$messages)->validate();
+        Validator::make($request->all(), Perfil::$rules, Perfil::$messages)->validate();
+
         $modelo_animal = ModeloAnimal::create($request->all());
         $perfil = new Perfil();
         $perfil->grupo_animal = $request->grupo_animal;
