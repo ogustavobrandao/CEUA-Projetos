@@ -449,6 +449,8 @@ class SolicitacaoController extends Controller
 
     public function criar_planejamento(Request $request)
     {
+        Validator::make($request->all(), Planejamento::$rules, Planejamento::$messages)->validate();
+
         $solicitacao = Solicitacao::find($request->solicitacao_id);
         $modelo_animal = ModeloAnimal::where('solicitacao_id', $solicitacao->id)->first();
         if (isset($solicitacao->modeloAnimal->planejamento)) {
@@ -502,10 +504,9 @@ class SolicitacaoController extends Controller
 
     public function criar_condicoes_animal(Request $request)
     {
+        Validator::make($request->all(), CondicoesAnimal::$rules, CondicoesAnimal::$messages)->validate();
+
         $planejamento = Planejamento::find($request->planejamento_id);
-        if($planejamento == null){
-            return redirect()->back()->with('fail', 'Necessária criação de um Planejamento');
-        }
 
         if (isset($planejamento->condicoesAnimal)) {
             $condicoes_animal = $planejamento->condicoesAnimal;
@@ -535,10 +536,9 @@ class SolicitacaoController extends Controller
 
     public function criar_procedimento(Request $request)
     {
+        Validator::make($request->all(), Procedimento::$rules, Procedimento::$messages)->validate();
+
         $planejamento = Planejamento::find($request->planejamento_id);
-        if($planejamento == null){
-            return redirect()->back()->with('fail', 'Necessária criação de um Planejamento');
-        }
 
         if (isset($planejamento->procedimento)) {
             $procedimento = $planejamento->procedimento;
@@ -554,10 +554,9 @@ class SolicitacaoController extends Controller
 
     public function criar_operacao(Request $request)
     {
+        Validator::make($request->all(), Operacao::$rules, Operacao::$messages)->validate();
+
         $planejamento = Planejamento::find($request->planejamento_id);
-        if($planejamento == null){
-            return redirect()->back()->with('fail', 'Necessária criação de um Planejamento');
-        }
 
         if ($request->cirurgia == "true") {
 
@@ -587,10 +586,9 @@ class SolicitacaoController extends Controller
 
     public function criar_eutanasia(Request $request)
     {
+        Validator::make($request->all(), Eutanasia::$rules, Eutanasia::$messages)->validate();
+
         $planejamento = Planejamento::find($request->planejamento_id);
-        if($planejamento == null){
-            return redirect()->back()->with('fail', 'Necessária criação de um Planejamento');
-        }
 
         if (isset($planejamento->eutanasia)) {
             $eutanasia = $planejamento->eutanasia;
@@ -623,10 +621,9 @@ class SolicitacaoController extends Controller
 
     public function criar_resultado(Request $request)
     {
+        Validator::make($request->all(), Resultado::$rules, Resultado::$messages)->validate();
+
         $planejamento = Planejamento::find($request->planejamento_id);
-        if($planejamento == null){
-            return redirect()->back()->with('fail', 'Necessária a criação de um Planejamento');
-        }
 
         if (isset($planejamento->resultado)) {
             $resultado = $planejamento->resultado;

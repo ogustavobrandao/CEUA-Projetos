@@ -16,6 +16,15 @@ class Operacao extends Model
         'procedimento_id',
     ];
 
+    public static $rules = [
+        'planejamento_id' => 'required',
+
+    ];
+
+    public static $messages = [
+        'planejamento_id.required'  => 'Necessária a criação de um planejamento',
+    ];
+
     public function planejamento()
     {
         return $this->belongsTo('App\Models\Planejamento');
