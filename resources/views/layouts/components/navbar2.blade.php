@@ -1,5 +1,5 @@
-<nav class="navbar navbar-expand-md navbar-light" style="border-bottom: 2px solid black;">
-    <a class="navbar-brand" href="{{ route('welcome') }}">
+<nav class="navbar navbar-expand-md navbar-dark bg-black">
+    <a class="navbar-brand ml-4" href="{{ route('welcome') }}">
         {{ config('app.name', 'Laravel') }}
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -26,15 +26,15 @@
         </ul>
 
         <!-- Right Side Of Navbar -->
-        <ul class="navbar-nav ms-auto">
+        <ul class="navbar-nav ms-auto mr-4">
             <!-- Authentication Links -->
             @guest
                 @if (Route::has('login'))
                     <li class="nav-item">
-                        <a class="nav-link" href="#" style="color: black;">{{ __('Sobre') }}</a>
+                        <a class="nav-link" href="#" style="color: white;">{{ __('Sobre') }}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" style="color: black;">{{ __('Contato') }}</a>
+                        <a class="nav-link" href="#" style="color: white;">{{ __('Contato') }}</a>
                     </li>
                 @endif
 
