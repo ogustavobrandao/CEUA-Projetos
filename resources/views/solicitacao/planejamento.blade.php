@@ -156,7 +156,9 @@
             </div>
         </div>
         <br>
-        <button type="submit" class="btn btn-success w-100">Salvar</button>
+        @if(Auth::user()->tipo_usuario_id == 3)
+            <button type="submit" class="btn btn-success w-100">Salvar</button>
+        @endif
 
     </form>
 

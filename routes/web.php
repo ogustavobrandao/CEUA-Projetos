@@ -70,6 +70,8 @@ Route::group(['middleware' => 'checkProprietario'], function () {
 
     Route::get('/solicitacao/planejamento/index/{modelo_animal_id}', [App\Http\Controllers\SolicitacaoController::class, 'index_planejamento'])->name('solicitacao.planejamento.index');
 
+    Route::get('/solicitacao/{solicitacao_id}/concluir', [App\Http\Controllers\SolicitacaoController::class, 'concluir'])->name('solicitacao.concluir');
+
 });
 
 Route::group(['middleware' => 'checkAvaliador'], function () {
