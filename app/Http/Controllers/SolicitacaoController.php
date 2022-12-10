@@ -135,20 +135,12 @@ class SolicitacaoController extends Controller
         $disabled = true;
         $responsavel = $solicitacao->responsavel;
         $colaboradores = $solicitacao->responsavel->colaboradores;
-        $modelo_animal = $solicitacao->modeloAnimal;
-        $perfil = $solicitacao->modeloAnimal->perfil;
-        $planejamento = $solicitacao->modeloAnimal->planejamento;
-        $condicoes_animal = $solicitacao->modeloAnimal->condicoesAnimal;
-        $procedimento = $solicitacao->procedimento;
-        $operacao = $solicitacao->procedimento->operacao;
-        $eutanasia = $solicitacao->procedimento->eutanasia;
-        $resultado = $solicitacao->resultado;
+        $modelo_animais = $solicitacao->modeloAnimal;
         $solicitacao->avaliador_atual_id = Auth::user()->id;
         $solicitacao->update();
         $avaliacao = Avaliacao::where('solicitacao_id', $solicitacao_id)->where('user_id', Auth::user()->id)->first();
-        return view('solicitacao.formulario', compact('disabled', 'solicitacao',
-            'instituicaos', 'responsavel', 'colaboradores', 'modelo_animal', 'perfil', 'planejamento',
-            'condicoes_animal', 'procedimento', 'operacao', 'eutanasia', 'resultado', 'avaliacao'));
+        return view('solicitacao.index', compact('disabled', 'solicitacao',
+            'instituicaos', 'responsavel', 'colaboradores', 'modelo_animais', 'avaliacao'));
     }
 
     public function aprovarSolicitacao(Request $request)
@@ -354,7 +346,7 @@ class SolicitacaoController extends Controller
         DadosComplementares::create($request->all());
 
         $solicitacao = Solicitacao::find($request->solicitacao_id);
-        $solicitacao->status = 'nao_avaliado';
+        $solicitacao->status = null;
         $solicitacao->estado_pagina = 4;
         $solicitacao->update();
         return redirect(route('solicitacao.index',['solicitacao_id'=> $solicitacao->id]));
@@ -644,5 +636,15 @@ class SolicitacaoController extends Controller
         $solicitacoes = Solicitacao::where('status', '!=', 'avaliado')->get();
         $avaliadores = User::where('tipo_usuario_id', '2')->get();
         return view('admin.solicitacoes', compact('solicitacoes', 'avaliadores'));
+    }
+
+    public function concluir($solicitacao_id){
+        $solicitacao = Solicitacao::where('id',$solicitacao_id)->where('user_id',Auth::user()->id)->first();
+        if($solicitacao == null){
+            return redirect()->back();
+        }
+        $solicitacao->status = 'nao_avaliado';
+        $solicitacao->update();
+        return redirect()->back()->with(['mensagem' => 'Solicitação concluída com sucesso!']);
     }
 }
