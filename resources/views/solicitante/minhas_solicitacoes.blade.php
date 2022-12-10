@@ -27,6 +27,7 @@
 
                     @if($solicitacao->status == null)Em progresso
                     @elseif($solicitacao->status == 'nao_avaliado')Não Avaliado
+                    @elseif($solicitacao->status == 'avaliando')Em avaliação
                     @elseif($solicitacao->avaliacao->first()->status == "aprovada")Aprovado
                     @elseif($solicitacao->avaliacao->first()->status == "reprovada")Reprovado
                     @else Aprovado com pendência
@@ -49,6 +50,10 @@
                             <a class="btn" style="border-color: #1B1C42; background-color: #c0ddf6" data-toggle="modal" data-target="#licencaModal{{$solicitacao->id}}" title="Licença."><i
                                     class="fa-regular fa-id-card"></i></a>
                         @endif
+                    @endif
+                    @if($solicitacao->status == null)
+                         <a class="btn" href="{{route('solicitacao.concluir', ['solicitacao_id' => $solicitacao->id])}}" style="border-color: #1d68a7; color: #1d68a7; background-color: #c0ddf6"
+                            title="Concluir Solicitação."><i class="fa-solid fa-file-circle-check" style="color: green"></i></a>
                     @endif
 
                 </td>

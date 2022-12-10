@@ -56,7 +56,7 @@
                     </div>
                 </div>
             </div>
-            <div id="procedimento" style="display: none;">
+            <div id="procedimento" style="display: none; @if(Auth::user()->tipo_usuario_id == 2) pointer-events: none @endif">
                 @include('solicitacao.procedimento')
             </div>
         </div>
@@ -71,7 +71,7 @@
                     </div>
                 </div>
             </div>
-            <div id="operacao" style="display: none;">
+            <div id="operacao" style="display: none; @if(Auth::user()->tipo_usuario_id == 2) pointer-events: none @endif">
                 @include('solicitacao.operacao')
             </div>
         </div>
@@ -87,7 +87,7 @@
                     </div>
                 </div>
             </div>
-            <div id="eutanasia" style="display: none;">
+            <div id="eutanasia" style="display: none; @if(Auth::user()->tipo_usuario_id == 2) pointer-events: none @endif">
                 @include('solicitacao.eutanasia')
             </div>
         </div>
@@ -103,7 +103,7 @@
                     </div>
                 </div>
             </div>
-            <div id="resultado" style="display: none;">
+            <div id="resultado" style="display: none; @if(Auth::user()->tipo_usuario_id == 2) pointer-events: none @endif">
                 @include('solicitacao.resultado')
             </div>
         </div>
