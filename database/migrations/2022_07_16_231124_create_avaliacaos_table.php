@@ -15,7 +15,6 @@ return new class extends Migration
     {
         Schema::create('avaliacaos', function (Blueprint $table) {
             $table->id();
-            $table->text('parecer')->nullable();
             $table->string('status');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('solicitacao_id');
