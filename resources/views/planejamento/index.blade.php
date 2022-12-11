@@ -31,18 +31,18 @@
 
     <div id="dados_solicitacao2" class="col-md-10 my-2">
         <div class="mb-4">
-            <div class="card shadow-lg p-3 bg-white borda-bottom" style="border-radius: 10px 10px 0px 0px;">
+            <div class="card shadow-lg p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_6">
                 <div class="row">
                     <div class="col-md-12">
-                        <h2 class="titulo">Condição Animal
-                            <a class="float-end" id="condicao_animal_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
-                            <a class="float-end" id="condicao_animal_btn_down" style="display: none"><i class="fa-solid fa-circle-chevron-down"></i></a>
+                        <h2 class="titulo" id="titulo_6">Condição Animal
+                            <a class="float-end" id="6_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
+                            <a class="float-end" id="6_btn_down" style="display: none"><i class="fa-solid fa-circle-chevron-down"></i></a>
                         </h2>
                     </div>
                 </div>
             </div>
             <div id="condicao_animal" style="display: none;">
-                @include('solicitacao.condicoes_animais')
+                @include('solicitacao.condicoes_animais',['tipo'=>6,'avaliacao_id'=>$avaliacao->id,'id'=>$condicoes_animal->id])
             </div>
         </div>
         <div class="mb-4">
@@ -147,11 +147,17 @@
         $(document).ready(function () {
             // Planejamento
             @if(isset($avaliacaoPlanejamento) != null )
-            alterarCorCard(5, '{{$avaliacaoPlanejamento->status}}');
+                alterarCorCard(5, '{{$avaliacaoPlanejamento->status}}');
+            @endif
+
+            // Condições Animal
+            @if(isset($avaliacaoCondicoesAnimal) != null )
+                alterarCorCard(6, '{{$avaliacaoCondicoesAnimal->status}}');
             @endif
 
         });
 
+        // Planejamento
         $('#5_btn_up').on('click', function () {
             $('#planejamento').slideToggle(800);
             $(this).hide();
@@ -164,16 +170,17 @@
             $('#5_btn_up').show();
         });
 
-        $('#condicao_animal_btn_up').on('click', function () {
+        // Condições Animal
+        $('#6_btn_up').on('click', function () {
             $('#condicao_animal').slideToggle(800);
             $(this).hide();
-            $('#condicao_animal_btn_down').show();
+            $('#6_btn_down').show();
         });
 
-        $('#condicao_animal_btn_down').on('click', function () {
+        $('#6_btn_down').on('click', function () {
             $('#condicao_animal').slideToggle(800);
             $(this).hide();
-            $('#condicao_animal_btn_up').show();
+            $('#6_btn_up').show();
         });
 
         $('#procedimento_btn_up').on('click', function () {
