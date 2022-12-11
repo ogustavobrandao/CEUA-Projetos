@@ -4,20 +4,20 @@
     <h2 class="titulo_h2" id="expand_dados_solicitacao"><span class="titulo_spam">Dados da Solicitação</span></h2>
     <div id="dados_solicitacao" class="col-md-10 my-2">
         <div class="mb-4">
-            <div class="card shadow-lg p-3 bg-white borda-bottom" style="border-radius: 10px 10px 0px 0px;">
+            <div class="card shadow-lg p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_0">
                 <div class="row">
                     <div class="col-md-12">
-                        <h2 class="titulo">1. Dados Iniciais
+                        <h2 class="titulo" id="titulo_0">1. Dados Iniciais
                             @if(isset($disabled))
-                                <a class="float-end" id="dados_iniciais_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
-                                <a class="float-end" id="dados_iniciais_btn_down" style="display: none"><i class="fa-solid fa-circle-chevron-down"></i></a>
+                                <a class="float-end" id="0_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
+                                <a class="float-end" id="0_btn_down" style="display: none"><i class="fa-solid fa-circle-chevron-down"></i></a>
                             @endif
                         </h2>
                     </div>
                 </div>
             </div>
             <div id="dados_iniciais">
-                @include('solicitacao.solicitacao')
+                @include('solicitacao.solicitacao',['tipo'=>0,'avaliacao_id'=>$avaliacao->id,'id'=>$solicitacao->id])
             </div>
         </div>
         <div class="mb-4">
@@ -59,7 +59,7 @@
             </div>
         </div>
         <div class="mb-4">
-            <div class="card shadow-lg p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px; color: #4c110f" id="fundo_3">
+            <div class="card shadow-lg p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_3">
                 <div class="row">
                     <div class="col-md-12">
                         <h2 class="titulo" id="titulo_3">4. Dados Complementares
@@ -186,6 +186,11 @@
     <script>
 
         $(document).ready(function () {
+            // Dados Iniciais
+            @if(isset($avaliacaoDadosini) != null )
+                alterarCorCard(0, '{{$avaliacaoDadosini->status}}');
+            @endif
+
             // Dados Complementares
             @if(isset($avaliacaoDadosComp) != null )
                 alterarCorCard(3, '{{$avaliacaoDadosComp->status}}');
@@ -193,16 +198,16 @@
         });
 
 
-        $('#dados_iniciais_btn_up').on('click', function () {
+        $('#0_btn_up').on('click', function () {
             $('#dados_iniciais').slideToggle(800);
             $(this).hide();
-            $('#dados_iniciais_btn_down').show();
+            $('#0_btn_down').show();
         });
 
-        $('#dados_iniciais_btn_down').on('click', function () {
+        $('#0_btn_down').on('click', function () {
             $('#dados_iniciais').slideToggle(800);
             $(this).hide();
-            $('#dados_iniciais_btn_up').show();
+            $('#0_btn_up').show();
         });
 
         $('#dados_responsavel_btn_up').on('click', function () {
