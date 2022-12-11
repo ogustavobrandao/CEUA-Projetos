@@ -465,11 +465,12 @@ class SolicitacaoController extends Controller
         $avaliacaoCondicoesAnimal = AvaliacaoIndividual::where('avaliacao_id',$avaliacao->id)->where('condicoes_animal_id',$condicoes_animal->id)->first();
         $avaliacaoProcedimento = AvaliacaoIndividual::where('avaliacao_id',$avaliacao->id)->where('procedimento_id',$procedimento->id)->first();
         $avaliacaoOperacao = AvaliacaoIndividual::where('avaliacao_id',$avaliacao->id)->where('operacao_id',$operacao->id)->first();
+        $avaliacaoEutanasia = AvaliacaoIndividual::where('avaliacao_id',$avaliacao->id)->where('eutanasia_id',$eutanasia->id)->first();
 
 
         return view('planejamento.index',
             compact('modelo_animal','planejamento','solicitacao','condicoes_animal','procedimento','operacao','eutanasia','resultado','avaliacao',
-                    'avaliacaoPlanejamento','avaliacaoCondicoesAnimal','avaliacaoProcedimento','avaliacaoOperacao'));
+                    'avaliacaoPlanejamento','avaliacaoCondicoesAnimal','avaliacaoProcedimento','avaliacaoOperacao','avaliacaoEutanasia'));
     }
 
     public function criar_planejamento(Request $request)

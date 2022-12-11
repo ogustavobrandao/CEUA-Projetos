@@ -77,18 +77,18 @@
         </div>
 
         <div class="mb-4">
-            <div class="card shadow-lg p-3 bg-white borda-bottom" style="border-radius: 10px 10px 0px 0px;">
+            <div class="card shadow-lg p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_9">
                 <div class="row">
                     <div class="col-md-12">
-                        <h2 class="titulo">Eutanasia
-                            <a class="float-end" id="eutanasia_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
-                            <a class="float-end" id="eutanasia_btn_down" style="display: none"><i class="fa-solid fa-circle-chevron-down"></i></a>
+                        <h2 class="titulo" id="titulo_9">Eutanásia
+                            <a class="float-end" id="9_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
+                            <a class="float-end" id="9_btn_down" style="display: none"><i class="fa-solid fa-circle-chevron-down"></i></a>
                         </h2>
                     </div>
                 </div>
             </div>
-            <div id="eutanasia" style="display: none; @if(Auth::user()->tipo_usuario_id == 2) pointer-events: none @endif">
-                @include('solicitacao.eutanasia')
+            <div id="eutanasia" style="display: none;">
+                @include('solicitacao.eutanasia',['tipo'=>9,'avaliacao_id'=>$avaliacao->id,'id'=>$eutanasia->id])
             </div>
         </div>
 
@@ -165,6 +165,11 @@
                 alterarCorCard(8, '{{$avaliacaoOperacao->status}}');
             @endif
 
+            // Operação
+            @if(isset($avaliacaoEutansia) != null )
+                alterarCorCard(8, '{{$avaliacaoEutansia->status}}');
+            @endif
+
         });
 
         // Planejamento
@@ -219,16 +224,17 @@
             $('#8_btn_up').show();
         });
 
-        $('#eutanasia_btn_up').on('click', function () {
+        // Eutanasia
+        $('#9_btn_up').on('click', function () {
             $('#eutanasia').slideToggle(800);
             $(this).hide();
-            $('#eutanasia_btn_down').show();
+            $('#9_btn_down').show();
         });
 
-        $('#eutanasia_btn_down').on('click', function () {
+        $('#9_btn_down').on('click', function () {
             $('#eutanasia').slideToggle(800);
             $(this).hide();
-            $('#eutanasia_btn_up').show();
+            $('#9_btn_up').show();
         });
 
         $('#resultado_btn_up').on('click', function () {
