@@ -93,18 +93,18 @@
         </div>
 
         <div class="mb-4">
-            <div class="card shadow-lg p-3 bg-white borda-bottom" style="border-radius: 10px 10px 0px 0px;">
+            <div class="card shadow-lg p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_10">
                 <div class="row">
                     <div class="col-md-12">
-                        <h2 class="titulo">Resultado
-                            <a class="float-end" id="resultado_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
-                            <a class="float-end" id="resultado_btn_down" style="display: none"><i class="fa-solid fa-circle-chevron-down"></i></a>
+                        <h2 class="titulo" id="titulo_10">Resultado
+                            <a class="float-end" id="10_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
+                            <a class="float-end" id="10_btn_down" style="display: none"><i class="fa-solid fa-circle-chevron-down"></i></a>
                         </h2>
                     </div>
                 </div>
             </div>
-            <div id="resultado" style="display: none; @if(Auth::user()->tipo_usuario_id == 2) pointer-events: none @endif">
-                @include('solicitacao.resultado')
+            <div id="resultado" style="display: none;">
+                @include('solicitacao.resultado',['tipo'=>10,'avaliacao_id'=>$avaliacao->id,'id'=>$resultado->id])
             </div>
         </div>
 
@@ -168,6 +168,11 @@
             // Eutanasia
             @if(isset($avaliacaoEutanasia) != null )
                 alterarCorCard(9, '{{$avaliacaoEutanasia->status}}');
+            @endif
+
+            // Resultado
+            @if(isset($avaliacaoResultado) != null )
+                alterarCorCard(10, '{{$avaliacaoResultado->status}}');
             @endif
 
         });
@@ -237,16 +242,17 @@
             $('#9_btn_up').show();
         });
 
-        $('#resultado_btn_up').on('click', function () {
+        // Resultado
+        $('#10_btn_up').on('click', function () {
             $('#resultado').slideToggle(800);
             $(this).hide();
-            $('#resultado_btn_down').show();
+            $('#10_btn_down').show();
         });
 
-        $('#resultado_btn_down').on('click', function () {
+        $('#10_btn_down').on('click', function () {
             $('#resultado').slideToggle(800);
             $(this).hide();
-            $('#resultado_btn_up').show();
+            $('#10_btn_up').show();
         });
 
         <!-- Ajax para avaliações individuais -->
