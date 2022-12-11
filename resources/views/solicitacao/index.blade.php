@@ -117,7 +117,11 @@
                                 {{$modelo_animal->perfil->idade}}
                             </td>
                             <td>
-                                <a class="btn btn-primary" href="{{route('solicitacao.planejamento.index', ['modelo_animal_id' => $modelo_animal->id])}}">Abrir</a>
+                                @if(Auth::user()->tipo_usuario_id == 2)
+                                    <a class="btn btn-primary" href="{{route('avaliador.solicitacao.planejamento.avaliar', ['modelo_animal_id' => $modelo_animal->id])}}">Abrir</a>
+                                @else
+                                    <a class="btn btn-primary" href="{{route('solicitacao.planejamento.index', ['modelo_animal_id' => $modelo_animal->id])}}">Abrir</a>
+                                @endif
                             </td>
                         </tr>
                     @endforeach
