@@ -165,9 +165,9 @@
                 alterarCorCard(8, '{{$avaliacaoOperacao->status}}');
             @endif
 
-            // Operação
-            @if(isset($avaliacaoEutansia) != null )
-                alterarCorCard(8, '{{$avaliacaoEutansia->status}}');
+            // Eutanasia
+            @if(isset($avaliacaoEutanasia) != null )
+                alterarCorCard(9, '{{$avaliacaoEutanasia->status}}');
             @endif
 
         });
