@@ -147,7 +147,7 @@
 
         </div>
 
-        @include('component.botoes_form')
+        @include('component.botoes_new_form')
 
     </form>
 

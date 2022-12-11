@@ -21,13 +21,13 @@
             </div>
         </div>
         <div class="mb-4">
-            <div class="card shadow-lg p-3 bg-white borda-bottom" style="border-radius: 10px 10px 0px 0px;">
+            <div class="card shadow-lg p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_1">
                 <div class="row">
                     <div class="col-md-12">
-                        <h2 class="titulo">2. Dados do Responsável
+                        <h2 class="titulo" id="titulo_1">2. Dados do Responsável
                             @if(isset($disabled))
-                                <a class="float-end" id="dados_responsavel_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
-                                <a class="float-end" id="dados_responsavel_btn_down" style="display: none"><i class="fa-solid fa-circle-chevron-down"></i></a>
+                                <a class="float-end" id="1_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
+                                <a class="float-end" id="1_btn_down" style="display: none"><i class="fa-solid fa-circle-chevron-down"></i></a>
                             @endif
                         </h2>
 
@@ -35,7 +35,7 @@
                 </div>
             </div>
             <div id="dados_responsavel">
-                @include('solicitacao.responsavel')
+                @include('solicitacao.responsavel',['tipo'=>1,'avaliacao_id'=>$avaliacao->id,'id'=>$responsavel->id])
             </div>
         </div>
         <div class="mb-4">
@@ -191,6 +191,11 @@
                 alterarCorCard(0, '{{$avaliacaoDadosini->status}}');
             @endif
 
+            // Responsável
+            @if(isset($avaliacaoResponsavel) != null )
+                alterarCorCard(1, '{{$avaliacaoResponsavel->status}}');
+            @endif
+
             // Dados Complementares
             @if(isset($avaliacaoDadosComp) != null )
                 alterarCorCard(3, '{{$avaliacaoDadosComp->status}}');
@@ -210,16 +215,16 @@
             $('#0_btn_up').show();
         });
 
-        $('#dados_responsavel_btn_up').on('click', function () {
+        $('#1_btn_up').on('click', function () {
             $('#dados_responsavel').slideToggle(800);
             $(this).hide();
-            $('#dados_responsavel_btn_down').show();
+            $('#1_btn_down').show();
         });
 
-        $('#dados_responsavel_btn_down').on('click', function () {
+        $('#1_btn_down').on('click', function () {
             $('#dados_responsavel').slideToggle(800);
             $(this).hide();
-            $('#dados_responsavel_btn_up').show();
+            $('#1_btn_up').show();
         });
 
         $('#dados_colaborador_btn_up').on('click', function () {
