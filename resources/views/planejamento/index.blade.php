@@ -46,18 +46,18 @@
             </div>
         </div>
         <div class="mb-4">
-            <div class="card shadow-lg p-3 bg-white borda-bottom" style="border-radius: 10px 10px 0px 0px;">
+            <div class="card shadow-lg p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_7">
                 <div class="row">
                     <div class="col-md-12">
-                        <h2 class="titulo">Procedimento
-                            <a class="float-end" id="procedimento_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
-                            <a class="float-end" id="procedimento_btn_down" style="display: none"><i class="fa-solid fa-circle-chevron-down"></i></a>
+                        <h2 class="titulo" id="titulo_7">Procedimento
+                            <a class="float-end" id="7_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
+                            <a class="float-end" id="7_btn_down" style="display: none"><i class="fa-solid fa-circle-chevron-down"></i></a>
                         </h2>
                     </div>
                 </div>
             </div>
-            <div id="procedimento" style="display: none; @if(Auth::user()->tipo_usuario_id == 2) pointer-events: none @endif">
-                @include('solicitacao.procedimento')
+            <div id="procedimento" style="display: none; ">
+                @include('solicitacao.procedimento',['tipo'=>7,'avaliacao_id'=>$avaliacao->id,'id'=>$procedimento->id])
             </div>
         </div>
         <div class="mb-4">
@@ -155,6 +155,11 @@
                 alterarCorCard(6, '{{$avaliacaoCondicoesAnimal->status}}');
             @endif
 
+            // Procedimento
+            @if(isset($avaliacaoProcedimento) != null )
+                alterarCorCard(7, '{{$avaliacaoProcedimento->status}}');
+            @endif
+
         });
 
         // Planejamento
@@ -183,16 +188,17 @@
             $('#6_btn_up').show();
         });
 
-        $('#procedimento_btn_up').on('click', function () {
+        // Procedimento
+        $('#7_btn_up').on('click', function () {
             $('#procedimento').slideToggle(800);
             $(this).hide();
-            $('#procedimento_btn_down').show();
+            $('#7_btn_down').show();
         });
 
-        $('#procedimento_btn_down').on('click', function () {
+        $('#7_btn_down').on('click', function () {
             $('#procedimento').slideToggle(800);
             $(this).hide();
-            $('#procedimento_btn_up').show();
+            $('#7_btn_up').show();
         });
 
         $('#operacao_btn_up').on('click', function () {

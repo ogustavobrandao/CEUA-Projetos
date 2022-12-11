@@ -7,7 +7,7 @@
         @csrf
         <input type="hidden" name="planejamento_id" @if(!empty($planejamento)) value="{{$planejamento->id}}" @endif>
 
-        <div class="row col-md-12">
+        <div class="row col-md-12" style="@if(Auth::user()->tipo_usuario_id == 2) pointer-events: none @endif">
             <h3 class="subtitulo">Informações</h3>
 
             <div class="col-sm-4 mt-2">
@@ -261,13 +261,7 @@
 
         </div>
 
-        <div class="row mt-4 justify-content-end">
-            <div class="col-3">
-                @if(Auth::user()->tipo_usuario_id == 3)
-                    <button type="submit" class="btn btn-success w-100">Salvar</button>
-                @endif
-            </div>
-        </div>
+        @include('component.botoes_new_form')
 
     </form>
 </div>
