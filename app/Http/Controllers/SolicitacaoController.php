@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Mail\SendNotificacaoSolicitacao;
+use App\Models\AvaliacaoIndividual;
 use Illuminate\Support\Facades\Validator;
 use App\Mail\SendSolicitacaoStatus;
 use App\Mail\SendSolicitacaoReprovada;
@@ -139,8 +140,12 @@ class SolicitacaoController extends Controller
         $solicitacao->avaliador_atual_id = Auth::user()->id;
         $solicitacao->update();
         $avaliacao = Avaliacao::where('solicitacao_id', $solicitacao_id)->where('user_id', Auth::user()->id)->first();
+
+        $avaliacaoDadosComp = AvaliacaoIndividual::where('avaliacao_id',$avaliacao->id)->where('dados_complementares_id',$solicitacao->dadosComplementares->id)->first();
+
         return view('solicitacao.index', compact('disabled', 'solicitacao',
-            'instituicaos', 'responsavel', 'colaboradores', 'modelo_animais', 'avaliacao'));
+            'instituicaos', 'responsavel', 'colaboradores', 'modelo_animais', 'avaliacao',
+            'avaliacaoDadosComp'));
     }
 
     public function aprovarSolicitacao(Request $request)
