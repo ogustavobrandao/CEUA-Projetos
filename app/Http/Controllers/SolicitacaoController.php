@@ -294,7 +294,16 @@ class SolicitacaoController extends Controller
     {
         Validator::make($request->all(), array_merge(ModeloAnimal::$rules, Perfil::$rules), array_merge(ModeloAnimal::$messages, Perfil::$messages))->validateWithBag('modelo');
 
+        if (($request->hasFile('termo_consentimento') && $request->file('termo_consentimento')->isValid())) {
+            $anexo = $request->termo_consentimento->extension();
+            $nomeAnexo = "tcle_" . $request->solicitacao_id . date('Ymd') . date('His') . '.' . $anexo;
+            $request->termo_consentimento->storeAs('termos/', $nomeAnexo);
+            $request->termo_consentimento = $nomeAnexo;
+        }
+
         $modelo_animal = ModeloAnimal::create($request->all());
+
+
         $perfil = new Perfil();
         $perfil->grupo_animal = $request->grupo_animal;
         $perfil->linhagem = $request->linhagem;
@@ -313,6 +322,12 @@ class SolicitacaoController extends Controller
     public function atualizar_modelo_animal(Request $request)
     {
         $modelo_animal = ModeloAnimal::find($request->modelo_animal_id);
+
+        if (($request->hasFile('termo_consentimento') && $request->file('termo_consentimento')->isValid())) {
+            $nomeAnexo = $modelo_animal->termo_consentimento;
+            $request->termo_consentimento->storeAs('termos/', $nomeAnexo);
+        }
+
         $modelo_animal->update($request->all());
 
         $perfil = $modelo_animal->perfil;
@@ -376,6 +391,11 @@ class SolicitacaoController extends Controller
     {
         $planejamento = Planejamento::find($planejamento_id);
         return Storage::download('formulas/' . $planejamento->anexo_formula);
+    }
+    public function downloadTermo($modelo_animal_id)
+    {
+        $modelo_animal = ModeloAnimal::find($modelo_animal_id);
+        return Storage::download('termos/' . $modelo_animal->anexo_formula);
     }
 
     public function index_planejamento($modelo_animal_id)
