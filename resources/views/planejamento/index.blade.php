@@ -28,6 +28,7 @@
                         <input type="hidden" name="modelo_animal_id" value="{{$modelo_animal->id}}">
                         <div class="modal-body">
                             @include('solicitacao.modelo_animal')
+
                             @if(Auth::user()->tipo_usuario_id == 2)
                                 @include('component.botoes_new_form',['tipo'=>4,'avaliacao_id'=>$avaliacao->id,'id'=>$modelo_animal->id])
                             @else
