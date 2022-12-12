@@ -428,7 +428,6 @@
                 type: 'GET',
                 dataType: 'json',
                 success: function (data) {
-                    console.log(data);
                     alterarCorList(modelo,data);
                 }
             });
@@ -448,7 +447,8 @@
         function alterarCorList(id,status){
             if(status == "aprovado"){
                 $("#fundo_modelo_"+id).css({"background-color": "#38c172","color": "white"});
-            }else{
+            }
+            else if(status == "reprovado"){
                 $("#fundo_modelo_"+id).css({"background-color": "#e3342f","color": "white"});
             }
         }

@@ -202,6 +202,11 @@ class AvaliacaoIndividualController extends Controller
         $avaliacaoEutanasia = AvaliacaoIndividual::where('avaliacao_id',$avaliacao_id)->where('eutanasia_id',$planejamento->eutanasia->id)->first();
         $avaliacaoResultado = AvaliacaoIndividual::where('avaliacao_id',$avaliacao_id)->where('resultado_id',$planejamento->resultado->id)->first();
 
+        if($avaliacaoModelo == null || $avaliacaoPlanejamento == null || $avaliacaoCondicoesAnimal == null || $avaliacaoProcedimento == null ||
+           $avaliacaoOperacao == null || $avaliacaoEutanasia == null || $avaliacaoResultado == null){
+            return json_encode("nao_finalizadas");
+        }
+
         if($avaliacaoModelo->status == "reprovado" || $avaliacaoPlanejamento->status == "reprovado" || $avaliacaoCondicoesAnimal->status == "reprovado" || $avaliacaoProcedimento->status == "reprovado" ||
            $avaliacaoOperacao->status == "reprovado" || $avaliacaoEutanasia->status == "reprovado" || $avaliacaoResultado->status == "reprovado"){
             return json_encode("reprovado");
