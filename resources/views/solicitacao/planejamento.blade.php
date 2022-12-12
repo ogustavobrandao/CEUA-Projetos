@@ -25,8 +25,8 @@
             </div>
 
             <div class="col-sm-5">
-                <label for="especificar_grupo">Especificar cada grupo (controle, tratado, utilizado para treinamento se
-                    for o caso):</label>
+                <label for="especificar_grupo">Especificar cada grupo (controle, tratado, utilizado para treinamento se for o caso)
+                    e numero de animais por grupo:</label>
                 <textarea class="form-control @error('especificar_grupo') is-invalid @enderror" id="especificar_grupo"
                           name="especificar_grupo" required autocomplete="especificar_grupo"
                           autofocus>@if(!empty($planejamento) && $planejamento->especificar_grupo != null){{$planejamento->especificar_grupo}}
