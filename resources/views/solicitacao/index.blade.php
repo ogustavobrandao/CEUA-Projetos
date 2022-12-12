@@ -44,11 +44,14 @@
                     <div class="col-md-12">
                         <h2 class="titulo">3. Dados do(s) Colaborador(es)
                             @if(!isset($disabled))
-                                <a class="float-end" onclick="criarColaborador()"><i class="fa-solid fa-user-plus" style="font-size: 30px; rotate: 90deg;"></i></a>
+                                <a class="float-end" onclick="criarColaborador()" style="color: green" title="Adicionar Colaborador">
+                                    <i class="fa-solid fa-circle-plus fa-2xl"></i></a>
                             @endif
                             @if(isset($disabled))
-                                <a class="float-end" id="dados_colaborador_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
-                                <a class="float-end" id="dados_colaborador_btn_down" style="display: none"><i class="fa-solid fa-circle-chevron-down"></i></a>
+                                <a class="float-end" id="dados_colaborador_btn_up"><i
+                                        class="fa-solid fa-circle-chevron-up"></i></a>
+                                <a class="float-end" id="dados_colaborador_btn_down" style="display: none"><i
+                                        class="fa-solid fa-circle-chevron-down"></i></a>
                             @endif
                         </h2>
                     </div>
@@ -78,19 +81,25 @@
         </div>
     </div>
 
-    <h2 class="titulo_h2" id="expand_dados_solicitacao"><span class="titulo_spam">Dados dos Modelos Animais</span></h2>
 
-
-    <div class="row my-5 justify-content-center">
-        <div class="col-md-10">
-            <div class="row">
-                <div class="col-sm-8">
-                    <label>Pesquisar:</label>
-                    <input type="text">
+    <div id="dados_solicitacao" class="col-md-10">
+        <div class="mb-4">
+            <div class="card shadow-lg p-3 bg-white borda-bottom" style="border-radius: 10px 10px 0px 0px;">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3 class="titulo">5. Dados dos Modelos Animais
+                            <a class="float-end "
+                               data-toggle="modal"
+                               data-target="#modeloAnimalModal"
+                               style="color: green"
+                               title="Adicionar Modelo Animal"><i
+                                    class="fa-solid fa-circle-plus fa-2xl"></i></a></h3>
+                    </div>
                 </div>
-                <div class="col-sm-4"><a class="btn btn-primary float-right mb-1" data-toggle="modal" data-target="#modeloAnimalModal">Criar Modelo</a></div>
+                @if(isset($solicitacao->modelosAnimais))
             </div>
-            @if(isset($modelo_animais))
+            <div class="card shadow-lg p-3 bg-white" style="border-radius: 0px 0px 10px 10px;">
+
                 <table class="table">
                     <thead>
                     <tr>
@@ -98,11 +107,11 @@
                         <th scope="col">Procedência</th>
                         <th scope="col">Linhagem</th>
                         <th scope="col">Idade</th>
-                        <th scope="col">Ações</th>
+                        <th class="text-center" scope="col" style="width: 20%">Ações</th>
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($modelo_animais as $modelo_animal)
+                    @foreach($solicitacao->modelosAnimais as $modelo_animal)
                         <tr>
                             <td>
                                 {{$modelo_animal->nome_cientifico}}
@@ -116,23 +125,77 @@
                             <td>
                                 {{$modelo_animal->perfil->idade}}
                             </td>
-                            <td>
+                            <td class="text-center">               
                                 @if(Auth::user()->tipo_usuario_id == 2)
                                     <a class="btn btn-primary" href="{{route('avaliador.solicitacao.planejamento.avaliar', ['modelo_animal_id' => $modelo_animal->id])}}">Abrir</a>
                                 @else
                                     <a class="btn btn-primary" href="{{route('solicitacao.planejamento.index', ['modelo_animal_id' => $modelo_animal->id])}}">Abrir</a>
+                                    <a class="btn btn-primary" data-toggle="modal" data-target="#modeloAnimalEditModal{{$modelo_animal->id}}">Editar</a>
+                                <a class="btn btn-danger" href="{{route('solicitacao.modelo_animal.delete', ['id' => $modelo_animal->id])}}"
+                                   onclick="return confirm('Você tem certeza que deseja apagar?')">Deletar</a>
                                 @endif
                             </td>
                         </tr>
                     @endforeach
                     </tbody>
                 </table>
-            @endif
+
+                @endif
+            </div>
+
+            <div class="row mt-4">
+                <div class="col-4">
+                    <a class="btn btn-secondary w-100"
+                       href="{{route('solicitacao.solicitante.index')}}">Voltar</a>
+                </div>
+                <div class="col-4"></div>
+
+                <div class="col-4">
+                    @if($solicitacao->status == null)
+                        <a class="btn w-100"
+                           href="{{route('solicitacao.concluir', ['solicitacao_id' => $solicitacao->id])}}"
+                           style="border-color: #1d68a7; color: #1d68a7; background-color: #c0ddf6"
+                           title="Concluir Solicitação.">Concluir Solicitação</a>
+                    @endif
+                </div>
+
+            </div>
         </div>
     </div>
 
+    @foreach($solicitacao->modelosAnimais as $modelo_animal)
+        <!-- Modal -->
+        <div class="modal fade" id="modeloAnimalEditModal{{$modelo_animal->id}}" tabindex="-1" role="dialog"
+             aria-labelledby="exampleModalLongTitle"
+             aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Edição de Modelo Animal</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form method="POST" action="{{route('solicitacao.modelo_animal.update')}}">
+                        @csrf
+                        <input type="hidden" name="modelo_animal_id" value="{{$modelo_animal->id}}">
+
+                        <div class="modal-body">
+                            @include('solicitacao.modelo_animal_form', compact('modelo_animal'))
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                            <button type="submit" class="btn btn-success">Alterar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    @endforeach
+
     <!-- Modal -->
-    <div class="modal fade" id="modeloAnimalModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal fade" id="modeloAnimalModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+         aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">

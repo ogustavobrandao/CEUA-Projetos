@@ -35,25 +35,21 @@
                 </td>
                 <td class="text-center">
                     @if($solicitacao->status == null)
-                        <a class="btn" href="{{route('solicitacao.form', ['solicitacao_id' => $solicitacao->id])}}" style="border-color: #1d68a7; color: #1d68a7; background-color: #c0ddf6"
+                        <a class="btn" href="{{route('solicitacao.index', ['solicitacao_id' => $solicitacao->id])}}" style="border-color: #1d68a7; color: #1d68a7; background-color: #c0ddf6"
                            title="Continuar Preenchendo Solicitação."><i class="fa-solid fa-file"></i></a>
                     @elseif(($solicitacao->status == "nao_avaliado" && $solicitacao->avaliacao->first() == null) ||
                             ($solicitacao->status == "avaliado" && $solicitacao->avaliacao->first()->status == "aprovadaPendencia"))
-                        <a class="btn" href="{{route('solicitacao.edit.form', ['solicitacao_id' => $solicitacao->id])}}" style="border-color: #1B1C42; background-color: #c0ddf6"
+                        <a class="btn" href="{{route('solicitacao.index', ['solicitacao_id' => $solicitacao->id])}}" style="border-color: #1B1C42; background-color: #c0ddf6"
                            title="Editar Solicitação."><i class="fa-solid fa-up-right-from-square"></i></a>
                     @elseif(($solicitacao->avaliacao->first()->status == "reprovada") ||
                             ($solicitacao->avaliacao->first()->status == "aprovada") ||
                             ($solicitacao->status == "nao_avaliado" && $solicitacao->avaliacao->first()->status == "aprovadaPendencia"))
-                        <a class="btn" href="{{route('solicitacao.edit.form', ['solicitacao_id' => $solicitacao->id])}}" style="border-color: #1B1C42; background-color: #c0ddf6"
+                        <a class="btn" href="{{route('solicitacao.index', ['solicitacao_id' => $solicitacao->id])}}" style="border-color: #1B1C42; background-color: #c0ddf6"
                            title="Visualizar Solicitação."><i class="fa-solid fa-up-right-from-square"></i></a>
                         @if($solicitacao->avaliacao->first()->status == "aprovada")
                             <a class="btn" style="border-color: #1B1C42; background-color: #c0ddf6" data-toggle="modal" data-target="#licencaModal{{$solicitacao->id}}" title="Licença."><i
                                     class="fa-regular fa-id-card"></i></a>
                         @endif
-                    @endif
-                    @if($solicitacao->status == null)
-                         <a class="btn" href="{{route('solicitacao.concluir', ['solicitacao_id' => $solicitacao->id])}}" style="border-color: #1d68a7; color: #1d68a7; background-color: #c0ddf6"
-                            title="Concluir Solicitação."><i class="fa-solid fa-file-circle-check" style="color: green"></i></a>
                     @endif
 
                 </td>

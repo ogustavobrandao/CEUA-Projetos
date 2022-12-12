@@ -1,21 +1,13 @@
 @if(!isset($disabled))
     <div class="row mt-4">
         <div class="col-3">
-            <a class="btn btn-secondary w-100" href="{{route('solicitacao.voltar.pagina', ['solicitacao_id' => $solicitacao->id])}}">Voltar</a>
         </div>
 
         <div class="col-6">
         </div>
 
         <div class="col-3">
-            @if($solicitacao->status == 'avaliado' && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia')
-                <input type="hidden" name="conclusaoPendencia" value="1">
-                <button type="submit" class="btn btn-success w-100" onclick="return confirm('Após concluir não será mais possivel modificar os dados base da solicitação.\nTem certeza que deseja concluir a solicitação?')"
-                >@if($solicitacao->estado_pagina == 3) Concluir @else Próximo @endif</button>
-            @else
-                <button type="submit" class="btn btn-success w-100">@if($solicitacao->estado_pagina == 3) Concluir @else Próximo @endif</button>
-
-            @endif
+            <button type="submit" class="btn btn-success w-100">Salvar</button>
         </div>
     </div>
 @endif

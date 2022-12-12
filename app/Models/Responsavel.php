@@ -20,16 +20,17 @@ class Responsavel extends Model
 
     public static $rules = [
         'nome' => 'required|string|min:5',
-        'treinamento' => 'required',
-        'experiencia_previa' => 'required',
+        'departamento_id' => 'required',
+        'experiencia_previa' => 'mimes:pdf',
+        'treinamento' => 'mimes:pdf'
     ];
 
     public static $messages = [
+        '*.required' => 'O :attribute é um campo obrigatório.',
+        '*.mimes' => 'O anexo do campo :attribute só pode ser do tipo PDF',
         'nome.required' => 'O nome é um campo obrigatório.',
         'nome.string' => 'O nome deve ser um texto',
         'nome.min' => 'O nome deve possuir no minimo 5 caracteres',
-        'treinamento.required' => 'O envio do treinamento é obrigatório',
-        'experiencia_previa.required' => 'O envio da experiência previa é obrigatório',
     ];
 
     public function colaboradores(){

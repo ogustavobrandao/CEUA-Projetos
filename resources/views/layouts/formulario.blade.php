@@ -38,9 +38,8 @@
     <link rel="stylesheet" href="{{ asset ('css/app.css') }}">
 </head>
 <body>
-<div class="mx-4" id="app">
-    @include('layouts.components.navbar2')
-
+@include('layouts.components.navbar2')
+<div id="app">
     @yield('login')
     <div class="row my-5 justify-content-center">
         @yield('content')

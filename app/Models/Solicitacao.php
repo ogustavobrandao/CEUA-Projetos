@@ -48,7 +48,7 @@ class Solicitacao extends Model
         return $this->hasOne('App\Models\Responsavel');
     }
 
-    public function modeloAnimal()
+    public function modelosAnimais()
     {
         return $this->hasMany('App\Models\ModeloAnimal');
     }
@@ -66,4 +66,5 @@ class Solicitacao extends Model
     {
         return $this->belongsTo('App\Models\User');
     }
+
 }
