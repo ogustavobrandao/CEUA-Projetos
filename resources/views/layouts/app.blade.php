@@ -62,6 +62,7 @@
 </html>
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
 <script>
+    if($('#instituicao'))
     function unidades(id) {
         var instituicao = $('#instituicao' + id).val();
         $.ajax({
