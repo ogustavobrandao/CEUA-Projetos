@@ -21,4 +21,12 @@ class Instituicao extends Model
         return $this->hasMany('App\Models\Colaborador');
     }
 
+    public static $rules = [
+        'nome' => 'required',
+    ];
+
+    public static $messages = [
+        '*.required'  => 'O :attribute é obrigatório',
+    ];
+
 }
