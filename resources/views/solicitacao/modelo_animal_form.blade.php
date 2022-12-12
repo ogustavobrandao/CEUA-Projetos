@@ -202,7 +202,13 @@
         </div>
 
         <div class="col-sm-12 mt-2">
-            <label for="termo_consentimento">Termo de Consentimento Livre e Esclarecido (TCLE):</label>
+            <label>Termo de Consentimento Livre e Esclarecido (TCLE):
+                <a target="_blank"
+                   title="O TCLE deverá ser obtido após o participante da pesquisa e/ou seu responsável legal estar suficientemente esclarecido de todos os possíveis benefícios, riscos e procedimentos que serão realizados e fornecidas todas as informações pertinentes à pesquisa."
+                   style="color: darkred">
+                    <i class="fa-solid fa-circle-info fa-lg"></i>
+                </a>
+            </label>
             <input class="form-control @error('termo_consentimento') is-invalid @enderror" id="termo_consentimento"
                    type="file" name="termo_consentimento"
                    @if(isset($modelo_animal)) value="{{$modelo_animal->termo_consentimento}}" @else value="{{old('termo_consentimento')}}" @endif autocomplete="termo_consentimento" autofocus required>
