@@ -30,6 +30,8 @@
                             @include('solicitacao.modelo_animal_form')
                             @if(Auth::user()->tipo_usuario_id == 2)
                                 @include('component.botoes_new_form',['tipo'=>4,'avaliacao_id'=>$avaliacao->id,'id'=>$modelo_animal->id])
+                            @else
+                                @include('component.botoes_new_form')
                             @endif
                         </div>
                     </form>
@@ -53,7 +55,11 @@
                 </div>
             </div>
             <div id="planejamento">
-                @include('solicitacao.planejamento',['tipo'=>5,'avaliacao_id'=>$avaliacao->id,'id'=>$planejamento->id])
+                @if(Auth::user()->tipo_usuario_id == 2)
+                    @include('solicitacao.planejamento',['tipo'=>5,'avaliacao_id'=>$avaliacao->id,'id'=>$planejamento->id])
+                @else
+                    @include('solicitacao.planejamento')
+                @endif
             </div>
         </div>
 
@@ -74,7 +80,11 @@
                 </div>
             </div>
             <div id="condicao_animal" style="display: none;">
-                @include('solicitacao.condicoes_animais',['tipo'=>6,'avaliacao_id'=>$avaliacao->id,'id'=>$condicoes_animal->id])
+                @if(Auth::user()->tipo_usuario_id == 2)
+                    @include('solicitacao.condicoes_animais',['tipo'=>6,'avaliacao_id'=>$avaliacao->id,'id'=>$condicoes_animal->id])
+                @else
+                    @include('solicitacao.condicoes_animais')
+                @endif
             </div>
         </div>
         <div class="mb-4">
@@ -89,7 +99,11 @@
                 </div>
             </div>
             <div id="procedimento" style="display: none; ">
-                @include('solicitacao.procedimento',['tipo'=>7,'avaliacao_id'=>$avaliacao->id,'id'=>$procedimento->id])
+                @if(Auth::user()->tipo_usuario_id == 2)
+                    @include('solicitacao.procedimento',['tipo'=>7,'avaliacao_id'=>$avaliacao->id,'id'=>$procedimento->id])
+                @else
+                    @include('solicitacao.procedimento')
+                @endif
             </div>
         </div>
         <div class="mb-4">
@@ -104,7 +118,11 @@
                 </div>
             </div>
             <div id="operacao" style="display: none; ">
-                @include('solicitacao.operacao',['tipo'=>8,'avaliacao_id'=>$avaliacao->id,'id'=>$operacao->id])
+                @if(Auth::user()->tipo_usuario_id == 2)
+                    @include('solicitacao.operacao',['tipo'=>8,'avaliacao_id'=>$avaliacao->id,'id'=>$operacao->id])
+                @else
+                    @include('solicitacao.operacao')
+                @endif
             </div>
         </div>
 
@@ -120,7 +138,11 @@
                 </div>
             </div>
             <div id="eutanasia" style="display: none;">
-                @include('solicitacao.eutanasia',['tipo'=>9,'avaliacao_id'=>$avaliacao->id,'id'=>$eutanasia->id])
+                @if(Auth::user()->tipo_usuario_id == 2)
+                    @include('solicitacao.eutanasia',['tipo'=>9,'avaliacao_id'=>$avaliacao->id,'id'=>$eutanasia->id])
+                @else
+                    @include('solicitacao.eutanasia')
+                @endif
             </div>
         </div>
 
@@ -136,7 +158,11 @@
                 </div>
             </div>
             <div id="resultado" style="display: none;">
-                @include('solicitacao.resultado',['tipo'=>10,'avaliacao_id'=>$avaliacao->id,'id'=>$resultado->id])
+                @if(Auth::user()->tipo_usuario_id == 2)
+                    @include('solicitacao.resultado',['tipo'=>10,'avaliacao_id'=>$avaliacao->id,'id'=>$resultado->id])
+                @else
+                    @include('solicitacao.resultado')
+                @endif
             </div>
         </div>
 
