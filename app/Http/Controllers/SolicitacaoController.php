@@ -42,14 +42,7 @@ class SolicitacaoController extends Controller
         $solicitacao = Solicitacao::find($solicitacao_id);
         $instituicaos = Instituicao::all();
 
-        $responsavel = $solicitacao->responsavel;
-        $colaboradores = $solicitacao->responsavel->colaboradores;
-
-        $modelo_animais = $solicitacao->modeloAnimal;
-
-        $disabled = true;
-
-        return view('solicitacao.index', compact('solicitacao', 'instituicaos', 'responsavel', 'colaboradores', 'disabled', 'modelo_animais'));
+        return view('solicitacao.index', compact('solicitacao', 'instituicaos'));
     }
 
     public function form($solicitacao_id)
@@ -225,7 +218,7 @@ class SolicitacaoController extends Controller
 
         $solicitacao->save();
 
-        return redirect(route('solicitacao.form', ['solicitacao_id' => $solicitacao->id]));
+        return redirect(route('solicitacao.index', ['solicitacao_id' => $solicitacao->id]));
     }
 
     public function criar(Request $request)
@@ -238,11 +231,10 @@ class SolicitacaoController extends Controller
         $solicitacao->inicio = $request->inicio;
         $solicitacao->fim = $request->fim;
         $solicitacao->area_conhecimento = $request->area_conhecimento;
-        $solicitacao->estado_pagina = 1;
 
         $solicitacao->update();
 
-        return redirect(route('solicitacao.form', ['solicitacao_id' => $request->solicitacao_id]));
+        return redirect(route('solicitacao.index', ['solicitacao_id' => $request->solicitacao_id]));
     }
 
     public function criar_responsavel(Request $request)
@@ -251,6 +243,20 @@ class SolicitacaoController extends Controller
         Validator::make($request->all(), Contato::$rules, Contato::$messages)->validate();
 
         $solicitacao = Solicitacao::find($request->solicitacao_id);
+
+        if (($request->hasFile('experiencia_previa') && $request->file('experiencia_previa')->isValid())) {
+            $anexo = $request->experiencia_previa->extension();
+            $nomeAnexo = "experiencia_" . $solicitacao->responsavel->id . date('Ymd') . date('His') . '.' . $anexo;
+            $request->experiencia_previa->storeAs('experiencias_previas/', $nomeAnexo);
+            $request->experiencia_previa = $nomeAnexo;
+        }
+
+        if (($request->hasFile('treinamento') && $request->file('treinamento')->isValid())) {
+            $anexo = $request->treinamento->extension();
+            $nomeAnexo = "treinamento" . $solicitacao->responsavel->id . date('Ymd') . date('His') . '.' . $anexo;
+            $request->treinamento->storeAs('treinamentos/', $nomeAnexo);
+            $request->treinamento = $nomeAnexo;
+        }
 
         if (isset($solicitacao->responsavel)) {
             $responsavel = $solicitacao->responsavel;
@@ -263,6 +269,7 @@ class SolicitacaoController extends Controller
         $responsavel->departamento_id = $request->departamento_id;
         $responsavel->experiencia_previa = $request->experiencia_previa;
         $responsavel->vinculo_instituicao = $request->vinculo_instituicao;
+        $responsavel->grau_escolaridade = $request->grau_escolaridade;
         $responsavel->treinamento = $request->treinamento;
 
         if (isset($solicitacao->responsavel)) {
@@ -287,16 +294,13 @@ class SolicitacaoController extends Controller
             $contato->save();
         }
 
-        $solicitacao->estado_pagina = 2;
-        $solicitacao->update();
-
-        return redirect(route('solicitacao.form', ['solicitacao_id' => $request->solicitacao_id]));
+        return redirect(route('solicitacao.index', ['solicitacao_id' => $request->solicitacao_id]));
 
     }
 
     public function criar_colaborador(Request $request)
     {
-        Validator::make($request->all(), Colaborador::$rules, Colaborador::$messages)->validate();
+        //Validator::make($request->all(), Colaborador::$rules, Colaborador::$messages)->validate();
         $solicitacao = Solicitacao::find($request->solicitacao_id);
         $listaColab = [];
 
@@ -339,29 +343,54 @@ class SolicitacaoController extends Controller
 
         $solicitacao->estado_pagina = 3;
         $solicitacao->update();
-        return redirect(route('solicitacao.form', ['solicitacao_id' => $request->solicitacao_id]));
+        return redirect(route('solicitacao.index', ['solicitacao_id' => $request->solicitacao_id]));
     }
 
     public function criar_solicitacao_fim(Request $request)
     {
+
         Validator::make($request->all(), DadosComplementares::$rules, DadosComplementares::$messages)->validate();
-
-        DadosComplementares::create($request->all());
-
         $solicitacao = Solicitacao::find($request->solicitacao_id);
+
+        if (isset($solicitacao->dadosComplementares)) {
+            $solicitacao->dadosComplementares->update($request->all());
+        } else {
+            DadosComplementares::create($request->all());
+        }
+
         $solicitacao->status = null;
-        $solicitacao->estado_pagina = 4;
         $solicitacao->update();
-        return redirect(route('solicitacao.index',['solicitacao_id'=> $solicitacao->id]));
+        return redirect(route('solicitacao.index', ['solicitacao_id' => $solicitacao->id]));
     }
 
     public function criar_modelo_animal(Request $request)
     {
         Validator::make($request->all(), ModeloAnimal::$rules, ModeloAnimal::$messages)->validate();
-        Validator::make($request->all(), Perfil::$rules, Perfil::$messages)->validate();
+        Validator::make($request->all(['peso', 'quantidade', 'linhagem', 'machos', 'femeas', 'total', 'idade']), Perfil::$rules, Perfil::$messages)->validate();
+
 
         $modelo_animal = ModeloAnimal::create($request->all());
         $perfil = new Perfil();
+        $perfil->grupo_animal = $request->grupo_animal;
+        $perfil->linhagem = $request->linhagem;
+        $perfil->idade = $request->idade;
+        $perfil->periodo = $request->periodo;
+        $perfil->peso = $request->peso;
+        $perfil->quantidade = $request->quantidade;
+        $perfil->machos = $request->machos;
+        $perfil->femeas = $request->femeas;
+        $perfil->total = $request->quantidade;
+        $perfil->modelo_animal_id = $modelo_animal->id;
+        $perfil->save();
+        return redirect(route('solicitacao.index', ['solicitacao_id' => $request->solicitacao_id]));
+    }
+
+    public function atualizar_modelo_animal(Request $request)
+    {
+        $modelo_animal = ModeloAnimal::find($request->modelo_animal_id);
+        $modelo_animal->update($request->all());
+
+        $perfil = $modelo_animal->perfil;
         $perfil->grupo_animal = $request->grupo_animal;
         $perfil->linhagem = $request->linhagem;
         $perfil->idade = $request->idade;
@@ -371,8 +400,17 @@ class SolicitacaoController extends Controller
         $perfil->femeas = $request->femeas;
         $perfil->total = $request->quantidade;
         $perfil->modelo_animal_id = $modelo_animal->id;
-        $perfil->save();
+        $perfil->update();
+
         return redirect(route('solicitacao.index', ['solicitacao_id' => $request->solicitacao_id]));
+    }
+
+    public function deletar_modelo_animal($id)
+    {
+
+        ModeloAnimal::find($id)->delete();
+        return redirect()->back()->with('success', 'Modelo Animal removido com sucesso!');
+
     }
 
     public function criar_perfil(Request $request)
@@ -389,6 +427,7 @@ class SolicitacaoController extends Controller
         $perfil->grupo_animal = $request->grupo_animal;
         $perfil->linhagem = $request->linhagem;
         $perfil->idade = $request->idade;
+        $perfil->periodo = $request->periodo;
         $perfil->peso = $request->peso;
         $perfil->machos = $request->machos;
         $perfil->femeas = $request->femeas;
@@ -417,17 +456,17 @@ class SolicitacaoController extends Controller
     public function index_planejamento($modelo_animal_id)
     {
         $modelo_animal = ModeloAnimal::find($modelo_animal_id);
-        $planejamento = Planejamento::where('modelo_animal_id',$modelo_animal_id)->first();
+        $planejamento = Planejamento::where('modelo_animal_id', $modelo_animal_id)->first();
         $solicitacao = Solicitacao::find($modelo_animal->solicitacao_id);
 
         //Componentes que requerem ter Planejamento
-        if($planejamento != null){
+        if ($planejamento != null) {
             $condicoes_animal = CondicoesAnimal::where('planejamento_id', $planejamento->id)->first();
             $procedimento = Procedimento::where('planejamento_id', $planejamento->id)->first();
             $operacao = Operacao::where('planejamento_id', $planejamento->id)->first();
             $eutanasia = Eutanasia::where('planejamento_id', $planejamento->id)->first();
             $resultado = Resultado::where('planejamento_id', $planejamento->id)->first();
-        }else{
+        } else {
             $condicoes_animal = null;
             $procedimento = null;
             $operacao = null;
@@ -436,20 +475,26 @@ class SolicitacaoController extends Controller
         }
 
         return view('planejamento.index',
-            compact('modelo_animal','planejamento','solicitacao','condicoes_animal','procedimento','operacao','eutanasia','resultado'));
+            compact('modelo_animal', 'planejamento', 'solicitacao', 'condicoes_animal', 'procedimento', 'operacao', 'eutanasia', 'resultado'));
     }
 
     public function criar_planejamento(Request $request)
     {
         Validator::make($request->all(), Planejamento::$rules, Planejamento::$messages)->validate();
 
-        $solicitacao = Solicitacao::find($request->solicitacao_id);
-        $modelo_animal = ModeloAnimal::where('solicitacao_id', $solicitacao->id)->first();
-        if (isset($solicitacao->modeloAnimal->planejamento)) {
-            $planejamento = $solicitacao->modeloAnimal->planejamento;
+        $modelo_animal = ModeloAnimal::find($request->modelo_animal_id);
+        if (isset($modelo_animal->planejamento)) {
+            $planejamento = $modelo_animal->planejamento;
 
             if (($request->hasFile('anexo_formula') && $request->file('anexo_formula')->isValid())) {
-                $nomeAnexo = $planejamento->anexo_formula;
+                if($planejamento->anexo != null)
+                {
+                    $nomeAnexo = $planejamento->anexo_formula;
+                } else {
+                    $anexo = $request->anexo_formula->extension();
+                    $nomeAnexo = "formula_" . date('Ymd') . date('His') . '.' . $anexo;
+                }
+                $planejamento->anexo_formula = $nomeAnexo;
                 $request->anexo_formula->storeAs('formulas/', $nomeAnexo);
             }
 
@@ -487,10 +532,6 @@ class SolicitacaoController extends Controller
         } else {
             $planejamento->save();
         }
-
-        $solicitacao->estado_pagina = 7;
-        $solicitacao->update();
-
         return redirect(route('solicitacao.planejamento.index', ['modelo_animal_id' => $planejamento->modelo_animal->id]));
     }
 
@@ -643,9 +684,10 @@ class SolicitacaoController extends Controller
         return view('admin.solicitacoes', compact('solicitacoes', 'avaliadores'));
     }
 
-    public function concluir($solicitacao_id){
-        $solicitacao = Solicitacao::where('id',$solicitacao_id)->where('user_id',Auth::user()->id)->first();
-        if($solicitacao == null){
+    public function concluir($solicitacao_id)
+    {
+        $solicitacao = Solicitacao::where('id', $solicitacao_id)->where('user_id', Auth::user()->id)->first();
+        if ($solicitacao == null) {
             return redirect()->back();
         }
         $solicitacao->status = 'nao_avaliado';
