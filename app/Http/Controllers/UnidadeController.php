@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Instituicao;
 use App\Models\Unidade;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class UnidadeController extends Controller
 {
@@ -21,6 +22,8 @@ class UnidadeController extends Controller
     }
 
     public function store(Request $request){
+        Validator::make($request->all(), Unidade::$rules, Unidade::$messages)->validate();
+
         $unidade = Unidade::create($request->all());
         return redirect()->back();
     }
@@ -32,6 +35,8 @@ class UnidadeController extends Controller
     }
 
     public function update(Request $request){
+        Validator::make($request->all(), Unidade::$rules, Unidade::$messages)->validate();
+
         $unidade = Unidade::find($request->id);
         $unidade->nome = $request->nome;
         $unidade->update();
