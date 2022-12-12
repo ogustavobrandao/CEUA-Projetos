@@ -7,6 +7,38 @@
             <button type="button" class="close" data-dismiss="alert">&times;</button>
         </div>
     @enderror
+
+    <h2 class="titulo_h2" id="expand_dados_solicitacao"><span class="titulo_spam">Modelo Animal</span></h2>
+    <div id="dados_modelo" class="col-md-10 my-2">
+        <div class="mb-4">
+            <div class="card shadow-lg p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_4">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2 class="titulo" id="titulo_4">Dados Base
+                            <a class="float-end" id="4_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
+                            <a class="float-end" id="4_btn_down" style="display: none"><i class="fa-solid fa-circle-chevron-down"></i></a>
+                        </h2>
+                    </div>
+                </div>
+            </div>
+            <div id="modelo_animal">
+                <div class="card shadow-lg p-3 bg-white" style="border-radius: 0px 0px 10px 10px">
+                    <form method="POST" action="{{route('solicitacao.modelo_animal.update')}}">
+                        @csrf
+                        <input type="hidden" name="modelo_animal_id" value="{{$modelo_animal->id}}">
+                        <div class="modal-body">
+                            @include('solicitacao.modelo_animal_form')
+                            @if(Auth::user()->tipo_usuario_id == 2)
+                                @include('component.botoes_new_form',['tipo'=>4,'avaliacao_id'=>$avaliacao->id,'id'=>$modelo_animal->id])
+                            @endif
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
     <h2 class="titulo_h2" id="expand_dados_solicitacao"><span class="titulo_spam">Planejamento</span></h2>
     <div id="dados_solicitacao" class="col-md-10 my-2">
         <div class="mb-4">
@@ -151,6 +183,12 @@
     <script type="text/javascript">
 
         $(document).ready(function () {
+
+            // Modelo Animal
+            @if(isset($avaliacaoModeloAnimal) != null )
+                alterarCorCard(4, '{{$avaliacaoModeloAnimal->status}}');
+            @endif
+
             // Planejamento
             @if(isset($avaliacaoPlanejamento) != null )
                 alterarCorCard(5, '{{$avaliacaoPlanejamento->status}}');
@@ -181,6 +219,19 @@
                 alterarCorCard(10, '{{$avaliacaoResultado->status}}');
             @endif
 
+        });
+
+        // Modelo animal
+        $('#4_btn_up').on('click', function () {
+            $('#modelo_animal').slideToggle(800);
+            $(this).hide();
+            $('#4_btn_down').show();
+        });
+
+        $('#4_btn_down').on('click', function () {
+            $('#modelo_animal').slideToggle(800);
+            $(this).hide();
+            $('#4_btn_up').show();
         });
 
         // Planejamento
