@@ -7,6 +7,40 @@
             <button type="button" class="close" data-dismiss="alert">&times;</button>
         </div>
     @enderror
+
+    <h2 class="titulo_h2" id="expand_dados_solicitacao"><span class="titulo_spam">Modelo Animal</span></h2>
+    <div id="dados_modelo" class="col-md-10 my-2">
+        <div class="mb-4">
+            <div class="card shadow-lg p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_4">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2 class="titulo" id="titulo_4">Dados Base
+                            <a class="float-end" id="4_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
+                            <a class="float-end" id="4_btn_down" style="display: none"><i class="fa-solid fa-circle-chevron-down"></i></a>
+                        </h2>
+                    </div>
+                </div>
+            </div>
+            <div id="modelo_animal">
+                <div class="card shadow-lg p-3 bg-white" style="border-radius: 0px 0px 10px 10px">
+                    <form method="POST" action="{{route('solicitacao.modelo_animal.update')}}">
+                        @csrf
+                        <input type="hidden" name="modelo_animal_id" value="{{$modelo_animal->id}}">
+                        <div class="modal-body">
+                            @include('solicitacao.modelo_animal_form')
+                            @if(Auth::user()->tipo_usuario_id == 2)
+                                @include('component.botoes_new_form',['tipo'=>4,'avaliacao_id'=>$avaliacao->id,'id'=>$modelo_animal->id])
+                            @else
+                                @include('component.botoes_new_form')
+                            @endif
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
     <h2 class="titulo_h2" id="expand_dados_solicitacao"><span class="titulo_spam">Planejamento</span></h2>
     <div id="dados_solicitacao" class="col-md-10 my-2">
         <div class="mb-4">
@@ -21,7 +55,11 @@
                 </div>
             </div>
             <div id="planejamento">
-                @include('solicitacao.planejamento',['tipo'=>5,'avaliacao_id'=>$avaliacao->id,'id'=>$planejamento->id])
+                @if(Auth::user()->tipo_usuario_id == 2)
+                    @include('solicitacao.planejamento',['tipo'=>5,'avaliacao_id'=>$avaliacao->id,'id'=>$planejamento->id])
+                @else
+                    @include('solicitacao.planejamento')
+                @endif
             </div>
         </div>
 
@@ -42,7 +80,11 @@
                 </div>
             </div>
             <div id="condicao_animal" style="display: none;">
-                @include('solicitacao.condicoes_animais',['tipo'=>6,'avaliacao_id'=>$avaliacao->id,'id'=>$condicoes_animal->id])
+                @if(Auth::user()->tipo_usuario_id == 2)
+                    @include('solicitacao.condicoes_animais',['tipo'=>6,'avaliacao_id'=>$avaliacao->id,'id'=>$condicoes_animal->id])
+                @else
+                    @include('solicitacao.condicoes_animais')
+                @endif
             </div>
         </div>
         <div class="mb-4">
@@ -57,7 +99,11 @@
                 </div>
             </div>
             <div id="procedimento" style="display: none; ">
-                @include('solicitacao.procedimento',['tipo'=>7,'avaliacao_id'=>$avaliacao->id,'id'=>$procedimento->id])
+                @if(Auth::user()->tipo_usuario_id == 2)
+                    @include('solicitacao.procedimento',['tipo'=>7,'avaliacao_id'=>$avaliacao->id,'id'=>$procedimento->id])
+                @else
+                    @include('solicitacao.procedimento')
+                @endif
             </div>
         </div>
         <div class="mb-4">
@@ -72,7 +118,11 @@
                 </div>
             </div>
             <div id="operacao" style="display: none; ">
-                @include('solicitacao.operacao',['tipo'=>8,'avaliacao_id'=>$avaliacao->id,'id'=>$operacao->id])
+                @if(Auth::user()->tipo_usuario_id == 2)
+                    @include('solicitacao.operacao',['tipo'=>8,'avaliacao_id'=>$avaliacao->id,'id'=>$operacao->id])
+                @else
+                    @include('solicitacao.operacao')
+                @endif
             </div>
         </div>
 
@@ -88,7 +138,11 @@
                 </div>
             </div>
             <div id="eutanasia" style="display: none;">
-                @include('solicitacao.eutanasia',['tipo'=>9,'avaliacao_id'=>$avaliacao->id,'id'=>$eutanasia->id])
+                @if(Auth::user()->tipo_usuario_id == 2)
+                    @include('solicitacao.eutanasia',['tipo'=>9,'avaliacao_id'=>$avaliacao->id,'id'=>$eutanasia->id])
+                @else
+                    @include('solicitacao.eutanasia')
+                @endif
             </div>
         </div>
 
@@ -104,7 +158,11 @@
                 </div>
             </div>
             <div id="resultado" style="display: none;">
-                @include('solicitacao.resultado',['tipo'=>10,'avaliacao_id'=>$avaliacao->id,'id'=>$resultado->id])
+                @if(Auth::user()->tipo_usuario_id == 2)
+                    @include('solicitacao.resultado',['tipo'=>10,'avaliacao_id'=>$avaliacao->id,'id'=>$resultado->id])
+                @else
+                    @include('solicitacao.resultado')
+                @endif
             </div>
         </div>
 
@@ -151,6 +209,12 @@
     <script type="text/javascript">
 
         $(document).ready(function () {
+
+            // Modelo Animal
+            @if(isset($avaliacaoModeloAnimal) != null )
+                alterarCorCard(4, '{{$avaliacaoModeloAnimal->status}}');
+            @endif
+
             // Planejamento
             @if(isset($avaliacaoPlanejamento) != null )
                 alterarCorCard(5, '{{$avaliacaoPlanejamento->status}}');
@@ -181,6 +245,19 @@
                 alterarCorCard(10, '{{$avaliacaoResultado->status}}');
             @endif
 
+        });
+
+        // Modelo animal
+        $('#4_btn_up').on('click', function () {
+            $('#modelo_animal').slideToggle(800);
+            $(this).hide();
+            $('#4_btn_down').show();
+        });
+
+        $('#4_btn_down').on('click', function () {
+            $('#modelo_animal').slideToggle(800);
+            $(this).hide();
+            $('#4_btn_up').show();
         });
 
         // Planejamento
