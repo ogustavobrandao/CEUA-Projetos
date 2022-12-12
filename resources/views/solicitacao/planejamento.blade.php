@@ -65,7 +65,7 @@
                     Quando não for o caso, justifique.</label>
             </div>
             <div class="col-sm-6">
-                @if(isset($disabled))
+                @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2)
                     <a class="btn btn-primary"
                        href="{{route('planejamento.formula.download', ['planejamento_id' => $planejamento->id])}}">Baixar
                         Fórmula</a>
@@ -82,7 +82,7 @@
                         @enderror
                         @if($planejamento->anexo_formula != null)
                             <span
-                                style="border: 1px gray solid; border-radius: 10px; text-align: center; width: 250px; position: absolute; bottom: 0px; left: 155px; height: 38px; padding-top: 5px; background-color: #dcfadf">Um Arquivo Já Foi Selecionado</span>
+                                style="border: 1px gray solid; border-radius: 10px; text-align: center; width: 250px; position: absolute; bottom: 0px; left: 155px; height: 38px; padding-top: 5px; background-color: #dcfadf">Um Arquivo Já Foi Enviado</span>
                         @endif
                     @else
                         <input class="form-control @error('anexo_formula') is-invalid @enderror" id="anexo_formula"

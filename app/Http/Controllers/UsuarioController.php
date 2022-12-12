@@ -39,6 +39,12 @@ class UsuarioController extends Controller
         return view('user.editar_perfil', compact('instituicaos', 'user'));
     }
 
+    public function editar_senha()
+    {
+        $user = Auth::user();
+        return view('user.editar_senha', compact('user'));
+    }
+
     public function alterar_perfil(Request $request)
     {
         Validator::make($request->all(), User::$rules, user::$messages)->validate();
@@ -51,6 +57,20 @@ class UsuarioController extends Controller
         $usuario->update();
 
         return redirect()->back()->with(['success', 'Perfil alterado com sucesso!']);
+    }
+
+    public function alterar_senha(Request $request)
+    {
+        Validator::make($request->all(), ['password' => 'required|confirmed|min:8'],
+            ['*.required' => 'O campo de senha é obrigatório',
+            '*.confirmed' => 'É necessário confirmar a senha',
+                '*.min' => 'A senha deve ter no minimo 8 caracteres'])->validate();
+
+        $usuario = Auth::user();
+        $usuario->password = Hash::make($request->password);
+        $usuario->update();
+
+        return redirect()->back()->with(['success', 'Senha alterada com sucesso!']);
     }
 
     public function update(Request $request){

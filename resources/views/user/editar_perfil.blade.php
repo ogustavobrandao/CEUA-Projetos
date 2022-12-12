@@ -51,9 +51,6 @@
                     </div>
                 </div>
 
-                <input id="password" type="hidden" class="form-control @error('password') is-invalid @enderror"
-                       name="password" required autocomplete="current-password" value="password">
-
                 <div class="row justify-content-center mt-2">
                     <div class="col-sm-5">
                         <label for="instituicao">{{ __('Instituição') }}</label>
