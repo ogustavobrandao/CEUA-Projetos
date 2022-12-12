@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Avaliacao;
 use App\Models\AvaliacaoIndividual;
+use App\Models\ModeloAnimal;
+use App\Models\Planejamento;
 use Illuminate\Http\Request;
 
 class AvaliacaoIndividualController extends Controller
@@ -185,6 +188,26 @@ class AvaliacaoIndividualController extends Controller
 
 
         return json_encode("Aprovado");
+    }
+
+    public function verificarAvalModelo($modelo_animal_id,$avaliacao_id){
+        $planejamento = Planejamento::where('modelo_animal_id',$modelo_animal_id)->first();
+
+        // Modelo Animal
+        $avaliacaoModelo = AvaliacaoIndividual::where('avaliacao_id',$avaliacao_id)->where('modelo_animal_id',$modelo_animal_id)->first();
+        $avaliacaoPlanejamento = AvaliacaoIndividual::where('avaliacao_id',$avaliacao_id)->where('planejamento_id',$planejamento->id)->first();
+        $avaliacaoCondicoesAnimal = AvaliacaoIndividual::where('avaliacao_id',$avaliacao_id)->where('condicoes_animal_id',$planejamento->condicoesAnimal->id)->first();
+        $avaliacaoProcedimento = AvaliacaoIndividual::where('avaliacao_id',$avaliacao_id)->where('procedimento_id',$planejamento->procedimento->id)->first();
+        $avaliacaoOperacao = AvaliacaoIndividual::where('avaliacao_id',$avaliacao_id)->where('operacao_id',$planejamento->operacao->id)->first();
+        $avaliacaoEutanasia = AvaliacaoIndividual::where('avaliacao_id',$avaliacao_id)->where('eutanasia_id',$planejamento->eutanasia->id)->first();
+        $avaliacaoResultado = AvaliacaoIndividual::where('avaliacao_id',$avaliacao_id)->where('resultado_id',$planejamento->resultado->id)->first();
+
+        if($avaliacaoModelo->status == "reprovado" || $avaliacaoPlanejamento->status == "reprovado" || $avaliacaoCondicoesAnimal->status == "reprovado" || $avaliacaoProcedimento->status == "reprovado" ||
+           $avaliacaoOperacao->status == "reprovado" || $avaliacaoEutanasia->status == "reprovado" || $avaliacaoResultado->status == "reprovado"){
+            return json_encode("reprovado");
+        }
+
+        return json_encode("aprovado");
     }
 
 }
