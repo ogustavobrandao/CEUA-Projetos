@@ -66,7 +66,7 @@
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" name="tipo" id="tipo2" value="Extencao">
                                 <label class="form-check-label" for="tipo2">
-                                    Extenção
+                                    Extensão
                                 </label>
                             </div>
                             <div class="form-check">
