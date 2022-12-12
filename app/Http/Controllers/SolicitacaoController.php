@@ -326,6 +326,7 @@ class SolicitacaoController extends Controller
         if (($request->hasFile('termo_consentimento') && $request->file('termo_consentimento')->isValid())) {
             $nomeAnexo = $modelo_animal->termo_consentimento;
             $request->termo_consentimento->storeAs('termos/', $nomeAnexo);
+            $request->termo_consentimento = $nomeAnexo;
         }
 
         $modelo_animal->update($request->all());
