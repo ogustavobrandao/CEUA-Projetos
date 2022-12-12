@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Departamento;
 use App\Models\Unidade;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class DepartamentoController extends Controller
 {
@@ -16,12 +17,14 @@ class DepartamentoController extends Controller
     }
 
     public function store(Request $request){
+        Validator::make($request->all(), Departamento::$rules, Departamento::$messages)->validate();
         $departamento = Departamento::create($request->all());
 
         return redirect()->back();
     }
 
     public function update(Request $request){
+        Validator::make($request->all(), Departamento::$rules, Departamento::$messages)->validate();
         $departamento = Departamento::find($request->id);
         $departamento->nome = $request->nome;
         $departamento->update();

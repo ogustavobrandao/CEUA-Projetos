@@ -26,4 +26,12 @@ class Unidade extends Model
         return $this->belongsTo('App\Models\Instituicao');
     }
 
+    public static $rules = [
+        'nome' => 'required',
+    ];
+
+    public static $messages = [
+        '*.required'  => 'O :attribute é obrigatório',
+    ];
+
 }

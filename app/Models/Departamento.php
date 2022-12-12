@@ -22,4 +22,12 @@ class Departamento extends Model
         return $this->belongsTo('App\Models\Unidade');
     }
 
+    public static $rules = [
+        'nome' => 'required',
+    ];
+
+    public static $messages = [
+        '*.required'  => 'O :attribute é obrigatório',
+    ];
+
 }

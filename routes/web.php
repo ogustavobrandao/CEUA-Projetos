@@ -87,6 +87,7 @@ Route::group(['middleware' => 'checkAvaliador'], function () {
 
     //Avaliação Individual
     Route::get('/avaliacao_individual/{tipo}/{avaliacao_id}/{id}', [App\Http\Controllers\AvaliacaoIndividualController::class, 'exibir'])->name('avaliador.avaliacao_ind.exibir');
+    Route::get('/avaliacao_individual/verificar/modelo/{modelo_animal_id}/{avaliacao_id}', [App\Http\Controllers\AvaliacaoIndividualController::class, 'verificarAvalModelo'])->name('avaliador.avaliacao_ind.verificar.modelo');
     Route::post('/avaliacao_individual/reprovar', [App\Http\Controllers\AvaliacaoIndividualController::class, 'realizarAvaliacao'])->name('avaliador.avaliacao_ind.realizarAvaliacao');
 
 });

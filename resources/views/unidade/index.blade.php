@@ -59,7 +59,7 @@
                         <div class="row justify-content-center mt-2">
                             <div class="col-sm-10">
                                 <label for="nome">Nome da Unidade:</label>
-                                <input class="form-control @error('nome') is-invalid @enderror" id="nome" type="nome" name="nome" value="{{ old('nome') }}" required autocomplete="nome"
+                                <input class="form-control @error('nome') is-invalid @enderror" id="nome" name="nome" value="{{ old('nome') }}" required autocomplete="nome"
                                        autofocus>
                                 @error('nome')
                                 <span class="invalid-feedback" role="alert">
@@ -95,7 +95,7 @@
                             <div class="row justify-content-center mt-2">
                                 <div class="col-sm-10">
                                     <label for="nome">Nome da Unidade:</label>
-                                    <input class="form-control @error('nome') is-invalid @enderror" id="nome" type="nome" name="nome" value="{{ $unidade->nome }}" required autocomplete="nome"
+                                    <input class="form-control @error('nome') is-invalid @enderror" id="nome" name="nome" value="{{ $unidade->nome }}" required autocomplete="nome"
                                            autofocus>
                                     @error('nome')
                                     <span class="invalid-feedback" role="alert">
