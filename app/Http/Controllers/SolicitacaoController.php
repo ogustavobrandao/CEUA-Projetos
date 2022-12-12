@@ -245,6 +245,7 @@ class SolicitacaoController extends Controller
                 }
                 $colaborador->nome = $colab['nome'];
                 $colaborador->instituicao_id = $colab['instituicao_id'];
+                $colaborador->grau_escolaridade = $colab['gradu_escolaridade'];
                 $colaborador->nivel_academico = $colab['nivel_academico'];
                 $colaborador->experiencia_previa = $colab['experiencia_previa'];
                 $colaborador->treinamento = $colab['treinamento'];

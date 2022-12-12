@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('treinamento');
             $table->string('experiencia_previa');
             $table->string('nivel_academico');
+            $table->string('grau_escolaridade');
             $table->unsignedBigInteger('instituicao_id');
             $table->unsignedBigInteger('responsavel_id');
 
