@@ -313,7 +313,7 @@ class SolicitacaoController extends Controller
         $perfil->total = $request->quantidade;
         $perfil->modelo_animal_id = $modelo_animal->id;
         $perfil->save();
-        return redirect(route('solicitacao.index', ['solicitacao_id' => $request->solicitacao_id]));
+        return redirect(route('solicitacao.index', ['solicitacao_id' => $request->solicitacao_id]))->with('success', 'Modelo Animal Criado com Sucesso!');
     }
 
     public function atualizar_modelo_animal(Request $request)
@@ -333,7 +333,7 @@ class SolicitacaoController extends Controller
         $perfil->modelo_animal_id = $modelo_animal->id;
         $perfil->update();
 
-        return redirect(route('solicitacao.index', ['solicitacao_id' => $request->solicitacao_id]));
+        return redirect(route('solicitacao.planejamento.index', ['modelo_animal_id' => $request->modelo_animal_id]))->with('success', 'Modelo Animal Atualizado com Sucesso!');
     }
 
     public function deletar_modelo_animal($id)
