@@ -414,8 +414,8 @@
                 $("#fundo_"+tipo).css({"background-color": "#e3342f"});
             }
             $("#titulo_"+tipo).css({"color": "white"});
-            $("#"+tipo+"_btn_up").css({"color": "black"});
-            $("#"+tipo+"_btn_down").css({"color": "black"});
+            $("#"+tipo+"_btn_up").css({"color": "white"});
+            $("#"+tipo+"_btn_down").css({"color": "white"});
         }
     </script>
 
