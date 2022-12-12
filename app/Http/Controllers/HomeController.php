@@ -7,15 +7,6 @@ use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
-
-    public function index()
-    {
-        if(Auth::user()->tipo_usuario_id == 1){
-            return redirect()->route('solicitacao.admin.index');
-        }
-        return view('welcome');
-    }
-
     public function home()
     {
         if (Auth::check()) {
@@ -27,5 +18,4 @@ class HomeController extends Controller
             return view('welcome');
         }
     }
-
 }
