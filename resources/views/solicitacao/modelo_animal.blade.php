@@ -150,7 +150,7 @@
 
         <div class="col-sm-6">
             <label for="peso">Peso Aproximado:</label>
-            <input class="form-control @error('peso') is-invalid @enderror" id="peso" type="number" name="peso"
+            <input class="form-control @error('peso') is-invalid @enderror" id="peso" type="text" name="peso"
                    @if(isset($modelo_animal->perfil)) value="{{$modelo_animal->perfil->peso}}" @else value="{{old('peso')}}" @endif required autocomplete="peso"
                    autofocus>
             @error('peso')
