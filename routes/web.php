@@ -16,6 +16,11 @@ Auth::routes();
 Route::get('/', [App\Http\Controllers\HomeController::class, 'home'])->name('welcome');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'home'])->name('home');
 
+Route::group(['middleware' => 'auth'], function(){
+    Route::get('editar/perfil', [\App\Http\Controllers\UsuarioController::class, 'editar_perfil'])->name('user.perfil.editar');
+    Route::post('alterar/perfil', [\App\Http\Controllers\UsuarioController::class, 'alterar_perfil'])->name('user.perfil.alterar');
+});
+
 Route::group(['middleware' => 'checkAdministrador'], function () {
     Route::post('/instituicao/store', [App\Http\Controllers\InstituicaoController::class, 'store'])->name('instituicao.store');
     Route::post('/instituicao/update', [App\Http\Controllers\InstituicaoController::class, 'update'])->name('instituicao.update');

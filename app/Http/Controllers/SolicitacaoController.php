@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Auth\ResetPasswordController;
-use App\Mail\SendNotificacaoSolicitacao;
 use App\Models\AvaliacaoIndividual;
 use Illuminate\Support\Facades\Validator;
 use App\Mail\SendSolicitacaoStatus;
@@ -26,14 +24,11 @@ use App\Models\Resultado;
 use App\Models\Solicitacao;
 use App\Models\User;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 use Phalcon\Forms\Element\Date;
-use PhpParser\Node\Expr\AssignOp\Mod;
 
 class SolicitacaoController extends Controller
 {
