@@ -62,10 +62,11 @@ class SolicitacaoController extends Controller
         $avaliacaoDadosComp = AvaliacaoIndividual::where('avaliacao_id',$avaliacao->id)->where('dados_complementares_id',$solicitacao->dadosComplementares->id)->first();
         $avaliacaoDadosini = AvaliacaoIndividual::where('avaliacao_id',$avaliacao->id)->where('solicitacao_id',$solicitacao->id)->first();
         $avaliacaoResponsavel = AvaliacaoIndividual::where('avaliacao_id',$avaliacao->id)->where('responsavel_id',$responsavel->id)->first();
+        $avaliacaoColaborador = AvaliacaoIndividual::where('avaliacao_id',$avaliacao->id)->where('tipo',2)->first();
 
         return view('solicitacao.index', compact('disabled', 'solicitacao',
             'instituicaos', 'responsavel', 'colaboradores', 'modelo_animais', 'avaliacao',
-            'avaliacaoDadosComp', 'avaliacaoDadosini', 'avaliacaoResponsavel'));
+            'avaliacaoDadosComp', 'avaliacaoDadosini', 'avaliacaoResponsavel', 'avaliacaoColaborador'));
     }
 
     public function aprovarSolicitacao(Request $request)

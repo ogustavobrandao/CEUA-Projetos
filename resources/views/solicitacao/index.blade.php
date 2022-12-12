@@ -52,10 +52,10 @@
         </div>
 
         <div class="mb-4">
-            <div class="card shadow-lg p-3 bg-white borda-bottom" style="border-radius: 10px 10px 0px 0px;">
+            <div class="card shadow-lg p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_2">
                 <div class="row">
                     <div class="col-md-12">
-                        <h2 class="titulo">3. Dados do(s) Colaborador(es)
+                        <h2 class="titulo" id="titulo_2">3. Dados do(s) Colaborador(es)
                             @if(!isset($solicitacao->responsavel))<small style="color: red; font-weight: bold">Necessária a criação de um responsável</small>@endif
                             @if(!isset($disabled) && isset($solicitacao->responsavel))
                                 <a class="float-end" onclick="criarColaborador()" style="color: green"
@@ -63,9 +63,9 @@
                                     <i class="fa-solid fa-circle-plus fa-2xl"></i></a>
                             @endif
                             @if(isset($disabled))
-                                <a class="float-end" id="dados_colaborador_btn_up"><i
+                                <a class="float-end" id="2_btn_up"><i
                                         class="fa-solid fa-circle-chevron-up"></i></a>
-                                <a class="float-end" id="dados_colaborador_btn_down" style="display: none"><i
+                                <a class="float-end" id="2_btn_down" style="display: none"><i
                                         class="fa-solid fa-circle-chevron-down"></i></a>
                             @endif
                         </h2>
@@ -74,7 +74,7 @@
             </div>
             <div id="dados_colaborador">
                 @if(Auth::user()->tipo_usuario_id == 2)
-                    {{--@include('solicitacao.colaborador',['tipo'=>3,'avaliacao_id'=>$avaliacao->id,'id'=>???])--}}
+                    @include('solicitacao.colaborador',['tipo'=>2,'avaliacao_id'=>$avaliacao->id,'id'=> -1])
                 @else
                     @include('solicitacao.colaborador')
                 @endif
@@ -302,6 +302,11 @@
             alterarCorCard(1, '{{$avaliacaoResponsavel->status}}');
             @endif
 
+            // Colaborador
+            @if(isset($avaliacaoColaborador) != null )
+            alterarCorCard(2, '{{$avaliacaoColaborador->status}}');
+            @endif
+
             // Dados Complementares
             @if(isset($avaliacaoDadosComp) != null )
             alterarCorCard(3, '{{$avaliacaoDadosComp->status}}');
@@ -341,16 +346,17 @@
             $('#1_btn_up').show();
         });
 
-        $('#dados_colaborador_btn_up').on('click', function () {
+        // Colaborador
+        $('#2_btn_up').on('click', function () {
             $('#dados_colaborador').slideToggle(800);
             $(this).hide();
-            $('#dados_colaborador_btn_down').show();
+            $('#2_btn_down').show();
         });
 
-        $('#dados_colaborador_btn_down').on('click', function () {
+        $('#2_btn_down').on('click', function () {
             $('#dados_colaborador').slideToggle(800);
             $(this).hide();
-            $('#dados_colaborador_btn_up').show();
+            $('#2_btn_up').show();
         });
 
         // Dados Complementares
@@ -458,7 +464,7 @@
             if(status == "aprovado"){
                 $("#fundo_"+tipo).css({"background-color": "#38c172"});
             }else{
-                $("#fundo_"+tipo).css({"background-color": "#9a5857"});
+                $("#fundo_"+tipo).css({"background-color": "#e3342f"});
             }
             $("#titulo_"+tipo).css({"color": "white"});
             $("#"+tipo+"_btn_up").css({"color": "white"});
