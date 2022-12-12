@@ -17,7 +17,12 @@
                 </div>
             </div>
             <div id="dados_iniciais">
-                @include('solicitacao.solicitacao',['tipo'=>0,'avaliacao_id'=>$avaliacao->id,'id'=>$solicitacao->id])
+                @if(Auth::user()->tipo_usuario_id == 2)
+                    @include('solicitacao.solicitacao',['tipo'=>0,'avaliacao_id'=>$avaliacao->id,'id'=>$solicitacao->id])
+                @else
+                    @include('solicitacao.solicitacao')
+                @endif
+
             </div>
         </div>
         <div class="mb-4">
@@ -35,7 +40,12 @@
                 </div>
             </div>
             <div id="dados_responsavel">
-                @include('solicitacao.responsavel',['tipo'=>1,'avaliacao_id'=>$avaliacao->id,'id'=>$responsavel->id])
+                @if(Auth::user()->tipo_usuario_id == 2)
+                    @include('solicitacao.responsavel',['tipo'=>1,'avaliacao_id'=>$avaliacao->id,'id'=>$responsavel->id])
+                @else
+                    @include('solicitacao.responsavel')
+                @endif
+
             </div>
         </div>
 
@@ -77,7 +87,12 @@
                 </div>
             </div>
             <div id="dados_complementares">
-                @include('solicitacao.solicitacao_fim',['tipo'=>3,'avaliacao_id'=>$avaliacao->id,'id'=>$solicitacao->dadosComplementares->id])
+                @if(Auth::user()->tipo_usuario_id == 2)
+                    @include('solicitacao.solicitacao_fim',['tipo'=>3,'avaliacao_id'=>$avaliacao->id,'id'=>$solicitacao->dadosComplementares->id])
+                @else
+                    @include('solicitacao.solicitacao_fim')
+                @endif
+
             </div>
         </div>
     </div>
