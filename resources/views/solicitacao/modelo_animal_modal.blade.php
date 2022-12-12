@@ -223,9 +223,9 @@
 
         <div class="col-sm-6">
             <label for="peso">Peso Aproximado:</label>
-            <input class="form-control @if($errors->modelo->has('peso')) is-invalid @endif" id="peso" type="number" name="peso"
+            <input class="form-control @if($errors->modelo->has('peso')) is-invalid @endif" id="peso" type="text" name="peso"
                    @if(isset($modelo_animal->perfil)) value="{{$modelo_animal->perfil->peso}}"
-                   @else value="{{old('peso')}}" @endif required autocomplete="peso"
+                   @else value="{{old('peso')}}" placeholder="Ex: 30 kg" @endif required autocomplete="peso"
                    autofocus>
             @if($errors->modelo->has('peso'))
                 <span class="invalid-feedback" role="alert">

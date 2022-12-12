@@ -72,7 +72,11 @@
                 </div>
             </div>
             <div id="dados_colaborador">
-                @include('solicitacao.colaborador')
+                @if(Auth::user()->tipo_usuario_id == 2)
+                    {{--@include('solicitacao.colaborador',['tipo'=>3,'avaliacao_id'=>$avaliacao->id,'id'=>???])--}}
+                @else
+                    @include('solicitacao.colaborador')
+                @endif
             </div>
         </div>
         <div class="mb-4">
@@ -158,7 +162,7 @@
                         </thead>
                         <tbody>
                         @foreach($solicitacao->modelosAnimais as $modelo_animal)
-                            <tr>
+                            <tr id="fundo_modelo_{{$modelo_animal->id}}">
                                 <td>
                                     {{$modelo_animal->nome_cientifico}}
                                 </td>
@@ -299,6 +303,12 @@
             @if(isset($avaliacaoDadosComp) != null )
             alterarCorCard(3, '{{$avaliacaoDadosComp->status}}');
             @endif
+
+            //Modelo Animal
+            @foreach($solicitacao->modelosAnimais as $modelo_animal)
+                verificarAvalModelo('{{$modelo_animal->id}}','{{$avaliacao->id}}');
+            @endforeach
+
         });
 
 
@@ -428,15 +438,35 @@
             }
         }
 
-        function alterarCorCard(tipo, status) {
-            if (status == "aprovado") {
-                $("#fundo_" + tipo).css({"background-color": "#38c172"});
-            } else {
-                $("#fundo_" + tipo).css({"background-color": "#e3342f"});
+        function verificarAvalModelo(modelo,avaliacao){
+            $.ajax({
+                url: '/avaliacao_individual/verificar/modelo/' + modelo + '/' + avaliacao,
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    alterarCorList(modelo,data);
+                }
+            });
+        }
+
+        function alterarCorCard(tipo,status){
+            if(status == "aprovado"){
+                $("#fundo_"+tipo).css({"background-color": "#38c172"});
+            }else{
+                $("#fundo_"+tipo).css({"background-color": "#9a5857"});
             }
-            $("#titulo_" + tipo).css({"color": "white"});
-            $("#" + tipo + "_btn_up").css({"color": "black"});
-            $("#" + tipo + "_btn_down").css({"color": "black"});
+            $("#titulo_"+tipo).css({"color": "white"});
+            $("#"+tipo+"_btn_up").css({"color": "white"});
+            $("#"+tipo+"_btn_down").css({"color": "white"});
+        }
+
+        function alterarCorList(id,status){
+            if(status == "aprovado"){
+                $("#fundo_modelo_"+id).css({"background-color": "#38c172","color": "white"});
+            }
+            else if(status == "reprovado"){
+                $("#fundo_modelo_"+id).css({"background-color": "#e3342f","color": "white"});
+            }
         }
     </script>
 @endsection

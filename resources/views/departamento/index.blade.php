@@ -45,7 +45,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="cadastroModalLabel">Cadastrar Unidade</h5>
+                    <h5 class="modal-title" id="cadastroModalLabel">Cadastrar Departamento</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -57,7 +57,7 @@
                         <div class="row justify-content-center mt-2">
                             <div class="col-sm-10">
                                 <label for="nome">Nome do Departamento:</label>
-                                <input class="form-control @error('nome') is-invalid @enderror" id="nome" type="nome" name="nome" value="{{ old('nome') }}" required autocomplete="nome"
+                                <input class="form-control @error('nome') is-invalid @enderror" id="nome" name="nome" value="{{ old('nome') }}" required autocomplete="nome"
                                        autofocus>
                                 @error('nome')
                                 <span class="invalid-feedback" role="alert">
@@ -92,8 +92,8 @@
                             <input type="hidden" name="id" value="{{$departamento->id}}">
                             <div class="row justify-content-center mt-2">
                                 <div class="col-sm-10">
-                                    <label for="nome">Nome da Unidade:</label>
-                                    <input class="form-control @error('nome') is-invalid @enderror" id="nome" type="nome" name="nome" value="{{ $departamento->nome }}" required autocomplete="nome"
+                                    <label for="nome">Nome do Departamento:</label>
+                                    <input class="form-control @error('nome') is-invalid @enderror" id="nome" name="nome" value="{{ $departamento->nome }}" required autocomplete="nome"
                                            autofocus>
                                     @error('nome')
                                     <span class="invalid-feedback" role="alert">

@@ -25,8 +25,8 @@
             </div>
 
             <div class="col-sm-5">
-                <label for="especificar_grupo">Especificar cada grupo (controle, tratado, utilizado para treinamento se
-                    for o caso):</label>
+                <label for="especificar_grupo">Especificar cada grupo (controle, tratado, utilizado para treinamento se for o caso)
+                    e numero de animais por grupo:</label>
                 <textarea class="form-control @error('especificar_grupo') is-invalid @enderror" id="especificar_grupo"
                           name="especificar_grupo" required autocomplete="especificar_grupo"
                           autofocus>@if(!empty($planejamento) && $planejamento->especificar_grupo != null){{$planejamento->especificar_grupo}}
@@ -104,11 +104,8 @@
                 <label for="desc_materiais_metodos">Descrição de materiais e métodos:</label>
                 <textarea class="form-control @error('desc_materiais_metodos') is-invalid @enderror"
                           id="desc_materiais_metodos" name="desc_materiais_metodos" required
-                          autocomplete="desc_materiais_metodos"
-                          autofocus>@if(!empty($planejamento) && $planejamento->desc_materiais_metodos != null){{$planejamento->desc_materiais_metodos}}
-                    @else
-                        {{old('desc_materiais_metodos')}}
-                    @endif</textarea>
+                          autocomplete="desc_materiais_metodos" maxlength="1000"
+                          autofocus>@if(!empty($planejamento) && $planejamento->desc_materiais_metodos != null){{$planejamento->desc_materiais_metodos}}@else{{old('desc_materiais_metodos')}}@endif</textarea>
                 @error('desc_materiais_metodos')
                 <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
