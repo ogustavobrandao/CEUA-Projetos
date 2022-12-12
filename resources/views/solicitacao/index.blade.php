@@ -38,6 +38,7 @@
                 @include('solicitacao.responsavel',['tipo'=>1,'avaliacao_id'=>$avaliacao->id,'id'=>$responsavel->id])
             </div>
         </div>
+
         <div class="mb-4">
             <div class="card shadow-lg p-3 bg-white borda-bottom" style="border-radius: 10px 10px 0px 0px;">
                 <div class="row">
@@ -125,7 +126,7 @@
                             <td>
                                 {{$modelo_animal->perfil->idade}}
                             </td>
-                            <td class="text-center">               
+                            <td class="text-center">
                                 @if(Auth::user()->tipo_usuario_id == 2)
                                     <a class="btn btn-primary" href="{{route('avaliador.solicitacao.planejamento.avaliar', ['modelo_animal_id' => $modelo_animal->id])}}">Abrir</a>
                                 @else
