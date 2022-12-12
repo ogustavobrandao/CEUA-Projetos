@@ -204,9 +204,7 @@
             </div>
         </div>
         <br>
-        @if(Auth::user()->tipo_usuario_id == 3)
-            <button type="submit" class="btn btn-success w-100">Salvar</button>
-        @endif
+        @include('component.botoes_new_form')
 
     </form>
 
