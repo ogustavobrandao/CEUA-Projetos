@@ -118,7 +118,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form method="POST" action="{{route('solicitacao.modelo_animal.criar')}}">
+                <form method="POST" action="{{route('solicitacao.modelo_animal.criar')}}" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
                         @include('solicitacao.modelo_animal_modal')
@@ -219,36 +219,6 @@
                 </div>
         </div>
     </div>
-
-    @foreach($solicitacao->modelosAnimais as $modelo_animal)
-        <!-- Modal -->
-        <div class="modal fade" id="modeloAnimalEditModal{{$modelo_animal->id}}" tabindex="-1" role="dialog"
-             aria-labelledby="exampleModalLongTitle"
-             aria-hidden="true">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Edição de Modelo Animal</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <form method="POST" action="{{route('solicitacao.modelo_animal.update')}}">
-                        @csrf
-                        <input type="hidden" name="modelo_animal_id" value="{{$modelo_animal->id}}">
-
-                        <div class="modal-body">
-                            @include('solicitacao.modelo_animal', compact('modelo_animal'))
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                            <button type="submit" class="btn btn-success">Alterar</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    @endforeach
 
     <!-- Utilizado para quando houver avaliação -->
     @if(Auth::user()->tipo_usuario_id == 2)

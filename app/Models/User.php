@@ -26,6 +26,18 @@ class User extends Authenticatable
         'tipo_usuario_id',
     ];
 
+    public static $rules = [
+        'name' => 'required|min:5',
+        'email' => 'required|email|min:5',
+        'cpf' => 'required',
+    ];
+
+    public static $messages = [
+        '*.required'  => 'O :attribute é obrigatório',
+        '*.email'  => 'O :attribute deve estar no formato correto',
+        '*.min'  => 'O :attribute deve ter no minimo 5 caracteres',
+    ];
+
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -45,19 +57,23 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function tipoUsuario(){
+    public function tipoUsuario()
+    {
         return $this->belongsTo('App\Models\TipoUsuario');
     }
 
-    public function unidade(){
+    public function unidade()
+    {
         return $this->belongsTo('App\Models\Unidade');
     }
 
-    public function avaliacoes(){
+    public function avaliacoes()
+    {
         return $this->hasMany('App\Models\Avaliacao');
     }
 
-    public function solicitacoes(){
+    public function solicitacoes()
+    {
         return $this->hasMany('App\Models\Solicitacao');
     }
 

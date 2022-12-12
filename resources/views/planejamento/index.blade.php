@@ -23,7 +23,7 @@
             </div>
             <div id="modelo_animal">
                 <div class="card shadow-lg p-3 bg-white" style="border-radius: 0px 0px 10px 10px">
-                    <form method="POST" action="{{route('solicitacao.modelo_animal.update')}}">
+                    <form method="POST" action="{{route('solicitacao.modelo_animal.update')}}" enctype="multipart/form-data">
                         @csrf
                         <input type="hidden" name="modelo_animal_id" value="{{$modelo_animal->id}}">
                         <div class="modal-body">
