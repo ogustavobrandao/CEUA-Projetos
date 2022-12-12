@@ -83,7 +83,7 @@ class SolicitacaoController extends Controller
         $licenca = new Licenca();
         $licenca->inicio = $request->inicio;
         $licenca->fim = $request->fim;
-        $licenca->codigo = Str::random(10);
+        $licenca->codigo = strtoupper(hash($solicitacao->id, $request->inicio.$request->fim));
         $licenca->avaliacao_id = $avaliacao->id;
         $licenca->save();
 
@@ -297,9 +297,7 @@ class SolicitacaoController extends Controller
 
     public function criar_modelo_animal(Request $request)
     {
-        Validator::make($request->all(), ModeloAnimal::$rules, ModeloAnimal::$messages)->validate();
-        Validator::make($request->all(['peso', 'quantidade', 'linhagem', 'machos', 'femeas', 'total', 'idade']), Perfil::$rules, Perfil::$messages)->validate();
-
+        Validator::make($request->all(), array_merge(ModeloAnimal::$rules, Perfil::$rules), array_merge(ModeloAnimal::$messages, Perfil::$messages))->validateWithBag('modelo');
 
         $modelo_animal = ModeloAnimal::create($request->all());
         $perfil = new Perfil();
