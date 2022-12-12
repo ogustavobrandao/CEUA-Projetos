@@ -1,6 +1,8 @@
 <div class="card shadow-lg p-3 bg-white" style="border-radius: 0px 0px 10px 10px">
     @if($solicitacao->status == 'avaliado' && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia')
-        <a type="button" class="btn btn-info text-start" style="position: absolute;pointer-events: all;z-index:10;" data-toggle="modal" data-target="#pendenciaVisuModal" title="Pendência"><img src="{{asset('images/pendencia.svg')}}" width="30px"></a>
+        <a type="button" class="btn btn-info text-start" style="position: absolute;pointer-events: all;z-index:10;"
+           data-toggle="modal" data-target="#pendenciaVisuModal" title="Pendência"><img
+                src="{{asset('images/pendencia.svg')}}" width="30px"></a>
     @endif
 
     <form id="form2" method="POST" action="{{route('solicitacao.colaborador.criar')}}">
@@ -101,8 +103,8 @@
         );
     }
 
-
-    @foreach($colaboradores as $key => $colab)
+    @if(isset($solicitacao->responsavel->colaboradores))
+    @foreach($solicitacao->responsavel->colaboradores as $key => $colab)
     criarColaborador();
     $('#colab' + {{$key+1}}).find('#colab_id').val("{{$colab->id}}");
     $('#colab' + {{$key+1}}).find('#nome').val("{{$colab->nome}}");
@@ -113,6 +115,7 @@
     $('#colab' + {{$key+1}}).find('#experiencia_previa').val("{{$colab->experiencia_previa}}");
     $('#colab' + {{$key+1}}).find('#instituicao').val("{{$colab->instituicao->id}}");
     @endforeach
+    @endif
 
 </script>
 
