@@ -77,6 +77,19 @@
             '</span>' +
             '@enderror' +
             '</div>' +
+            '<div class="col-sm-6 mt-2">' +
+                '<label for="grau_escolaridade">Grau de Escolaridade:</label>' +
+                '<select class="form-control" id="grau_escolaridade" name="colaborador[' + cont + '][grau_escolaridade]">' +
+                    '<option disabled selected>Selecione um Grau de Escolaridade</option>' +
+                    '<option @if(old('grau_escolaridade') == "graduacao_completa") selected @endif value="graduacao_completa">Graduação Completa</option>' +
+                    '<option @if(old('grau_escolaridade') == "pos_graduacao_incompleta") selected @endif value="pos_graduacao_incompleta">Pós-Gradução Incompleta</option>' +
+                    '<option @if(old('grau_escolaridade') == "pos_graduacao_completa") selected @endif value="pos_graduacao_completa">Pós-Gradução Completa</option>' +
+                    '<option @if(old('grau_escolaridade') == "mestrado_incompleto") selected @endif value="mestrado_incompleto">Mestrado Incompleto</option>' +
+                    '<option @if(old('grau_escolaridade') == "mestrado_completo") selected @endif value="mestrado_completo">Mestrado Completo</option>' +
+                    '<option @if(old('grau_escolaridade') == "doutorado_completo") selected @endif value="doutorado_completo">Doutorado Incompleto</option>' +
+                    '<option @if(old('grau_escolaridade') == "doutorado_incompleto") selected @endif value="doutorado_incompleto">Doutorado Completo</option>' +
+                '</select>' +
+            '</div>' +
             '</div>' +
             '</div>' +
             '<div class="row">' +
@@ -114,6 +127,7 @@
     $('#colab' + {{$key+1}}).find('#treinamento').val("{{$colab->treinamento}}");
     $('#colab' + {{$key+1}}).find('#experiencia_previa').val("{{$colab->experiencia_previa}}");
     $('#colab' + {{$key+1}}).find('#instituicao').val("{{$colab->instituicao->id}}");
+    $('#colab' + {{$key+1}}).find('#grau_escolaridade').val("{{$colab->grau_escolaridade}}");
     @endforeach
     @endif
 
