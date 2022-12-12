@@ -110,6 +110,12 @@
 
     </div>
 
+    <div class="row col-md-10 m-0">
+        <div class="col-4 pl-0">
+            <a type="button" class="btn btn-secondary w-100" href="{{route('avaliador.solicitacao.avaliar', ['solicitacao_id' => $avaliacao->solicitacao->id])}}">Voltar</a>
+        </div>
+    </div>
+
     <!-- Utilizado para quando houver avaliação -->
     @if(Auth::user()->tipo_usuario_id == 2)
 
