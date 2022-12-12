@@ -138,12 +138,14 @@
                 <div class="row">
                     <div class="col-md-12">
                         <h3 class="titulo">5. Dados dos Modelos Animais
+                            @if(Auth::user()->tipo_usuario_id == 3)
                             <a class="float-end "
                                data-toggle="modal"
                                data-target="#modeloAnimalModal"
                                style="color: green"
                                title="Adicionar Modelo Animal"><i
                                     class="fa-solid fa-circle-plus fa-2xl"></i></a></h3>
+                            @endif
                     </div>
                 </div>
             </div>
