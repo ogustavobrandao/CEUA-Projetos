@@ -56,7 +56,8 @@
                 <div class="row">
                     <div class="col-md-12">
                         <h2 class="titulo">3. Dados do(s) Colaborador(es)
-                            @if(!isset($disabled))
+                            @if(!isset($solicitacao->responsavel))<small style="color: red; font-weight: bold">Necessária a criação de um responsável</small>@endif
+                            @if(!isset($disabled) && isset($solicitacao->responsavel))
                                 <a class="float-end" onclick="criarColaborador()" style="color: green"
                                    title="Adicionar Colaborador">
                                     <i class="fa-solid fa-circle-plus fa-2xl"></i></a>
