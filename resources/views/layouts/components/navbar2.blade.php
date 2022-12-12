@@ -31,17 +31,17 @@
             @guest
                 @if (Route::has('login'))
                     <li class="nav-item">
-                        <a class="nav-link" href="#" style="color: white;">{{ __('Sobre') }}</a>
+                        <a class="nav-link text-white" href="#">{{ __('Sobre') }}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" style="color: white;">{{ __('Contato') }}</a>
+                        <a class="nav-link text-white" href="#">{{ __('Contato') }}</a>
                     </li>
                 @endif
 
 
             @else
                 <li class="nav-item dropdown">
-                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v- style="color: black">
+                    <a id="navbarDropdown" class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v- style="color: black">
                         <span class="font-weight-bolder">Olá, </span>{{ Auth::user()->name }}
                     </a>
 
