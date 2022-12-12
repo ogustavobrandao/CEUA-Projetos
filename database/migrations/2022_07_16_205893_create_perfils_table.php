@@ -17,7 +17,8 @@ return new class extends Migration
             $table->id();
             $table->string('grupo_animal');
             $table->string('linhagem');
-            $table->string('idade');
+            $table->integer('idade');
+            $table->string('periodo');
             $table->string('peso');
             $table->string('quantidade');
             $table->string('machos');
