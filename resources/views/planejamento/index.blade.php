@@ -27,7 +27,7 @@
                         @csrf
                         <input type="hidden" name="modelo_animal_id" value="{{$modelo_animal->id}}">
                         <div class="modal-body">
-                            @include('solicitacao.modelo_animal_form')
+                            @include('solicitacao.modelo_animal')
                             @if(Auth::user()->tipo_usuario_id == 2)
                                 @include('component.botoes_new_form',['tipo'=>4,'avaliacao_id'=>$avaliacao->id,'id'=>$modelo_animal->id])
                             @else
@@ -170,7 +170,7 @@
 
     <div class="row col-md-10 m-0">
         <div class="col-4 pl-0">
-            <a type="button" class="btn btn-secondary w-100" href="{{route('avaliador.solicitacao.avaliar', ['solicitacao_id' => $avaliacao->solicitacao->id])}}">Voltar</a>
+            <a type="button" class="btn btn-secondary w-100" href="{{route('avaliador.solicitacao.avaliar', ['solicitacao_id' => $solicitacao->id])}}">Voltar</a>
         </div>
     </div>
 
