@@ -104,11 +104,8 @@
                 <label for="desc_materiais_metodos">Descrição de materiais e métodos:</label>
                 <textarea class="form-control @error('desc_materiais_metodos') is-invalid @enderror"
                           id="desc_materiais_metodos" name="desc_materiais_metodos" required
-                          autocomplete="desc_materiais_metodos"
-                          autofocus>@if(!empty($planejamento) && $planejamento->desc_materiais_metodos != null){{$planejamento->desc_materiais_metodos}}
-                    @else
-                        {{old('desc_materiais_metodos')}}
-                    @endif</textarea>
+                          autocomplete="desc_materiais_metodos" maxlength="1000"
+                          autofocus>@if(!empty($planejamento) && $planejamento->desc_materiais_metodos != null){{$planejamento->desc_materiais_metodos}}@else{{old('desc_materiais_metodos')}}@endif</textarea>
                 @error('desc_materiais_metodos')
                 <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
