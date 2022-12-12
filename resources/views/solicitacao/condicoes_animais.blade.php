@@ -92,7 +92,7 @@
                 <input class="form-control @error('dimensoes_ambiente') is-invalid @enderror" id="dimensoes_ambiente" type="text" name="dimensoes_ambiente"
                        @if(!empty($condicoes_animal) && $condicoes_animal->dimensoes_ambiente != null) value="{{$condicoes_animal->dimensoes_ambiente}}" @else value="{{old('dimensoes_ambiente')}}" @endif
                        required
-                       autocomplete="dimensoes_ambiente" autofocus>
+                       autocomplete="dimensoes_ambiente" placeholder="Altura x Largura x Comprimento" autofocus>
                 @error('dimensoes_ambiente')
                 <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
