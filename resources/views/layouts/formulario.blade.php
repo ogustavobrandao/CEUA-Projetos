@@ -39,7 +39,7 @@
 </head>
 <body>
 @include('layouts.components.navbar2')
-<div class="mx-4" id="app">
+<div id="app">
     @yield('login')
     <div class="row my-5 justify-content-center">
         @yield('content')
