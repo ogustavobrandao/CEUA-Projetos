@@ -42,4 +42,8 @@ class ModeloAnimal extends Model
         return $this->hasOne('App\Models\Planejamento');
     }
 
+    public function avaliacaoIndividual(){
+        return $this->hasOne('App\Models\AvaliacaoIndividual');
+    }
+
 }
