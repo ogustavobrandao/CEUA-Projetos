@@ -295,14 +295,16 @@ class SolicitacaoController extends Controller
     {
         Validator::make($request->all(), array_merge(ModeloAnimal::$rules, Perfil::$rules), array_merge(ModeloAnimal::$messages, Perfil::$messages))->validateWithBag('modelo');
 
+        $data = $request->all();
         if (($request->hasFile('termo_consentimento') && $request->file('termo_consentimento')->isValid())) {
             $anexo = $request->termo_consentimento->extension();
             $nomeAnexo = "tcle_" . $request->solicitacao_id . date('Ymd') . date('His') . '.' . $anexo;
             $request->termo_consentimento->storeAs('termos/', $nomeAnexo);
-            $request->termo_consentimento = $nomeAnexo;
+            $data['termo_consentimento'] = $nomeAnexo;
+
         }
 
-        $modelo_animal = ModeloAnimal::create($request->all());
+        $modelo_animal = ModeloAnimal::create($data);
 
 
         $perfil = new Perfil();

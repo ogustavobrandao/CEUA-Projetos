@@ -23,7 +23,7 @@ class Perfil extends Model
     ];
 
     public static $rules = [
-        'peso' => 'required|numeric|min:1',
+        'peso' => 'required|string|min:1',
         'idade' => 'required|numeric|min:1',
         'periodo' => 'required',
     ];
