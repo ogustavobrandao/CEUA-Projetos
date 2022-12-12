@@ -290,7 +290,9 @@
 
             //Modelo Animal
             @foreach($solicitacao->modelosAnimais as $modelo_animal)
-                verificarAvalModelo('{{$modelo_animal->id}}','{{$avaliacao->id}}');
+                @if($avaliacao != null)
+                    verificarAvalModelo('{{$modelo_animal->id}}','{{$avaliacao->id}}');
+                @endif
             @endforeach
 
         });
