@@ -19,7 +19,7 @@ class AvaliacaoController extends Controller
         $avaliador = User::find(Auth::user()->id);
         Avaliacao::where('solicitacao_id', $solicitacao->id)->where('user_id', '!=', $avaliador->id)->delete();
         $avaliacao = Avaliacao::find($request->avaliacao_id);
-        $avaliacao->status = 'aprovada';
+        $avaliacao->status = 'aprovado';
         $solicitacao->status = 'avaliado';
         $solicitacao->update();
         $avaliacao->update();
@@ -56,11 +56,10 @@ class AvaliacaoController extends Controller
     public function reprovarSolicitacao(Request $request)
     {
         $solicitacao = Solicitacao::find($request->solicitacao_id);
-        $avaliador = User::find($request->avaliador_id);
+        $avaliador = User::find(Auth::user()->id);
+        $avaliacao = Avaliacao::find($request->avaliacao_id);
         Avaliacao::where('solicitacao_id', $solicitacao->id)->where('user_id', '!=', $avaliador->id)->delete();
-        $avaliacao = $solicitacao->avaliacao->first();
-        $avaliacao->status = 'reprovada';
-        $avaliacao->parecer = $request->parecer;
+        $avaliacao->status = 'reprovado';
         $solicitacao->status = 'avaliado';
         $solicitacao->update();
         $avaliacao->update();
