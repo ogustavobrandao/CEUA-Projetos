@@ -149,93 +149,94 @@
             <h3 class="subtitulo">Informações Complementares</h3>
             <div class="col-sm-2">
                 <label for="experiencia">Experiência Prévia:</label>
-                <div class="row ml-1 mt-2">
-                    <div class="col-sm-6">
-                        <input class="form-check-input" type="radio" name="experiencia_previa_radio"
-                               id="experiencia_previa_sim"
-                               @if(!empty($solicitacao->responsavel) && $solicitacao->responsavel->experiencia_previa != null) checked @endif>
-                        <label class="form-check-label" for="experiencia_previa_sim">Sim</label>
-                    </div>
-                    <div class="col-sm-6">
-                        <input class="form-check-input" type="radio" name="experiencia_previa_radio"
-                               id="experiencia_previa_nao"
-                               @if(!empty($solicitacao->responsavel) && $solicitacao->responsavel->experiencia_previa == null || empty($solicitacao->responsavel)) checked
-                               @endif value="false">
-                        <label class="form-check-label" for="experiencia_previa_nao">
-                            Não
-                        </label>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-4" id="anexo_experiencia" style="display: none;">
-                <label>Anexo Experiência Prévia:</label>
                 @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2)
                     <a class="btn btn-primary"
                        href="{{route('experiencia.download', ['responsavel_id' => $solicitacao->responsavel->id])}}">Baixar
                         Experiência Prévia</a>
                 @else
-                    @if(!empty($solicitacao->responsavel))
-                        <input class="form-control @error('experiencia_previa') is-invalid @enderror"
-                               id="experiencia_previa"
-                               type="file" name="experiencia_previa"
-                               value="" autocomplete="experiencia_previa"
-                               @if($solicitacao->responsavel->experiencia_previa != null) style="width: 135px" @endif >
-                        @error('experiencia_previa')
-                        <span class="invalid-feedback" role="alert">
+                    <div class="row ml-1 mt-2">
+                        <div class="col-sm-6">
+                            <input class="form-check-input" type="radio" name="experiencia_previa_radio"
+                                   id="experiencia_previa_sim"
+                                   @if(!empty($solicitacao->responsavel) && $solicitacao->responsavel->experiencia_previa != null) checked @endif>
+                            <label class="form-check-label" for="experiencia_previa_sim">Sim</label>
+                        </div>
+                        <div class="col-sm-6">
+                            <input class="form-check-input" type="radio" name="experiencia_previa_radio"
+                                   id="experiencia_previa_nao"
+                                   @if(!empty($solicitacao->responsavel) && $solicitacao->responsavel->experiencia_previa == null || empty($solicitacao->responsavel)) checked
+                                   @endif value="false">
+                            <label class="form-check-label" for="experiencia_previa_nao">
+                                Não
+                            </label>
+                        </div>
+                    </div>
+            </div>
+            <div class="col-sm-4" id="anexo_experiencia" style="display: none;">
+                <label>Anexo Experiência Prévia:</label>
+                @if(!empty($solicitacao->responsavel))
+                    <input class="form-control @error('experiencia_previa') is-invalid @enderror"
+                           id="experiencia_previa"
+                           type="file" name="experiencia_previa"
+                           value="" autocomplete="experiencia_previa"
+                           @if($solicitacao->responsavel->experiencia_previa != null) style="width: 135px" @endif >
+                    @error('experiencia_previa')
+                    <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
             </span>
-                        @enderror
-                        @if($solicitacao->responsavel->experiencia_previa != null)
-                            <span
-                                style="border: 1px gray solid; border-radius: 10px; text-align: center; width: 250px; position: absolute; bottom: 0px; left: 155px; height: 38px; padding-top: 5px; background-color: #dcfadf">Um Arquivo Já Foi Enviado</span>
-                        @endif
+                    @enderror
+                    @if($solicitacao->responsavel->experiencia_previa != null)
+                        <span
+                            style="border: 1px gray solid; border-radius: 10px; text-align: center; width: 250px; position: absolute; bottom: 0px; left: 155px; height: 38px; padding-top: 5px; background-color: #dcfadf">Um Arquivo Já Foi Enviado</span>
                     @endif
                 @endif
             </div>
+            @endif
 
             <div class="col-sm-2">
                 <label>Treinamento:</label>
-                <div class="row ml-1 mt-2">
-                    <div class="col-sm-6">
-                        <input class="form-check-input" type="radio" name="treinamento_radio" id="treinamento_sim"
-                               @if(!empty($solicitacao->responsavel) && $solicitacao->responsavel->treinamento != null) checked @endif>
-                        <label class="form-check-label" for="treinamento">Sim</label>
-                    </div>
-                    <div class="col-sm-6">
-                        <input class="form-check-input" type="radio" name="treinamento_radio" id="treinamento_nao"
-                               @if(!empty($solicitacao->responsavel) && $solicitacao->responsavel->treinamento == null || $solicitacao->responsavel == null) checked
-                               @endif value="false">
-                        <label class="form-check-label" for="treinamento">
-                            Não
-                        </label>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-4" id="anexo_treinamento" style="display: none;">
-                <label>Anexo Treinamento:</label>
                 @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2)
                     <a class="btn btn-primary"
                        href="{{route('treinamento.download', ['responsavel_id' => $solicitacao->responsavel->id])}}">Baixar
                         Treinamento</a>
                 @else
-                    @if(!empty($solicitacao->responsavel))
-                        <input class="form-control @error('treinamento') is-invalid @enderror"
-                               id="treinamento"
-                               type="file" name="treinamento"
-                               value="" autocomplete="treinamento"
-                               @if($solicitacao->responsavel->treinamento != null) style="width: 135px" @endif>
-                        @error('treinamento')
-                        <span class="invalid-feedback" role="alert">
+                    <div class="row ml-1 mt-2">
+                        <div class="col-sm-6">
+                            <input class="form-check-input" type="radio" name="treinamento_radio" id="treinamento_sim"
+                                   @if(!empty($solicitacao->responsavel) && $solicitacao->responsavel->treinamento != null) checked @endif>
+                            <label class="form-check-label" for="treinamento">Sim</label>
+                        </div>
+                        <div class="col-sm-6">
+                            <input class="form-check-input" type="radio" name="treinamento_radio" id="treinamento_nao"
+                                   @if(!empty($solicitacao->responsavel) && $solicitacao->responsavel->treinamento == null || $solicitacao->responsavel == null) checked
+                                   @endif value="false">
+                            <label class="form-check-label" for="treinamento">
+                                Não
+                            </label>
+                        </div>
+                    </div>
+            </div>
+            <div class="col-sm-4" id="anexo_treinamento" style="display: none;">
+                <label>Anexo Treinamento:</label>
+                @if(!empty($solicitacao->responsavel))
+                    <input class="form-control @error('treinamento') is-invalid @enderror"
+                           id="treinamento"
+                           type="file" name="treinamento"
+                           value="" autocomplete="treinamento"
+                           @if($solicitacao->responsavel->treinamento != null) style="width: 135px" @endif>
+                    @error('treinamento')
+                    <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
             </span>
-                        @enderror
-                        @if($solicitacao->responsavel->treinamento != null)
-                            <span
-                                style="border: 1px gray solid; border-radius: 10px; text-align: center; width: 250px; position: absolute; bottom: 0px; left: 155px; height: 38px; padding-top: 5px; background-color: #dcfadf">Um Arquivo Já Foi Enviado</span>
-                        @endif
+                    @enderror
+                    @if($solicitacao->responsavel->treinamento != null)
+                        <span
+                            style="border: 1px gray solid; border-radius: 10px; text-align: center; width: 250px; position: absolute; bottom: 0px; left: 155px; height: 38px; padding-top: 5px; background-color: #dcfadf">Um Arquivo Já Foi Enviado</span>
                     @endif
                 @endif
+
             </div>
+            @endif
 
         </div>
 
@@ -267,7 +268,7 @@
     $("#treinamento_sim").click(function () {
         $("#anexo_treinamento").show().find('input, textarea').prop('disabled', false);
         @if($solicitacao->responsavel->treinamento == null)
-            $("#treinamento").prop('required', true);
+        $("#treinamento").prop('required', true);
         @endif
     });
     $("#treinamento_nao").click(function () {
@@ -278,7 +279,7 @@
     $("#experiencia_previa_sim").click(function () {
         $("#anexo_experiencia").show().find('input, textarea').prop('disabled', false);
         @if($solicitacao->responsavel->experiencia_previa == null)
-            $("#experiencia_previa").prop('required', true);
+        $("#experiencia_previa").prop('required', true);
         @endif
 
     });
