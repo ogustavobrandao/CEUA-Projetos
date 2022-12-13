@@ -11,7 +11,7 @@
             <h3 class="subtitulo">Informações</h3>
 
             <div class="col-sm-4 mt-2">
-                <label for="estresse_radio">Estresse/dor intencional nos animais:</label>
+                <label for="estresse_radio">Estresse/dor intencional nos animais:<strong style="color: red">*</strong></label>
                 <div class="row ml-1">
                     <div class="col-sm-2">
                         <input class="form-check-input" type="radio" name="estresse_radio" id="estresse_sim" @if(!empty($procedimento) && $procedimento->estresse != null) checked @endif>
@@ -27,7 +27,7 @@
             </div>
 
             <div class="col-sm-4 mt-2">
-                <label for="anestesico_radio">Uso de fármacos anestésicos:</label>
+                <label for="anestesico_radio">Uso de fármacos anestésicos:<strong style="color: red">*</strong></label>
                 <div class="row ml-1">
                     <div class="col-sm-2">
                         <input class="form-check-input" type="radio" name="anestesico_radio" id="anestesico_sim" @if(!empty($procedimento) && $procedimento->anestesico != null) checked @endif>
@@ -43,7 +43,7 @@
             </div>
 
             <div class="col-sm-4 mt-2">
-                <label for="relaxante_radio">Uso de relaxante muscular:</label>
+                <label for="relaxante_radio">Uso de relaxante muscular:<strong style="color: red">*</strong></label>
                 <div class="row ml-1">
                     <div class="col-sm-2">
                         <input class="form-check-input" type="radio" name="relaxante_radio" id="relaxante_sim" @if(!empty($procedimento) && $procedimento->relaxante != null) checked @endif>
@@ -59,7 +59,7 @@
             </div>
 
             <div class="col-sm-4 mt-2">
-                <label for="analgesico_radio">Uso de fármacos analgésicos:</label>
+                <label for="analgesico_radio">Uso de fármacos analgésicos:<strong style="color: red">*</strong></label>
                 <div class="row ml-1">
                     <div class="col-sm-2">
                         <input class="form-check-input" type="radio" name="analgesico_radio" id="analgesico_sim" @if(!empty($procedimento) && $procedimento->analgesico != null) checked @endif>
@@ -75,7 +75,7 @@
             </div>
 
             <div class="col-sm-4 mt-2">
-                <label for="imobilizacao_radio">Imobilização/Contenção do animal:</label>
+                <label for="imobilizacao_radio">Imobilização/Contenção do animal:<strong style="color: red">*</strong></label>
                 <div class="row ml-1">
                     <div class="col-sm-2">
                         <input class="form-check-input" type="radio" name="imobilizacao_radio" id="imobilizacao_sim" @if(!empty($procedimento) && $procedimento->imobilizacao != null) checked @endif>
@@ -91,7 +91,7 @@
             </div>
 
             <div class="col-sm-4 mt-2">
-                <label for="inoculacao_substancia_radio">Exposição / Inoculação / Administração:</label>
+                <label for="inoculacao_substancia_radio">Exposição / Inoculação / Administração:<strong style="color: red">*</strong></label>
                 <div class="row ml-1">
                     <div class="col-sm-2">
                         <input class="form-check-input" type="radio" name="inoculacao_substancia_radio" id="inoculacao_substancia_sim" @if(!empty($procedimento) && $procedimento->inoculacao_substancia != null) checked @endif>
@@ -107,7 +107,7 @@
             </div>
 
             <div class="col-sm-4 mt-2">
-                <label for="extracao_radio">Extração de materiais biológicos:</label>
+                <label for="extracao_radio">Extração de materiais biológicos:<strong style="color: red">*</strong></label>
                 <div class="row ml-1">
                     <div class="col-sm-2">
                         <input class="form-check-input" type="radio" name="extracao_radio" id="extracao_sim" @if(!empty($procedimento) && $procedimento->extracao != null) checked @endif>
@@ -125,7 +125,7 @@
             {{-- Campos de textos das Informações --}}
 
             <div class="col-sm-12 mt-2" id="estresse" style="display: none;">
-                <label for="estresse">Estresse/dor intencional nos animais:</label>
+                <label for="estresse">Estresse/dor intencional nos animais:<strong style="color: red">*</strong></label>
                 <textarea class="form-control @error('estresse') is-invalid @enderror" name="estresse" id="estresse" autocomplete="estresse" autofocus
                           required disabled>@if(!empty($procedimento) && $procedimento->estresse != null) {{$procedimento->estresse}} @else {{old('estresse')}} @endif</textarea>
                 @error('estresse')
@@ -136,7 +136,7 @@
             </div>
 
             <div class="col-sm-12 mt-2" id="anestesico" style="display: none;">
-                <label for="anestesico">Uso de fármacos anestésicos:</label>
+                <label for="anestesico">Uso de fármacos anestésicos:<strong style="color: red">*</strong></label>
                 <textarea class="form-control @error('anestesico') is-invalid @enderror" name="anestesico" id="anestesico" autocomplete="anestesico" autofocus
                           required disabled>@if(!empty($procedimento) && $procedimento->anestesico != null) {{$procedimento->anestesico}} @else {{old('anestesico')}} @endif</textarea>
                 @error('anestesico')
@@ -147,7 +147,7 @@
             </div>
 
             <div class="col-sm-12 mt-2" id="relaxante" style="display: none;">
-                <label for="relaxante">Uso de relaxante muscular:</label>
+                <label for="relaxante">Uso de relaxante muscular:<strong style="color: red">*</strong></label>
                 <textarea class="form-control @error('relaxante') is-invalid @enderror" name="relaxante" id="relaxante" autocomplete="relaxante" autofocus
                           required disabled>@if(!empty($procedimento) && $procedimento->relaxante != null) {{$procedimento->relaxante}} @else {{old('relaxante')}} @endif</textarea>
                 @error('relaxante')
@@ -158,7 +158,7 @@
             </div>
 
             <div class="col-sm-12 mt-2" id="analgesico" style="display: none;">
-                <label for="analgesico">Uso de fármacos analgésicos:</label>
+                <label for="analgesico">Uso de fármacos analgésicos:<strong style="color: red">*</strong></label>
                 <textarea class="form-control @error('analgesico') is-invalid @enderror" name="analgesico" id="analgesico" autocomplete="analgesico" autofocus
                           required disabled>@if(!empty($procedimento) && $procedimento->analgesico != null) {{$procedimento->analgesico}} @else {{old('analgesico')}} @endif</textarea>
                 @error('analgesico')
@@ -169,7 +169,7 @@
             </div>
 
             <div class="col-sm-12 mt-2" id="imobilizacao" style="display: none;">
-                <label for="imobilizacao">Imobilização/Contenção do animal:</label>
+                <label for="imobilizacao">Imobilização/Contenção do animal:<strong style="color: red">*</strong></label>
                 <textarea class="form-control @error('imobilizacao') is-invalid @enderror" name="imobilizacao" id="imobilizacao" autocomplete="imobilizacao" autofocus
                           required disabled>@if(!empty($procedimento) && $procedimento->imobilizacao != null) {{$procedimento->imobilizacao}} @else {{old('imobilizacao')}} @endif</textarea>
                 @error('imobilizacao')
@@ -180,7 +180,7 @@
             </div>
 
             <div class="col-sm-12 mt-2" id="inoculacao_substancia" style="display: none;">
-                <label for="inoculacao_substancia">Exposição / Inoculação / Administração:</label>
+                <label for="inoculacao_substancia">Exposição / Inoculação / Administração:<strong style="color: red">*</strong></label>
                 <textarea class="form-control @error('inoculacao_substancia') is-invalid @enderror" name="inoculacao_substancia" id="inoculacao_substancia" autocomplete="inoculacao_substancia" autofocus
                           required disabled>@if(!empty($procedimento) && $procedimento->inoculacao_substancia != null) {{$procedimento->inoculacao_substancia}} @else {{old('inoculacao_substancia')}} @endif</textarea>
                 @error('inoculacao_substancia')
@@ -191,7 +191,7 @@
             </div>
 
             <div class="col-sm-12 mt-2" id="extracao" style="display: none;">
-                <label for="extracao">Extração de materiais biológicos:</label>
+                <label for="extracao">Extração de materiais biológicos:<strong style="color: red">*</strong></label>
                 <textarea class="form-control @error('extracao') is-invalid @enderror" name="extracao" id="extracao" autocomplete="extracao" autofocus
                           required disabled>@if(!empty($procedimento) && $procedimento->extracao != null) {{$procedimento->extracao}} @else {{old('extracao')}} @endif</textarea>
                 @error('extracao')
@@ -204,7 +204,7 @@
             <h3 class="subtitulo">Condições alimentares</h3>
 
             <div class="col-sm-4 mt-2">
-                <label for="jejum">Jejum:</label>
+                <label for="jejum">Jejum:<strong style="color: red">*</strong></label>
                 <div class="row ml-1">
                     <div class="col-sm-2">
                         <input class="form-check-input" type="radio" name="jejum_radio" id="jejum_sim" @if(!empty($procedimento) && $procedimento->jejum != null) checked @endif>
@@ -220,7 +220,7 @@
             </div>
 
             <div class="col-sm-4 mt-2">
-                <label for="restricao_hidrica">Restrição Hídrica:</label>
+                <label for="restricao_hidrica">Restrição Hídrica:<strong style="color: red">*</strong></label>
                 <div class="row ml-1">
                     <div class="col-sm-2">
                         <input class="form-check-input" type="radio" name="restricao_hidrica_radio" id="restricao_hidrica_sim" @if(!empty($procedimento) && $procedimento->restricao_hidrica != null) checked @endif>
@@ -237,7 +237,7 @@
 
             {{-- Campos de textos das Condições Alimentares --}}
             <div class="col-sm-12 mt-2" id="jejum" style="display: none;">
-                <label for="jejum">Jejum:</label>
+                <label for="jejum">Jejum:<strong style="color: red">*</strong></label>
                 <textarea class="form-control @error('jejum') is-invalid @enderror" name="jejum" id="jejum" autocomplete="jejum" autofocus
                           required disabled>@if(!empty($procedimento) && $procedimento->jejum != null) {{$procedimento->jejum}} @else {{old('jejum')}} @endif</textarea>
                 @error('jejum')
@@ -248,7 +248,7 @@
             </div>
 
             <div class="col-sm-12 mt-2" id="restricao_hidrica" style="display: none;">
-                <label for="restricao_hidrica">Restrição Hídrica:</label>
+                <label for="restricao_hidrica">Restrição Hídrica:<strong style="color: red">*</strong></label>
                 <textarea class="form-control @error('restricao_hidrica') is-invalid @enderror" name="restricao_hidrica" id="restricao_hidrica" autocomplete="restricao_hidrica" autofocus
                           required disabled>@if(!empty($procedimento) && $procedimento->restricao_hidrica != null) {{$procedimento->restricao_hidrica}} @else {{old('restricao_hidrica')}} @endif</textarea>
                 @error('restricao_hidrica')

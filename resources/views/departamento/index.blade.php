@@ -56,7 +56,7 @@
                         <input type="hidden" name="unidade_id" value="{{$unidade->id}}">
                         <div class="row justify-content-center mt-2">
                             <div class="col-sm-10">
-                                <label for="nome">Nome do Departamento:</label>
+                                <label for="nome">Nome do Departamento:<strong style="color: red">*</strong></label>
                                 <input class="form-control @error('nome') is-invalid @enderror" id="nome" name="nome" value="{{ old('nome') }}" required autocomplete="nome"
                                        autofocus>
                                 @error('nome')

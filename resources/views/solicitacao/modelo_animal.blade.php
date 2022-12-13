@@ -2,7 +2,7 @@
 <div class="row">
     <h3 class="subtitulo">Informações do Animal/Uso</h3>
     <div class="col-sm-6">
-        <label for="nome_cientifico">Nome ciêntifico:</label>
+        <label for="nome_cientifico">Nome ciêntifico:<strong style="color: red">*</strong></label>
         <input class="form-control @error('nome_cientifico') is-invalid @enderror" id="nome_cientifico" type="text"
                name="nome_cientifico" @if(isset($modelo_animal)) value="{{$modelo_animal->nome_cientifico}}"
                @else value="{{old('nome_cientifico')}}" @endif required
@@ -15,7 +15,7 @@
     </div>
 
     <div class="col-sm-6">
-        <label for="nome_vulgar">Nome vulgar:</label>
+        <label for="nome_vulgar">Nome vulgar:<strong style="color: red">*</strong></label>
         <input class="form-control @error('nome_vulgar') is-invalid @enderror" id="nome_vulgar" type="text"
                name="nome_vulgar" @if(isset($modelo_animal)) value="{{$modelo_animal->nome_vulgar}}"
                @else value="{{old('nome_vulgar')}}" @endif required
@@ -29,7 +29,7 @@
     </div>
 
     <div class="col-sm-12 mt-2">
-        <label for="justificativa">Justificar o uso dos procedimentos e da espécie animal:</label>
+        <label for="justificativa">Justificar o uso dos procedimentos e da espécie animal:<strong style="color: red">*</strong></label>
         <textarea class="form-control @error('justificativa') is-invalid @enderror" id="justificativa"
                   name="justificativa" required autocomplete="justificativa"
                   autofocus>@if(isset($modelo_animal))
@@ -50,7 +50,7 @@
     <h3 class="subtitulo">Procedência</h3>
     <div class="row">
         <div class="col-sm-6">
-            <label for="procedencia">Procedência:</label>
+            <label for="procedencia">Procedência:<strong style="color: red">*</strong></label>
             <select class="form-control @error('procedencia') is-invalid @enderror" id="procedencia" name="procedencia">
                 <option disabled selected>Selecione a Procedência</option>
                 <option value="animal_comprado"
@@ -91,7 +91,7 @@
         </div>
 
         <div class="col-sm-6">
-            <label for="experiencia">O animal é geneticamente modificado?</label>
+            <label for="experiencia">O animal é geneticamente modificado?<strong style="color: red">*</strong></label>
             <div class="row ml-1">
                 <div class="col-sm-2">
                     <input class="form-check-input" type="radio" name="geneticamente_modificado"
@@ -120,7 +120,7 @@
     <div class="row mt-2">
         <h3 class="subtitulo">Tipo e Característica</h3>
         <div class="col-sm-6">
-            <label for="grupo_animal">Grupo Animal:</label>
+            <label for="grupo_animal">Grupo Animal:<strong style="color: red">*</strong></label>
             <select class="form-control @error('grupo_animal') is-invalid @enderror" id="grupo_animal"
                     name="grupo_animal">
                 <option disabled selected>Selecione o Grupo Animal</option>
@@ -173,7 +173,7 @@
         </div>
 
         <div class="col-sm-6">
-            <label for="linhagem">Linhagem/Raça:</label>
+            <label for="linhagem">Linhagem/Raça:<strong style="color: red">*</strong></label>
             <input class="form-control @error('linhagem') is-invalid @enderror" id="linhagem" type="text"
                    name="linhagem" @if(isset($modelo_animal->perfil)) value="{{$modelo_animal->perfil->linhagem}}" @else
                        value="{{old('linhagem')}}" @endif required autocomplete="linhagem"
@@ -189,7 +189,7 @@
 
     <div class="row mt-2">
         <div class="col-sm-4 pr-0">
-            <label for="idade">Idade:</label>
+            <label for="idade">Idade:<strong style="color: red">*</strong></label>
             <input class="form-control @error('idade') is-invalid @enderror" id="idade" type="number" name="idade"
                    @if(isset($modelo_animal->perfil)) value="{{$modelo_animal->perfil->idade}}"
                    @else value="{{old('idade')}}" @endif required autocomplete="idade" autofocus>
@@ -201,7 +201,7 @@
         </div>
 
         <div class="col-sm-2 pl-1">
-            <label for="periodo">Periodo:</label>
+            <label for="periodo">Periodo:<strong style="color: red">*</strong></label>
             <select class="form-control" name="periodo" autofocus>
                 <option value="Dias"
                         @if(isset($modelo_animal->perfil) && $modelo_animal->perfil->periodo == "Dias" || isset($modelo_animal->perfil) && $modelo_animal->perfil->periodo == null) selected @endif>
@@ -219,7 +219,7 @@
         </div>
 
         <div class="col-sm-6">
-            <label for="peso">Peso Aproximado:</label>
+            <label for="peso">Peso Aproximado:<strong style="color: red">*</strong></label>
             <input class="form-control @error('peso') is-invalid @enderror" id="peso" type="text" name="peso"
                    @if(isset($modelo_animal->perfil)) value="{{$modelo_animal->perfil->peso}}"
                    @else value="{{old('peso')}}" @endif required autocomplete="peso"
@@ -236,7 +236,7 @@
     <div class="row mt-2">
 
         <div class="col-sm-4">
-            <label for="machos">Quantidade de machos:</label>
+            <label for="machos">Quantidade de Machos:<strong style="color: red">*</strong></label>
             <input class="form-control @error('machos') is-invalid @enderror" id="machos" type="number" name="machos"
                    @if(isset($modelo_animal->perfil)) value="{{$modelo_animal->perfil->machos}}"
                    @else value="{{old('machos')}}" @endif required autocomplete="machos"
@@ -249,7 +249,7 @@
         </div>
 
         <div class="col-sm-4">
-            <label for="femeas">Quantidade de fêmeas:</label>
+            <label for="femeas">Quantidade de Fêmeas:<strong style="color: red">*</strong></label>
             <input class="form-control @error('femeas') is-invalid @enderror" id="femeas" type="number" name="femeas"
                    @if(isset($modelo_animal->perfil)) value="{{$modelo_animal->perfil->femeas}}"
                    @else value="{{old('femeas')}}" @endif required autocomplete="femeas"
@@ -262,7 +262,7 @@
         </div>
 
         <div class="col-sm-4">
-            <label for="quantidade">Quantidade:</label>
+            <label for="quantidade">Quantidade:<strong style="color: red">*</strong></label>
             <input class="form-control @error('quantidade') is-invalid @enderror" id="quantidade" type="number"
                    name="quantidade"
                    @if(isset($modelo_animal->perfil)) value="{{$modelo_animal->perfil->quantidade}}"
@@ -276,7 +276,7 @@
         </div>
 
         <div class="col-sm-12 mt-2">
-            <label for="termo_consentimento">Termo de Consentimento Livre e Esclarecido (TCLE):</label>
+            <label for="termo_consentimento">Termo de Consentimento Livre e Esclarecido (TCLE):<strong style="color: red">*</strong></label>
             @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2)
                 <a class="btn btn-primary"
                    href="{{route('termo.download', ['modelo_animal_id' => $modelo_animal->id])}}">Baixar
