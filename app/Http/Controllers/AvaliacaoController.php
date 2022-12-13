@@ -6,6 +6,7 @@ use App\Mail\SendSolicitacaoStatus;
 use App\Models\Avaliacao;
 use App\Models\Solicitacao;
 use App\Models\User;
+use App\Models\Licenca;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,8 +18,8 @@ class AvaliacaoController extends Controller
     {
         $solicitacao = Solicitacao::find($request->solicitacao_id);
         $avaliador = User::find(Auth::user()->id);
-        Avaliacao::where('solicitacao_id', $solicitacao->id)->where('user_id', '!=', $avaliador->id)->delete();
         $avaliacao = Avaliacao::find($request->avaliacao_id);
+        Avaliacao::where('solicitacao_id', $solicitacao->id)->where('user_id', '!=', $avaliador->id)->delete();
         $avaliacao->status = 'aprovado';
         $solicitacao->status = 'avaliado';
         $solicitacao->update();
@@ -27,7 +28,7 @@ class AvaliacaoController extends Controller
         $licenca = new Licenca();
         $licenca->inicio = $request->inicio;
         $licenca->fim = $request->fim;
-        $licenca->codigo = strtoupper(hash($solicitacao->id, $request->inicio.$request->fim));
+        $licenca->codigo = strtoupper(hash('ripemd160', $solicitacao->id.$request->inicio.$request->fim));
         $licenca->avaliacao_id = $avaliacao->id;
         $licenca->save();
 
