@@ -214,9 +214,15 @@
                     </div>
                     <div class="col-4">
                         @if(Auth::user()->tipo_usuario_id == 2)
-                        <a class="btn w-100 btn-danger"
-                           href="#"
-                           title="Reprovar Solicitação." id="reprovarAvaliacao">Reprovar</a>
+                            <form method="POST" action="{{route('avaliador.solicitacao.reprovar')}}">
+                                @csrf
+                                <input type="hidden" name="avaliacao_id" value="{{$avaliacao->id}}">
+                                <input type="hidden" name="solicitacao_id" value="{{$solicitacao->id}}">
+                                <input type="hidden" name="reprovarAvaliacao" value="reprovado">
+                                <button type="submit" class="btn w-100 btn-danger" title="Reprovar Solicitação."
+                                        id="reprovarAvaliacao" >Reprovar
+                                </button>
+                            </form>
                         @endif
                     </div>
 
