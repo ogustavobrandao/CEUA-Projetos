@@ -213,18 +213,22 @@
                            href="{{route('solicitacao.solicitante.index')}}">Voltar</a>
                     </div>
                     <div class="col-4">
+                        @if(Auth::user()->tipo_usuario_id == 2)
                         <a class="btn w-100 btn-danger"
                            href="#"
                            title="Reprovar Solicitação." id="reprovarAvaliacao">Reprovar</a>
+                        @endif
                     </div>
 
                     <div class="col-4">
+                        @if(Auth::user()->tipo_usuario_id == 2)
                         <a class="btn w-100 btn-success"
                            href="#"
                            title="Aprovar Solicitação." id="aprovarAvaliacao" hidden="hidden">Aprovar</a>
                         <a class="btn w-100 btn-primary"
                            href="#"
                            title="Aprovar Solicitação Com Pendências." id="pendenciaAvaliacao">Aprovar com pendências</a>
+                        @endif
                         @if($solicitacao->status == null)
                             <a class="btn w-100"
                                href="{{route('solicitacao.concluir', ['solicitacao_id' => $solicitacao->id])}}"
