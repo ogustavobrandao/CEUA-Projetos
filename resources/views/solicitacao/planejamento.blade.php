@@ -11,7 +11,7 @@
         <div class="row">
             <h3 class="subtitulo">Planejamento Estatístico/Delineamento Experimental/Desenho Experimental</h3>
             <div class="col-sm-2">
-                <label for="num_animais_grupo">Número de grupos:</label>
+                <label for="num_animais_grupo">Número de grupos:<strong style="color: red">*</strong></label>
                 <input class="form-control @error('num_animais_grupo') is-invalid @enderror" id="num_animais_grupo"
                        type="number" name="num_animais_grupo"
                        value="@if(!empty($planejamento) && $planejamento->num_animais_grupo != null){{$planejamento->num_animais_grupo}}@else{{ old('num_animais_grupo')}} @endif"
@@ -26,7 +26,7 @@
 
             <div class="col-sm-5">
                 <label for="especificar_grupo">Especificar cada grupo (controle, tratado, utilizado para treinamento se for o caso)
-                    e numero de animais por grupo:</label>
+                    e numero de animais por grupo:<strong style="color: red">*</strong></label>
                 <textarea class="form-control @error('especificar_grupo') is-invalid @enderror" id="especificar_grupo"
                           name="especificar_grupo" required autocomplete="especificar_grupo"
                           autofocus>@if(!empty($planejamento) && $planejamento->especificar_grupo != null){{$planejamento->especificar_grupo}}
@@ -42,7 +42,7 @@
 
             <div class="col-sm-5">
                 <label for="criterios">Quais critérios e/ou referências científicas foram utilizados para definir o
-                    tamanho da amostra: </label>
+                    tamanho da amostra:<strong style="color: red">*</strong> </label>
                 <textarea class="form-control @error('criterios') is-invalid @enderror" id="criterios" name="criterios"
                           required autocomplete="criterios"
                           autofocus>@if(!empty($planejamento) && $planejamento->criterios != null){{$planejamento->criterios}}
@@ -101,7 +101,7 @@
 
         <div class="row mt-2">
             <div class="col-sm-6">
-                <label for="desc_materiais_metodos">Descrição de materiais e métodos:</label>
+                <label for="desc_materiais_metodos">Descrição de materiais e métodos:<strong style="color: red">*</strong></label>
                 <textarea class="form-control @error('desc_materiais_metodos') is-invalid @enderror"
                           id="desc_materiais_metodos" name="desc_materiais_metodos" required
                           autocomplete="desc_materiais_metodos" maxlength="1000"
@@ -114,7 +114,7 @@
             </div>
 
             <div class="col-sm-6">
-                <label for="analise_estatistica">Análise estatística</label>
+                <label for="analise_estatistica">Análise Estatística:<strong style="color: red">*</strong></label>
                 <textarea class="form-control @error('analise_estatistica') is-invalid @enderror"
                           id="analise_estatistica" name="analise_estatistica" required
                           autocomplete="analise_estatistica"
@@ -132,7 +132,7 @@
 
         <div class="row mt-2">
             <div class="col-sm-12">
-                <label for="outras_infos">Outras informações relevantes:</label>
+                <label for="outras_infos">Outras informações relevantes:<strong style="color: red">*</strong></label>
                 <textarea class="form-control @error('outras_infos') is-invalid @enderror" id="outras_infos"
                           name="outras_infos" required autocomplete="outras_infos"
                           autofocus>@if(!empty($planejamento) && $planejamento->outras_infos != null){{$planejamento->outras_infos}}
@@ -157,14 +157,14 @@
                 </div>
             </div>
             <div class="col-sm-12">
-                <label for="grau_select">Grau de Invasividade:
+                <label for="grau_select">Grau de Invasividade:<strong style="color: red">*</strong>
                     <a target="_blank"
                        href="https://www2.dti.ufv.br/ceua/scripts/grau-invasividade.html"
                        title="Informações sobre o grau de invasividade" style="color: darkred">
                         <i class="fa-solid fa-circle-info fa-lg"></i>
                     </a>
                 </label>
-                <select class="form-control" name="grau_select" id="grau_select">
+                <select class="form-control" name="grau_select" id="grau_select" required>
                     <option value="GI1"
                             @if($planejamento != null && $planejamento->grau_select == "GI1") selected @endif>GI1 =
                         Experimentos que causam pouco ou nenhum desconforto ou estresse
@@ -187,7 +187,7 @@
             </div>
             <div class="col-sm-12 mt-2">
                 <label for="grau_invasividade">Os materiais biológicos destes exemplares serão usados em outros
-                    projetos? Quais? Se já aprovado pela CEUA, mencionar o número do protocolo.</label>
+                    projetos? Quais? Se já aprovado pela CEUA, mencionar o número do protocolo.<strong style="color: red">*</strong></label>
                 <textarea class="form-control @error('grau_invasividade') is-invalid @enderror" id="grau_invasividade"
                           name="grau_invasividade" required autocomplete="grau_invasividade"
                           autofocus>@if(!empty($planejamento) && $planejamento->grau_invasividade != null){{$planejamento->grau_invasividade}}

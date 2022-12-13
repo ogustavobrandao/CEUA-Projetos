@@ -356,7 +356,7 @@
                     ret += "<input type=\"hidden\" name=\"tipo\" value=\"" + tipo + "\">";
                     ret += "<input type=\"hidden\" name=\"id\" value=\"" + id + "\">";
 
-                    ret += "<label for=\"parecer\" > Parecer: </label>";
+                    ret += "<label for=\"parecer\" > Parecer:<strong style=\"color: red\">*</strong></label>";
                     if(data[0] != null){
                         ret += "<textarea class=\"form-control\" name=\"parecer\" style=\"height: 200px\" id=\"parecerAval\" autofocus required>"+ data[0]['parecer'] +"</textarea>"
                         exist = data[0]['id'];

@@ -10,7 +10,7 @@
             <div class="row">
                 <h3 class="subtitulo">Informações</h3>
                 <div class="col-sm-4 mt-2">
-                    <label for="cirurgia">Cirurgia:</label>
+                    <label for="cirurgia">Cirurgia:<strong style="color: red">*</strong></label>
                     <div class="row ml-1">
                         <div class="col-sm-2">
                             <input class="form-check-input" type="radio" name="cirurgia" id="cirurgia_sim" value="true">
@@ -31,7 +31,7 @@
                 <h3 id="" class="subtitulo">Pós-Operatório</h3>
 
                 <div class="col-sm-4 mt-2">
-                    <label for="observacao_recuperacao">Observação da recuperação:</label>
+                    <label for="observacao_recuperacao">Observação da recuperação:<strong style="color: red">*</strong></label>
                     <div class="row ml-1">
                         <div class="col-sm-2">
                             <input class="form-check-input" type="radio" name="observacao_recuperacao" id="observacao_recuperacao_sim" value="true"
@@ -49,7 +49,7 @@
                 </div>
 
                 <div class="col-sm-4 mt-2">
-                    <label for="analgesia_recuperacao">Uso de analgesia:</label>
+                    <label for="analgesia_recuperacao">Uso de analgesia:<strong style="color: red">*</strong></label>
                     <div class="row ml-1">
                         <div class="col-sm-2">
                             <input class="form-check-input" type="radio" name="analgesia_recuperacao" id="analgesia_recuperacao_sim" value="true"
@@ -67,7 +67,7 @@
                 </div>
 
                 <div class="col-sm-4 mt-2">
-                    <label for="outros_cuidados_recuperacao">Outros cuidados pós-operatórios:</label>
+                    <label for="outros_cuidados_recuperacao">Outros cuidados pós-operatórios:<strong style="color: red">*</strong></label>
                     <div class="row ml-1">
                         <div class="col-sm-2">
                             <input class="form-check-input" type="radio" name="outros_cuidados_recuperacao" id="outros_cuidados_recuperacao_sim" value="true"
