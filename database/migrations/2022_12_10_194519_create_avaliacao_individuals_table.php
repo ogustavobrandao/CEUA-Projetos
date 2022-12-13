@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->text('parecer')->nullable();
             $table->string('status');
+            $table->string('tipo');
             $table->unsignedBigInteger('eutanasia_id')->nullable();
             $table->unsignedBigInteger('solicitacao_id')->nullable();
             $table->unsignedBigInteger('responsavel_id')->nullable();
@@ -26,7 +27,6 @@ return new class extends Migration
             $table->unsignedBigInteger('dados_complementares_id')->nullable();
             $table->unsignedBigInteger('operacao_id')->nullable();
             $table->unsignedBigInteger('procedimento_id')->nullable();
-            $table->unsignedBigInteger('colaborador_id')->nullable();
             $table->unsignedBigInteger('modelo_animal_id')->nullable();
             $table->unsignedBigInteger('avaliacao_id')->nullable();
 
@@ -39,7 +39,6 @@ return new class extends Migration
             $table->foreign('dados_complementares_id')->references('id')->on('dados_complementares')->onDelete('cascade');
             $table->foreign('operacao_id')->references('id')->on('operacaos')->onDelete('cascade');
             $table->foreign('procedimento_id')->references('id')->on('procedimentos')->onDelete('cascade');
-            $table->foreign('colaborador_id')->references('id')->on('colaboradors')->onDelete('cascade');
             $table->foreign('modelo_animal_id')->references('id')->on('modelo_animals')->onDelete('cascade');
             $table->foreign('avaliacao_id')->references('id')->on('avaliacaos')->onDelete('cascade');
             $table->timestamps();
