@@ -87,6 +87,7 @@
                     <option value="ciencias_exatas_terra" @if(!empty($solicitacao) && $solicitacao->area_conhecimento == 'ciencias_exatas_terra') selected @endif>Ciências Exatas e da Terra</option>
                     <option value="ciencias_humanas" @if(!empty($solicitacao) && $solicitacao->area_conhecimento == 'ciencias_humanas') selected @endif>Ciências Humanas</option>
                     <option value="ciencias_sociais_aplicadas" @if(!empty($solicitacao) && $solicitacao->area_conhecimento == 'ciencias_sociais_aplicadas') selected @endif>Ciências Sociais Aplicadas
+                    <option value="ciencias_ambientais" @if(!empty($solicitacao) && $solicitacao->area_conhecimento == 'ciencias_ambientais') selected @endif>Ciências Ambientais
                     </option>
                     <option value="engenharias" @if(!empty($solicitacao) && $solicitacao->area_conhecimento == 'engenharias') selected @endif>Engenharias</option>
                     <option value="linguistica_letras_artes" @if(!empty($solicitacao) && $solicitacao->area_conhecimento == 'linguistica_letras_artes') selected @endif>Linguística,Letras e Artes

@@ -13,6 +13,7 @@ class Colaborador extends Model
         'nome',
         'treinamento',
         'nivel_academico',
+        'grau_escolaridade',
         'experiencia_previa',
         'instituicao_id',
         'responsavel_id',
@@ -23,6 +24,7 @@ class Colaborador extends Model
         'treinamento' => 'required',
         'experiencia_previa' => 'required',
         'nivel_academico' => 'required',
+        'grau_escolaridade' => 'required',
     ];
 
     public static $messages = [
@@ -32,6 +34,7 @@ class Colaborador extends Model
         'treinamento.required' => 'O envio do treinamento é obrigatório',
         'experiencia_previa.required' => 'O envio da experiência previa é obrigatório',
         'nivel_academico.required' => 'O nivel acadêmico é um campo obrigatório',
+        'grau_escolaridade.required' => 'O grau de escolaridade é um campo obrigatório',
     ];
 
     public function contato(){
