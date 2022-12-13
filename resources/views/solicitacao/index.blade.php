@@ -52,10 +52,10 @@
         </div>
 
         <div class="mb-4">
-            <div class="card shadow-lg p-3 bg-white borda-bottom" style="border-radius: 10px 10px 0px 0px;">
+            <div class="card shadow-lg p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_2">
                 <div class="row">
                     <div class="col-md-12">
-                        <h2 class="titulo">3. Dados do(s) Colaborador(es)
+                        <h2 class="titulo" id="titulo_2">3. Dados do(s) Colaborador(es)
                             @if(!isset($solicitacao->responsavel))<small style="color: red; font-weight: bold">Necessária a criação de um responsável</small>@endif
                             @if(!isset($disabled) && isset($solicitacao->responsavel))
                                 <a class="float-end" onclick="criarColaborador()" style="color: green"
@@ -63,9 +63,9 @@
                                     <i class="fa-solid fa-circle-plus fa-2xl"></i></a>
                             @endif
                             @if(isset($disabled))
-                                <a class="float-end" id="dados_colaborador_btn_up"><i
+                                <a class="float-end" id="2_btn_up"><i
                                         class="fa-solid fa-circle-chevron-up"></i></a>
-                                <a class="float-end" id="dados_colaborador_btn_down" style="display: none"><i
+                                <a class="float-end" id="2_btn_down" style="display: none"><i
                                         class="fa-solid fa-circle-chevron-down"></i></a>
                             @endif
                         </h2>
@@ -74,7 +74,7 @@
             </div>
             <div id="dados_colaborador">
                 @if(Auth::user()->tipo_usuario_id == 2)
-                    {{--@include('solicitacao.colaborador',['tipo'=>3,'avaliacao_id'=>$avaliacao->id,'id'=>???])--}}
+                    @include('solicitacao.colaborador',['tipo'=>2,'avaliacao_id'=>$avaliacao->id,'id'=> -1])
                 @else
                     @include('solicitacao.colaborador')
                 @endif
@@ -135,10 +135,10 @@
 
     <div id="dados_solicitacao" class="col-md-10">
         <div class="mb-4">
-            <div class="card shadow-lg p-3 bg-white borda-bottom" style="border-radius: 10px 10px 0px 0px;">
+            <div class="card shadow-lg p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_4">
                 <div class="row">
                     <div class="col-md-12">
-                        <h3 class="titulo">5. Dados dos Modelos Animais
+                        <h3 class="titulo" id="titulo_4">5. Dados dos Modelos Animais
                             @if(Auth::user()->tipo_usuario_id == 3)
                             <a class="float-end "
                                data-toggle="modal"
@@ -200,14 +200,42 @@
                     @endif
                 </div>
 
+                {{-- Contagem de aprovados--}}
+                <input type="hidden" id="dadosInicaisAval" value="0">
+                <input type="hidden" id="dadosResponsavelAval" value="0">
+                <input type="hidden" id="dadosColaboradoAval" value="0">
+                <input type="hidden" id="dadosComplementaresAval" value="0">
+                <input type="hidden" id="dadosModeloAnimalAval" value="0">
+
                 <div class="row mt-4">
                     <div class="col-4">
                         <a class="btn btn-secondary w-100"
                            href="{{route('solicitacao.solicitante.index')}}">Voltar</a>
                     </div>
-                    <div class="col-4"></div>
+                    <div class="col-4">
+                        @if(Auth::user()->tipo_usuario_id == 2)
+                            {{-- Reprovar Solicitação--}}
+                            <form method="POST" action="{{route('avaliador.solicitacao.reprovar')}}">
+                                @csrf
+                                <input type="hidden" name="avaliacao_id" value="{{$avaliacao->id}}">
+                                <input type="hidden" name="solicitacao_id" value="{{$solicitacao->id}}">
+                                <button type="submit" class="btn w-100 btn-danger" title="Reprovar Solicitação."
+                                        id="reprovarAvaliacao" >Reprovar
+                                </button>
+                            </form>
+                        @endif
+                    </div>
 
                     <div class="col-4">
+                        @if(Auth::user()->tipo_usuario_id == 2)
+                            <a type="button" class="btn w-100 btn-success"
+                               data-toggle="modal" data-target="#aprovarModal"
+                               title="Aprovar Solicitação." id="aprovarAvaliacao">Aprovar</a>
+
+                        <a class="btn w-100 btn-primary"
+                           href="#"
+                           title="Aprovar Solicitação Com Pendências." id="pendenciaAvaliacao">Aprovar com pendências</a>
+                        @endif
                         @if($solicitacao->status == null)
                             <a class="btn w-100"
                                href="{{route('solicitacao.concluir', ['solicitacao_id' => $solicitacao->id])}}"
@@ -251,11 +279,63 @@
             </div>
         </div>
 
+        <!-- Modal Aprovar -->
+        <div class="modal fade" id="aprovarModal" tabindex="-1" role="dialog" aria-labelledby="aprovarModalLabel" aria-hidden="true">
+            <div class="modal-dialog " role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="aprovarModalLabel">Período da licença</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form method="POST" action="{{route('avaliador.solicitacao.aprovar')}}">
+                        @csrf
+                        <input type="hidden" name="solicitacao_id" value="{{$solicitacao->id}}">
+                        <input type="hidden" name="avaliacao_id" value="{{$avaliacao->id}}">
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-sm-5">
+                                    <label for="inicio">Data de Início:<strong style="color: red">*</strong></label>
+                                    <input class="form-control @error('inicio') is-invalid @enderror" id="inicio" type="date" name="inicio"
+                                           value="{{date('Y-m-d', strtotime($solicitacao->inicio))}}"
+                                           required autocomplete="inicio" autofocus>
+                                    @error('inicio')
+                                    <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                                <div class="col-sm-2"></div>
+                                <div class="col-sm-5">
+                                    <label for="fim">Data de Fim:<strong style="color: red">*</strong></label>
+                                    <input class="form-control @error('fim') is-invalid @enderror" id="fim" type="date" name="fim"
+                                           value="{{date('Y-m-d', strtotime($solicitacao->fim))}}"
+                                           required autocomplete="fim" autofocus>
+                                    @error('fim')
+                                    <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                            <button type="submit" class="btn btn-success">Confirmar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     @endif
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js"></script>
     <script>
+        // Contador para verificar aprovações da lista de modelos animais
+        var contadorModelo = 0;
+
         $(document).ready(function () {
             //Abrir Modal de Criação de Modelo Animal se houver erro de validação
             @if(count($errors->modelo) > 0)
@@ -270,6 +350,11 @@
             // Responsável
             @if(isset($avaliacaoResponsavel) != null )
             alterarCorCard(1, '{{$avaliacaoResponsavel->status}}');
+            @endif
+
+            // Colaborador
+            @if(isset($avaliacaoColaborador) != null )
+            alterarCorCard(2, '{{$avaliacaoColaborador->status}}');
             @endif
 
             // Dados Complementares
@@ -287,6 +372,7 @@
         });
 
 
+        // Dados Iniciais
         $('#0_btn_up').on('click', function () {
             $('#dados_iniciais').slideToggle(800);
             $(this).hide();
@@ -299,6 +385,7 @@
             $('#0_btn_up').show();
         });
 
+        // Responsavel
         $('#1_btn_up').on('click', function () {
             $('#dados_responsavel').slideToggle(800);
             $(this).hide();
@@ -311,16 +398,17 @@
             $('#1_btn_up').show();
         });
 
-        $('#dados_colaborador_btn_up').on('click', function () {
+        // Colaborador
+        $('#2_btn_up').on('click', function () {
             $('#dados_colaborador').slideToggle(800);
             $(this).hide();
-            $('#dados_colaborador_btn_down').show();
+            $('#2_btn_down').show();
         });
 
-        $('#dados_colaborador_btn_down').on('click', function () {
+        $('#2_btn_down').on('click', function () {
             $('#dados_colaborador').slideToggle(800);
             $(this).hide();
-            $('#dados_colaborador_btn_up').show();
+            $('#2_btn_up').show();
         });
 
         // Dados Complementares
@@ -381,6 +469,7 @@
 
         function closeModal() {
             $("#pendenciaModal").modal('hide');
+            $("#licencaModal").modal('hide');
         }
 
         function realizarAvaliacaoInd(tipo, avaliacao_id, id, status) {
@@ -428,20 +517,66 @@
             if(status == "aprovado"){
                 $("#fundo_"+tipo).css({"background-color": "#38c172"});
             }else{
-                $("#fundo_"+tipo).css({"background-color": "#9a5857"});
+                $("#fundo_"+tipo).css({"background-color": "#e3342f"});
             }
             $("#titulo_"+tipo).css({"color": "white"});
             $("#"+tipo+"_btn_up").css({"color": "white"});
             $("#"+tipo+"_btn_down").css({"color": "white"});
+            // Modificar o contador geral para avaliação
+            if(tipo != '4'){
+                alterarContAval(tipo,status);
+            }
         }
 
         function alterarCorList(id,status){
             if(status == "aprovado"){
                 $("#fundo_modelo_"+id).css({"background-color": "#38c172","color": "white"});
+                contadorModelo += 1;
             }
             else if(status == "reprovado"){
                 $("#fundo_modelo_"+id).css({"background-color": "#e3342f","color": "white"});
+                contadorModelo = 0;
+            }else{
+                contadorModelo = 0;
+            }
+            alterarContAval(4,status);
+        }
+
+        function alterarContAval(tipo,status){
+            var marc = 0;
+            if(status == "aprovado"){
+                marc = 1;
+            }
+            if(tipo == '0'){
+                $("#dadosInicaisAval").val(marc);
+            }else if(tipo == '1'){
+                $("#dadosResponsavelAval").val(marc);
+            }else if(tipo == '2'){
+                $("#dadosColaboradoAval").val(marc);
+            }else if(tipo == '3'){
+                $("#dadosComplementaresAval").val(marc);
+            }else if(tipo == '4' && contadorModelo == {{count($solicitacao->modelosAnimais)}}){
+                $("#dadosModeloAnimalAval").val(1);
+                alterarCorCard(tipo,'aprovado');
+            }else if(tipo == '4' && contadorModelo != {{count($solicitacao->modelosAnimais)}}){
+                $("#dadosModeloAnimalAval").val(0);
+                alterarCorCard(tipo,'reprovado');
+            }
+            statusAvaliacao();
+        }
+
+        function statusAvaliacao(){
+            if($("#dadosInicaisAval").val() == '1' && $("#dadosResponsavelAval").val() == '1' && $("#dadosColaboradoAval").val() == '1'
+               && $("#dadosComplementaresAval").val() == '1' && $("#dadosModeloAnimalAval").val() == '1'){
+                $("#reprovarAvaliacao").attr("hidden",true);
+                $("#pendenciaAvaliacao").attr("hidden",true);
+                $("#aprovarAvaliacao").removeAttr("hidden");
+            }else{
+                $("#reprovarAvaliacao").removeAttr("hidden");
+                $("#pendenciaAvaliacao").removeAttr("hidden");
+                $("#aprovarAvaliacao").attr("hidden",true);
             }
         }
+
     </script>
 @endsection

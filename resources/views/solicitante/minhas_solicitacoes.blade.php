@@ -28,8 +28,8 @@
                     @if($solicitacao->status == null)Em progresso
                     @elseif($solicitacao->status == 'nao_avaliado')Não Avaliado
                     @elseif($solicitacao->status == 'avaliando')Em avaliação
-                    @elseif($solicitacao->avaliacao->first()->status == "aprovada")Aprovado
-                    @elseif($solicitacao->avaliacao->first()->status == "reprovada")Reprovado
+                    @elseif($solicitacao->avaliacao->first()->status == "aprovado")Aprovado
+                    @elseif($solicitacao->avaliacao->first()->status == "reprovado")Reprovado
                     @else Aprovado com pendência
                     @endif
                 </td>
@@ -42,11 +42,11 @@
                         <a class="btn" href="{{route('solicitacao.index', ['solicitacao_id' => $solicitacao->id])}}" style="border-color: #1B1C42; background-color: #c0ddf6"
                            title="Editar Solicitação."><i class="fa-solid fa-up-right-from-square"></i></a>
                     @elseif(($solicitacao->avaliacao->first()->status == "reprovada") ||
-                            ($solicitacao->avaliacao->first()->status == "aprovada") ||
+                            ($solicitacao->avaliacao->first()->status == "aprovado") ||
                             ($solicitacao->status == "nao_avaliado" && $solicitacao->avaliacao->first()->status == "aprovadaPendencia"))
                         <a class="btn" href="{{route('solicitacao.index', ['solicitacao_id' => $solicitacao->id])}}" style="border-color: #1B1C42; background-color: #c0ddf6"
                            title="Visualizar Solicitação."><i class="fa-solid fa-up-right-from-square"></i></a>
-                        @if($solicitacao->avaliacao->first()->status == "aprovada")
+                        @if($solicitacao->avaliacao->first()->status == "aprovado")
                             <a class="btn" style="border-color: #1B1C42; background-color: #c0ddf6" data-toggle="modal" data-target="#licencaModal{{$solicitacao->id}}" title="Licença."><i
                                     class="fa-regular fa-id-card"></i></a>
                         @endif
@@ -55,7 +55,7 @@
                 </td>
             </tr>
 
-            @if($solicitacao->status == "avaliado" && $solicitacao->avaliacao->first()->status == "aprovada")
+            @if($solicitacao->status == "avaliado" && $solicitacao->avaliacao->first()->status == "aprovado")
                 <!-- Modal Licença -->
                 <div class="modal fade" id="licencaModal{{$solicitacao->id}}" tabindex="-1" role="dialog" aria-labelledby="licencaModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-lg" role="document">
@@ -68,17 +68,17 @@
                             </div>
                             <div class="modal-body">
                                 <div class="row">
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-12">
                                         <label for="codigo">Código:</label>
                                         <input class="form-control" disabled
                                                value="{{$solicitacao->avaliacao->first()->licenca->codigo}}">
                                     </div>
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-6">
                                         <label for="inicio">Data de Início:</label>
                                         <input class="form-control" type="date" disabled
                                                value="{{$solicitacao->avaliacao->first()->licenca->inicio}}">
                                     </div>
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-6">
                                         <label for="fim">Data de Fim:</label>
                                         <input class="form-control" type="date" disabled
                                                value="{{$solicitacao->avaliacao->first()->licenca->fim}}">

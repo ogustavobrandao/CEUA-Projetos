@@ -28,7 +28,7 @@ class AvaliacaoIndividualController extends Controller
                 break;
             // Colaborador
             case 2:
-                $avaliacaoIndividual = AvaliacaoIndividual::where('avaliacao_id',$avaliacao_id)->where('colaborador_id',$id)->first();
+                $avaliacaoIndividual = AvaliacaoIndividual::where('avaliacao_id',$avaliacao_id)->where('tipo',$tipo)->first();
                 $titulo = "Colaborador";
                 break;
             // Dados Complementares
@@ -99,10 +99,9 @@ class AvaliacaoIndividualController extends Controller
                 break;
             // Colaborador
             case 2:
-                $avaliacaoIndividual = AvaliacaoIndividual::where('avaliacao_id',$request->avaliacao_id)->where('colaborador_id',$request->id)->first();
+                $avaliacaoIndividual = AvaliacaoIndividual::where('avaliacao_id',$request->avaliacao_id)->where('tipo',$request->tipo)->first();
                 if($avaliacaoIndividual == null){
                     $avaliacaoIndividual = new AvaliacaoIndividual();
-                    $avaliacaoIndividual->colaborador_id = $request->id;
                 }
                 break;
             // Dados Complementares
@@ -181,6 +180,7 @@ class AvaliacaoIndividualController extends Controller
 
         if($avaliacaoIndividual->avaliacao_id == null){
             $avaliacaoIndividual->avaliacao_id = $request->avaliacao_id;
+            $avaliacaoIndividual->tipo = $request->tipo;
             $avaliacaoIndividual->save();
         }else{
             $avaliacaoIndividual->update();
