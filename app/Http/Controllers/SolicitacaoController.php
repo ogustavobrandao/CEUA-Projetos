@@ -64,64 +64,6 @@ class SolicitacaoController extends Controller
             'avaliacaoDadosComp', 'avaliacaoDadosini', 'avaliacaoResponsavel', 'avaliacaoColaborador'));
     }
 
-    public function aprovarSolicitacao(Request $request)
-    {
-        $solicitacao = Solicitacao::find($request->solicitacao_id);
-        $avaliador = User::find($request->avaliador_id);
-        Avaliacao::where('solicitacao_id', $solicitacao->id)->where('user_id', '!=', $avaliador->id)->delete();
-        $avaliacao = $solicitacao->avaliacao->first();
-        $avaliacao->status = 'aprovada';
-        $avaliacao->parecer = 'Solicitação Aprovada sem Pendências';
-        $solicitacao->status = 'avaliado';
-        $solicitacao->update();
-        $avaliacao->update();
-        //Criação da licença
-        $licenca = new Licenca();
-        $licenca->inicio = $request->inicio;
-        $licenca->fim = $request->fim;
-        $licenca->codigo = strtoupper(hash($solicitacao->id, $request->inicio.$request->fim));
-        $licenca->avaliacao_id = $avaliacao->id;
-        $licenca->save();
-
-        Mail::to($solicitacao->responsavel->contato->email)->send(new SendSolicitacaoStatus($solicitacao->responsavel, $avaliacao));
-
-        return redirect(route('solicitacao.avaliador.index'));
-    }
-
-    public function aprovarPendenciaSolicitacao(Request $request)
-    {
-        $solicitacao = Solicitacao::find($request->solicitacao_id);
-        $avaliador = User::find($request->avaliador_id);
-        Avaliacao::where('solicitacao_id', $solicitacao->id)->where('user_id', '!=', $avaliador->id)->delete();
-        $avaliacao = $solicitacao->avaliacao->first();
-        $avaliacao->status = 'aprovadaPendencia';
-        $avaliacao->parecer = $request->parecer;
-        $solicitacao->status = 'avaliado';
-        $solicitacao->update();
-        $avaliacao->update();
-
-        Mail::to($solicitacao->responsavel->contato->email)->send(new SendSolicitacaoStatus($solicitacao->responsavel, $avaliacao));
-
-        return redirect(route('solicitacao.avaliador.index'));
-    }
-
-    public function reprovarSolicitacao(Request $request)
-    {
-        $solicitacao = Solicitacao::find($request->solicitacao_id);
-        $avaliador = User::find($request->avaliador_id);
-        Avaliacao::where('solicitacao_id', $solicitacao->id)->where('user_id', '!=', $avaliador->id)->delete();
-        $avaliacao = $solicitacao->avaliacao->first();
-        $avaliacao->status = 'reprovada';
-        $avaliacao->parecer = $request->parecer;
-        $solicitacao->status = 'avaliado';
-        $solicitacao->update();
-        $avaliacao->update();
-
-        Mail::to($solicitacao->responsavel->contato->email)->send(new SendSolicitacaoStatus($solicitacao->responsavel, $avaliacao));
-
-        return redirect(route('solicitacao.avaliador.index'));
-    }
-
     public function index_solicitante()
     {
         $solicitante = Auth::user();
