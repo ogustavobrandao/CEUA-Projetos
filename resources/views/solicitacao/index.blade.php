@@ -228,13 +228,20 @@
 
                     <div class="col-4">
                         @if(Auth::user()->tipo_usuario_id == 2)
+                            {{-- Aprovar Solicitação --}}
                             <a type="button" class="btn w-100 btn-success"
                                data-toggle="modal" data-target="#aprovarModal"
                                title="Aprovar Solicitação." id="aprovarAvaliacao">Aprovar</a>
 
-                        <a class="btn w-100 btn-primary"
-                           href="#"
-                           title="Aprovar Solicitação Com Pendências." id="pendenciaAvaliacao">Aprovar com pendências</a>
+                            {{-- Reprovar Solicitação--}}
+                            <form method="POST" action="{{route('avaliador.solicitacao.aprovarPendencia')}}">
+                                @csrf
+                                <input type="hidden" name="avaliacao_id" value="{{$avaliacao->id}}">
+                                <input type="hidden" name="solicitacao_id" value="{{$solicitacao->id}}">
+                                <button type="submit" class="btn w-100 btn-primary" title="Aprovar Solicitação Com Pendências."
+                                        id="pendenciaAvaliacao" >Aprovar com pendências
+                                </button>
+                            </form>
                         @endif
                         @if($solicitacao->status == null)
                             <a class="btn w-100"
