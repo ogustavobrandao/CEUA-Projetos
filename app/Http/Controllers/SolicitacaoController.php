@@ -301,7 +301,6 @@ class SolicitacaoController extends Controller
             $nomeAnexo = "tcle_" . $request->solicitacao_id . date('Ymd') . date('His') . '.' . $anexo;
             $request->termo_consentimento->storeAs('termos/', $nomeAnexo);
             $data['termo_consentimento'] = $nomeAnexo;
-
         }
 
         $modelo_animal = ModeloAnimal::create($data);
@@ -399,7 +398,7 @@ class SolicitacaoController extends Controller
     public function downloadTermo($modelo_animal_id)
     {
         $modelo_animal = ModeloAnimal::find($modelo_animal_id);
-        return Storage::download('termos/' . $modelo_animal->anexo_formula);
+        return Storage::download('termos/' . $modelo_animal->termo_consentimento);
     }
 
     public function index_planejamento($modelo_animal_id)
