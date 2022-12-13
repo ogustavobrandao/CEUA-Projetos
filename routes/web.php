@@ -17,6 +17,7 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'home'])->name('wel
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'home'])->name('home');
 
 Route::group(['middleware' => 'auth'], function(){
+
     Route::get('editar/perfil', [\App\Http\Controllers\UsuarioController::class, 'editar_perfil'])->name('user.perfil.editar');
     Route::get('editar/senha', [\App\Http\Controllers\UsuarioController::class, 'editar_senha'])->name('user.senha.editar');
     Route::post('alterar/senha', [\App\Http\Controllers\UsuarioController::class, 'alterar_senha'])->name('user.senha.alterar');

@@ -56,7 +56,7 @@ class UsuarioController extends Controller
 
         $usuario->update();
 
-        return redirect()->back()->with(['success', 'Perfil alterado com sucesso!']);
+        return redirect()->back()->with('success', 'Perfil alterado com sucesso!');
     }
 
     public function alterar_senha(Request $request)
@@ -70,7 +70,7 @@ class UsuarioController extends Controller
         $usuario->password = Hash::make($request->password);
         $usuario->update();
 
-        return redirect()->back()->with(['success', 'Senha alterada com sucesso!']);
+        return redirect()->back()->with('success', 'Senha alterada com sucesso!');
     }
 
     public function update(Request $request){
