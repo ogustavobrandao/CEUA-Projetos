@@ -54,9 +54,9 @@ class SolicitacaoController extends Controller
         $solicitacao->update();
         $avaliacao = Avaliacao::where('solicitacao_id', $solicitacao_id)->where('user_id', Auth::user()->id)->first();
 
-        $avaliacaoDadosComp = AvaliacaoIndividual::where('avaliacao_id',$avaliacao->id)->where('dados_complementares_id',$solicitacao->dadosComplementares->id)->first();
-        $avaliacaoDadosini = AvaliacaoIndividual::where('avaliacao_id',$avaliacao->id)->where('solicitacao_id',$solicitacao->id)->first();
-        $avaliacaoResponsavel = AvaliacaoIndividual::where('avaliacao_id',$avaliacao->id)->where('responsavel_id',$responsavel->id)->first();
+        $avaliacaoDadosComp = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)->where('dados_complementares_id', $solicitacao->dadosComplementares->id)->first();
+        $avaliacaoDadosini = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)->where('solicitacao_id', $solicitacao->id)->first();
+        $avaliacaoResponsavel = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)->where('responsavel_id', $responsavel->id)->first();
 
         return view('solicitacao.index', compact('disabled', 'solicitacao',
             'instituicaos', 'responsavel', 'colaboradores', 'modelo_animais', 'avaliacao',
@@ -78,7 +78,7 @@ class SolicitacaoController extends Controller
         $licenca = new Licenca();
         $licenca->inicio = $request->inicio;
         $licenca->fim = $request->fim;
-        $licenca->codigo = strtoupper(hash($solicitacao->id, $request->inicio.$request->fim));
+        $licenca->codigo = strtoupper(hash($solicitacao->id, $request->inicio . $request->fim));
         $licenca->avaliacao_id = $avaliacao->id;
         $licenca->save();
 
@@ -171,33 +171,49 @@ class SolicitacaoController extends Controller
 
         $solicitacao = Solicitacao::find($request->solicitacao_id);
 
-        if (($request->hasFile('experiencia_previa') && $request->file('experiencia_previa')->isValid())) {
-            $anexo = $request->experiencia_previa->extension();
-            $nomeAnexo = "experiencia_" . $solicitacao->responsavel->id . date('Ymd') . date('His') . '.' . $anexo;
-            $request->experiencia_previa->storeAs('experiencias_previas/', $nomeAnexo);
-            $request->experiencia_previa = $nomeAnexo;
-        }
-
-        if (($request->hasFile('treinamento') && $request->file('treinamento')->isValid())) {
-            $anexo = $request->treinamento->extension();
-            $nomeAnexo = "treinamento" . $solicitacao->responsavel->id . date('Ymd') . date('His') . '.' . $anexo;
-            $request->treinamento->storeAs('treinamentos/', $nomeAnexo);
-            $request->treinamento = $nomeAnexo;
-        }
-
         if (isset($solicitacao->responsavel)) {
             $responsavel = $solicitacao->responsavel;
         } else {
             $responsavel = new Responsavel();
         }
 
+        if (($request->hasFile('experiencia_previa') && $request->file('experiencia_previa')->isValid())) {
+            $anexo = $request->experiencia_previa->extension();
+            $nomeAnexo = "experiencia_" . $solicitacao->id . date('Ymd') . date('His') . '.' . $anexo;
+            if ($responsavel->experiencia_revia != null) {
+                $nomeAnexo = $responsavel->experiencia_previa;
+            }
+            $request->experiencia_previa->storeAs('experiencias/', $nomeAnexo);
+            $request->experiencia_previa = $nomeAnexo;
+        }
+
+        if (($request->hasFile('treinamento') && $request->file('treinamento')->isValid())) {
+            $anexo = $request->treinamento->extension();
+            $nomeAnexo = "treinamento_" . $solicitacao->responsavel->id . date('Ymd') . date('His') . '.' . $anexo;
+            if ($responsavel->treinamento != null) {
+                $nomeAnexo = $responsavel->treinamento;
+            }
+            $request->treinamento->storeAs('treinamentos/', $nomeAnexo);
+            $request->treinamento = $nomeAnexo;
+        }
+
+
         $responsavel->solicitacao_id = $request->solicitacao_id;
         $responsavel->nome = $request->nome;
         $responsavel->departamento_id = $request->departamento_id;
+        if ($request->experiencia_previa == null && $responsavel->experiencia_previa != null)
+            $request->experiencia_previa = $responsavel->experiencia_previa;
+        if ($request->experiencia_previa_radio == "false")
+            $request->experiencia_previa = null;
         $responsavel->experiencia_previa = $request->experiencia_previa;
         $responsavel->vinculo_instituicao = $request->vinculo_instituicao;
         $responsavel->grau_escolaridade = $request->grau_escolaridade;
+        if ($request->treinamento == null && $responsavel->treinamento != null)
+            $request->treinamento = $responsavel->treinamento;
+        if ($request->treinamento_radio == "false")
+            $request->treinamento = null;
         $responsavel->treinamento = $request->treinamento;
+
 
         if (isset($solicitacao->responsavel)) {
             $responsavel->update();
@@ -395,10 +411,23 @@ class SolicitacaoController extends Controller
         $planejamento = Planejamento::find($planejamento_id);
         return Storage::download('formulas/' . $planejamento->anexo_formula);
     }
+
     public function downloadTermo($modelo_animal_id)
     {
         $modelo_animal = ModeloAnimal::find($modelo_animal_id);
         return Storage::download('termos/' . $modelo_animal->termo_consentimento);
+    }
+
+    public function downloadTreinamento($responsavel_id)
+    {
+        $responsavel = Responsavel::find($responsavel_id);
+        return Storage::download('treinamentos/' . $responsavel->treinamento);
+    }
+
+    public function downloadExperiencia($responsavel_id)
+    {
+        $responsavel = Responsavel::find($responsavel_id);
+        return Storage::download('experiencias/' . $responsavel->experiencia_previa);
     }
 
     public function index_planejamento($modelo_animal_id)
@@ -429,7 +458,7 @@ class SolicitacaoController extends Controller
     public function avaliarPlanejamento($modelo_animal_id)
     {
         $modelo_animal = ModeloAnimal::find($modelo_animal_id);
-        $planejamento = Planejamento::where('modelo_animal_id',$modelo_animal_id)->first();
+        $planejamento = Planejamento::where('modelo_animal_id', $modelo_animal_id)->first();
         $solicitacao = Solicitacao::find($modelo_animal->solicitacao_id);
 
 
@@ -441,19 +470,19 @@ class SolicitacaoController extends Controller
 
         $avaliacao = Avaliacao::where('solicitacao_id', $solicitacao->id)->where('user_id', Auth::user()->id)->first();
         // Avaliações Individuais
-        $avaliacaoPlanejamento = AvaliacaoIndividual::where('avaliacao_id',$avaliacao->id)->where('planejamento_id',$planejamento->id)->first();
-        $avaliacaoCondicoesAnimal = AvaliacaoIndividual::where('avaliacao_id',$avaliacao->id)->where('condicoes_animal_id',$condicoes_animal->id)->first();
-        $avaliacaoProcedimento = AvaliacaoIndividual::where('avaliacao_id',$avaliacao->id)->where('procedimento_id',$procedimento->id)->first();
-        $avaliacaoOperacao = AvaliacaoIndividual::where('avaliacao_id',$avaliacao->id)->where('operacao_id',$operacao->id)->first();
-        $avaliacaoEutanasia = AvaliacaoIndividual::where('avaliacao_id',$avaliacao->id)->where('eutanasia_id',$eutanasia->id)->first();
-        $avaliacaoResultado = AvaliacaoIndividual::where('avaliacao_id',$avaliacao->id)->where('resultado_id',$resultado->id)->first();
-        $avaliacaoModeloAnimal = AvaliacaoIndividual::where('avaliacao_id',$avaliacao->id)->where('modelo_animal_id',$modelo_animal->id)->first();
+        $avaliacaoPlanejamento = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)->where('planejamento_id', $planejamento->id)->first();
+        $avaliacaoCondicoesAnimal = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)->where('condicoes_animal_id', $condicoes_animal->id)->first();
+        $avaliacaoProcedimento = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)->where('procedimento_id', $procedimento->id)->first();
+        $avaliacaoOperacao = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)->where('operacao_id', $operacao->id)->first();
+        $avaliacaoEutanasia = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)->where('eutanasia_id', $eutanasia->id)->first();
+        $avaliacaoResultado = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)->where('resultado_id', $resultado->id)->first();
+        $avaliacaoModeloAnimal = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)->where('modelo_animal_id', $modelo_animal->id)->first();
 
 
         return view('planejamento.index',
-            compact('modelo_animal','planejamento','solicitacao','condicoes_animal','procedimento','operacao','eutanasia','resultado','avaliacao',
-                    'avaliacaoPlanejamento','avaliacaoCondicoesAnimal','avaliacaoProcedimento','avaliacaoOperacao',
-                    'avaliacaoEutanasia','avaliacaoResultado','avaliacaoModeloAnimal'));
+            compact('modelo_animal', 'planejamento', 'solicitacao', 'condicoes_animal', 'procedimento', 'operacao', 'eutanasia', 'resultado', 'avaliacao',
+                'avaliacaoPlanejamento', 'avaliacaoCondicoesAnimal', 'avaliacaoProcedimento', 'avaliacaoOperacao',
+                'avaliacaoEutanasia', 'avaliacaoResultado', 'avaliacaoModeloAnimal'));
     }
 
     public function criar_planejamento(Request $request)
@@ -465,8 +494,7 @@ class SolicitacaoController extends Controller
             $planejamento = $modelo_animal->planejamento;
 
             if (($request->hasFile('anexo_formula') && $request->file('anexo_formula')->isValid())) {
-                if($planejamento->anexo != null)
-                {
+                if ($planejamento->anexo != null) {
                     $nomeAnexo = $planejamento->anexo_formula;
                 } else {
                     $anexo = $request->anexo_formula->extension();
