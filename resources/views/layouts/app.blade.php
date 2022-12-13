@@ -39,7 +39,8 @@
 <div id="barra-brasil" style="background:#7F7F7F; height: 20px; padding:0 0 0 10px;display:block;">
     <ul id="menu-barra-temp" style="list-style:none;">
         <li style="display:inline; float:left;padding-right:10px; margin-right:10px; border-right:1px solid #EDEDED">
-            <a href="http://brasil.gov.br" style="font-family:sans,sans-serif; text-decoration:none; color:white;">Portal do Governo Brasileiro</a>
+            <a href="http://brasil.gov.br" style="font-family:sans,sans-serif; text-decoration:none; color:white;">Portal
+                do Governo Brasileiro</a>
         </li>
     </ul>
 </div>
@@ -50,7 +51,7 @@
     <div class="mx-4" id="app">
         <div class="row my-5">
             <div style="min-height: 28rem">
-                @include('layouts.components.errors')
+                @include('layouts.components.messages')
                 @yield('content')
             </div>
         </div>
@@ -62,37 +63,37 @@
 </html>
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
 <script>
-    if($('#instituicao'))
-    function unidades(id) {
-        var instituicao = $('#instituicao' + id).val();
-        $.ajax({
-            type: 'POST',
-            url: '{{ route('unidade.consulta') }}',
-            data: 'instituicao=' + instituicao,
-            headers:
-                {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    if ($('#instituicao'))
+        function unidades(id) {
+            var instituicao = $('#instituicao' + id).val();
+            $.ajax({
+                type: 'POST',
+                url: '{{ route('unidade.consulta') }}',
+                data: 'instituicao=' + instituicao,
+                headers:
+                    {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                success: (dados) => {
+                    if (dados.length > 0) {
+                        $.each(dados, function (i, obj) {
+                            if ("{{old('unidade')}}" == obj.id) {
+                                option += '<option selected value="' + obj.id + '">' + obj.nome + '</option>';
+                            } else {
+                                option += '<option value="' + obj.id + '">' + obj.nome + '</option>';
+                            }
+                        })
+                    } else {
+                        var option = "<option selected disabled>Não possui unidade</option>";
+                    }
+                    $('#unidade' + id).html(option).show();
                 },
-            success: (dados) => {
-                if (dados.length > 0) {
-                    $.each(dados, function (i, obj) {
-                        if ("{{old('unidade')}}" == obj.id) {
-                            option += '<option selected value="' + obj.id + '">' + obj.nome + '</option>';
-                        } else {
-                            option += '<option value="' + obj.id + '">' + obj.nome + '</option>';
-                        }
-                    })
-                } else {
-                    var option = "<option selected disabled>Não possui unidade</option>";
+                error: (data) => {
+                    console.log(data);
                 }
-                $('#unidade' + id).html(option).show();
-            },
-            error: (data) => {
-                console.log(data);
-            }
 
-        })
-    }
+            })
+        }
 
     $(document).ready(function () {
         unidades();

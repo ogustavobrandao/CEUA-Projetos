@@ -643,6 +643,6 @@ class SolicitacaoController extends Controller
         }
         $solicitacao->status = 'nao_avaliado';
         $solicitacao->update();
-        return redirect()->back()->with(['mensagem' => 'Solicitação concluída com sucesso!']);
+        return redirect()->back()->with(['success' => 'Solicitação concluída com sucesso!']);
     }
 }
