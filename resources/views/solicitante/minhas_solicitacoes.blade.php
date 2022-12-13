@@ -29,7 +29,7 @@
                     @elseif($solicitacao->status == 'nao_avaliado')Não Avaliado
                     @elseif($solicitacao->status == 'avaliando')Em avaliação
                     @elseif($solicitacao->avaliacao->first()->status == "aprovada")Aprovado
-                    @elseif($solicitacao->avaliacao->first()->status == "reprovada")Reprovado
+                    @elseif($solicitacao->avaliacao->first()->status == "reprovado")Reprovado
                     @else Aprovado com pendência
                     @endif
                 </td>

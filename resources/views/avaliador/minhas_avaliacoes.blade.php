@@ -28,7 +28,7 @@
                     @elseif($avaliacao->status == 'aprovada') Aprovada
                     @elseif($avaliacao->solicitacao->status == "avaliado" && $avaliacao->status == 'aprovadaPendencia') Aprovada com pendência
                     @elseif($avaliacao->solicitacao->status == "nao_avaliado" && $avaliacao->status == "aprovadaPendencia") Re-Avaliar
-                    @else Recusada @endif</td>
+                    @else Reprovado @endif</td>
                 <td class="text-center">
                     @if(($avaliacao->solicitacao->updated_at->diffInHours($horario) >= 2 && $avaliacao->solicitacao->updated_at < $horario)
                         || $avaliacao->solicitacao->avaliador_atual_id == Auth::user()->id
