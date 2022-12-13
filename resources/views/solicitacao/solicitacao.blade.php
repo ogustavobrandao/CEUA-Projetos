@@ -18,7 +18,7 @@
             </div>
 
             <div class="col-sm-4">
-                <label for="inicio">Inicio:</label>
+                <label for="inicio">Inicio:<strong style="color: red">*</strong></label>
                 <input class="form-control @error('inicio') is-invalid @enderror" id="inicio" type="datetime-local" name="inicio"
                        @if(!empty($solicitacao) && $solicitacao->inicio != null) value="{{$solicitacao->inicio}}" @else value="{{old('inicio')}}" @endif
                        required
@@ -32,7 +32,7 @@
 
             <div class="col-sm-4">
 
-                <label for="inicio">Fim:</label>
+                <label for="inicio">Fim:<strong style="color: red">*</strong></label>
                 <input class="form-control @error('fim') is-invalid @enderror" id="fim" type="datetime-local" name="fim"
                        @if(!empty($solicitacao) && $solicitacao->fim != null) value="{{$solicitacao->fim}}" @else value="{{old('fim')}}" @endif
                        required
@@ -52,7 +52,7 @@
         </div>
         <div class="row">
             <div class="col-sm-4">
-                <label for="titulo_pt">Título em Português:</label>
+                <label for="titulo_pt">Título em Português:<strong style="color: red">*</strong></label>
                 <input class="form-control @error('titulo_pt') is-invalid @enderror" id="titulo_pt" type="text" name="titulo_pt"
                        value="@if(!empty($solicitacao) && $solicitacao->titulo_pt != null) {{$solicitacao->titulo_pt}} @else {{ old('titulo_pt') }} @endif"
                        required
@@ -65,7 +65,7 @@
             </div>
 
             <div class="col-sm-4">
-                <label for="titulo_en">Titulo em Inglês (Apenas para projeto):</label>
+                <label for="titulo_en">Titulo em Inglês (Apenas para projeto):<strong style="color: red">*</strong></label>
                 <input class="form-control @error('titulo_en') is-invalid @enderror" id="titulo_en" type="text" name="titulo_en"
                        value="@if(!empty($solicitacao) && $solicitacao->titulo_en != null) {{$solicitacao->titulo_en}} @else {{ old('titulo_en') }} @endif"
                        required
@@ -78,7 +78,7 @@
             </div>
 
             <div class="col-sm-4">
-                <label for="area_conhecimento">Área de conhecimento:</label>
+                <label for="area_conhecimento">Área de conhecimento:<strong style="color: red">*</strong></label>
                 <select class="form-control @error('area_conhecimento') is-invalid @enderror" id="area_conhecimento" name="area_conhecimento">
                     <option disabled selected>Selecione a Área de Conhecimento</option>
                     <option value="ciencias_agrarias" @if(!empty($solicitacao) && $solicitacao->area_conhecimento == 'ciencias_agrarias') selected @endif>Ciências Agrárias</option>

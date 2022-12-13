@@ -189,7 +189,7 @@ class SolicitacaoController extends Controller
 
         if (($request->hasFile('treinamento') && $request->file('treinamento')->isValid())) {
             $anexo = $request->treinamento->extension();
-            $nomeAnexo = "treinamento_" . $solicitacao->responsavel->id . date('Ymd') . date('His') . '.' . $anexo;
+            $nomeAnexo = "treinamento_" . $solicitacao->id . date('Ymd') . date('His') . '.' . $anexo;
             if ($responsavel->treinamento != null) {
                 $nomeAnexo = $responsavel->treinamento;
             }
