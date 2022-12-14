@@ -58,6 +58,9 @@ Route::group(['middleware' => 'checkProprietarioAvaliador'], function () {
     Route::get('/experiencia/{responsavel_id}/download', [App\Http\Controllers\SolicitacaoController::class, 'downloadExperiencia'])->name('experiencia.download');
     Route::get('/termo/{modelo_animal_id}/download', [App\Http\Controllers\SolicitacaoController::class, 'downloadTermo'])->name('termo.download');
     Route::get('/formulario_voltar/{solicitacao_id}', [App\Http\Controllers\SolicitacaoController::class, 'voltarPagina'])->name('solicitacao.voltar.pagina');
+//Avaliação Individual
+    Route::get('/avaliacao_individual/{tipo}/{avaliacao_id}/{id}', [App\Http\Controllers\AvaliacaoIndividualController::class, 'exibir'])->name('avaliador.avaliacao_ind.exibir');
+    Route::get('/avaliacao_individual/verificar/modelo/{modelo_animal_id}/{avaliacao_id}', [App\Http\Controllers\AvaliacaoIndividualController::class, 'verificarAvalModelo'])->name('avaliador.avaliacao_ind.verificar.modelo');
 });
 
 
@@ -90,15 +93,12 @@ Route::group(['middleware' => 'checkProprietario'], function () {
 Route::group(['middleware' => 'checkAvaliador'], function () {
     Route::get('/solicitacao/index_avaliador', [App\Http\Controllers\SolicitacaoController::class, 'index_avaliador'])->name('solicitacao.avaliador.index');
     Route::post('/avaliador/aprovar', [App\Http\Controllers\AvaliacaoController::class, 'aprovarSolicitacao'])->name('avaliador.solicitacao.aprovar');
-    Route::post('/avaliador/aprovarPendencia', [App\Http\Controllers\SolicitacaoController::class, 'aprovarPendenciaSolicitacao'])->name('avaliador.solicitacao.aprovarPendencia');
+    Route::post('/avaliador/aprovarPendencia', [App\Http\Controllers\AvaliacaoController::class, 'aprovarPendenciaSolicitacao'])->name('avaliador.solicitacao.aprovarPendencia');
     Route::post('/avaliador/reprovar', [App\Http\Controllers\AvaliacaoController::class, 'reprovarSolicitacao'])->name('avaliador.solicitacao.reprovar');
     Route::get('/avaliar/{solicitacao_id}', [App\Http\Controllers\SolicitacaoController::class, 'avaliarSolicitacao'])->name('avaliador.solicitacao.avaliar');
     Route::get('/avaliar/planejamento/{modelo_animal_id}', [App\Http\Controllers\SolicitacaoController::class, 'avaliarPlanejamento'])->name('avaliador.solicitacao.planejamento.avaliar');
 
-
-    //Avaliação Individual
-    Route::get('/avaliacao_individual/{tipo}/{avaliacao_id}/{id}', [App\Http\Controllers\AvaliacaoIndividualController::class, 'exibir'])->name('avaliador.avaliacao_ind.exibir');
-    Route::get('/avaliacao_individual/verificar/modelo/{modelo_animal_id}/{avaliacao_id}', [App\Http\Controllers\AvaliacaoIndividualController::class, 'verificarAvalModelo'])->name('avaliador.avaliacao_ind.verificar.modelo');
+//Avaliação Individual
     Route::post('/avaliacao_individual/reprovar', [App\Http\Controllers\AvaliacaoIndividualController::class, 'realizarAvaliacao'])->name('avaliador.avaliacao_ind.realizarAvaliacao');
 
 });

@@ -67,4 +67,8 @@ class Solicitacao extends Model
         return $this->belongsTo('App\Models\User');
     }
 
+    public function avaliacao_individual(){
+        return $this->hasOne('App\Models\AvaliacaoIndividual');
+    }
+
 }

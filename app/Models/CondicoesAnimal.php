@@ -47,4 +47,9 @@ class CondicoesAnimal extends Model
         return $this->belongsTo('App\Models\Planejamento');
     }
 
+    public function avaliacao_individual()
+    {
+        return $this->hasOne('App\Models\AvaliacaoIndividual');
+    }
+
 }
