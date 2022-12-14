@@ -674,12 +674,23 @@ class SolicitacaoController extends Controller
     public
     function concluir($solicitacao_id)
     {
+        $concluir = true;
         $solicitacao = Solicitacao::where('id', $solicitacao_id)->where('user_id', Auth::user()->id)->first();
+        foreach ($solicitacao->modelosAnimais as $modelo) {
+            if (!isset($modelo->planejamento) && !isset($modelo->planejamento->operacao) && !isset($modelo->planejamento->eutanasia)
+                && !isset($modelo->planejamento->resultado) && !isset($modelo->planejamento->procedimento) && !isset($modelo->planejamento->condicoesAnimal)) {
+                $concluir = false;
+            }
+        }
+
+        if($concluir == false){
+            return redirect()->back()->with('fail', 'É necessário preencher todas as informações obrigatórias!');
+        }
         if ($solicitacao == null) {
-            return redirect()->back();
+            return redirect()->back()->with('fail', 'Solicitação não encontrada');
         }
         $solicitacao->status = 'nao_avaliado';
         $solicitacao->update();
-        return redirect()->back()->with(['success' => 'Solicitação concluída com sucesso!']);
+        return redirect(route('solicitacao.solicitante.index'))->with(['success' => 'Solicitação concluída com sucesso!']);
     }
 }
