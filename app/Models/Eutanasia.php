@@ -15,16 +15,15 @@ class Eutanasia extends Model
         'metodo',
         'destino',
         'descricao',
-        'procedimento_id',
     ];
 
     public static $rules = [
         'planejamento_id' => 'required',
         'destino' => 'required',
         'descarte' => 'required',
-        'estresse' => 'required_if:eutanasia,==,true',
-        'anestesico' => 'required_if:eutanasia,==,true',
-        'relaxante' => 'required_if:eutanasia,==,true',
+        'metodo' => 'required_if:eutanasia,==,true',
+        'descricao' => 'required_if:eutanasia,==,true',
+        'justificativa_metodo' => 'required_if:eutanasia,==,true',
 
     ];
 
