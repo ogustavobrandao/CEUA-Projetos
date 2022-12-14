@@ -105,8 +105,6 @@
 <script>
     $(document).ready(function () {
 
-        console.log({{$operacao->observacao_recuperacao}});
-
         @if(isset($operacao) && $operacao->observacao_recuperacao != null && $operacao->outros_cuidados_recuperacao != null && $operacao->analgesia_recuperacao != null)
         $("#cirurgia_sim").attr('checked', true);
         $("#pos_operatorio").show();
