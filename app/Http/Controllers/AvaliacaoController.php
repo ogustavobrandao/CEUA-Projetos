@@ -41,10 +41,9 @@ class AvaliacaoController extends Controller
     {
         $solicitacao = Solicitacao::find($request->solicitacao_id);
         $avaliador = User::find(Auth::user()->id);
+        $avaliacao = Avaliacao::find($request->avaliacao_id);
         Avaliacao::where('solicitacao_id', $solicitacao->id)->where('user_id', '!=', $avaliador->id)->delete();
-        $avaliacao = $solicitacao->avaliacao->first();
         $avaliacao->status = 'aprovadaPendencia';
-        $avaliacao->parecer = $request->parecer;
         $solicitacao->status = 'avaliado';
         $solicitacao->update();
         $avaliacao->update();

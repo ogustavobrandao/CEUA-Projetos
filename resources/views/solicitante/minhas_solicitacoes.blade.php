@@ -37,13 +37,14 @@
                     @if($solicitacao->status == null)
                         <a class="btn" href="{{route('solicitacao.index', ['solicitacao_id' => $solicitacao->id])}}" style="border-color: #1d68a7; color: #1d68a7; background-color: #c0ddf6"
                            title="Continuar Preenchendo Solicitação."><i class="fa-solid fa-file"></i></a>
+
                     @elseif(($solicitacao->status == "nao_avaliado" && $solicitacao->avaliacao->first() == null) ||
                             ($solicitacao->status == "avaliado" && $solicitacao->avaliacao->first()->status == "aprovadaPendencia"))
                         <a class="btn" href="{{route('solicitacao.index', ['solicitacao_id' => $solicitacao->id])}}" style="border-color: #1B1C42; background-color: #c0ddf6"
                            title="Editar Solicitação."><i class="fa-solid fa-up-right-from-square"></i></a>
+
                     @elseif(($solicitacao->avaliacao->first()->status == "reprovada") ||
-                            ($solicitacao->avaliacao->first()->status == "aprovado") ||
-                            ($solicitacao->status == "nao_avaliado" && $solicitacao->avaliacao->first()->status == "aprovadaPendencia"))
+                            ($solicitacao->avaliacao->first()->status == "aprovado"))
                         <a class="btn" href="{{route('solicitacao.index', ['solicitacao_id' => $solicitacao->id])}}" style="border-color: #1B1C42; background-color: #c0ddf6"
                            title="Visualizar Solicitação."><i class="fa-solid fa-up-right-from-square"></i></a>
                         @if($solicitacao->avaliacao->first()->status == "aprovado")

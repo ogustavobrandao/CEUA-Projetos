@@ -16,6 +16,11 @@ class Avaliacao extends Model
         'solicitacao_id',
     ];
 
+    public function avaliacao_individual()
+    {
+        return $this->hasMany('App\Models\AvaliacaoIndividual');
+    }
+
     public function user(){
         return $this->belongsTo('App\Models\User');
     }

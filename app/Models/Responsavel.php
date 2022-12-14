@@ -48,4 +48,8 @@ class Responsavel extends Model
     public function solicitacao(){
         return $this->belongsTo('App\Models\Solicitacao');
     }
+
+    public function avaliacao_individual(){
+        return $this->hasOne('App\Models\AvaliacaoIndividual');
+    }
 }

@@ -1,10 +1,4 @@
 <div class="card shadow-lg p-3 bg-white" style="border-radius: 0px 0px 10px 10px">
-    @if($solicitacao->status == 'avaliado' && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia')
-        <a type="button" class="btn btn-info text-start" style="position: absolute;pointer-events: all;z-index:10;"
-           data-toggle="modal" data-target="#pendenciaVisuModal" title="Pendência"><img
-                src="{{asset('images/pendencia.svg')}}" width="30px"></a>
-    @endif
-
     <form id="form0" method="POST" action="{{route('solicitacao.criar')}}">
         @csrf
         <input type="hidden" name="solicitacao_id" value="{{$solicitacao->id}}">
@@ -138,6 +132,7 @@
             </div>
         </div>
 
+
         <div id="outra_area_conhecimento_div" class="row mt-2" style="display: none">
             <div class="col-4">
                 <label for="outra_area_conhecimento">Outra área de conhecimento:<strong
@@ -147,6 +142,7 @@
                        autocomplete="outra_area_conhecimento" autofocus>
             </div>
         </div>
+
 
         @include('component.botoes_new_form')
     </form>
