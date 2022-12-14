@@ -24,8 +24,6 @@ class SolicitacaoFactory extends Factory
             'titulo_pt' => 'Titulo Portugues',
             'inicio' => today(),
             'area_conhecimento' => 'Area de conhecimento',
-            'estado_pagina' => 0,
-            'estado_pagina_maximo' => 0
         ];
     }
 }

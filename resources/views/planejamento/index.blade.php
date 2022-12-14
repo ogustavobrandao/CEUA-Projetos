@@ -74,8 +74,8 @@
                 <div class="row">
                     <div class="col-md-12">
                         <h2 class="titulo" id="titulo_6">Condição Animal
-                            <a class="float-end" id="6_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
-                            <a class="float-end" id="6_btn_down" style="display: none"><i class="fa-solid fa-circle-chevron-down"></i></a>
+                            <a class="float-end" id="6_btn_up"><i class="fa-solid fa-circle-chevron-down"></i></a>
+                            <a class="float-end" id="6_btn_down" style="display: none"><i class="fa-solid fa-circle-chevron-up"></i></a>
                         </h2>
                     </div>
                 </div>
@@ -93,8 +93,8 @@
                 <div class="row">
                     <div class="col-md-12">
                         <h2 class="titulo" id="titulo_7">Procedimento
-                            <a class="float-end" id="7_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
-                            <a class="float-end" id="7_btn_down" style="display: none"><i class="fa-solid fa-circle-chevron-down"></i></a>
+                            <a class="float-end" id="7_btn_up"><i class="fa-solid fa-circle-chevron-down"></i></a>
+                            <a class="float-end" id="7_btn_down" style="display: none"><i class="fa-solid fa-circle-chevron-up"></i></a>
                         </h2>
                     </div>
                 </div>
@@ -112,8 +112,8 @@
                 <div class="row">
                     <div class="col-md-12">
                         <h2 class="titulo" id="titulo_8">Operação
-                                <a class="float-end" id="8_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
-                                <a class="float-end" id="8_btn_down" style="display: none"><i class="fa-solid fa-circle-chevron-down"></i></a>
+                                <a class="float-end" id="8_btn_up"><i class="fa-solid fa-circle-chevron-down"></i></a>
+                                <a class="float-end" id="8_btn_down" style="display: none"><i class="fa-solid fa-circle-chevron-up"></i></a>
                         </h2>
                     </div>
                 </div>
@@ -132,8 +132,8 @@
                 <div class="row">
                     <div class="col-md-12">
                         <h2 class="titulo" id="titulo_9">Eutanásia
-                            <a class="float-end" id="9_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
-                            <a class="float-end" id="9_btn_down" style="display: none"><i class="fa-solid fa-circle-chevron-down"></i></a>
+                            <a class="float-end" id="9_btn_up"><i class="fa-solid fa-circle-chevron-down"></i></a>
+                            <a class="float-end" id="9_btn_down" style="display: none"><i class="fa-solid fa-circle-chevron-up"></i></a>
                         </h2>
                     </div>
                 </div>
@@ -152,8 +152,8 @@
                 <div class="row">
                     <div class="col-md-12">
                         <h2 class="titulo" id="titulo_10">Resultado
-                            <a class="float-end" id="10_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
-                            <a class="float-end" id="10_btn_down" style="display: none"><i class="fa-solid fa-circle-chevron-down"></i></a>
+                            <a class="float-end" id="10_btn_up"><i class="fa-solid fa-circle-chevron-down"></i></a>
+                            <a class="float-end" id="10_btn_down" style="display: none"><i class="fa-solid fa-circle-chevron-up"></i></a>
                         </h2>
                     </div>
                 </div>
@@ -171,7 +171,7 @@
 
     <div class="row col-md-10 m-0">
         <div class="col-4 pl-0">
-            <a type="button" class="btn btn-secondary w-100" href="{{route('avaliador.solicitacao.avaliar', ['solicitacao_id' => $solicitacao->id])}}">Voltar</a>
+            <a type="button" class="btn btn-secondary w-100" href="{{route('solicitacao.index', ['solicitacao_id' => $solicitacao->id])}}">Voltar</a>
         </div>
     </div>
 

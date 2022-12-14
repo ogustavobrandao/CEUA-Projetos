@@ -103,7 +103,8 @@ class SolicitacaoController extends Controller
         $solicitacao->inicio = $request->inicio;
         $solicitacao->fim = $request->fim;
         $solicitacao->area_conhecimento = $request->area_conhecimento;
-
+        if(isset($request->outra_area_conhecimento))
+            $solicitacao->outra_area_conhecimento = $request->outra_area_conhecimento;
         $solicitacao->update();
 
         return redirect(route('solicitacao.index', ['solicitacao_id' => $request->solicitacao_id]));
