@@ -17,8 +17,7 @@ class PlanejamentoFactory extends Factory
     public function definition()
     {
         return [
-            'grau_invasividade' => 'Grau 2',
-            'grau_select' => 'Grau 2',
+            'grau_invasividade' => 'GI2',
             'outras_infos' => 'Outras Informações',
             'analise_estatistica' => 'Analise Estatistica',
             'especificar_grupo' => 'Especificar Grupo',

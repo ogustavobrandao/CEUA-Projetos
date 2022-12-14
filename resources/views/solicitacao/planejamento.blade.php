@@ -164,41 +164,28 @@
                         <i class="fa-solid fa-circle-info fa-lg"></i>
                     </a>
                 </label>
-                <select class="form-control" name="grau_select" id="grau_select" required>
+                <select class="form-control" name="grau_invasividade" id="grau_invasividade" required>
                     <option value="GI1"
-                            @if($planejamento != null && $planejamento->grau_select == "GI1") selected @endif>GI1 =
+                            @if($planejamento != null && $planejamento->grau_invasividade == "GI1") selected @endif>GI1 =
                         Experimentos que causam pouco ou nenhum desconforto ou estresse
                     </option>
                     <option value="GI2"
-                            @if($planejamento != null && $planejamento->grau_select == "GI2") selected @endif>GI2 =
+                            @if($planejamento != null && $planejamento->grau_invasividade == "GI2") selected @endif>GI2 =
                         Experimentos que causam estresse, desconforto ou dor, de leve
                         intensidade
                     </option>
                     <option value="GI3"
-                            @if($planejamento != null && $planejamento->grau_select == "GI3") selected @endif>GI3 =
+                            @if($planejamento != null && $planejamento->grau_invasividade == "GI3") selected @endif>GI3 =
                         Experimentos que causam estresse, desconforto ou dor, de intensidade
                         intermediária
                     </option>
                     <option value="GI4"
-                            @if($planejamento != null && $planejamento->grau_select == "GI4") selected @endif>GI4 =
+                            @if($planejamento != null && $planejamento->grau_invasividade == "GI4") selected @endif>GI4 =
                         Experimentos que causam dor de alta intensidade
                     </option>
                 </select>
             </div>
-            <div class="col-sm-12 mt-2">
-                <label for="grau_invasividade">Os materiais biológicos destes exemplares serão usados em outros
-                    projetos? Quais? Se já aprovado pela CEUA, mencionar o número do protocolo.<strong style="color: red">*</strong></label>
-                <textarea class="form-control @error('grau_invasividade') is-invalid @enderror" id="grau_invasividade"
-                          name="grau_invasividade" required autocomplete="grau_invasividade"
-                          autofocus>@if(!empty($planejamento) && $planejamento->grau_invasividade != null){{$planejamento->grau_invasividade}}
-                    @else{{ old('grau_invasividade')}}
-                    @endif</textarea>
-                @error('grau_invasividade')
-                <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-                @enderror
-            </div>
+
         </div>
         <br>
         @include('component.botoes_new_form')
