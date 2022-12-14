@@ -50,6 +50,7 @@
                     <option @if(!empty($condicoes_animal) && $condicoes_animal->ambiente_alojamento == "gaiola") selected @endif value="gaiola">Gaiola</option>
                     <option @if(!empty($condicoes_animal) && $condicoes_animal->ambiente_alojamento == "galpao") selected @endif value="galpao">Galpão</option>
                     <option @if(!empty($condicoes_animal) && $condicoes_animal->ambiente_alojamento == "jaula") selected @endif value="jaula">Jaula</option>
+                    <option @if(!empty($condicoes_animal) && $condicoes_animal->ambiente_alojamento == "nao_se_aplica") selected @endif value="nao_se_aplica">Não se Aplica</option>
                     <option @if(!empty($condicoes_animal) && $condicoes_animal->ambiente_alojamento == "outro") selected @endif value="outro">Outro</option>
                 </select>
                 @error('ambiente_alojamento')
@@ -65,6 +66,7 @@
                     <option disabled selected>Selecione o Tipo de Cama</option>
                     <option @if(!empty($condicoes_animal) && $condicoes_animal->tipo_cama == "estrado") selected @endif value="estrado">Estrado</option>
                     <option @if(!empty($condicoes_animal) && $condicoes_animal->tipo_cama == "maravalha") selected @endif value="maravalha">Maravalha</option>
+                    <option @if(!empty($condicoes_animal) && $condicoes_animal->tipo_cama == "nao_se_aplica") selected @endif value="nao_se_aplica">Não se Aplica</option>
                     <option @if(!empty($condicoes_animal) && $condicoes_animal->tipo_cama == "outra") selected @endif value="outra">Outra</option>
                 </select>
                 @error('tipo_cama')
