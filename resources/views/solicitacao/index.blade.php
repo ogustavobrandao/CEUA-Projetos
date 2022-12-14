@@ -56,7 +56,10 @@
                 <div class="row">
                     <div class="col-md-12">
                         <h2 class="titulo" id="titulo_2">3. Dados do(s) Colaborador(es)
-                            @if(!isset($solicitacao->responsavel))<small style="color: red; font-weight: bold">Necessária a criação de um responsável</small>@endif
+                            @if(!isset($solicitacao->responsavel))
+                                <small style="color: red; font-weight: bold">Necessária a criação de um
+                                    responsável</small>
+                            @endif
                             @if(!isset($disabled) && isset($solicitacao->responsavel))
                                 <a class="float-end" onclick="criarColaborador()" style="color: green"
                                    title="Adicionar Colaborador">
@@ -140,13 +143,13 @@
                     <div class="col-md-12">
                         <h3 class="titulo" id="titulo_4">5. Dados dos Modelos Animais
                             @if(Auth::user()->tipo_usuario_id == 3)
-                            <a class="float-end "
-                               data-toggle="modal"
-                               data-target="#modeloAnimalModal"
-                               style="color: green"
-                               title="Adicionar Modelo Animal"><i
-                                    class="fa-solid fa-circle-plus fa-2xl"></i></a></h3>
-                            @endif
+                                <a class="float-end "
+                                   data-toggle="modal"
+                                   data-target="#modeloAnimalModal"
+                                   style="color: green"
+                                   title="Adicionar Modelo Animal"><i
+                                        class="fa-solid fa-circle-plus fa-2xl"></i></a></h3>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -220,7 +223,7 @@
                                 <input type="hidden" name="avaliacao_id" value="{{$avaliacao->id}}">
                                 <input type="hidden" name="solicitacao_id" value="{{$solicitacao->id}}">
                                 <button type="submit" class="btn w-100 btn-danger" title="Reprovar Solicitação."
-                                        id="reprovarAvaliacao" >Reprovar
+                                        id="reprovarAvaliacao">Reprovar
                                 </button>
                             </form>
                         @endif
@@ -232,15 +235,19 @@
                                data-toggle="modal" data-target="#aprovarModal"
                                title="Aprovar Solicitação." id="aprovarAvaliacao">Aprovar</a>
 
-                        <a class="btn w-100 btn-primary"
-                           href="#"
-                           title="Aprovar Solicitação Com Pendências." id="pendenciaAvaliacao">Aprovar com pendências</a>
+                            <a class="btn w-100 btn-primary"
+                               href="#"
+                               title="Aprovar Solicitação Com Pendências." id="pendenciaAvaliacao">Aprovar com
+                                pendências</a>
                         @endif
-                        @if($solicitacao->status == null)
+                        @if($solicitacao->status == null && isset($solicitacao) && isset($solicitacao->responsavel) && count($solicitacao->modelosAnimais) > 0)
                             <a class="btn w-100"
                                href="{{route('solicitacao.concluir', ['solicitacao_id' => $solicitacao->id])}}"
                                style="border-color: #1d68a7; color: #1d68a7; background-color: #c0ddf6"
                                title="Concluir Solicitação.">Concluir Solicitação</a>
+
+                        @else
+                                <button class="btn btn-secondary" disabled>Concluir Solicitação</button>
                         @endif
                     </div>
 
@@ -280,7 +287,8 @@
         </div>
 
         <!-- Modal Aprovar -->
-        <div class="modal fade" id="aprovarModal" tabindex="-1" role="dialog" aria-labelledby="aprovarModalLabel" aria-hidden="true">
+        <div class="modal fade" id="aprovarModal" tabindex="-1" role="dialog" aria-labelledby="aprovarModalLabel"
+             aria-hidden="true">
             <div class="modal-dialog " role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -297,7 +305,8 @@
                             <div class="row">
                                 <div class="col-sm-5">
                                     <label for="inicio">Data de Início:<strong style="color: red">*</strong></label>
-                                    <input class="form-control @error('inicio') is-invalid @enderror" id="inicio" type="date" name="inicio"
+                                    <input class="form-control @error('inicio') is-invalid @enderror" id="inicio"
+                                           type="date" name="inicio"
                                            value="{{date('Y-m-d', strtotime($solicitacao->inicio))}}"
                                            required autocomplete="inicio" autofocus>
                                     @error('inicio')
@@ -309,7 +318,8 @@
                                 <div class="col-sm-2"></div>
                                 <div class="col-sm-5">
                                     <label for="fim">Data de Fim:<strong style="color: red">*</strong></label>
-                                    <input class="form-control @error('fim') is-invalid @enderror" id="fim" type="date" name="fim"
+                                    <input class="form-control @error('fim') is-invalid @enderror" id="fim" type="date"
+                                           name="fim"
                                            value="{{date('Y-m-d', strtotime($solicitacao->fim))}}"
                                            required autocomplete="fim" autofocus>
                                     @error('fim')
@@ -339,7 +349,7 @@
         $(document).ready(function () {
             //Abrir Modal de Criação de Modelo Animal se houver erro de validação
             @if(count($errors->modelo) > 0)
-                $('#modeloAnimalModal').modal('show');
+            $('#modeloAnimalModal').modal('show');
             @endif
 
             // Dados Iniciais
@@ -364,9 +374,9 @@
 
             //Modelo Animal
             @foreach($solicitacao->modelosAnimais as $modelo_animal)
-                @if(isset($avaliacao))
-                    verificarAvalModelo('{{$modelo_animal->id}}','{{$avaliacao->id}}');
-                @endif
+            @if(isset($avaliacao))
+            verificarAvalModelo('{{$modelo_animal->id}}', '{{$avaliacao->id}}');
+            @endif
             @endforeach
 
         });
@@ -502,79 +512,78 @@
             }
         }
 
-        function verificarAvalModelo(modelo,avaliacao){
+        function verificarAvalModelo(modelo, avaliacao) {
             $.ajax({
                 url: '/avaliacao_individual/verificar/modelo/' + modelo + '/' + avaliacao,
                 type: 'GET',
                 dataType: 'json',
                 success: function (data) {
-                    alterarCorList(modelo,data);
+                    alterarCorList(modelo, data);
                 }
             });
         }
 
-        function alterarCorCard(tipo,status){
-            if(status == "aprovado"){
-                $("#fundo_"+tipo).css({"background-color": "#38c172"});
-            }else{
-                $("#fundo_"+tipo).css({"background-color": "#e3342f"});
+        function alterarCorCard(tipo, status) {
+            if (status == "aprovado") {
+                $("#fundo_" + tipo).css({"background-color": "#38c172"});
+            } else {
+                $("#fundo_" + tipo).css({"background-color": "#e3342f"});
             }
-            $("#titulo_"+tipo).css({"color": "white"});
-            $("#"+tipo+"_btn_up").css({"color": "white"});
-            $("#"+tipo+"_btn_down").css({"color": "white"});
+            $("#titulo_" + tipo).css({"color": "white"});
+            $("#" + tipo + "_btn_up").css({"color": "white"});
+            $("#" + tipo + "_btn_down").css({"color": "white"});
             // Modificar o contador geral para avaliação
-            if(tipo != '4'){
-                alterarContAval(tipo,status);
+            if (tipo != '4') {
+                alterarContAval(tipo, status);
             }
         }
 
-        function alterarCorList(id,status){
-            if(status == "aprovado"){
-                $("#fundo_modelo_"+id).css({"background-color": "#38c172","color": "white"});
+        function alterarCorList(id, status) {
+            if (status == "aprovado") {
+                $("#fundo_modelo_" + id).css({"background-color": "#38c172", "color": "white"});
                 contadorModelo += 1;
-            }
-            else if(status == "reprovado"){
-                $("#fundo_modelo_"+id).css({"background-color": "#e3342f","color": "white"});
+            } else if (status == "reprovado") {
+                $("#fundo_modelo_" + id).css({"background-color": "#e3342f", "color": "white"});
                 contadorModelo = 0;
-            }else{
+            } else {
                 contadorModelo = 0;
             }
-            alterarContAval(4,status);
+            alterarContAval(4, status);
         }
 
-        function alterarContAval(tipo,status){
+        function alterarContAval(tipo, status) {
             var marc = 0;
-            if(status == "aprovado"){
+            if (status == "aprovado") {
                 marc = 1;
             }
-            if(tipo == '0'){
+            if (tipo == '0') {
                 $("#dadosInicaisAval").val(marc);
-            }else if(tipo == '1'){
+            } else if (tipo == '1') {
                 $("#dadosResponsavelAval").val(marc);
-            }else if(tipo == '2'){
+            } else if (tipo == '2') {
                 $("#dadosColaboradoAval").val(marc);
-            }else if(tipo == '3'){
+            } else if (tipo == '3') {
                 $("#dadosComplementaresAval").val(marc);
-            }else if(tipo == '4' && contadorModelo == {{count($solicitacao->modelosAnimais)}}){
+            } else if (tipo == '4' && contadorModelo == {{count($solicitacao->modelosAnimais)}}) {
                 $("#dadosModeloAnimalAval").val(1);
-                alterarCorCard(tipo,'aprovado');
-            }else if(tipo == '4' && contadorModelo != {{count($solicitacao->modelosAnimais)}}){
+                alterarCorCard(tipo, 'aprovado');
+            } else if (tipo == '4' && contadorModelo != {{count($solicitacao->modelosAnimais)}}) {
                 $("#dadosModeloAnimalAval").val(0);
-                alterarCorCard(tipo,'reprovado');
+                alterarCorCard(tipo, 'reprovado');
             }
             statusAvaliacao();
         }
 
-        function statusAvaliacao(){
-            if($("#dadosInicaisAval").val() == '1' && $("#dadosResponsavelAval").val() == '1' && $("#dadosColaboradoAval").val() == '1'
-               && $("#dadosComplementaresAval").val() == '1' && $("#dadosModeloAnimalAval").val() == '1'){
-                $("#reprovarAvaliacao").attr("hidden",true);
-                $("#pendenciaAvaliacao").attr("hidden",true);
+        function statusAvaliacao() {
+            if ($("#dadosInicaisAval").val() == '1' && $("#dadosResponsavelAval").val() == '1' && $("#dadosColaboradoAval").val() == '1'
+                && $("#dadosComplementaresAval").val() == '1' && $("#dadosModeloAnimalAval").val() == '1') {
+                $("#reprovarAvaliacao").attr("hidden", true);
+                $("#pendenciaAvaliacao").attr("hidden", true);
                 $("#aprovarAvaliacao").removeAttr("hidden");
-            }else{
+            } else {
                 $("#reprovarAvaliacao").removeAttr("hidden");
                 $("#pendenciaAvaliacao").removeAttr("hidden");
-                $("#aprovarAvaliacao").attr("hidden",true);
+                $("#aprovarAvaliacao").attr("hidden", true);
             }
         }
 

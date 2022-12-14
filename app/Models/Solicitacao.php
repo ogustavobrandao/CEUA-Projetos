@@ -55,7 +55,7 @@ class Solicitacao extends Model
 
     public function planejamento()
     {
-        return $this->hasOne('App\Models\Planejamento');
+        return $this->belongsTo('App\Models\Planejamento');
     }
     public function dadosComplementares()
     {
