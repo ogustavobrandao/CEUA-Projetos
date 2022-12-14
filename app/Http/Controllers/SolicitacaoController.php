@@ -604,7 +604,7 @@ class SolicitacaoController extends Controller
     public
     function criar_eutanasia(Request $request)
     {
-        Validator::make($request->all(), Eutanasia::$rules, Eutanasia::$messages)->validate();
+        //Validator::make($request->all(), Eutanasia::$rules, Eutanasia::$messages)->validate();
 
         $planejamento = Planejamento::find($request->planejamento_id);
 
