@@ -45,10 +45,6 @@ class AvaliacaoIndividual extends Model
         return $this->belongsTo('App\Models\Procedimento');
     }
 
-    public function colaborador(){
-        return $this->belongsTo('App\Models\Colaborador');
-    }
-
     public function modelo_animal(){
         return $this->belongsTo('App\Models\ModeloAnimal');
     }

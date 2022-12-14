@@ -50,6 +50,10 @@ class Planejamento extends Model
         return $this->belongsTo('App\Models\ModeloAnimal');
     }
 
+    public function avaliacao_individual(){
+        return $this->hasOne('App\Models\AvaliacaoIndividual');
+    }
+
     public static $rules = [
         'num_animais_grupo' => 'required | numeric | min:0',
         'especificar_grupo' => 'required',
