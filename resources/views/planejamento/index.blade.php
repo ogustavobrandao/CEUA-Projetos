@@ -28,9 +28,11 @@
                         <input type="hidden" name="modelo_animal_id" value="{{$modelo_animal->id}}">
                         <div class="modal-body">
                             @include('solicitacao.modelo_animal')
-
                             @if(Auth::user()->tipo_usuario_id == 2)
                                 @include('component.botoes_new_form',['tipo'=>4,'avaliacao_id'=>$avaliacao->id,'id'=>$modelo_animal->id])
+                            @elseif(Auth::user()->tipo_usuario_id == 3 && $solicitacao->status == 'avaliado'
+                                    && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia')
+                                @include('component.botoes_new_form',['tipo'=>4,'id'=>$modelo_animal->id,'status'=>$avaliacaoModeloAnimal->status])
                             @else
                                 @include('component.botoes_new_form')
                             @endif
@@ -58,6 +60,9 @@
             <div id="planejamento">
                 @if(Auth::user()->tipo_usuario_id == 2)
                     @include('solicitacao.planejamento',['tipo'=>5,'avaliacao_id'=>$avaliacao->id,'id'=>$planejamento->id])
+                @elseif(Auth::user()->tipo_usuario_id == 3 && $solicitacao->status == 'avaliado'
+                        && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia')
+                    @include('solicitacao.planejamento',['tipo'=>5,'id'=>$planejamento->id,'status'=>$avaliacaoPlanejamento->status])
                 @else
                     @include('solicitacao.planejamento')
                 @endif
@@ -83,6 +88,9 @@
             <div id="condicao_animal" style="display: none;">
                 @if(Auth::user()->tipo_usuario_id == 2)
                     @include('solicitacao.condicoes_animais',['tipo'=>6,'avaliacao_id'=>$avaliacao->id,'id'=>$condicoes_animal->id])
+                @elseif(Auth::user()->tipo_usuario_id == 3 && $solicitacao->status == 'avaliado'
+                        && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia')
+                    @include('solicitacao.condicoes_animais',['tipo'=>6,'id'=>$condicoes_animal->id,'status'=>$avaliacaoCondicoesAnimal->status])
                 @else
                     @include('solicitacao.condicoes_animais')
                 @endif
@@ -102,8 +110,11 @@
             <div id="procedimento" style="display: none; ">
                 @if(Auth::user()->tipo_usuario_id == 2)
                     @include('solicitacao.procedimento',['tipo'=>7,'avaliacao_id'=>$avaliacao->id,'id'=>$procedimento->id])
+                @elseif(Auth::user()->tipo_usuario_id == 3 && $solicitacao->status == 'avaliado'
+                        && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia')
+                    @include('solicitacao.procedimento',['tipo'=>7,'id'=>$procedimento->id,'status'=>$avaliacaoProcedimento->status])
                 @else
-                    @include('solicitacao.procedimento')
+                    @include('solicitacao.procedimento',['tipo'=>7])
                 @endif
             </div>
         </div>
@@ -121,6 +132,9 @@
             <div id="operacao" style="display: none; ">
                 @if(Auth::user()->tipo_usuario_id == 2)
                     @include('solicitacao.operacao',['tipo'=>8,'avaliacao_id'=>$avaliacao->id,'id'=>$operacao->id])
+                @elseif(Auth::user()->tipo_usuario_id == 3 && $solicitacao->status == 'avaliado'
+                        && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia')
+                    @include('solicitacao.operacao',['tipo'=>8,'id'=>$operacao->id,'status'=>$avaliacaoOperacao->status])
                 @else
                     @include('solicitacao.operacao')
                 @endif
@@ -141,8 +155,11 @@
             <div id="eutanasia" style="display: none;">
                 @if(Auth::user()->tipo_usuario_id == 2)
                     @include('solicitacao.eutanasia',['tipo'=>9,'avaliacao_id'=>$avaliacao->id,'id'=>$eutanasia->id])
+                @elseif(Auth::user()->tipo_usuario_id == 3 && $solicitacao->status == 'avaliado'
+                        && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia')
+                    @include('solicitacao.eutanasia',['tipo'=>9,'id'=>$eutanasia->id,'status'=>$avaliacaoEutanasia->status])
                 @else
-                    @include('solicitacao.eutanasia')
+                    @include('solicitacao.eutanasia',['tipo'=>9])
                 @endif
             </div>
         </div>
@@ -161,6 +178,9 @@
             <div id="resultado" style="display: none;">
                 @if(Auth::user()->tipo_usuario_id == 2)
                     @include('solicitacao.resultado',['tipo'=>10,'avaliacao_id'=>$avaliacao->id,'id'=>$resultado->id])
+                @elseif(Auth::user()->tipo_usuario_id == 3 && $solicitacao->status == 'avaliado'
+                        && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia')
+                    @include('solicitacao.resultado',['tipo'=>10,'id'=>$resultado->id,'status'=>$avaliacaoResultado->status])
                 @else
                     @include('solicitacao.resultado')
                 @endif
@@ -176,7 +196,6 @@
     </div>
 
     <!-- Utilizado para quando houver avaliação -->
-    @if(Auth::user()->tipo_usuario_id == 2)
 
         <!-- Modal Pendencia -->
         <div class="modal fade" id="pendenciaModal" tabindex="-1" role="dialog" aria-labelledby="pendenciaModalLabel" aria-hidden="true">
@@ -196,14 +215,14 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeModal()">Fechar</button>
-                            <button type="button" class="btn btn-success" id="confirmPendencia">Confirmar</button>
+                            @if(Auth::user()->tipo_usuario_id == 2)
+                                <button type="button" class="btn btn-success" id="confirmPendencia">Confirmar</button>
+                            @endif
                         </div>
                     </form>
                 </div>
             </div>
         </div>
-
-    @endif
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js"></script>
@@ -367,7 +386,9 @@
                     $("#trocaConteudo").append(ret);
                     $("#titulo_pendencia").append("Pendência(s) - " + data[1]);
 
-                    document.getElementById( "confirmPendencia" ).setAttribute( "onClick", "realizarAvaliacaoInd("+ tipo +","+ avaliacao_id +","+ id +", '"+ status +"')" );
+                    @if(Auth::user()->tipo_usuario_id == 2)
+                    document.getElementById("confirmPendencia").setAttribute("onClick", "realizarAvaliacaoInd(" + tipo + "," + avaliacao_id + "," + id + ", '" + status + "')");
+                    @endif
 
                     $("#pendenciaModal").modal('show');
                 }
