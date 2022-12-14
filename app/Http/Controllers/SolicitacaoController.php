@@ -477,7 +477,6 @@ class SolicitacaoController extends Controller
         $planejamento->analise_estatistica = $request->analise_estatistica;
         $planejamento->outras_infos = $request->outras_infos;
         $planejamento->grau_invasividade = $request->grau_invasividade;
-        $planejamento->grau_select = $request->grau_select;
 
         if (isset($modelo_animal->planejamento)) {
             $planejamento->update();
