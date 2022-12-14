@@ -45,8 +45,8 @@
 
                     @elseif(($solicitacao->avaliacao->first()->status == "reprovada") ||
                             ($solicitacao->avaliacao->first()->status == "aprovado"))
-                        <a class="btn" href="{{route('solicitacao.index', ['solicitacao_id' => $solicitacao->id])}}" style="border-color: #1B1C42; background-color: #c0ddf6"
-                           title="Visualizar Solicitação."><i class="fa-solid fa-up-right-from-square"></i></a>
+                        {{-- <a class="btn" href="{{route('solicitacao.index', ['solicitacao_id' => $solicitacao->id])}}" style="border-color: #1B1C42; background-color: #c0ddf6"
+                           title="Visualizar Solicitação."><i class="fa-solid fa-up-right-from-square"></i></a> --}}
                         @if($solicitacao->avaliacao->first()->status == "aprovado")
                             <a class="btn" style="border-color: #1B1C42; background-color: #c0ddf6" data-toggle="modal" data-target="#licencaModal{{$solicitacao->id}}" title="Licença."><i
                                     class="fa-regular fa-id-card"></i></a>
