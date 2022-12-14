@@ -16,7 +16,6 @@ return new class extends Migration
         Schema::create('planejamentos', function (Blueprint $table) {
             $table->id();
             $table->text('grau_invasividade');
-            $table->string('grau_select');
             $table->string('anexo_formula')->nullable();
             $table->string('justificativa')->nullable();
             $table->text('outras_infos');

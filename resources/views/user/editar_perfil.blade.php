@@ -13,7 +13,7 @@
                 @csrf
                 <div class="row justify-content-center mt-2">
                     <div class="col-sm-10">
-                        <label for="name">Nome:</label>
+                        <label for="name">Nome:<strong style="color: red">*</strong></label>
                         <input class="form-control @error('name') is-invalid @enderror" id="name" type="text"
                                name="name"
                                value="{{$user->name}}" required autocomplete="name"
@@ -28,7 +28,7 @@
 
                 <div class="row justify-content-center mt-2">
                     <div class="col-sm-5">
-                        <label for="email">E-mail:</label>
+                        <label for="email">E-mail:<strong style="color: red">*</strong></label>
                         <input class="form-control @error('email') is-invalid @enderror" id="email" type="email"
                                name="email" value="{{ $user->email }}" required autocomplete="email"
                                autofocus>
@@ -39,7 +39,7 @@
                         @enderror
                     </div>
                     <div class="col-sm-5">
-                        <label for="cpf">CPF:</label>
+                        <label for="cpf">CPF:<strong style="color: red">*</strong></label>
                         <input class="form-control @error('cpf') is-invalid @enderror" id="cpf" type="text" name="cpf"
                                value="{{ $user->cpf }}" required autocomplete="cpf"
                                autofocus>

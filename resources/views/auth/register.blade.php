@@ -12,7 +12,7 @@
 
         <div class="row justify-content-center mt-2">
             <div class="col-sm-4">
-                <label for="name">Nome:</label>
+                <label for="name">Nome:<strong style="color: red">*</strong></label>
                 <input class="form-control @error('name') is-invalid @enderror" id="name" type="text" name="name" value="{{ old('name') }}" required autocomplete="name"
                        autofocus>
                 @error('name')
@@ -23,7 +23,7 @@
             </div>
 
             <div class="col-sm-4">
-                <label for="email">E-mail:</label>
+                <label for="email">E-mail:<strong style="color: red">*</strong></label>
                 <input class="form-control @error('email') is-invalid @enderror" id="email" type="email" name="email" value="{{ old('email') }}" required autocomplete="email"
                        autofocus>
                 @error('email')
@@ -34,7 +34,7 @@
             </div>
 
             <div class="col-sm-2">
-                <label for="name">CPF:</label>
+                <label for="name">CPF:<strong style="color: red">*</strong></label>
                 <input class="form-control @error('cpf') is-invalid @enderror" id="cpf" type="text" name="cpf" value="{{ old('cpf') }}" required autocomplete="cpf"
                        autofocus>
                 @error('cpf')
@@ -47,7 +47,7 @@
 
         <div class="row justify-content-center mt-2">
             <div class="col-sm-5">
-                <label for="password">{{ __('Senha') }}</label>
+                <label for="password">{{ __('Senha') }}<strong style="color: red">*</strong></label>
                 <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
                 @error('password')
                 <span class="invalid-feedback" role="alert">
@@ -56,14 +56,14 @@
                 @enderror
             </div>
             <div class="col-sm-5">
-                <label for="password-confirm">{{ __('Confirmar Senha') }}</label>
+                <label for="password-confirm">{{ __('Confirmar Senha') }}<strong style="color: red">*</strong></label>
                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
             </div>
         </div>
 
         <div class="row justify-content-center mt-2">
             <div class="col-sm-5">
-                <label for="instituicao">{{ __('Instituição') }}</label>
+                <label for="instituicao">{{ __('Instituição') }}<strong style="color: red">*</strong></label>
                 <select class="form-control" id="instituicao" name="instituicao" onchange="unidades('')">
                     <option selected disabled style="font-weight: bolder">
                         Selecione uma Instituição
@@ -80,7 +80,7 @@
                 @enderror
             </div>
             <div class="col-sm-5">
-                <label for="unidade">{{ __('Unidade') }}</label>
+                <label for="unidade">{{ __('Unidade') }}<strong style="color: red">*</strong></label>
                 <select class="form-control" id="unidade" name="unidade">
                     <option selected disabled>
                         Selecione uma Unidade

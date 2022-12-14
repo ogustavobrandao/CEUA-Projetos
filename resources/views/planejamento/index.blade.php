@@ -14,7 +14,7 @@
             <div class="card shadow-lg p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_4">
                 <div class="row">
                     <div class="col-md-12">
-                        <h2 class="titulo" id="titulo_4">Dados Base
+                        <h2 class="titulo" id="titulo_4">Dados Base do Modelo Animal
                             <a class="float-end" id="4_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
                             <a class="float-end" id="4_btn_down" style="display: none"><i class="fa-solid fa-circle-chevron-down"></i></a>
                         </h2>
@@ -50,7 +50,7 @@
             <div class="card shadow-lg p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_5">
                 <div class="row">
                     <div class="col-md-12">
-                        <h2 class="titulo" id="titulo_5">Dados Base
+                        <h2 class="titulo" id="titulo_5">Dados Base do Planejamento
                             <a class="float-end" id="5_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
                             <a class="float-end" id="5_btn_down" style="display: none"><i class="fa-solid fa-circle-chevron-down"></i></a>
                         </h2>
@@ -79,8 +79,8 @@
                 <div class="row">
                     <div class="col-md-12">
                         <h2 class="titulo" id="titulo_6">Condição Animal
-                            <a class="float-end" id="6_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
-                            <a class="float-end" id="6_btn_down" style="display: none"><i class="fa-solid fa-circle-chevron-down"></i></a>
+                            <a class="float-end" id="6_btn_up"><i class="fa-solid fa-circle-chevron-down"></i></a>
+                            <a class="float-end" id="6_btn_down" style="display: none"><i class="fa-solid fa-circle-chevron-up"></i></a>
                         </h2>
                     </div>
                 </div>
@@ -101,8 +101,8 @@
                 <div class="row">
                     <div class="col-md-12">
                         <h2 class="titulo" id="titulo_7">Procedimento
-                            <a class="float-end" id="7_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
-                            <a class="float-end" id="7_btn_down" style="display: none"><i class="fa-solid fa-circle-chevron-down"></i></a>
+                            <a class="float-end" id="7_btn_up"><i class="fa-solid fa-circle-chevron-down"></i></a>
+                            <a class="float-end" id="7_btn_down" style="display: none"><i class="fa-solid fa-circle-chevron-up"></i></a>
                         </h2>
                     </div>
                 </div>
@@ -123,8 +123,8 @@
                 <div class="row">
                     <div class="col-md-12">
                         <h2 class="titulo" id="titulo_8">Operação
-                                <a class="float-end" id="8_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
-                                <a class="float-end" id="8_btn_down" style="display: none"><i class="fa-solid fa-circle-chevron-down"></i></a>
+                                <a class="float-end" id="8_btn_up"><i class="fa-solid fa-circle-chevron-down"></i></a>
+                                <a class="float-end" id="8_btn_down" style="display: none"><i class="fa-solid fa-circle-chevron-up"></i></a>
                         </h2>
                     </div>
                 </div>
@@ -146,8 +146,8 @@
                 <div class="row">
                     <div class="col-md-12">
                         <h2 class="titulo" id="titulo_9">Eutanásia
-                            <a class="float-end" id="9_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
-                            <a class="float-end" id="9_btn_down" style="display: none"><i class="fa-solid fa-circle-chevron-down"></i></a>
+                            <a class="float-end" id="9_btn_up"><i class="fa-solid fa-circle-chevron-down"></i></a>
+                            <a class="float-end" id="9_btn_down" style="display: none"><i class="fa-solid fa-circle-chevron-up"></i></a>
                         </h2>
                     </div>
                 </div>
@@ -169,8 +169,8 @@
                 <div class="row">
                     <div class="col-md-12">
                         <h2 class="titulo" id="titulo_10">Resultado
-                            <a class="float-end" id="10_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
-                            <a class="float-end" id="10_btn_down" style="display: none"><i class="fa-solid fa-circle-chevron-down"></i></a>
+                            <a class="float-end" id="10_btn_up"><i class="fa-solid fa-circle-chevron-down"></i></a>
+                            <a class="float-end" id="10_btn_down" style="display: none"><i class="fa-solid fa-circle-chevron-up"></i></a>
                         </h2>
                     </div>
                 </div>
@@ -191,7 +191,7 @@
 
     <div class="row col-md-10 m-0">
         <div class="col-4 pl-0">
-            <a type="button" class="btn btn-secondary w-100" href="{{route('avaliador.solicitacao.avaliar', ['solicitacao_id' => $solicitacao->id])}}">Voltar</a>
+            <a type="button" class="btn btn-secondary w-100" href="{{route('solicitacao.index', ['solicitacao_id' => $solicitacao->id])}}">Voltar</a>
         </div>
     </div>
 
@@ -229,6 +229,9 @@
     <script type="text/javascript">
 
         $(document).ready(function () {
+            @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2)
+            $('#dados_modelo').find('input, textarea, select, button').attr('disabled', 'disabled');
+            @endif
 
             // Modelo Animal
             @if(isset($avaliacaoModeloAnimal) != null )
@@ -375,7 +378,7 @@
                     ret += "<input type=\"hidden\" name=\"tipo\" value=\"" + tipo + "\">";
                     ret += "<input type=\"hidden\" name=\"id\" value=\"" + id + "\">";
 
-                    ret += "<label for=\"parecer\" > Parecer: </label>";
+                    ret += "<label for=\"parecer\" > Parecer:<strong style=\"color: red\">*</strong></label>";
                     if(data[0] != null){
                         ret += "<textarea class=\"form-control\" name=\"parecer\" style=\"height: 200px\" id=\"parecerAval\" autofocus required>"+ data[0]['parecer'] +"</textarea>"
                         exist = data[0]['id'];

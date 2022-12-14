@@ -117,7 +117,8 @@ class SolicitacaoController extends Controller
         $solicitacao->inicio = $request->inicio;
         $solicitacao->fim = $request->fim;
         $solicitacao->area_conhecimento = $request->area_conhecimento;
-
+        if (isset($request->outra_area_conhecimento))
+            $solicitacao->outra_area_conhecimento = $request->outra_area_conhecimento;
         $solicitacao->update();
 
         return redirect(route('solicitacao.index', ['solicitacao_id' => $request->solicitacao_id]));
@@ -507,7 +508,6 @@ class SolicitacaoController extends Controller
         $planejamento->analise_estatistica = $request->analise_estatistica;
         $planejamento->outras_infos = $request->outras_infos;
         $planejamento->grau_invasividade = $request->grau_invasividade;
-        $planejamento->grau_select = $request->grau_select;
 
         if (isset($modelo_animal->planejamento)) {
             $planejamento->update();
@@ -573,33 +573,36 @@ class SolicitacaoController extends Controller
 
         $planejamento = Planejamento::find($request->planejamento_id);
 
-        if ($request->cirurgia == "true") {
 
-            if (isset($planejamento->operacao)) {
-                $operacao = $planejamento->operacao;
-            } else {
-                $operacao = new Operacao();
-                $operacao->planejamento_id = $planejamento->id;
-            }
+        if (isset($planejamento->operacao)) {
+            $operacao = $planejamento->operacao;
+        } else {
+            $operacao = new Operacao();
+            $operacao->planejamento_id = $planejamento->id;
+        }
 
+        if ($request->cirurgia != "true") {
+            $operacao->observacao_recuperacao = null;
+            $operacao->outros_cuidados_recuperacao = null;
+            $operacao->analgesia_recuperacao = null;
+        } else {
             $operacao->observacao_recuperacao = $request->observacao_recuperacao;
             $operacao->outros_cuidados_recuperacao = $request->outros_cuidados_recuperacao;
             $operacao->analgesia_recuperacao = $request->analgesia_recuperacao;
-
-            if (isset($planejamento->operacao)) {
-                $operacao->update();
-            } else {
-                $operacao->save();
-            }
-
-        } elseif (isset($planejamento->operacao)) {
-            $planejamento->operacao->delete();
         }
+
+        if (isset($planejamento->operacao)) {
+            $operacao->update();
+        } else {
+            $operacao->save();
+        }
+
 
         return redirect(route('solicitacao.planejamento.index', ['modelo_animal_id' => $planejamento->modelo_animal->id]));
     }
 
-    public function criar_eutanasia(Request $request)
+    public
+    function criar_eutanasia(Request $request)
     {
         Validator::make($request->all(), Eutanasia::$rules, Eutanasia::$messages)->validate();
 
@@ -634,7 +637,8 @@ class SolicitacaoController extends Controller
         return redirect(route('solicitacao.planejamento.index', ['modelo_animal_id' => $planejamento->modelo_animal->id]));
     }
 
-    public function criar_resultado(Request $request)
+    public
+    function criar_resultado(Request $request)
     {
         Validator::make($request->all(), Resultado::$rules, Resultado::$messages)->validate();
 
@@ -659,14 +663,16 @@ class SolicitacaoController extends Controller
         return redirect(route('solicitacao.planejamento.index', ['modelo_animal_id' => $planejamento->modelo_animal->id]));
     }
 
-    public function index_admin()
+    public
+    function index_admin()
     {
         $solicitacoes = Solicitacao::where('status', '!=', 'avaliado')->get();
         $avaliadores = User::where('tipo_usuario_id', '2')->get();
         return view('admin.solicitacoes', compact('solicitacoes', 'avaliadores'));
     }
 
-    public function concluir($solicitacao_id)
+    public
+    function concluir($solicitacao_id)
     {
         $solicitacao = Solicitacao::where('id', $solicitacao_id)->where('user_id', Auth::user()->id)->first();
         if ($solicitacao == null) {
@@ -674,6 +680,6 @@ class SolicitacaoController extends Controller
         }
         $solicitacao->status = 'nao_avaliado';
         $solicitacao->update();
-        return redirect()->back()->with(['mensagem' => 'Solicitação concluída com sucesso!']);
+        return redirect()->back()->with(['success' => 'Solicitação concluída com sucesso!']);
     }
 }

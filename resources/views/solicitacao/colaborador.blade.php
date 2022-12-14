@@ -34,7 +34,7 @@
             '<div id="colaboradorDados"> <div class="row"> <h3 class="subtitulo">Informações Pessoais/Contato</h3>' +
             '<div class="col-sm-4">' +
             '<input type="hidden" id="colab_id" name="colaborador[' + cont + '][colab_id]" value="">' +
-            '<label for="nome">Nome Completo:</label>' +
+            '<label for="nome">Nome Completo:<strong style="color: red">*</strong></label>' +
             '<input class="form-control @error('nome') is-invalid @enderror" id="nome" type="text" name="colaborador[' + cont + '][nome]" value="{{ old('nome') }}" required autocomplete="nome" autofocus>' +
             '@error('nome')' +
             '<span class="invalid-feedback" role="alert">' +
@@ -43,7 +43,7 @@
             '@enderror' +
             '</div>' +
             '<div class="col-sm-4">' +
-            '<label for="nome">E-mail:</label>' +
+            '<label for="nome">E-mail:<strong style="color: red">*</strong></label>' +
             '<input class="form-control @error('email') is-invalid @enderror" id="email" type="email" name="colaborador[' + cont + '][email]" value="{{ old('email') }}" required autocomplete="email" autofocus>' +
             '@error('email')' +
             '<span class="invalid-feedback" role="alert">' +
@@ -52,7 +52,7 @@
             '@enderror' +
             '</div>' +
             '<div class="col-sm-4">' +
-            '<label for="telefone">Telefone:</label>' +
+            '<label for="telefone">Telefone:<strong style="color: red">*</strong></label>' +
             '<input class="form-control @error('telefone') is-invalid @enderror" id="telefone" type="text" name="colaborador[' + cont + '][telefone]" value="{{ old('telefone') }}" required autocomplete="telefone" autofocus>' +
             '@error('telefone')' +
             '<span class="invalid-feedback" role="alert">' +
@@ -64,7 +64,7 @@
             '<h3 class="subtitulo">Informações Institucionais</h3>' +
             '<div class="row">' +
             '<div class="col-sm-6">' +
-            '<label for="instituicao">Instituicão:</label>' +
+            '<label for="instituicao">Instituicão:<strong style="color: red">*</strong></label>' +
             '<select class="form-control" id="instituicao" name="colaborador[' + cont + '][instituicao_id]" onchange="unidades()">' +
             '<option disabled selected>Selecione uma Instituição</option>' +
             '@foreach($instituicaos as $instituicao)' +
@@ -73,7 +73,7 @@
             '</select>' +
             '</div>' +
             '<div class="col-sm-6">' +
-            '<label for="nivel_academico">Nível Acadêmico:</label>' +
+            '<label for="nivel_academico">Nível Acadêmico:<strong style="color: red">*</strong></label>' +
             '<input class="form-control @error('nivel_academico') is-invalid @enderror" id="nivel_academico" type="text" name="colaborador[' + cont + '][nivel_academico]" value="{{ old('nivel_academico') }}" required autocomplete="nivel_academico" autofocus>' +
             '@error('nivel_academico') ' +
             '<span class="invalid-feedback" role="alert">' +
@@ -82,7 +82,7 @@
             '@enderror' +
             '</div>' +
             '<div class="col-sm-6 mt-2">' +
-                '<label for="grau_escolaridade">Grau de Escolaridade:</label>' +
+                '<label for="grau_escolaridade">Grau de Escolaridade:<strong style="color: red">*</strong></label>' +
                 '<select class="form-control" id="grau_escolaridade" name="colaborador[' + cont + '][grau_escolaridade]">' +
                     '<option disabled selected>Selecione um Grau de Escolaridade</option>' +
                     '<option @if(old('grau_escolaridade') == "graduacao_completa") selected @endif value="graduacao_completa">Graduação Completa</option>' +
@@ -99,7 +99,7 @@
             '<div class="row">' +
             '<h3 class="subtitulo">Informações Complementares</h3>' +
             '<div class="col-sm-6">' +
-            '<label for="experiencia_previa">Experiência Previa(anos):</label>' +
+            '<label for="experiencia_previa">Experiência Previa(anos):<strong style="color: red">*</strong></label>' +
             '<input class="form-control @error('experiencia_previa') is-invalid @enderror" id="experiencia_previa" type="text" name="colaborador[' + cont + '][experiencia_previa]" value="{{ old('experiencia_previa') }}" required autocomplete="experiencia_previa" autofocus>' +
             '@error('experiencia_previa')' +
             '<span class="invalid-feedback" role="alert">' +
@@ -108,7 +108,7 @@
             '@enderror' +
             '</div>' +
             '<div class="col-sm-6">' +
-            '<label for="treinamento">Treinamento(especificar):</label>' +
+            '<label for="treinamento">Treinamento(especificar):<strong style="color: red">*</strong></label>' +
             '<input class="form-control @error('treinamento') is-invalid @enderror" id="treinamento" type="text" name="colaborador[' + cont + '][treinamento]" value="{{ old('treinamento') }}" required autocomplete="treinamento" autofocus>' +
             '@error('treinamento')' +
             '<span class="invalid-feedback" role="alert">' +
