@@ -50,7 +50,7 @@
                 </div>
 
                 <div class="col-sm-4 mt-2">
-                    <label for="analgesia_recuperacao">Uso de analgesia:<strong style="color: red">*</strong></label>
+                    <label for="analgesia_recuperacao">Uso de Analgesia:<strong style="color: red">*</strong></label>
                     <div class="row ml-1">
                         <div class="col-sm-2">
                             <input class="form-check-input" type="radio" name="analgesia_recuperacao"
@@ -69,7 +69,7 @@
                     </div>
                 </div>
                 <div class="col-sm-4 mt-2">
-                    <label for="outros_cuidados_recuperacao">Outros cuidados pós-operatórios:<strong style="color: red">*</strong></label>
+                    <label for="outros_cuidados_recuperacao">Outros Cuidados Pós-Operatórios:<strong style="color: red">*</strong></label>
                     <div class="row ml-1">
                         <div class="col-sm-2">
                             <input class="form-check-input" type="radio" name="outros_cuidados_recuperacao"

@@ -35,7 +35,7 @@
                 </div>
 
                 <div class="col-sm-12 mt-2">
-                    <label for="metodo">Substância, dose, via:<strong style="color: red">*</strong></label>
+                    <label for="metodo">Substância, Dose, Via:<strong style="color: red">*</strong></label>
                     <textarea class="form-control @error('metodo') is-invalid @enderror" name="metodo" id="metodo"
                               autocomplete="metodo" autofocus required>@if(!empty($eutanasia) && $eutanasia->metodo != null){{$eutanasia->metodo}}@else{{old('metodo')}}@endif</textarea>
                     @error('metodo')
@@ -46,7 +46,7 @@
                 </div>
 
                 <div class="col-sm-12 mt-2">
-                    <label for="justificativa_metodo">Caso método restrito, justifique:<strong style="color: red">*</strong></label>
+                    <label for="justificativa_metodo">Caso Método Restrito, Justifique:<strong style="color: red">*</strong></label>
                     <textarea class="form-control @error('justificativa_metodo') is-invalid @enderror"
                               name="justificativa_metodo" id="justificativa_metodo" autocomplete="justificativa_metodo"
                               autofocus
@@ -59,10 +59,10 @@
                 </div>
             </div>
 
-            <h3 class="subtitulo">Outras informações</h3>
+            <h3 class="subtitulo">Outras Informações</h3>
 
             <div class="col-sm-12 mt-2">
-                <label for="destino">Destino dos animais mortos e/ou tecidos/fragmentos:<strong style="color: red">*</strong></label>
+                <label for="destino">Destino dos Animais Mortos e / ou Tecidos / Fragmentos:<strong style="color: red">*</strong></label>
                 <textarea class="form-control @error('destino') is-invalid @enderror" name="destino" id="destino"
                           autocomplete="destino" autofocus required>@if(!empty($eutanasia) && $eutanasia->destino != null){{$eutanasia->destino}}@else{{old('destino')}}@endif</textarea>
                 @error('destino')
@@ -73,7 +73,7 @@
             </div>
 
             <div class="col-sm-12 mt-2">
-                <label for="descarte">Forma de descarte da carcaça:<strong style="color: red">*</strong></label>
+                <label for="descarte">Forma de Descarte da Carcaça:<strong style="color: red">*</strong></label>
                 <textarea class="form-control @error('descarte') is-invalid @enderror" name="descarte" id="descarte"
                           autocomplete="descarte" autofocus required>@if(!empty($eutanasia) && $eutanasia->descarte != null){{$eutanasia->descarte}}@else{{old('descarte')}}@endif</textarea>
                 @error('descarte')

@@ -5,7 +5,7 @@
         <div class="card shadow-lg p-3 bg-white col-8" style="border-radius: 10px">
             <div class="row mb-4 mt-2 borda-bottom">
                 <div class="col-md-12">
-                    <h3 class="text-center">Editar Senha<strong style="color: red">*</strong></h3>
+                    <h3 class="text-center">Editar Senha</h3>
                 </div>
             </div>
 
@@ -28,7 +28,7 @@
                 </div>
                 <div class="row justify-content-center mt-2">
                     <div class="col-sm-5">
-                        <label for="password-confirm">{{ __('Confirmar Senha') }}</label>
+                        <label for="password-confirm">Confirmar Senha:<strong style="color: red">*</strong></label>
                         <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
                     </div>
                 </div>

@@ -2,7 +2,7 @@
 <div class="row">
     <h3 class="subtitulo">Informações do Animal/Uso</h3>
     <div class="col-sm-6">
-        <label for="nome_cientifico">Nome ciêntifico:</label>
+        <label for="nome_cientifico">Nome Científico:</label>
         <input class="form-control @if($errors->modelo->has('nome_cientifico')) is-invalid @endif" id="nome_cientifico"
                type="text"
                name="nome_cientifico" @if(isset($modelo_animal)) value="{{$modelo_animal->nome_cientifico}}"
@@ -16,7 +16,7 @@
     </div>
 
     <div class="col-sm-6">
-        <label for="nome_vulgar">Nome vulgar:</label>
+        <label for="nome_vulgar">Nome Vulgar:</label>
         <input class="form-control @if($errors->modelo->has('nome_vulgar')) is-invalid @endif" id="nome_vulgar"
                type="text"
                name="nome_vulgar" @if(isset($modelo_animal)) value="{{$modelo_animal->nome_vulgar}}"
@@ -31,7 +31,7 @@
     </div>
 
     <div class="col-sm-12 mt-2">
-        <label for="justificativa">Justificar o uso dos procedimentos e da espécie animal:</label>
+        <label for="justificativa">Justificar o uso dos Procedimentos e da Espécie Animal:</label>
         <textarea class="form-control @if($errors->modelo->has('justificativa')) is-invalid @endif" id="justificativa"
                   name="justificativa" required autocomplete="justificativa"
                   autofocus>@if(isset($modelo_animal))
@@ -94,7 +94,7 @@
         </div>
 
         <div class="col-sm-6">
-            <label for="experiencia">O animal é geneticamente modificado?</label>
+            <label for="experiencia">O Animal é Geneticamente Modificado?</label>
             <div class="row ml-1">
                 <div class="col-sm-2">
                     <input class="form-check-input" type="radio" name="geneticamente_modificado"
@@ -176,7 +176,7 @@
         </div>
 
         <div class="col-sm-6">
-            <label for="linhagem">Linhagem/Raça:</label>
+            <label for="linhagem">Linhagem / Raça:</label>
             <input class="form-control @if($errors->modelo->has('linhagem')) is-invalid @endif" id="linhagem" type="text"
                    name="linhagem" @if(isset($modelo_animal->perfil)) value="{{$modelo_animal->perfil->linhagem}}" @else
                        value="{{old('linhagem')}}" @endif required autocomplete="linhagem"
@@ -239,7 +239,7 @@
     <div class="row mt-2">
 
         <div class="col-sm-4">
-            <label for="machos">Quantidade de machos:</label>
+            <label for="machos">Quantidade de Machos:</label>
             <input class="form-control @if($errors->modelo->has('machos')) is-invalid @endif" id="machos" type="number" name="machos"
                    @if(isset($modelo_animal->perfil)) value="{{$modelo_animal->perfil->machos}}"
                    @else value="{{old('machos')}}" @endif required autocomplete="machos"
@@ -252,7 +252,7 @@
         </div>
 
         <div class="col-sm-4">
-            <label for="femeas">Quantidade de fêmeas:</label>
+            <label for="femeas">Quantidade de Fêmeas:</label>
             <input class="form-control @if($errors->modelo->has('femeas')) is-invalid @endif" id="femeas" type="number" name="femeas"
                    @if(isset($modelo_animal->perfil)) value="{{$modelo_animal->perfil->femeas}}"
                    @else value="{{old('femeas')}}" @endif required autocomplete="femeas"
@@ -265,7 +265,7 @@
         </div>
 
         <div class="col-sm-4">
-            <label for="quantidade">Quantidade:</label>
+            <label for="quantidade">Quantidade Total:</label>
             <input class="form-control @if($errors->modelo->has('quantidade')) is-invalid @endif" id="quantidade" type="number"
                    name="quantidade"
                    @if(isset($modelo_animal->perfil)) value="{{$modelo_animal->perfil->quantidade}}"

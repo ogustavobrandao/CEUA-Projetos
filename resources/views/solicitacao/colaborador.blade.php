@@ -31,7 +31,7 @@
             '</div>' +
             '</div>' +
             '<div id="colaboradorDados' + cont + '">' +
-            '<div id="colaboradorDados"> <div class="row"> <h3 class="subtitulo">Informações Pessoais/Contato</h3>' +
+            '<div id="colaboradorDados"> <div class="row"> <h3 class="subtitulo">Informações Pessoais / Contato</h3>' +
             '<div class="col-sm-4">' +
             '<input type="hidden" id="colab_id" name="colaborador[' + cont + '][colab_id]" value="">' +
             '<label for="nome">Nome Completo:<strong style="color: red">*</strong></label>' +
@@ -99,7 +99,7 @@
             '<div class="row">' +
             '<h3 class="subtitulo">Informações Complementares</h3>' +
             '<div class="col-sm-6">' +
-            '<label for="experiencia_previa">Experiência Previa(anos):<strong style="color: red">*</strong></label>' +
+            '<label for="experiencia_previa">Experiência Previa (anos):<strong style="color: red">*</strong></label>' +
             '<input class="form-control @error('experiencia_previa') is-invalid @enderror" id="experiencia_previa" type="text" name="colaborador[' + cont + '][experiencia_previa]" value="{{ old('experiencia_previa') }}" required autocomplete="experiencia_previa" autofocus>' +
             '@error('experiencia_previa')' +
             '<span class="invalid-feedback" role="alert">' +
@@ -108,7 +108,7 @@
             '@enderror' +
             '</div>' +
             '<div class="col-sm-6">' +
-            '<label for="treinamento">Treinamento(especificar):<strong style="color: red">*</strong></label>' +
+            '<label for="treinamento">Treinamento (especificar):<strong style="color: red">*</strong></label>' +
             '<input class="form-control @error('treinamento') is-invalid @enderror" id="treinamento" type="text" name="colaborador[' + cont + '][treinamento]" value="{{ old('treinamento') }}" required autocomplete="treinamento" autofocus>' +
             '@error('treinamento')' +
             '<span class="invalid-feedback" role="alert">' +
