@@ -11,7 +11,7 @@
         <thead>
         <tr>
             <th class="text-center" scope="col">Solicitante</th>
-            <th class="text-center" scope="col">Titulo</th>
+            <th class="text-center" scope="col">Título</th>
             <th class="text-center" scope="col">Tipo</th>
             <th class="text-center" scope="col">Status</th>
             <th class="w-25 text-center" scope="col">Ações</th>

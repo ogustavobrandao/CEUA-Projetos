@@ -40,7 +40,7 @@
 
         <div class="row mt-2">
             <div class="col-sm-6">
-                <label for="ambiente_alojamento">Ambiente de alojamento:<strong style="color: red">*</strong></label>
+                <label for="ambiente_alojamento">Ambiente de Alojamento:<strong style="color: red">*</strong></label>
                 <select class="form-control @error('ambiente_alojamento') is-invalid @enderror" id="ambiente_alojamento" name="ambiente_alojamento">
                     <option disabled selected>Selecione o Ambiente de Alojamento</option>
                     <option @if(!empty($condicoes_animal) && $condicoes_animal->ambiente_alojamento == "baia") selected @endif value="baia" >Baia</option>
@@ -58,7 +58,7 @@
             </div>
 
             <div class="col-sm-6">
-                <label for="tipo_cama">Tipo de cama:<strong style="color: red">*</strong></label>
+                <label for="tipo_cama">Tipo de Cama:<strong style="color: red">*</strong></label>
                 <select class="form-control @error('tipo_cama') is-invalid @enderror" id="tipo_cama" name="tipo_cama">
                     <option disabled selected>Selecione o Tipo de Cama</option>
                     <option @if(!empty($condicoes_animal) && $condicoes_animal->tipo_cama == "estrado") selected @endif value="estrado">Estrado</option>
@@ -76,7 +76,7 @@
 
         <div class="row mt-2">
             <div class="col-sm-4">
-                <label for="num_animais_ambiente">Número de animais por ambiente de contenção:<strong style="color: red">*</strong></label>
+                <label for="num_animais_ambiente">Número de Animais por Ambiente de Contenção:<strong style="color: red">*</strong></label>
                 <input class="form-control @error('num_animais_ambiente') is-invalid @enderror" id="num_animais_ambiente" type="number" name="num_animais_ambiente"
                        @if(!empty($condicoes_animal) && $condicoes_animal->num_animais_ambiente != null) value="{{$condicoes_animal->num_animais_ambiente}}" @else value="{{old('num_animais_ambiente')}}" @endif required
                        autocomplete="num_animais_ambiente" autofocus>
@@ -87,7 +87,7 @@
                 @enderror
             </div>
             <div class="col-sm-4">
-                <label for="dimensoes_ambiente">Dimensões do ambiente de contenção dos animais:<strong style="color: red">*</strong></label>
+                <label for="dimensoes_ambiente">Dimensões do Ambiente de Contenção dos Animais:<strong style="color: red">*</strong></label>
                 <input class="form-control @error('dimensoes_ambiente') is-invalid @enderror" id="dimensoes_ambiente" type="text" name="dimensoes_ambiente"
                        @if(!empty($condicoes_animal) && $condicoes_animal->dimensoes_ambiente != null) value="{{$condicoes_animal->dimensoes_ambiente}}" @else value="{{old('dimensoes_ambiente')}}" @endif
                        required
@@ -99,7 +99,7 @@
                 @enderror
             </div>
             <div class="col-sm-4">
-                <label for="periodo">Período total de manutenção dos animais no experimento:<strong style="color: red">*</strong></label>
+                <label for="periodo">Período Total de Manutenção dos Animais no Experimento:<strong style="color: red">*</strong></label>
                 <input class="form-control @error('periodo') is-invalid @enderror" id="periodo" type="text" name="periodo"
                        @if(!empty($condicoes_animal) && $condicoes_animal->periodo != null) value="{{$condicoes_animal->periodo}}" @else value="{{old('periodo')}}" @endif
                        required
@@ -114,7 +114,7 @@
 
         <div class="row mt-2">
             <div class="col-6">
-                <label for="profissional_responsavel">Profissional responsável:<strong style="color: red">*</strong></label>
+                <label for="profissional_responsavel">Profissional Responsável:<strong style="color: red">*</strong></label>
                 <input class="form-control @error('profissional_responsavel') is-invalid @enderror" id="profissional_responsavel" type="text" name="profissional_responsavel"
                        @if(!empty($condicoes_animal) && $condicoes_animal->profissional_responsavel != null) value="{{$condicoes_animal->profissional_responsavel}}" @else value="{{old('profissional_responsavel')}}" @endif required
                        autocomplete="profissional_responsavel" autofocus>
@@ -126,7 +126,7 @@
             </div>
 
             <div class="col-6">
-                <label for="email_responsavel">Email do responsável:<strong style="color: red">*</strong></label>
+                <label for="email_responsavel">E-Mail do Responsável:<strong style="color: red">*</strong></label>
                 <input class="form-control @error('email_responsavel') is-invalid @enderror" id="email_responsavel" type="email" name="email_responsavel"
                        @if(!empty($condicoes_animal) && $condicoes_animal->email_responsavel != null) value="{{$condicoes_animal->email_responsavel}}" @else value="{{old('email_responsavel')}}" @endif
                        required

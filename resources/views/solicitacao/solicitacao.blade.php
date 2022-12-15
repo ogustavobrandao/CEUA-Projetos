@@ -14,7 +14,7 @@
             </div>
 
             <div class="col-sm-4">
-                <label for="inicio">Inicio:<strong style="color: red">*</strong></label>
+                <label for="inicio">Início:<strong style="color: red">*</strong></label>
                 <input class="form-control @error('inicio') is-invalid @enderror" id="inicio" type="datetime-local"
                        name="inicio"
                        @if(!empty($solicitacao) && $solicitacao->inicio != null) value="{{$solicitacao->inicio}}"
@@ -46,7 +46,7 @@
 
         <div class="row mt-2">
             <div class="col-12">
-                <h3 class="subtitulo">Titulo do Projeto/Aula Prática/Treinamento</h3>
+                <h3 class="subtitulo">Titulo do Projeto / Aula Prática / Treinamento</h3>
             </div>
         </div>
         <div class="row">
@@ -65,12 +65,10 @@
             </div>
 
             <div class="col-sm-4">
-                <label for="titulo_en">Titulo em Inglês (Apenas para projeto):<strong
-                        style="color: red">*</strong></label>
+                <label for="titulo_en">Titulo em Inglês (apenas para projeto):</label>
                 <input class="form-control @error('titulo_en') is-invalid @enderror" id="titulo_en" type="text"
                        name="titulo_en"
                        value="@if(!empty($solicitacao) && $solicitacao->titulo_en != null) {{$solicitacao->titulo_en}} @else {{ old('titulo_en') }} @endif"
-                       required
                        autocomplete="titulo_en" autofocus>
                 @error('titulo_en')
                 <span class="invalid-feedback" role="alert">
@@ -80,7 +78,7 @@
             </div>
 
             <div class="col-sm-4">
-                <label for="area_conhecimento">Área de conhecimento:<strong style="color: red">*</strong></label>
+                <label for="area_conhecimento">Área de Conhecimento:<strong style="color: red">*</strong></label>
                 <select class="form-control @error('area_conhecimento') is-invalid @enderror" id="area_conhecimento"
                         name="area_conhecimento">
                     <option disabled selected>Selecione a Área de Conhecimento</option>
@@ -117,7 +115,7 @@
                     </option>
                     <option value="linguistica_letras_artes"
                             @if(!empty($solicitacao) && $solicitacao->area_conhecimento == 'linguistica_letras_artes') selected @endif>
-                        Linguística,Letras e Artes
+                        Linguística, Letras e Artes
                     </option>
                     <option value="outras"
                             @if(!empty($solicitacao) && $solicitacao->area_conhecimento == 'outras') selected @endif>
@@ -135,7 +133,7 @@
 
         <div id="outra_area_conhecimento_div" class="row mt-2" style="display: none">
             <div class="col-4">
-                <label for="outra_area_conhecimento">Outra área de conhecimento:<strong
+                <label for="outra_area_conhecimento">Outra Área de Conhecimento:<strong
                         style="color: red">*</strong></label>
                 <input class="form-control" id="outra_area_conhecimento" type="text" name="outra_area_conhecimento"
                        value="@if(!empty($solicitacao) && $solicitacao->outra_area_conhecimento != null) {{$solicitacao->outra_area_conhecimento}} @else {{ old('outra_area_conhecimento') }} @endif"

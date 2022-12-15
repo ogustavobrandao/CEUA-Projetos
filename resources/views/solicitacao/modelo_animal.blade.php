@@ -2,7 +2,7 @@
 <div class="row">
     <h3 class="subtitulo">Informações do Animal/Uso</h3>
     <div class="col-sm-6">
-        <label for="nome_cientifico">Nome ciêntifico:<strong style="color: red">*</strong></label>
+        <label for="nome_cientifico">Nome Científico:<strong style="color: red">*</strong></label>
         <input class="form-control @error('nome_cientifico') is-invalid @enderror" id="nome_cientifico" type="text"
                name="nome_cientifico" @if(isset($modelo_animal)) value="{{$modelo_animal->nome_cientifico}}"
                @else value="{{old('nome_cientifico')}}" @endif required
@@ -15,7 +15,7 @@
     </div>
 
     <div class="col-sm-6">
-        <label for="nome_vulgar">Nome vulgar:<strong style="color: red">*</strong></label>
+        <label for="nome_vulgar">Nome Vulgar:<strong style="color: red">*</strong></label>
         <input class="form-control @error('nome_vulgar') is-invalid @enderror" id="nome_vulgar" type="text"
                name="nome_vulgar" @if(isset($modelo_animal)) value="{{$modelo_animal->nome_vulgar}}"
                @else value="{{old('nome_vulgar')}}" @endif required
@@ -29,7 +29,7 @@
     </div>
 
     <div class="col-sm-12 mt-2">
-        <label for="justificativa">Justificar o uso dos procedimentos e da espécie animal:<strong style="color: red">*</strong></label>
+        <label for="justificativa">Justificar o uso dos Procedimentos e da Espécie Animal:<strong style="color: red">*</strong></label>
         <textarea class="form-control @error('justificativa') is-invalid @enderror" id="justificativa"
                   name="justificativa" required autocomplete="justificativa"
                   autofocus>@if(isset($modelo_animal))
@@ -91,7 +91,7 @@
         </div>
 
         <div class="col-sm-6">
-            <label for="experiencia">O animal é geneticamente modificado?<strong style="color: red">*</strong></label>
+            <label for="experiencia">O Animal é Geneticamente Modificado?<strong style="color: red">*</strong></label>
             <div class="row ml-1">
                 <div class="col-sm-2">
                     <input class="form-check-input" type="radio" name="geneticamente_modificado"
@@ -173,7 +173,7 @@
         </div>
 
         <div class="col-sm-6">
-            <label for="linhagem">Linhagem/Raça:<strong style="color: red">*</strong></label>
+            <label for="linhagem">Linhagem / Raça:<strong style="color: red">*</strong></label>
             <input class="form-control @error('linhagem') is-invalid @enderror" id="linhagem" type="text"
                    name="linhagem" @if(isset($modelo_animal->perfil)) value="{{$modelo_animal->perfil->linhagem}}" @else
                        value="{{old('linhagem')}}" @endif required autocomplete="linhagem"
@@ -262,7 +262,7 @@
         </div>
 
         <div class="col-sm-4">
-            <label for="quantidade">Quantidade:<strong style="color: red">*</strong></label>
+            <label for="quantidade">Quantidade Total:<strong style="color: red">*</strong></label>
             <input class="form-control @error('quantidade') is-invalid @enderror" id="quantidade" type="number"
                    name="quantidade"
                    @if(isset($modelo_animal->perfil)) value="{{$modelo_animal->perfil->quantidade}}"

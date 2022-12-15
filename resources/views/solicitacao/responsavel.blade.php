@@ -4,7 +4,7 @@
         @csrf
         <input type="hidden" name="solicitacao_id" value="{{$solicitacao->id}}">
         <div class="row">
-            <h3 class="subtitulo">Informações Pessoais/Contato</h3>
+            <h3 class="subtitulo">Informações Pessoais / Contato</h3>
             <div class="col-sm-4">
                 <label for="nome">Nome Completo:<strong style="color: red">*</strong></label>
                 <input class="form-control @error('nome') is-invalid @enderror" id="nome" type="text" name="nome"
@@ -48,7 +48,7 @@
             <h3 class="subtitulo">Informações Institucionais</h3>
             <div class="row">
                 <div class="col-sm-4">
-                    <label for="instituicao">Instituicão:<strong style="color: red">*</strong></label>
+                    <label for="instituicao">Instituição:<strong style="color: red">*</strong></label>
                     <select class="form-control" id="instituicao" name="instituicao_id" onchange="unidades('')" required>
                         <option disabled selected>Selecione uma Instituição</option>
                         @foreach($instituicaos as $instituicao)
@@ -84,7 +84,7 @@
             </div>
             <div class="row mt-2">
                 <div class="col-sm-6">
-                    <label for="vinculo_instituicao">Vinculo:<strong style="color: red">*</strong></label>
+                    <label for="vinculo_instituicao">Vínculo:<strong style="color: red">*</strong></label>
                     <select class="form-control" id="vinculo_instituicao" name="vinculo_instituicao" required>
                         <option disabled selected>Selecione um Vinculo</option>
                         <option
@@ -174,7 +174,7 @@
                 </div>
         </div>
         <div class="col-sm-4" id="anexo_experiencia" style="display: none;">
-            <label>Anexo Experiência Prévia:</label>
+            <label>Anexar Comprovante de Experiência Prévia:</label>
             <input class="form-control @error('experiencia_previa') is-invalid @enderror"
                    id="experiencia_previa"
                    type="file" name="experiencia_previa"
@@ -223,7 +223,7 @@
             </div>
 </div>
 <div class="col-sm-4" id="anexo_treinamento" style="display: none;">
-    <label>Anexo Treinamento:</label>
+    <label>Anexar Comprovante de Treinamento:</label>
     <input class="form-control @error('treinamento') is-invalid @enderror"
            id="treinamento"
            type="file" name="treinamento"
