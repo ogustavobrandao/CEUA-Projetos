@@ -9,9 +9,9 @@
                 <div class="row">
                     <div class="col-md-12">
                         <h2 class="titulo" id="titulo_0">1. Dados Iniciais
-                                <a class="float-end" id="0_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
-                                <a class="float-end" id="0_btn_down" style="display: none"><i
-                                        class="fa-solid fa-circle-chevron-down"></i></a>
+                            <a class="float-end" id="0_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
+                            <a class="float-end" id="0_btn_down" style="display: none"><i
+                                    class="fa-solid fa-circle-chevron-down"></i></a>
                         </h2>
                     </div>
                 </div>
@@ -32,9 +32,9 @@
                 <div class="row">
                     <div class="col-md-12">
                         <h2 class="titulo" id="titulo_1">2. Dados do Responsável
-                                <a class="float-end" id="1_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
-                                <a class="float-end" id="1_btn_down" style="display: none"><i
-                                        class="fa-solid fa-circle-chevron-down"></i></a>
+                            <a class="float-end" id="1_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
+                            <a class="float-end" id="1_btn_down" style="display: none"><i
+                                    class="fa-solid fa-circle-chevron-down"></i></a>
                         </h2>
 
                     </div>
@@ -59,11 +59,14 @@
                     <div class="col-md-12">
                         <h2 class="titulo" id="titulo_2">3. Dados do(s) Colaborador(es)
 
-                            @if(!isset($solicitacao->responsavel))<small style="color: red; font-weight: bold">Necessária a criação de um responsável</small>@endif
-                                <a class="float-end" id="2_btn_up"><i
-                                        class="fa-solid fa-circle-chevron-up"></i></a>
-                                <a class="float-end" id="2_btn_down" style="display: none"><i
-                                        class="fa-solid fa-circle-chevron-down"></i></a>
+                            @if(!isset($solicitacao->responsavel))
+                                <small style="color: red; font-weight: bold">Necessária a criação de um
+                                    responsável</small>
+                            @endif
+                            <a class="float-end" id="2_btn_up"><i
+                                    class="fa-solid fa-circle-chevron-up"></i></a>
+                            <a class="float-end" id="2_btn_down" style="display: none"><i
+                                    class="fa-solid fa-circle-chevron-down"></i></a>
                             @if(!isset($disabled) && isset($solicitacao->responsavel))
                                 <a class="float-end mr-2" onclick="criarColaborador()" style="color: green"
                                    title="Adicionar Colaborador">
@@ -89,9 +92,9 @@
                 <div class="row">
                     <div class="col-md-12">
                         <h2 class="titulo" id="titulo_3">4. Dados Complementares
-                                <a class="float-end" id="3_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
-                                <a class="float-end" id="3_btn_down" style="display: none"><i
-                                        class="fa-solid fa-circle-chevron-down"></i></a>
+                            <a class="float-end" id="3_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
+                            <a class="float-end" id="3_btn_down" style="display: none"><i
+                                    class="fa-solid fa-circle-chevron-down"></i></a>
                         </h2>
 
                     </div>
@@ -146,13 +149,13 @@
                         <h3 class="titulo" id="titulo_4">5. Dados dos Modelos Animais
 
                             @if(Auth::user()->tipo_usuario_id == 3  && $solicitacao->status != 'avaliado')
-                            <a class="float-end "
-                               data-toggle="modal"
-                               data-target="#modeloAnimalModal"
-                               style="color: green"
-                               title="Adicionar Modelo Animal"><i
-                                    class="fa-solid fa-circle-plus fa-2xl"></i></a></h3>
-                            @endif
+                                <a class="float-end "
+                                   data-toggle="modal"
+                                   data-target="#modeloAnimalModal"
+                                   style="color: green"
+                                   title="Adicionar Modelo Animal"><i
+                                        class="fa-solid fa-circle-plus fa-2xl"></i></a></h3>
+                        @endif
 
                     </div>
                 </div>
@@ -193,9 +196,9 @@
                                         <a class="btn btn-primary"
                                            href="{{route('solicitacao.planejamento.index', ['modelo_animal_id' => $modelo_animal->id])}}">Abrir</a>
                                         @if(Auth::user()->tipo_usuario_id == 3 && $solicitacao->status != 'avaliado')
-                                        <a class="btn btn-danger"
-                                           href="{{route('solicitacao.modelo_animal.delete', ['id' => $modelo_animal->id])}}"
-                                           onclick="return confirm('Você tem certeza que deseja apagar?')">Deletar</a>
+                                            <a class="btn btn-danger"
+                                               href="{{route('solicitacao.modelo_animal.delete', ['id' => $modelo_animal->id])}}"
+                                               onclick="return confirm('Você tem certeza que deseja apagar?')">Deletar</a>
                                         @endif
                                     @endif
                                 </td>
@@ -239,29 +242,32 @@
                             <a type="button" class="btn w-100 btn-success"
                                data-toggle="modal" data-target="#aprovarModal"
                                title="Aprovar Solicitação." id="aprovarAvaliacao">Aprovar</a>
-    
+
                             {{-- Reprovar Solicitação--}}
                             <form method="POST" action="{{route('avaliador.solicitacao.aprovarPendencia')}}">
                                 @csrf
                                 <input type="hidden" name="avaliacao_id" value="{{$avaliacao->id}}">
                                 <input type="hidden" name="solicitacao_id" value="{{$solicitacao->id}}">
-                                <button type="submit" class="btn w-100 btn-primary" title="Aprovar Solicitação Com Pendências."
-                                        id="pendenciaAvaliacao" >Aprovar com pendências
+                                <button type="submit" class="btn w-100 btn-primary"
+                                        title="Aprovar Solicitação Com Pendências."
+                                        id="pendenciaAvaliacao">Aprovar com pendências
                                 </button>
                             </form>
                         @endif
-                        
+
                         @if(($solicitacao->status == null  ||
                             ($solicitacao->status == 'avaliado' && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia'))
                             && (isset($solicitacao) && isset($solicitacao->responsavel) && count($solicitacao->modelosAnimais) > 0) )
-                            
+
                             <a class="btn w-100"
                                href="{{route('solicitacao.concluir', ['solicitacao_id' => $solicitacao->id])}}"
                                style="border-color: #1d68a7; color: #1d68a7; background-color: #c0ddf6"
                                title="Concluir Solicitação.">Concluir Solicitação</a>
 
                         @else
+                            @if(Auth::user()->tipo_usuario_id != 2 && Auth::user()->tipo_usuario_id != 1)
                                 <button class="btn btn-secondary w-100" disabled>Concluir Solicitação</button>
+                            @endif
                         @endif
                     </div>
 
@@ -271,35 +277,35 @@
 
     <!-- Utilizado para quando houver avaliação -->
 
-        <!-- Modal Pendencia -->
-        <div class="modal fade" id="pendenciaModal" tabindex="-1" role="dialog" aria-labelledby="pendenciaModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog modal-xl" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="titulo_pendencia"></h5>
-                        <button type="button" class="close" aria-label="Close" onclick="closeModal()">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <form id="form_troca">
-                        <div class="modal-body">
-                            <div class="col-sm-12 mt-2" id="trocaConteudo">
-
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeModal()">
-                                Fechar
-                            </button>
-                            @if(Auth::user()->tipo_usuario_id == 2)
-                                <button type="button" class="btn btn-success" id="confirmPendencia">Confirmar</button>
-                            @endif
-                        </div>
-                    </form>
+    <!-- Modal Pendencia -->
+    <div class="modal fade" id="pendenciaModal" tabindex="-1" role="dialog" aria-labelledby="pendenciaModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="titulo_pendencia"></h5>
+                    <button type="button" class="close" aria-label="Close" onclick="closeModal()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
+                <form id="form_troca">
+                    <div class="modal-body">
+                        <div class="col-sm-12 mt-2" id="trocaConteudo">
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeModal()">
+                            Fechar
+                        </button>
+                        @if(Auth::user()->tipo_usuario_id == 2)
+                            <button type="button" class="btn btn-success" id="confirmPendencia">Confirmar</button>
+                        @endif
+                    </div>
+                </form>
             </div>
         </div>
+    </div>
     @if(Auth::user()->tipo_usuario_id == 2)
         <!-- Modal Aprovar -->
         <div class="modal fade" id="aprovarModal" tabindex="-1" role="dialog" aria-labelledby="aprovarModalLabel"
