@@ -13,7 +13,6 @@ class Operacao extends Model
         'observacao_recuperacao',
         'outros_cuidados_recuperacao',
         'analgesia_recuperacao',
-        'procedimento_id',
     ];
 
     public static $rules = [
