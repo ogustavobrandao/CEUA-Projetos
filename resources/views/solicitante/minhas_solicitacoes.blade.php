@@ -26,7 +26,7 @@
                 <td class="text-center">
 
                     @if($solicitacao->status == null)Em progresso
-                    @elseif(\Illuminate\Support\Carbon::parse(($solicitacao->updated_at))->diffInDays(\Illuminate\Support\Carbon::parse($solicitacao->avaliacao->first()->updated_at)) > 30)
+                    @elseif(($solicitacao->avaliacao->first() != null ) && (\Illuminate\Support\Carbon::parse(($solicitacao->updated_at))->diffInDays(\Illuminate\Support\Carbon::parse($solicitacao->avaliacao->first()->updated_at)) > 30))
                         <strong style="color:red;">Reprovado <small>(Tempo expirado)</small></strong>
                     @elseif($solicitacao->status == 'nao_avaliado')Não Avaliado
                     @elseif($solicitacao->status == 'avaliando')Em avaliação

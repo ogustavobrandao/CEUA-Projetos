@@ -63,7 +63,6 @@ class Planejamento extends Model
         'analise_estatistica' => 'required',
         'outras_infos' => 'required',
         'grau_invasividade' => 'required',
-        'grau_select' => 'required',
 
     ];
 

@@ -99,8 +99,7 @@ class SolicitacaoController extends Controller
         $solicitacao = new Solicitacao();
         $solicitacao->tipo = $request->tipo;
         $solicitacao->user_id = Auth::user()->id;
-        $solicitacao->estado_pagina = 0;
-        $solicitacao->estado_pagina_maximo = 0;
+    
 
         $solicitacao->save();
 
@@ -245,7 +244,6 @@ class SolicitacaoController extends Controller
         //Deletar colaboradores não fornecidos no formulário
         Colaborador::where('responsavel_id', $solicitacao->responsavel->id)->whereNotIn('id', $listaColab)->delete();
 
-        $solicitacao->estado_pagina = 3;
         $solicitacao->update();
         return redirect(route('solicitacao.index', ['solicitacao_id' => $request->solicitacao_id]));
     }
@@ -360,7 +358,6 @@ class SolicitacaoController extends Controller
             $perfil->save();
         }
 
-        $solicitacao->estado_pagina = 6;
         $solicitacao->update();
 
         return redirect(route('solicitacao.form', ['solicitacao_id' => $request->solicitacao_id]));
@@ -465,7 +462,6 @@ class SolicitacaoController extends Controller
     public function criar_planejamento(Request $request)
     {
         Validator::make($request->all(), Planejamento::$rules, Planejamento::$messages)->validate();
-
         $modelo_animal = ModeloAnimal::find($request->modelo_animal_id);
         if (isset($modelo_animal->planejamento)) {
             $planejamento = $modelo_animal->planejamento;
