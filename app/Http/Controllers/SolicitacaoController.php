@@ -125,6 +125,7 @@ class SolicitacaoController extends Controller
 
     public function criar_responsavel(Request $request)
     {
+       
         Validator::make($request->all(), Responsavel::$rules, Responsavel::$messages)->validate();
         Validator::make($request->all(), Contato::$rules, Contato::$messages)->validate();
 
@@ -136,29 +137,41 @@ class SolicitacaoController extends Controller
             $responsavel = new Responsavel();
         }
 
-        if (($request->hasFile('experiencia_previa') && $request->file('experiencia_previa')->isValid())) {
-            $anexo = $request->experiencia_previa->extension();
-            $nomeAnexo = "experiencia_" . $solicitacao->id . date('Ymd') . date('His') . '.' . $anexo;
-            if ($responsavel->experiencia_revia != null) {
-                $nomeAnexo = $responsavel->experiencia_previa;
+        if(($request->hasFile('termo_responsabilidade') && $request->file('termo_responsabilidade')->isValid())) {
+            $anexo = $request->termo_responsabilidade->extension();
+            $nomeAnexo = "termo_responsabilidade_" . $solicitacao->id . date('Ymd') . date('His') . '.' . $anexo;
+            if ($responsavel->termo_responsabilidade != null) {
+                $nomeAnexo = $responsavel->termo_responsabilidade;
             }
-            $request->experiencia_previa->storeAs('experiencias/', $nomeAnexo);
-            $request->experiencia_previa = $nomeAnexo;
+            $request->termo_responsabilidade->storeAs('termos_responsabilidades/', $nomeAnexo);
+            $request->termo_responsabilidade = $nomeAnexo;
         }
+        // if (($request->hasFile('experiencia_previa') && $request->file('experiencia_previa')->isValid())) {
+        //     $anexo = $request->experiencia_previa->extension();
+        //     $nomeAnexo = "experiencia_" . $solicitacao->id . date('Ymd') . date('His') . '.' . $anexo;
+        //     if ($responsavel->experiencia_revia != null) {
+        //         $nomeAnexo = $responsavel->experiencia_previa;
+        //     }
+        //     $request->experiencia_previa->storeAs('experiencias/', $nomeAnexo);
+        //     $request->experiencia_previa = $nomeAnexo;
+        // }
 
-        if (($request->hasFile('treinamento') && $request->file('treinamento')->isValid())) {
-            $anexo = $request->treinamento->extension();
-            $nomeAnexo = "treinamento_" . $solicitacao->id . date('Ymd') . date('His') . '.' . $anexo;
-            if ($responsavel->treinamento != null) {
-                $nomeAnexo = $responsavel->treinamento;
-            }
-            $request->treinamento->storeAs('treinamentos/', $nomeAnexo);
-            $request->treinamento = $nomeAnexo;
-        }
-
+        // if (($request->hasFile('treinamento') && $request->file('treinamento')->isValid())) {
+        //     $anexo = $request->treinamento->extension();
+        //     $nomeAnexo = "treinamento_" . $solicitacao->id . date('Ymd') . date('His') . '.' . $anexo;
+        //     if ($responsavel->treinamento != null) {
+        //         $nomeAnexo = $responsavel->treinamento;
+        //     }
+        //     $request->treinamento->storeAs('treinamentos/', $nomeAnexo);
+        //     $request->treinamento = $nomeAnexo;
+        // }
+        // else {
+        //     $request->treinamento = $responsavel->treinamento;
+        // }
 
         $responsavel->solicitacao_id = $request->solicitacao_id;
         $responsavel->nome = $request->nome;
+        $responsavel->cpf = $request->cpf;
         $responsavel->departamento_id = $request->departamento_id;
         if ($request->experiencia_previa == null && $responsavel->experiencia_previa != null)
             $request->experiencia_previa = $responsavel->experiencia_previa;
@@ -172,7 +185,11 @@ class SolicitacaoController extends Controller
         if ($request->treinamento_radio == "false")
             $request->treinamento = null;
         $responsavel->treinamento = $request->treinamento;
-
+        if ($request->termo_responsabilidade == null && $responsavel->termo_responsabilidade != null)
+            $request->termo_responsabilidade = $responsavel->termo_responsabilidade;
+        if ($request->termo_responsabilidade_radio == "false")
+            $request->termo_responsabilidade = null;
+        $responsavel->termo_responsabilidade = $request->termo_responsabilidade;
 
         if (isset($solicitacao->responsavel)) {
             $responsavel->update();
@@ -214,6 +231,7 @@ class SolicitacaoController extends Controller
                     $colaborador = new Colaborador();
                 }
                 $colaborador->nome = $colab['nome'];
+                $colaborador->cpf = $colab['cpf'];
                 $colaborador->instituicao_id = $colab['instituicao_id'];
                 $colaborador->grau_escolaridade = $colab['grau_escolaridade'];
                 $colaborador->nivel_academico = $colab['nivel_academico'];
@@ -569,7 +587,6 @@ class SolicitacaoController extends Controller
 
         $planejamento = Planejamento::find($request->planejamento_id);
 
-
         if (isset($planejamento->operacao)) {
             $operacao = $planejamento->operacao;
         } else {
@@ -578,10 +595,12 @@ class SolicitacaoController extends Controller
         }
 
         if ($request->cirurgia != "true") {
+            $operacao->cirurgia = null;
             $operacao->observacao_recuperacao = null;
             $operacao->outros_cuidados_recuperacao = null;
             $operacao->analgesia_recuperacao = null;
         } else {
+            $operacao->cirurgia = $request->detalhes_cirurgia;
             $operacao->observacao_recuperacao = $request->observacao_recuperacao;
             $operacao->outros_cuidados_recuperacao = $request->outros_cuidados_recuperacao;
             $operacao->analgesia_recuperacao = $request->analgesia_recuperacao;
