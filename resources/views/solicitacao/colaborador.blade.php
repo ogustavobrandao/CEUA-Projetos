@@ -52,6 +52,15 @@
             '@enderror' +
             '</div>' +
             '<div class="col-sm-4">' +
+            '<label for="cpf">CPF:<strong style="color: red">*</strong></label>' +
+            '<input class="form-control @error('cpf') is-invalid @enderror" id="cpf" type="cpf" name="colaborador[' + cont + '][cpf]" value="{{ old('cpf') }}" required autocomplete="cpf" autofocus>' +
+            '@error('cpf')' +
+            '<span class="invalid-feedback" role="alert">' +
+            '<strong>{{ $message }}</strong>' +
+            '</span>' +
+            '@enderror' +
+            '</div>' +
+            '<div class="col-sm-4">' +
             '<label for="telefone">Telefone:<strong style="color: red">*</strong></label>' +
             '<input class="form-control @error('telefone') is-invalid @enderror" id="telefone" type="text" name="colaborador[' + cont + '][telefone]" value="{{ old('telefone') }}" required autocomplete="telefone" autofocus>' +
             '@error('telefone')' +
@@ -86,6 +95,7 @@
                 '<select class="form-control" id="grau_escolaridade" name="colaborador[' + cont + '][grau_escolaridade]">' +
                     '<option disabled selected>Selecione um Grau de Escolaridade</option>' +
                     '<option @if(old('grau_escolaridade') == "graduacao_completa") selected @endif value="graduacao_completa">Graduação Completa</option>' +
+                    '<option @if(old('grau_escolaridade') == "graduacao_incompleta") selected @endif value="graduacao_incompleta">Graduação Incompleta</option>' +
                     '<option @if(old('grau_escolaridade') == "pos_graduacao_incompleta") selected @endif value="pos_graduacao_incompleta">Pós-Gradução Incompleta</option>' +
                     '<option @if(old('grau_escolaridade') == "pos_graduacao_completa") selected @endif value="pos_graduacao_completa">Pós-Gradução Completa</option>' +
                     '<option @if(old('grau_escolaridade') == "mestrado_incompleto") selected @endif value="mestrado_incompleto">Mestrado Incompleto</option>' +
@@ -126,6 +136,7 @@
     $('#colab' + {{$key+1}}).find('#colab_id').val("{{$colab->id}}");
     $('#colab' + {{$key+1}}).find('#nome').val("{{$colab->nome}}");
     $('#colab' + {{$key+1}}).find('#email').val("{{$colab->contato->email}}");
+    $('#colab' + {{$key+1}}).find('#cpf').val("{{$colab->cpf}}");
     $('#colab' + {{$key+1}}).find('#telefone').val("{{$colab->contato->telefone}}");
     $('#colab' + {{$key+1}}).find('#nivel_academico').val("{{$colab->nivel_academico}}");
     $('#colab' + {{$key+1}}).find('#treinamento').val("{{$colab->treinamento}}");

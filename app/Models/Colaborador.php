@@ -11,6 +11,7 @@ class Colaborador extends Model
 
     protected $fillable = [
         'nome',
+        'cpf',
         'treinamento',
         'nivel_academico',
         'grau_escolaridade',
@@ -22,6 +23,7 @@ class Colaborador extends Model
     public static $rules = [
         'nome' => 'required|string|min:5',
         'treinamento' => 'required',
+        'cpf' => 'required',
         'experiencia_previa' => 'required',
         'nivel_academico' => 'required',
         'grau_escolaridade' => 'required',
