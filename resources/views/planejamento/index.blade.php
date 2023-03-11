@@ -122,7 +122,7 @@
             <div class="card shadow-lg p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_8">
                 <div class="row">
                     <div class="col-md-12">
-                        <h2 class="titulo" id="titulo_8">Operação
+                        <h2 class="titulo" id="titulo_8">Cirurgia
                                 <a class="float-end" id="8_btn_up"><i class="fa-solid fa-circle-chevron-down"></i></a>
                                 <a class="float-end" id="8_btn_down" style="display: none"><i class="fa-solid fa-circle-chevron-up"></i></a>
                         </h2>
