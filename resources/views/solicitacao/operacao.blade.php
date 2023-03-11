@@ -13,6 +13,14 @@
                             <input class="form-check-input" type="radio" name="cirurgia" id="cirurgia_sim" value="true">
                             <label class="form-check-label" for="cirurgia">Sim</label>
                         </div>
+                        <div class="col-sm-3">
+                            <input class="form-check-input" type="radio" name="cirurgia" id="cirurgia_unica" value="true">
+                            <label class="form-check-label" for="cirurgia">Única</label>
+                        </div>
+                        <div class="col-sm-3">
+                            <input class="form-check-input" type="radio" name="cirurgia" id="cirurgia_multipla" value="true">
+                            <label class="form-check-label" for="cirurgia">Múltipla</label>
+                        </div>
                         <div class="col-sm-2">
                             <input class="form-check-input" type="radio" name="cirurgia" id="cirurgia_nao" value="false"
                                    checked>
@@ -22,8 +30,18 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-sm-12" id="anexo_cirurgia" style="display: none;">
+                    <label for="anexo_cirurgia">Descrever Cirurgia:<strong style="color: red">*</strong></label>
+                    <textarea class="form-control @error('detalhes_cirurgia') is-invalid @enderror" name="detalhes_cirurgia" id="detalhes_cirurgia" autocomplete="detalhes_cirurgia" autofocus
+                              required> @if(!empty($operacao) && $operacao->cirurgia != null){{$operacao->cirurgia}}@else{{old('detalhes_cirurgia')}}@endif </textarea>
+                    @error('cirurgia')
+                    <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+                    @enderror
+                </div>
             </div>
-
+            
 
             <div class="row" id="pos_operatorio">
 
@@ -109,6 +127,17 @@
         @endif
 
         $("#cirurgia_sim").click(function () {
+            $("#anexo_cirurgia").show().find('input, radio').prop('disabled', false);
+            $("#pos_operatorio").show().find('input, radio').prop('disabled', false);
+        });
+
+        $("#cirurgia_unica").click(function () {
+            $("#anexo_cirurgia").show().find('input, radio').prop('disabled', false);
+            $("#pos_operatorio").show().find('input, radio').prop('disabled', false);
+        });
+
+        $("#cirurgia_multipla").click(function () {
+            $("#anexo_cirurgia").show().find('input, radio').prop('disabled', false);
             $("#pos_operatorio").show().find('input, radio').prop('disabled', false);
         });
 
