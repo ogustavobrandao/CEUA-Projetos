@@ -98,7 +98,6 @@
                     <input class="form-check-input" type="radio" name="geneticamente_modificado"
                            id="geneticamente_modificado_sim" value="true"
                            @if(isset($modelo_animal) && $modelo_animal->geneticamente_modificado) checked @endif
-                           @if(!isset($modelo_animal)) checked @endif>
                     <label class="form-check-label" for="geneticamente_modificado">Sim</label>
                 </div>
                 <div class="col-sm-2">
@@ -117,7 +116,7 @@
                 <div class="col-sm-4" id="anexo_cqb" style="display: none;">
                     <label for="anexo_cqb">Número CQB:<strong style="color: red">*</strong></label>
                     <input class="form-control @error('numero_cqb') is-invalid @enderror" id="numero_cqb" type="number" name="numero_cqb"
-                    @if(isset($modelo_animal)) value="{{$modelo_animal->numero_cqb}}"
+                    @if(($modelo_animal->numero_cqb != null)) value="{{$modelo_animal->numero_cqb}}"
                     @else value="{{old('numero_cqb')}}" @endif required autocomplete="numero_cqb" autofocus>
                 </div>
             </div>
