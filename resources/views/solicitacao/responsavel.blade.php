@@ -46,7 +46,7 @@
                 <label for="cpf">CPF:<strong style="color: red">*</strong></label>
                 <input class="form-control @error('cpf') is-invalid @enderror" id="cpf" type="text"
                        name="cpf"
-                       value="@if(!empty($solicitacao->responsavel) && $solicitacao->responsavel->contato->cpf != null){{$solicitacao->responsavel->contato->cpf}} @else{{old('cpf') }} @endif"
+                       value="@if(!empty($solicitacao->responsavel) && $solicitacao->responsavel->cpf != null){{$solicitacao->responsavel->cpf}} @else{{old('cpf') }} @endif"
                        required autocomplete="cpf" autofocus>
                 @error('cpf')
                 <span class="invalid-feedback" role="alert">
@@ -293,7 +293,7 @@
                        href="#">Não Enviado</a>
                 @else
                      <a class="btn btn-primary"
-                           href="{{route('termo_responsabilidade.download', ['responsavel_id' => $solicitacao->responsavel->id])}}">Baixar
+                           href="{{route('termo_responsabilidade.downloadTermoResponsabilidade', ['responsavel_id' => $solicitacao->responsavel->id])}}">Baixar
                             Termo de Responsabilidade</a>
                 @endif
         </div>
