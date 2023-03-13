@@ -58,13 +58,15 @@
                 </div>
             </div>
             <div id="planejamento">
-                @if(Auth::user()->tipo_usuario_id == 2)
-                    @include('solicitacao.planejamento',['tipo'=>5,'avaliacao_id'=>$avaliacao->id,'id'=>$planejamento->id])
-                @elseif(Auth::user()->tipo_usuario_id == 3 && $solicitacao->status == 'avaliado'
-                        && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia')
-                    @include('solicitacao.planejamento',['tipo'=>5,'id'=>$planejamento->id,'status'=>$avaliacaoPlanejamento->status])
-                @else
-                    @include('solicitacao.planejamento')
+                @if($planejamento->id != null)
+                    @if(Auth::user()->tipo_usuario_id == 2)
+                        @include('solicitacao.planejamento',['tipo'=>5,'avaliacao_id'=>$avaliacao->id,'id'=>$planejamento->id])
+                    @elseif(Auth::user()->tipo_usuario_id == 3 && $solicitacao->status == 'avaliado'
+                            && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia')
+                        @include('solicitacao.planejamento',['tipo'=>5,'id'=>$planejamento->id,'status'=>$avaliacaoPlanejamento->status])
+                    @else
+                        @include('solicitacao.planejamento')
+                    @endif
                 @endif
             </div>
         </div>
@@ -145,7 +147,7 @@
             <div class="card shadow-lg p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_9">
                 <div class="row">
                     <div class="col-md-12">
-                        <h2 class="titulo" id="titulo_9">Eutanásia
+                        <h2 class="titulo" id="titulo_9">Finalização
                             <a class="float-end" id="9_btn_up"><i class="fa-solid fa-circle-chevron-down"></i></a>
                             <a class="float-end" id="9_btn_down" style="display: none"><i class="fa-solid fa-circle-chevron-up"></i></a>
                         </h2>
