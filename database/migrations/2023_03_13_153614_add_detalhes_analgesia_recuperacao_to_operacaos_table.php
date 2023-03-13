@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('operacaos', function (Blueprint $table) {
-            $table->text('detalhes_cirurgia')->nullable();
+            $table->text('detalhes_analgesia_recuperacao')->nullable();
         });
     }
 
@@ -26,7 +26,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('operacaos', function (Blueprint $table) {
-            $table->dropColumn('detalhes_cirurgia');
+            $table->dropColumn('detalhes_analgesia_recuperacao');
         });
     }
 };

@@ -34,7 +34,7 @@
                     <label for="anexo_cirurgia">Descrever Cirurgia:<strong style="color: red">*</strong></label>
                     <textarea class="form-control @error('detalhes_cirurgia') is-invalid @enderror" name="detalhes_cirurgia" id="detalhes_cirurgia" autocomplete="detalhes_cirurgia" autofocus
                               required> @if(!empty($operacao) && $operacao->cirurgia != null){{$operacao->cirurgia}}@else{{old('detalhes_cirurgia')}}@endif </textarea>
-                    @error('cirurgia')
+                    @error('detalhes_cirurgia')
                     <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
                 </span>
@@ -65,6 +65,16 @@
                             </label>
                         </div>
                     </div>
+                    <div class="col-sm-12" id="anexo_observacao_recuperacao" style="display: none;">
+                        <label for="anexo_observacao_recuperacao">Descrever Observação da recuperação:<strong style="color: red">*</strong></label>
+                        <textarea class="form-control @error('detalhes_observacao_recuperacao') is-invalid @enderror" name="detalhes_observacao_recuperacao" id="detalhes_observacao_recuperacao" autocomplete="detalhes_cirurgia" autofocus
+                                  required> @if(!empty($operacao) && $operacao->detalhes_observacao_recuperacao != null){{$operacao->detalhes_observacao_recuperacao}}@else{{old('detalhes_observacao_recuperacao')}}@endif </textarea>
+                        @error('cirurgia')
+                        <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                        @enderror
+                    </div>
                 </div>
 
                 <div class="col-sm-4 mt-2">
@@ -85,6 +95,16 @@
                             </label>
                         </div>
                     </div>
+                    <div class="col-sm-12" id="anexo_analgesia_recuperacao" style="display: none;">
+                        <label for="anexo_analgesia_recuperacao">Descrever Uso de Analgesia:<strong style="color: red">*</strong></label>
+                        <textarea class="form-control @error('detalhes_analgesia_recuperacao') is-invalid @enderror" name="detalhes_analgesia_recuperacao" id="detalhes_analgesia_recuperacao" autocomplete="detalhes_analgesia_recuperacao" autofocus
+                                  required> @if(!empty($operacao) && $operacao->detalhes_analgesia_recuperacao != null){{$operacao->detalhes_analgesia_recuperacao}}@else{{old('detalhes_analgesia_recuperacao')}}@endif </textarea>
+                        @error('cirurgia')
+                        <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                        @enderror
+                    </div>
                 </div>
                 <div class="col-sm-4 mt-2">
                     <label for="outros_cuidados_recuperacao">Outros Cuidados Pós-Operatórios:<strong style="color: red">*</strong></label>
@@ -103,6 +123,16 @@
                                 Não
                             </label>
                         </div>
+                    </div>
+                    <div class="col-sm-12" id="anexo_outros_cuidados_recuperacao" style="display: none;">
+                        <label for="anexo_outros_cuidados_recuperacao">Descrever Outros Cuidados Pós-Operatórios:<strong style="color: red">*</strong></label>
+                        <textarea class="form-control @error('detalhes_outros_cuidados_recuperacao') is-invalid @enderror" name="detalhes_outros_cuidados_recuperacao" id="detalhes_outros_cuidados_recuperacao" autocomplete="detalhes_outros_cuidados_recuperacao" autofocus
+                                  required> @if(!empty($operacao) && $operacao->detalhes_outros_cuidados_recuperacao != null){{$operacao->detalhes_outros_cuidados_recuperacao}}@else{{old('detalhes_outros_cuidados_recuperacao')}}@endif </textarea>
+                        @error('cirurgia')
+                        <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                        @enderror
                     </div>
                 </div>
 
@@ -141,9 +171,35 @@
             $("#pos_operatorio").show().find('input, radio').prop('disabled', false);
         });
 
+        $("#observacao_recuperacao_sim").click(function () {
+            $("#anexo_observacao_recuperacao").show().find('input, radio').prop('disabled', false);
+        });
+
+        $("#observacao_recuperacao_nao").click(function () {
+            $("#anexo_observacao_recuperacao").hide().find('input, radio').prop('disabled', true);
+        });
+
+        $("#analgesia_recuperacao_sim").click(function () {
+            $("#anexo_analgesia_recuperacao").show().find('input, radio').prop('disabled', false);
+        });
+
+        $("#analgesia_recuperacao_nao").click(function () {
+            $("#anexo_analgesia_recuperacao").hide().find('input, radio').prop('disabled', true);
+        });
+
+        $("#outros_cuidados_recuperacao_sim").click(function () {
+            $("#anexo_outros_cuidados_recuperacao").show().find('input, radio').prop('disabled', false);
+        });
+
+        $("#outros_cuidados_recuperacao_nao").click(function () {
+            $("#anexo_outros_cuidados_recuperacao").hide().find('input, radio').prop('disabled', true);
+        });
+
         $("#cirurgia_nao").click(function () {
             $("#pos_operatorio").hide().find('input, radio').prop('disabled', true);
         });
+
+
     });
 </script>
 
