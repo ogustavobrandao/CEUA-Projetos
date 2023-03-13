@@ -81,15 +81,6 @@
             '@endforeach' +
             '</select>' +
             '</div>' +
-            '<div class="col-sm-6">' +
-            '<label for="nivel_academico">Nível Acadêmico:<strong style="color: red">*</strong></label>' +
-            '<input class="form-control @error('nivel_academico') is-invalid @enderror" id="nivel_academico" type="text" name="colaborador[' + cont + '][nivel_academico]" value="{{ old('nivel_academico') }}" required autocomplete="nivel_academico" autofocus>' +
-            '@error('nivel_academico') ' +
-            '<span class="invalid-feedback" role="alert">' +
-            '<strong>{{ $message }}</strong>' +
-            '</span>' +
-            '@enderror' +
-            '</div>' +
             '<div class="col-sm-6 mt-2">' +
                 '<label for="grau_escolaridade">Grau de Escolaridade:<strong style="color: red">*</strong></label>' +
                 '<select class="form-control" id="grau_escolaridade" name="colaborador[' + cont + '][grau_escolaridade]">' +
@@ -109,7 +100,7 @@
             '<div class="row">' +
             '<h3 class="subtitulo">Informações Complementares</h3>' +
             '<div class="col-sm-6">' +
-            '<label for="experiencia_previa">Experiência Previa (anos):<strong style="color: red">*</strong></label>' +
+            '<label for="experiencia_previa">Experiência Prévia (anos):<strong style="color: red">*</strong></label>' +
             '<input class="form-control @error('experiencia_previa') is-invalid @enderror" id="experiencia_previa" type="text" name="colaborador[' + cont + '][experiencia_previa]" value="{{ old('experiencia_previa') }}" required autocomplete="experiencia_previa" autofocus>' +
             '@error('experiencia_previa')' +
             '<span class="invalid-feedback" role="alert">' +
@@ -138,7 +129,6 @@
     $('#colab' + {{$key+1}}).find('#email').val("{{$colab->contato->email}}");
     $('#colab' + {{$key+1}}).find('#cpf').val("{{$colab->cpf}}");
     $('#colab' + {{$key+1}}).find('#telefone').val("{{$colab->contato->telefone}}");
-    $('#colab' + {{$key+1}}).find('#nivel_academico').val("{{$colab->nivel_academico}}");
     $('#colab' + {{$key+1}}).find('#treinamento').val("{{$colab->treinamento}}");
     $('#colab' + {{$key+1}}).find('#experiencia_previa').val("{{$colab->experiencia_previa}}");
     $('#colab' + {{$key+1}}).find('#instituicao').val("{{$colab->instituicao->id}}");
