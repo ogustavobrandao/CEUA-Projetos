@@ -55,6 +55,7 @@ Route::group(['middleware' => 'checkProprietarioAvaliador'], function () {
 
     Route::get('/formula/{planejamento_id}/download', [App\Http\Controllers\SolicitacaoController::class, 'downloadFormula'])->name('planejamento.formula.download');
     Route::get('/treinamento/{responsavel_id}/download', [App\Http\Controllers\SolicitacaoController::class, 'downloadTreinamento'])->name('treinamento.download');
+    Route::get('/termos_responsabilidades/{responsavel_id}/download', [App\Http\Controllers\SolicitacaoController::class, 'downloadTermoResponsabilidade'])->name('termo_responsabilidade.downloadTermoResponsabilidade');
     Route::get('/experiencia/{responsavel_id}/download', [App\Http\Controllers\SolicitacaoController::class, 'downloadExperiencia'])->name('experiencia.download');
     Route::get('/termo/{modelo_animal_id}/download', [App\Http\Controllers\SolicitacaoController::class, 'downloadTermo'])->name('termo.download');
     Route::get('/formulario_voltar/{solicitacao_id}', [App\Http\Controllers\SolicitacaoController::class, 'voltarPagina'])->name('solicitacao.voltar.pagina');
