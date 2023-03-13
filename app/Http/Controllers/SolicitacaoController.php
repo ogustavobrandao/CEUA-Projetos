@@ -303,6 +303,7 @@ class SolicitacaoController extends Controller
         $perfil->linhagem = $request->linhagem;
         $perfil->idade = $request->idade;
         $perfil->periodo = $request->periodo;
+        $perfil->tipo_grupo_animal = $request->tipo_grupo_animal;
         $perfil->peso = $request->peso;
         $perfil->quantidade = $request->quantidade;
         $perfil->machos = $request->machos;
@@ -324,11 +325,13 @@ class SolicitacaoController extends Controller
         }
 
         $modelo_animal->update($request->all());
+        
 
         $perfil = $modelo_animal->perfil;
         $perfil->grupo_animal = $request->grupo_animal;
         $perfil->linhagem = $request->linhagem;
         $perfil->idade = $request->idade;
+        $perfil->tipo_grupo_animal = $request->tipo_grupo_animal;
         $perfil->peso = $request->peso;
         $perfil->quantidade = $request->quantidade;
         $perfil->machos = $request->machos;
@@ -583,6 +586,7 @@ class SolicitacaoController extends Controller
 
     public function criar_operacao(Request $request)
     {
+        
         Validator::make($request->all(), Operacao::$rules, Operacao::$messages)->validate();
 
         $planejamento = Planejamento::find($request->planejamento_id);
@@ -595,12 +599,18 @@ class SolicitacaoController extends Controller
         }
 
         if ($request->cirurgia != "true") {
-            $operacao->cirurgia = null;
+            $operacao->detalhes_cirurgia = null;
+            $operacao->detalhes_observacao_recuperacao = null;
+            $operacao->detalhes_outros_cuidados_recuperacao = null;
+            $operacao->detalhes_analgesia_recuperacao = null;
             $operacao->observacao_recuperacao = null;
             $operacao->outros_cuidados_recuperacao = null;
             $operacao->analgesia_recuperacao = null;
         } else {
-            $operacao->cirurgia = $request->detalhes_cirurgia;
+            $operacao->detalhes_cirurgia = $request->detalhes_cirurgia;
+            $operacao->detalhes_observacao_recuperacao = $request->detalhes_observacao_recuperacao;
+            $operacao->detalhes_outros_cuidados_recuperacao = $request->detalhes_outros_cuidados_recuperacao;
+            $operacao->detalhes_analgesia_recuperacao = $request->detalhes_analgesia_recuperacao;
             $operacao->observacao_recuperacao = $request->observacao_recuperacao;
             $operacao->outros_cuidados_recuperacao = $request->outros_cuidados_recuperacao;
             $operacao->analgesia_recuperacao = $request->analgesia_recuperacao;
