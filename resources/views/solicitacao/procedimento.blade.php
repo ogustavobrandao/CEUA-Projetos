@@ -28,7 +28,7 @@
             </div>
 
             <div class="col-sm-4 mt-2">
-                <label for="anestesico_radio">Uso de Fármacos Anestésicos:<strong style="color: red">*</strong></label>
+                <label for="anestesico_radio">Uso de Fármacos com Dose (UI ou mg/kg), via de administração::<strong style="color: red">*</strong></label>
                 <div class="row ml-1">
                     <div class="col-sm-2">
                         <input class="form-check-input" type="radio" name="anestesico_radio" id="anestesico_sim"
@@ -162,7 +162,7 @@
             </div>
 
             <div class="col-sm-12 mt-2" id="anestesico" style="display: none;">
-                <label for="anestesico">Uso de Fármacos Anestésicos:<strong style="color: red">*</strong></label>
+                <label for="anestesico">Uso de Fármacos com Dose (UI ou mg/kg), via de administração:<strong style="color: red">*</strong></label>
                 <textarea class="form-control @error('anestesico') is-invalid @enderror" name="anestesico"
                           id="anestesico" autocomplete="anestesico" autofocus
                           required disabled>@if(!empty($procedimento) && $procedimento->anestesico != null){{$procedimento->anestesico}}
