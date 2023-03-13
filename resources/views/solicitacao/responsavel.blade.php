@@ -362,6 +362,14 @@
         @else
         $("#experiencia_previa_nao").attr('checked', true);
         @endif
+
+        @if(!empty($solicitacao->responsavel) && $solicitacao->responsavel->termo_responsabilidade != null)
+        $("#termo_responsabilidade_sim").attr('checked', true);
+        $("#termo_responsabilidade_sim").click();
+        @else
+        $("#termo_responsabilidade_nao").attr('checked', true);
+        @endif
+        
     });
 
     $("#treinamento_sim").click(function () {
@@ -388,6 +396,8 @@
         $("#experiencia_previa").prop('required', false);
 
     });
+
+
 
     $("#termo_responsabilidade_sim").click(function () {
         $("#anexo_termo_responsabilidade").show().find('input, textarea').prop('disabled', false);
