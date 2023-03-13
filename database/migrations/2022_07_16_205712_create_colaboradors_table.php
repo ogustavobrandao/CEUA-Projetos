@@ -18,11 +18,9 @@ return new class extends Migration
             $table->string('nome');
             $table->string('treinamento');
             $table->string('experiencia_previa');
-            $table->string('nivel_academico');
             $table->string('grau_escolaridade');
             $table->unsignedBigInteger('instituicao_id');
             $table->unsignedBigInteger('responsavel_id');
-
             $table->foreign('responsavel_id')->references('id')->on('responsavels')->onDelete('cascade');
             $table->foreign('instituicao_id')->references('id')->on('instituicaos');
             $table->timestamps();
