@@ -234,7 +234,6 @@ class SolicitacaoController extends Controller
                 $colaborador->cpf = $colab['cpf'];
                 $colaborador->instituicao_id = $colab['instituicao_id'];
                 $colaborador->grau_escolaridade = $colab['grau_escolaridade'];
-                $colaborador->nivel_academico = $colab['nivel_academico'];
                 $colaborador->experiencia_previa = $colab['experiencia_previa'];
                 $colaborador->treinamento = $colab['treinamento'];
                 $colaborador->responsavel_id = $solicitacao->responsavel->id;
@@ -295,6 +294,13 @@ class SolicitacaoController extends Controller
             $data['termo_consentimento'] = $nomeAnexo;
         }
 
+        if (($request->hasFile('licencas_previas') && $request->file('licencas_previas')->isValid())) {
+            $anexo = $request->licencas_previas->extension();
+            $nomeAnexo = "licencasPrevia_" . $request->solicitacao_id . date('Ymd') . date('His') . '.' . $anexo;
+            $request->licencas_previas->storeAs('licencas_previas/', $nomeAnexo);
+            $data['licencas_previas'] = $nomeAnexo;
+        }
+
         $modelo_animal = ModeloAnimal::create($data);
 
 
@@ -322,6 +328,13 @@ class SolicitacaoController extends Controller
             $nomeAnexo = $modelo_animal->termo_consentimento;
             $request->termo_consentimento->storeAs('termos/', $nomeAnexo);
             $request->termo_consentimento = $nomeAnexo;
+        }
+
+        if (($request->hasFile('licencas_previas') && $request->file('licencas_previas')->isValid())) {
+            $anexo = $request->licencas_previas->extension();
+            $nomeAnexo = "licencasPrevia_" . $request->solicitacao_id . date('Ymd') . date('His') . '.' . $anexo;
+            $request->licencas_previas->storeAs('licencas_previas/', $nomeAnexo);
+            $data['licencas_previas'] = $nomeAnexo;
         }
 
         $modelo_animal->update($request->all());
@@ -382,6 +395,18 @@ class SolicitacaoController extends Controller
         $solicitacao->update();
 
         return redirect(route('solicitacao.form', ['solicitacao_id' => $request->solicitacao_id]));
+    }
+
+    public function downloadAnexoAmostraPlanejamento($planejamento_id)
+    {
+        $planejamento = Planejamento::find($planejamento_id);
+        return Storage::download('anexo_amostra_planejamento/' . $planejamento->anexo_amostra_planejamento);
+    }
+
+    public function downloadLicencaPrevia($modelo_animal_id)
+    {
+        $modelo_animal = ModeloAnimal::find($modelo_animal_id);
+        return Storage::download('licencas_previas/' . $modelo_animal->licenca_previa);
     }
 
     public function downloadTermoResponsabilidade($responsavel_id)
@@ -504,6 +529,17 @@ class SolicitacaoController extends Controller
                 $request->anexo_formula->storeAs('formulas/', $nomeAnexo);
             }
 
+            if (($request->hasFile('anexo_amostra_planejamento') && $request->file('anexo_amostra_planejamento')->isValid())) {
+                if ($planejamento->anexo_amostra_planejamento != null) {
+                    $nomeAnexo = $planejamento->anexo_amostra_planejamento;
+                } else {
+                    $anexo = $request->anexo_amostra_planejamento->extension();
+                    $nomeAnexo = "anexo_amostra_planejamento_" . date('Ymd') . date('His') . '.' . $anexo;
+                }
+                $planejamento->anexo_amostra_planejamento = $nomeAnexo;
+                $request->anexo_amostra_planejamento->storeAs('anexo_amostra_planejamento/', $nomeAnexo);
+            }
+
         } else {
             $planejamento = new Planejamento();
 
@@ -514,6 +550,15 @@ class SolicitacaoController extends Controller
                 $planejamento->anexo_formula = $nomeAnexo;
                 $request->anexo_formula->storeAs('formulas/', $nomeAnexo);
                 $request->anexo_formula = $nomeAnexo;
+            }
+
+            if (($request->hasFile('anexo_amostra_planejamento') && $request->file('anexo_amostra_planejamento')->isValid())) {
+
+                $anexo = $request->anexo_amostra_planejamento->extension();
+                $nomeAnexo = "anexo_amostra_planejamento_" . date('Ymd') . date('His') . '.' . $anexo;
+                $planejamento->anexo_amostra_planejamento = $nomeAnexo;
+                $request->anexo_amostra_planejamento->storeAs('anexo_amostra_planejamento/', $nomeAnexo);
+                $request->anexo_amostra_planejamento = $nomeAnexo;
             }
         }
 
