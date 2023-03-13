@@ -403,7 +403,7 @@ class SolicitacaoController extends Controller
         return Storage::download('anexo_amostra_planejamento/' . $planejamento->anexo_amostra_planejamento);
     }
 
-    public function downloadLicencaPrevia($modelo_animal_id)
+    public function downloadLicencasPrevias($modelo_animal_id)
     {
         $modelo_animal = ModeloAnimal::find($modelo_animal_id);
         return Storage::download('licencas_previas/' . $modelo_animal->licenca_previa);
