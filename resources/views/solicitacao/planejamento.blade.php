@@ -51,6 +51,42 @@
                 @enderror
             </div>
 
+            <div class="col-sm-12">
+                <label>Anexar <span style="color: darkred">PDF</span> de amostra:</label>
+            </div>
+            <div class="col-sm-6">
+                @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2)
+                    <a class="btn btn-primary"
+                       href="{{route('anexo_amostra_planejamento.download', ['planejamento_id' => $planejamento->id])}}">Baixar
+                        Fórmula</a>
+                @else
+                    @if(!empty($planejamento))
+                        <input class="form-control @error('anexo_amostra_planejamento') is-invalid @enderror" id="anexo_amostra_planejamento"
+                               type="file" name="anexo_amostra_planejamento"
+                               value="" autocomplete="anexo_amostra_planejamento" autofocus
+                               @if($planejamento->anexo_amostra_planejamento != null) style="width: 135px" @endif>
+                        @error('anexo_amostra_planejamento')
+                        <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+                        @enderror
+                        @if($planejamento->anexo_amostra_planejamento != null)
+                            <span
+                                style="border: 1px gray solid; border-radius: 10px; text-align: center; width: 250px; position: absolute; bottom: 0px; left: 155px; height: 38px; padding-top: 5px; background-color: #dcfadf">Um Arquivo Já Foi Enviado</span>
+                        @endif
+                    @else
+                        <input class="form-control @error('anexo_amostra_planejamento') is-invalid @enderror" id="anexo_amostra_planejamento"
+                               type="file" name="anexo_amostra_planejamento"
+                               value="{{old('anexo_amostra_planejamento')}}" autocomplete="anexo_amostra_planejamento" autofocus>
+                        @error('anexo_amostra_planejamento')
+                        <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+                        @enderror
+                    @endif
+                @endif
+            </div>
+
         </div>
 
         <div class="row mt-2">
@@ -92,7 +128,6 @@
                 @endif
             </div>
         </div>
-
 
         <div class="row mt-2">
             <div class="col-sm-6">
