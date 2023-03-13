@@ -148,12 +148,38 @@
 <script>
     $(document).ready(function () {
 
-        @if(isset($operacao) && $operacao->observacao_recuperacao != null && $operacao->outros_cuidados_recuperacao != null && $operacao->analgesia_recuperacao != null)
+        @if(isset($operacao))
         $("#cirurgia_sim").attr('checked', true);
+        $("#anexo_cirurgia").show();
         $("#pos_operatorio").show();
         @else
         $("#cirurgia_nao").attr('checked', true);
+        $("#anexo_cirurgia").hide();
         $("#pos_operatorio").hide();
+        @endif
+
+        @if(isset($operacao) && ($operacao->observacao_recuperacao != null))
+        $("#observacao_recuperacao_sim").attr('checked', true);
+        $("#anexo_observacao_recuperacao").show();
+        @else
+        $("#observacao_recuperacao_nao").attr('checked', true);
+        $("#anexo_observacao_recuperacao").hide();
+        @endif
+
+        @if(isset($operacao) && ($operacao->outros_cuidados_recuperacao != null))
+        $("#outros_cuidados_recuperacao_sim").attr('checked', true);
+        $("#anexo_outros_cuidados_recuperacao").show();
+        @else
+        $("#outros_cuidados_recuperacao_nao").attr('checked', true);
+        $("#anexo_outros_cuidados_recuperacao").hide();
+        @endif
+
+        @if(isset($operacao) && ($operacao->analgesia_recuperacao != null))
+        $("#analgesia_recuperacao_sim").attr('checked', true);
+        $("#anexo_analgesia_recuperacao").show();
+        @else
+        $("#analgesia_recuperacao_nao").attr('checked', true);
+        $("#anexo_analgesia_recuperacao").hide();
         @endif
 
         $("#cirurgia_sim").click(function () {
