@@ -384,6 +384,12 @@ class SolicitacaoController extends Controller
         return redirect(route('solicitacao.form', ['solicitacao_id' => $request->solicitacao_id]));
     }
 
+    public function downloadTermoResponsabilidade($responsavel_id)
+    {
+        $responsavel = Responsavel::find($responsavel_id);
+        return Storage::download('termos_responsabilidades/' . $responsavel->termo_responsabilidade);
+    }
+
     public function downloadFormula($planejamento_id)
     {
         $planejamento = Planejamento::find($planejamento_id);
