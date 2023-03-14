@@ -163,22 +163,24 @@
         <h3 class="subtitulo">Informações Complementares</h3>
 
         <div class="row mt-3">
-            <div class="col-sm-12">
+            <div class="col-sm-2">
                     <label for="experiencia">Experiência Prévia:</label>
                     @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2)
                         @if($solicitacao->responsavel->experiencia_previa == null)
                             <a class="btn btn-secondary"
                             href="#">Não Enviado</a>
                         @else
-                        <div class="col-m-12 mt-2">
-                            <label for="experiencia_previa">Descrição:<strong style="color: red">*</strong></label>
-                            <textarea class="form-control @error('experiencia_previa') is-invalid @enderror" name="experiencia_previa" id="experiencia_previa" autocomplete="experiencia_previa" autofocus
-                            required>@if(!empty($solicitacao->responsavel) && $solicitacao->responsavel->experiencia_previa != null){{$solicitacao->responsavel->experiencia_previa}}@else{{old('experiencia_previa')}}@endif</textarea>
-                            @error('experiencia_previa')
-                            <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                            @enderror
+                        <div class="col-sm-12">
+                            <div class="col-m-12 mt-2">
+                                <label for="experiencia_previa">Descrição:<strong style="color: red">*</strong></label>
+                                <textarea class="form-control @error('experiencia_previa') is-invalid @enderror" name="experiencia_previa" id="experiencia_previa" autocomplete="experiencia_previa" autofocus
+                                required>@if(!empty($solicitacao->responsavel) && $solicitacao->responsavel->experiencia_previa != null){{$solicitacao->responsavel->experiencia_previa}}@else{{old('experiencia_previa')}}@endif</textarea>
+                                @error('experiencia_previa')
+                                <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                                @enderror
+                            </div>
                         </div>
                         @endif
                     @else
@@ -200,11 +202,10 @@
                         </div>
                     </div>
                 </div>
-            
-                <div class="col-sm-9" id="anexo_experiencia" style="display: none;">
+                <div class="col-sm-9 mt-2" id="anexo_experiencia" style="display: none;">
                     <label>Descreva:</label>
                     <textarea class="form-control @error('experiencia_previa') is-invalid @enderror" name="experiencia_previa" id="experiencia_previa" autocomplete="experiencia_previa" autofocus
-                            required> @if(empty($solicitacao_responsavel) && $solicitacao->responsavel->experiencia_previa != null){{$solicitacao->responsavel->experiencia_previa}}@else{{old('experiencia_previa')}}@endif </textarea>
+                            required> @if(!empty($solicitacao_responsavel) && $solicitacao->responsavel->experiencia_previa != null){{$solicitacao->responsavel->experiencia_previa}}@else{{old('experiencia_previa')}}@endif </textarea>
                     @error('experiencia_previa')
                     <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -215,7 +216,7 @@
         </div>
         
             <div class="row mt-3">
-                <div class="col-sm-12">
+                <div class="col-sm-2">
                     <label for="treinamento">Treinamento:</label>
                     @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2)
                         @if($solicitacao->responsavel->treinamento == null)
@@ -223,15 +224,17 @@
                             <a class="btn btn-secondary"
                             href="#">Não Enviado</a>
                         @else
-                        <div class="col-m-12 mt-2">
-                            <label for="treinamento">Descrição:<strong style="color: red">*</strong></label>
-                            <textarea class="form-control @error('treinamento') is-invalid @enderror" name="treinamento" id="treinamento" autocomplete="treinamento" autofocus
-                            required>@if(!empty($solicitacao->responsavel) && $solicitacao->responsavel->treinamento != null){{$solicitacao->responsavel->treinamento}}@else{{old('treinamento')}}@endif</textarea>
-                            @error('treinamento')
-                            <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                            @enderror
+                        <div class="col-sm-12">
+                            <div class="col-m-12 mt-2">
+                                <label for="treinamento">Descrição:<strong style="color: red">*</strong></label>
+                                <textarea class="form-control @error('treinamento') is-invalid @enderror" name="treinamento" id="treinamento" autocomplete="treinamento" autofocus
+                                required>@if(!empty($solicitacao->responsavel) && $solicitacao->responsavel->treinamento != null){{$solicitacao->responsavel->treinamento}}@else{{old('treinamento')}}@endif</textarea>
+                                @error('treinamento')
+                                <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                                @enderror
+                            </div>
                         </div>
                         @endif
                     @else
@@ -252,10 +255,10 @@
                         </div>
                 </div>
 
-                    <div class="col-sm-9" id="treinamento" style="display: none;">
+                    <div class="col-sm-9 mt-2" id="treinamento" style="display: none;">
                         <label>Descreva:</label>
                         <textarea class="form-control @error('treinamento') is-invalid @enderror" name="treinamento" id="treinamento" autocomplete="treinamento" autofocus
-                        required> @if(empty($solicitacao_responsavel) && $solicitacao->responsavel->treinamento != null) {{$solicitacao->responsavel->treinamento}} @else{{old('treinamento')}}@endif </textarea>
+                        required> @if(!empty($solicitacao_responsavel) && $solicitacao->responsavel->treinamento != null) {{$solicitacao->responsavel->treinamento}} @else{{old('treinamento')}}@endif </textarea>
                         @error('treinamento')
                         <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -266,7 +269,7 @@
             </div>
 
             <div class="row mt-3" >
-                <div class="col-sm-12">
+                <div class="col-sm-2">
                     <label>Termo de Responsabilidade:</label>
                     @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2)
                         @if($solicitacao->responsavel->termo_responsabilidade == null)<br>
@@ -295,7 +298,7 @@
                         </div>
                     </div>
                     
-                    <div class="col-sm-4" id="anexo_termo_responsabilidade" style="display: none;">
+                    <div class="col-sm-4 mt-2" id="anexo_termo_responsabilidade" style="display: none;">
                         <label>Anexar Termo de Responsabilidade:</label>
                         <li><a href="" target="blank">Modelo Termo de Responsabilidade</a></li>
                         <input class="form-control @error('termo_responsabilidade') is-invalid @enderror"
@@ -315,12 +318,8 @@
                     </div>
                     @endif
                 </div>
-        </div>
-    </div>
-</div>
         @include('component.botoes_new_form')
     </form>
-
 </div>
 
 
