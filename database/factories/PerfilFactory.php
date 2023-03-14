@@ -13,6 +13,7 @@ class PerfilFactory extends Factory
     {
         return [
             'grupo_animal' => 'Grupo 5',
+            'tipo_grupo_animal' => 'Tipo Grupo 5',
             'linhagem' => 'Linhagem',
             'idade' => '10',
             'periodo' => 'Anos',

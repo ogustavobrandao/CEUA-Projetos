@@ -19,11 +19,12 @@ class ModeloAnimalFactory extends Factory
     public function definition()
     {
         return [
-            'termo_consentimento' => 'asdasdas',
+            'termo_consentimento' => 'lista6.pdf',
             'nome_vulgar' => 'Gato',
             'nome_cientifico' => 'Gatuno',
             'justificativa' => 'Justificativa',
             'geneticamente_modificado' => true,
+            'numero_cqb' => '123456789',
             'procedencia' => 'Procedencia',
             'solicitacao_id' => 1
         ];

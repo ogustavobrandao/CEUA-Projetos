@@ -20,6 +20,10 @@ class OperacaoFactory extends Factory
             'observacao_recuperacao' => 'Observação da Recuperacao',
             'outros_cuidados_recuperacao' => 'Outros Cuidados da Recuperação',
             'analgesia_recuperacao' => 'Analgesia na Recuperação',
+            'detalhes_observacao_recuperacao' => 'Detalhes da Recuperação',
+            'detalhes_analgesia_recuperacao' => 'Detalhes da Anestesia',
+            'detalhes_outros_cuidados_recuperacao' => 'Detalhes dos Outros Cuidados',
+            'detalhes_cirurgia' => 'Detalhes da Cirurgia',
             'planejamento_id' => 1
         ];
     }
