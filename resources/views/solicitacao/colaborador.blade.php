@@ -60,7 +60,7 @@
             '</span>' +
             '@enderror' +
             '</div>' +
-            '<div class="col-sm-4">' +
+            '<div class="col-sm-4 mt-2">' +
             '<label for="telefone">Telefone:<strong style="color: red">*</strong></label>' +
             '<input class="form-control @error('telefone') is-invalid @enderror" id="telefone" type="text" name="colaborador[' + cont + '][telefone]" value="{{ old('telefone') }}" required autocomplete="telefone" autofocus>' +
             '@error('telefone')' +
