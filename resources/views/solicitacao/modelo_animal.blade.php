@@ -48,7 +48,7 @@
 </div>
 
 <div>
-    <h3 class="subtitulo">Procedência</h3>
+    <h3 class="subtitulo mt-2">Procedência</h3>
     <div class="row">
         <div class="col-sm-6">
             <label for="procedencia">Procedência:<strong style="color: red">*</strong></label>
@@ -116,7 +116,7 @@
                 <div class="col-sm-4" id="anexo_cqb" style="display: none;">
                     <label for="anexo_cqb">Número CQB:<strong style="color: red">*</strong></label>
                     <input class="form-control @error('numero_cqb') is-invalid @enderror" id="numero_cqb" type="number" name="numero_cqb"
-                    @if(($modelo_animal->numero_cqb != null)) value="{{$modelo_animal->numero_cqb}}"
+                    @if(isset($modelo_animal) && ($modelo_animal->numero_cqb != null)) value="{{$modelo_animal->numero_cqb}}"
                     @else value="{{old('numero_cqb')}}" @endif required autocomplete="numero_cqb" autofocus>
                 </div>
             </div>
@@ -364,7 +364,7 @@
             @enderror
         </div>
 
-        <div class="col-sm-12 mt-2">
+        <div class="col-sm-12 mt-3">
             <label for="termo_consentimento">Termo de Consentimento Livre e Esclarecido (TCLE):<strong style="color: red">*</strong></label>
             @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2)
                 <a class="btn btn-primary"
@@ -402,8 +402,8 @@
             @endif
         </div>
 
-        <div class="col-sm-12 mt-2">
-            <label for="termo_consentimento">Licenças Prévias de outras instituições (IBAMA, FUNAI, CNEN, CTNBio, CGEN, ICMBio.):
+        <div class="col-sm-12 mt-3">
+            <label for="licencas_previas">Licenças Prévias de outras instituições (IBAMA, FUNAI, CNEN, CTNBio, CGEN, ICMBio.):
                 <a target="_blank"
                 href="https://www2.dti.ufv.br/ceua/scripts/grau-invasividade.html"
                 title="A autorização da CEUA não requer a existência de licença prévia de outras instituições. Entretanto, o responsável deverá obter todas as autorizações legais cabíveis que a natureza do projeto exige antes do início das atividades com animais como, por exemplo, autorizações de instituições como Instituto Brasileiro do Meio Ambiente e dos Recursos Naturais Renováveis - IBAMA, Fundação Nacional do Índio - FUNAI, Comissão Nacional de Energia Nuclear - CNEN, Conselho de Gestão do Patrimônio Genético - CGEN, Comissão Técnica Nacional de Biossegurança - CTNBio, Instituto Chico Mendes de Conservação da Biodiversidade - ICMBio, dentre outras." style="color: darkred">
@@ -411,9 +411,9 @@
              </a>
             </label>
             @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2)
-                <a class="btn btn-primary"
+                {{-- <a class="btn btn-primary"
                    href="{{route('licencas_previas.download', ['modelo_animal_id' => $modelo_animal->id])}}">Baixar
-                   Licenças</a>
+                   Licenças</a> --}}
             @else
                 @if(!empty($modelo_animal))
                     <input class="form-control @error('licencas_previas') is-invalid @enderror"
@@ -451,7 +451,7 @@
 <script>
     $(document).ready(function () {
 
-        @if($modelo_animal->geneticamente_modificado == true)
+        @if(isset($modelo_animal) && $modelo_animal->geneticamente_modificado == true)
         $("#geneticamente_modificado_sim").attr('checked', true);
         $("#anexo_cqb").show();
         @else

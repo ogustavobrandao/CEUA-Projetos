@@ -125,7 +125,6 @@ class SolicitacaoController extends Controller
 
     public function criar_responsavel(Request $request)
     {
-       
         Validator::make($request->all(), Responsavel::$rules, Responsavel::$messages)->validate();
         Validator::make($request->all(), Contato::$rules, Contato::$messages)->validate();
 
@@ -284,6 +283,7 @@ class SolicitacaoController extends Controller
 
     public function criar_modelo_animal(Request $request)
     {
+        
         Validator::make($request->all(), array_merge(ModeloAnimal::$rules, Perfil::$rules), array_merge(ModeloAnimal::$messages, Perfil::$messages))->validateWithBag('modelo');
 
         $data = $request->all();
