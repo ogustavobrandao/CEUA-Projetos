@@ -51,7 +51,7 @@
                 @enderror
             </div>
 
-            <div class="col-sm-12">
+            <div class="col-sm-12 mt-2">
                 <label>Anexar <span style="color: darkred">PDF</span> de amostra:</label>
             </div>
             <div class="col-sm-6">
@@ -90,7 +90,7 @@
         </div>
 
         <div class="row mt-2">
-            <div class="col-sm-12">
+            <div class="col-sm-12 mt-2">
                 <label>Apresentar, em anexo no formato <span style="color: darkred">PDF</span>, a
                     Fórmula Matemática que defina o "n" amostral. Apresentar o Desenho Experimental completo.
                     Quando não for o caso, justifique.</label>
@@ -129,7 +129,7 @@
             </div>
         </div>
 
-        <div class="row mt-2">
+        <div class="row mt-2 mt-2">
             <div class="col-sm-6">
                 <label for="desc_materiais_metodos">Descrição de Materiais e Métodos:<strong style="color: red">*</strong></label>
                 <textarea class="form-control @error('desc_materiais_metodos') is-invalid @enderror"
