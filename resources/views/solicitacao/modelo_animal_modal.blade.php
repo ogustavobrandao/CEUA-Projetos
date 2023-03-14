@@ -363,9 +363,12 @@
         <div class="col-sm-12 mt-3">
             <label for="termo_consentimento">Termo de Consentimento Livre e Esclarecido (TCLE):<strong style="color: red">*</strong></label>
             @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2)
-                <a class="btn btn-primary"
-                   href="{{route('termo.download', ['modelo_animal_id' => $modelo_animal->id])}}">Baixar
-                    Termo de Consentimento</a>
+                @if (!empty($modelo_animal->termo_consentimento))
+                    <a class="btn btn-primary"
+                       href="{{route('termo.download', ['modelo_animal_id' => $modelo_animal->id])}}">Baixar
+                        Termo de Consentimento</a>
+                @endif
+               
             @else
                 @if(!empty($modelo_animal))
                     <input class="form-control @error('termo_consentimento') is-invalid @enderror"

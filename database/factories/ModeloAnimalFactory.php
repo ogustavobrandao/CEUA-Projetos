@@ -19,7 +19,6 @@ class ModeloAnimalFactory extends Factory
     public function definition()
     {
         return [
-            'termo_consentimento' => 'lista6.pdf',
             'nome_vulgar' => 'Gato',
             'nome_cientifico' => 'Gatuno',
             'justificativa' => 'Justificativa',
