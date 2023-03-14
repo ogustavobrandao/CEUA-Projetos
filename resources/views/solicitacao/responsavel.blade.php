@@ -1,5 +1,4 @@
 <div class="card shadow-lg p-3 bg-white" style="border-radius: 0px 0px 10px 10px">
-
     <form id="form1" method="POST" action="{{route('solicitacao.responsavel.criar')}}" enctype="multipart/form-data">
         @csrf
         <input type="hidden" name="solicitacao_id" value="{{$solicitacao->id}}">
@@ -42,7 +41,7 @@
                 @enderror
             </div>
 
-            <div class="col-sm-4">
+            <div class="col-sm-4 mt-2">
                 <label for="cpf">CPF:<strong style="color: red">*</strong></label>
                 <input class="form-control @error('cpf') is-invalid @enderror" id="cpf" type="text"
                        name="cpf"
@@ -161,187 +160,166 @@
 
         </div>
 
-        <div class="row">
-            <h3 class="subtitulo">Informações Complementares</h3>
-            <div class="col-sm-2">
-                <label for="experiencia">Experiência Prévia:</label>
-                @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2)
-                    @if($solicitacao->responsavel->experiencia_previa == null)
-                        <a class="btn btn-secondary"
-                           href="#">Não Enviado</a>
-                    @else
-                    <div class="col-sm-9" id="anexo_experiencia" style="display: none;">
-                        <label>Descreva sua Experiência Prévia:</label>
-                        <textarea class="form-control @error('experiencia_previa') is-invalid @enderror" name="experiencia_previa" id="experiencia_previa" autocomplete="experiencia_previa" autofocus
-                          required>@if(!empty($solicitacao->responsavel) && $solicitacao->responsavel->experiencia_previa != null){{$solicitacao->responsavel->experiencia_previa}}@else{{old('experiencia_previa')}}@endif</textarea>
-                    @endif
-                    </div>
-            @else
-                <div class="row ml-1 mt-2">
-                    <div class="col-sm-6">
-                        <input class="form-check-input" type="radio" name="experiencia_previa_radio"
-                               id="experiencia_previa_sim"
-                               @if(!empty($solicitacao->responsavel) && $solicitacao->responsavel->experiencia_previa != null) checked @endif>
-                        <label class="form-check-label" for="experiencia_previa_sim">Sim</label>
-                    </div>
-                    <div class="col-sm-6">
-                        <input class="form-check-input" type="radio" name="experiencia_previa_radio"
-                               id="experiencia_previa_nao"
-                               @if(!empty($solicitacao->responsavel) && $solicitacao->responsavel->experiencia_previa == null || empty($solicitacao->responsavel)) checked
-                               @endif value="false">
-                        <label class="form-check-label" for="experiencia_previa_nao">
-                            Não
-                        </label>
-                    </div>
-                </div>
-            </div>
-        {{-- <div class="col-sm-4" id="anexo_experiencia" style="display: none;">
-            <label>Anexar Comprovante de Experiência Prévia:</label>
-            <input class="form-control @error('experiencia_previa') is-invalid @enderror"
-                   id="experiencia_previa"
-                   type="file" name="experiencia_previa"
-                   value="" autocomplete="experiencia_previa"
-                   @if(isset($solicitacao->responsavel) && $solicitacao->responsavel->experiencia_previa != null) style="width: 135px" @endif >
-            @error('experiencia_previa')
-            <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-            @enderror
-            @if(isset($solicitacao->responsavel) && $solicitacao->responsavel->experiencia_previa != null)
-                <span
-                    style="border: 1px gray solid; border-radius: 10px; text-align: center; width: 250px; position: absolute; bottom: 0px; left: 155px; height: 38px; padding-top: 5px; background-color: #dcfadf">Um Arquivo Já Foi Enviado</span>
-            @endif
-        </div> --}}
-        <div class="col-sm-9" id="anexo_experiencia" style="display: none;">
-            <label>Descreva sua Experiência Prévia:</label>
-            <textarea class="form-control @error('experiencia_previa') is-invalid @enderror" name="experiencia_previa" id="experiencia_previa" autocomplete="experiencia_previa" autofocus
-                      required> @if(!empty($solicitacao->responsavel) && $solicitacao->responsavel->experiencia_previa != null){{$solicitacao->responsavel->experiencia_previa}}@else{{old('experiencia_previa')}}@endif </textarea>
-            @error('experiencia_previa')
-            <span class="invalid-feedback" role="alert">
-            <strong>{{ $message }}</strong>
-        </span>
-            @enderror
-        </div>
-        @endif
-        
-        <div class="col-sm-2">
-            <label>Treinamento:</label>
-            @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2)
-                @if($solicitacao->responsavel->treinamento == null)
-                    <br>
-                    <a class="btn btn-secondary"
-                       href="#">Não Enviado</a>
-                @else
-                <div class="col-sm-9" id="treinamento" style="display: none;">
-                    <label>Descreva seu Treinamento:</label>
-                    <textarea class="form-control @error('treinamento') is-invalid @enderror" name="treinamento" id="treinamento" autocomplete="treinamento" autofocus
-                          required>@if(!empty($solicitacao->responsavel) && $solicitacao->responsavel->treinamento != null){{$solicitacao->responsavel->treinamento}}@else{{old('treinamento')}}@endif</textarea>
-                @endif
-        </div>
-            @else
-            <div class="row ml-1 mt-2">
-                <div class="col-sm-6">
-                    <input class="form-check-input" type="radio" name="treinamento_radio" id="treinamento_sim"
-                           @if(!empty($solicitacao->responsavel) && $solicitacao->responsavel->treinamento != null) checked @endif>
-                    <label class="form-check-label" for="treinamento">Sim</label>
-                </div>
-                <div class="col-sm-6">
-                    <input class="form-check-input" type="radio" name="treinamento_radio" id="treinamento_nao"
-                           @if(!empty($solicitacao->responsavel) && $solicitacao->responsavel->treinamento == null || $solicitacao->responsavel == null) checked
-                           @endif value="false">
-                    <label class="form-check-label" for="treinamento">
-                        Não
-                    </label>
-                </div>
-            </div>
-        </div>
-{{-- <div class="col-sm-4" id="treinamento" style="display: none;">
-    <label>Anexar Comprovante de Treinamento:</label>
-    <input class="form-control @error('treinamento') is-invalid @enderror"
-           id="treinamento"
-           type="file" name="treinamento"
-           value="" autocomplete="treinamento"
-           @if(isset($solicitacao->responsavel) && $solicitacao->responsavel->treinamento != null) style="width: 135px" @endif>
-    @error('treinamento')
-    <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-    @enderror
-    @if(isset($solicitacao->responsavel) && $solicitacao->responsavel->treinamento != null)
-        <span
-            style="border: 1px gray solid; border-radius: 10px; text-align: center; width: 250px; position: absolute; bottom: 0px; left: 155px; height: 38px; padding-top: 5px; background-color: #dcfadf">Um Arquivo Já Foi Enviado</span>
-    @endif
-</div> --}}
-        <div class="col-sm-9" id="treinamento" style="display: none;">
-            <label>Descreva seu Treinamento:</label>
-            <textarea class="form-control @error('treinamento') is-invalid @enderror" name="treinamento" id="treinamento" autocomplete="treinamento" autofocus
-            required> @if(!empty($solicitacao->responsavel) && $solicitacao->responsavel->treinamento != null){{$solicitacao->responsavel->treinamento}}@else{{old('treinamento')}}@endif </textarea>
-            @error('treinamento')
-            <span class="invalid-feedback" role="alert">
-            <strong>{{ $message }}</strong>
-        </span>
-            @enderror
-        </div>
-        @endif
+        <h3 class="subtitulo">Informações Complementares</h3>
 
-        <div class="col-sm-2">
-            <label>Termo de Responsabilidade:</label>
-            @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2)
-                @if($solicitacao->responsavel->termo_responsabilidade == null)
-                    <br>
-                    <a class="btn btn-secondary"
-                       href="#">Não Enviado</a>
-                @else
-                     <a class="btn btn-primary"
-                           href="{{route('termo_responsabilidade.downloadTermoResponsabilidade', ['responsavel_id' => $solicitacao->responsavel->id])}}">Baixar
-                            Termo de Responsabilidade</a>
+        <div class="row mt-3">
+            <div class="col-sm-12">
+                    <label for="experiencia">Experiência Prévia:</label>
+                    @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2)
+                        @if($solicitacao->responsavel->experiencia_previa == null)
+                            <a class="btn btn-secondary"
+                            href="#">Não Enviado</a>
+                        @else
+                        <div class="col-m-12 mt-2">
+                            <label for="experiencia_previa">Descrição:<strong style="color: red">*</strong></label>
+                            <textarea class="form-control @error('experiencia_previa') is-invalid @enderror" name="experiencia_previa" id="experiencia_previa" autocomplete="experiencia_previa" autofocus
+                            required>@if(!empty($solicitacao->responsavel) && $solicitacao->responsavel->experiencia_previa != null){{$solicitacao->responsavel->experiencia_previa}}@else{{old('experiencia_previa')}}@endif</textarea>
+                            @error('experiencia_previa')
+                            <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                            @enderror
+                        </div>
+                        @endif
+                    @else
+                    <div class="row ml-1 mt-2">
+                        <div class="col-sm-6">
+                            <input class="form-check-input" type="radio" name="experiencia_previa_radio"
+                                id="experiencia_previa_sim"
+                                @if(!empty($solicitacao->responsavel) && $solicitacao->responsavel->experiencia_previa != null) checked @endif>
+                            <label class="form-check-label" for="experiencia_previa_sim">Sim</label>
+                        </div>
+                        <div class="col-sm-6">
+                            <input class="form-check-input" type="radio" name="experiencia_previa_radio"
+                                id="experiencia_previa_nao"
+                                @if(!empty($solicitacao->responsavel) && $solicitacao->responsavel->experiencia_previa == null || empty($solicitacao->responsavel)) checked
+                                @endif value="false">
+                            <label class="form-check-label" for="experiencia_previa_nao">
+                                Não
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="col-sm-9" id="anexo_experiencia" style="display: none;">
+                    <label>Descreva:</label>
+                    <textarea class="form-control @error('experiencia_previa') is-invalid @enderror" name="experiencia_previa" id="experiencia_previa" autocomplete="experiencia_previa" autofocus
+                            required> @if(empty($solicitacao_responsavel) && $solicitacao->responsavel->experiencia_previa != null){{$solicitacao->responsavel->experiencia_previa}}@else{{old('experiencia_previa')}}@endif </textarea>
+                    @error('experiencia_previa')
+                    <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+                    @enderror
+                </div>
                 @endif
         </div>
-            @else
-            <div class="row ml-1 mt-2">
-                <div class="col-sm-6">
-                    <input class="form-check-input" type="radio" name="termo_responsabilidade_radio" id="termo_responsabilidade_sim"
-                           @if(!empty($solicitacao->responsavel) && $solicitacao->responsavel->termo_responsabilidade != null) checked @endif>
-                    <label class="form-check-label" for="termo_responsabilidade">Sim</label>
+        
+            <div class="row mt-3">
+                <div class="col-sm-12">
+                    <label for="treinamento">Treinamento:</label>
+                    @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2)
+                        @if($solicitacao->responsavel->treinamento == null)
+                            <br>
+                            <a class="btn btn-secondary"
+                            href="#">Não Enviado</a>
+                        @else
+                        <div class="col-m-12 mt-2">
+                            <label for="treinamento">Descrição:<strong style="color: red">*</strong></label>
+                            <textarea class="form-control @error('treinamento') is-invalid @enderror" name="treinamento" id="treinamento" autocomplete="treinamento" autofocus
+                            required>@if(!empty($solicitacao->responsavel) && $solicitacao->responsavel->treinamento != null){{$solicitacao->responsavel->treinamento}}@else{{old('treinamento')}}@endif</textarea>
+                            @error('treinamento')
+                            <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                            @enderror
+                        </div>
+                        @endif
+                    @else
+                        <div class="row ml-1 mt-2">
+                            <div class="col-sm-6">
+                                <input class="form-check-input" type="radio" name="treinamento_radio" id="treinamento_sim"
+                                    @if(!empty($solicitacao->responsavel) && $solicitacao->responsavel->treinamento != null) checked @endif>
+                                <label class="form-check-label" for="treinamento">Sim</label>
+                            </div>
+                            <div class="col-sm-6">
+                                <input class="form-check-input" type="radio" name="treinamento_radio" id="treinamento_nao"
+                                    @if(!empty($solicitacao->responsavel) && $solicitacao->responsavel->treinamento == null || $solicitacao->responsavel == null) checked
+                                    @endif value="false">
+                                <label class="form-check-label" for="treinamento">
+                                    Não
+                                </label>
+                            </div>
+                        </div>
                 </div>
-                <div class="col-sm-6">
-                    <input class="form-check-input" type="radio" name="termo_responsabilidade_radio" id="termo_responsabilidade_nao"
-                           @if(!empty($solicitacao->responsavel) && $solicitacao->responsavel->termo_responsabilidade == null || $solicitacao->responsavel == null) checked
-                           @endif value="false">
-                    <label class="form-check-label" for="termo_responsabilidade">
-                        Não
-                    </label>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-4" id="anexo_termo_responsabilidade" style="display: none;">
-            <label>Anexar Termo de Responsabilidade:</label>
-            <li><a href="" target="blank">Modelo Termo de Responsabilidade</a> </li>
-            <input class="form-control @error('termo_responsabilidade') is-invalid @enderror"
-                id="termo_responsabilidade"
-                type="file" name="termo_responsabilidade"
-                value="" autocomplete="termo_responsabilidade"
-                @if(isset($solicitacao->responsavel) && $solicitacao->responsavel->termo_responsabilidade != null) style="width: 135px" @endif>
-            @error('termo_responsabilidade')
-            
-            <span class="invalid-feedback" role="alert">
+
+                    <div class="col-sm-9" id="treinamento" style="display: none;">
+                        <label>Descreva:</label>
+                        <textarea class="form-control @error('treinamento') is-invalid @enderror" name="treinamento" id="treinamento" autocomplete="treinamento" autofocus
+                        required> @if(empty($solicitacao_responsavel) && $solicitacao->responsavel->treinamento != null) {{$solicitacao->responsavel->treinamento}} @else{{old('treinamento')}}@endif </textarea>
+                        @error('treinamento')
+                        <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
-            @enderror
-            @if(isset($solicitacao->responsavel) && $solicitacao->responsavel->termo_responsabilidade != null)
-                <span
-                    style="border: 1px gray solid; border-radius: 10px; text-align: center; width: 250px; position: absolute; bottom: 0px; left: 155px; height: 38px; padding-top: 5px; background-color: #dcfadf">Um Arquivo Já Foi Enviado</span>
-            @endif
+                        @enderror
+                    </div>
+                @endif
+            </div>
+
+            <div class="row mt-3" >
+                <div class="col-sm-12">
+                    <label>Termo de Responsabilidade:</label>
+                    @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2)
+                        @if($solicitacao->responsavel->termo_responsabilidade == null)<br>
+                            <a class="btn btn-secondary"
+                            href="#">Não Enviado</a>
+                        @else
+                            <a class="btn btn-primary"
+                                href="{{route('termo_responsabilidade.downloadTermoResponsabilidade', ['responsavel_id' => $solicitacao->responsavel->id])}}">Baixar
+                                    Termo de Responsabilidade</a>
+                        @endif
+                    @else
+                        <div class="row ml-1 mt-2">
+                            <div class="col-sm-6">
+                                <input class="form-check-input" type="radio" name="termo_responsabilidade_radio" id="termo_responsabilidade_sim"
+                                    @if(!empty($solicitacao->responsavel) && $solicitacao->responsavel->termo_responsabilidade != null) checked @endif>
+                                <label class="form-check-label" for="termo_responsabilidade">Sim</label>
+                            </div>
+                            <div class="col-sm-6">
+                                <input class="form-check-input" type="radio" name="termo_responsabilidade_radio" id="termo_responsabilidade_nao"
+                                    @if(!empty($solicitacao->responsavel) && $solicitacao->responsavel->termo_responsabilidade == null || $solicitacao->responsavel == null) checked
+                                    @endif value="false">
+                                <label class="form-check-label" for="termo_responsabilidade">
+                                    Não
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-sm-4" id="anexo_termo_responsabilidade" style="display: none;">
+                        <label>Anexar Termo de Responsabilidade:</label>
+                        <li><a href="" target="blank">Modelo Termo de Responsabilidade</a></li>
+                        <input class="form-control @error('termo_responsabilidade') is-invalid @enderror"
+                            id="termo_responsabilidade"
+                            type="file" name="termo_responsabilidade"
+                            value="" autocomplete="termo_responsabilidade"
+                            @if(isset($solicitacao->responsavel) && $solicitacao->responsavel->termo_responsabilidade != null) style="width: 135px" @endif>
+                        @error('termo_responsabilidade')
+                        <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                        @enderror
+                        @if(isset($solicitacao->responsavel) && $solicitacao->responsavel->termo_responsabilidade != null)
+                            <span
+                                style="border: 1px gray solid; border-radius: 10px; text-align: center; width: 250px; position: absolute; bottom: 0px; left: 155px; height: 38px; padding-top: 5px; background-color: #dcfadf">Um Arquivo Já Foi Enviado</span>
+                        @endif
+                    </div>
+                    @endif
+                </div>
         </div>
-        @endif
-
-        </div>
-
-        
-
-@include('component.botoes_new_form')
-
-</form>
+    </div>
+</div>
+        @include('component.botoes_new_form')
+    </form>
 
 </div>
 
@@ -397,8 +375,6 @@
 
     });
 
-
-
     $("#termo_responsabilidade_sim").click(function () {
         $("#anexo_termo_responsabilidade").show().find('input, textarea').prop('disabled', false);
         @if(isset($solicitacao->responsavel) && $solicitacao->responsavel->termo_responsabilidade == null)
@@ -411,5 +387,4 @@
         $("#termo_responsabilidade").prop('required', false);
     });
 
-    
 </script>
