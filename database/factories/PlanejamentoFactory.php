@@ -18,6 +18,7 @@ class PlanejamentoFactory extends Factory
     {
         return [
             'grau_invasividade' => 'GI2',
+            
             'outras_infos' => 'Outras Informações',
             'analise_estatistica' => 'Analise Estatistica',
             'especificar_grupo' => 'Especificar Grupo',

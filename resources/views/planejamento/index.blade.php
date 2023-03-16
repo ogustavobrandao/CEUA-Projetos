@@ -58,7 +58,6 @@
                 </div>
             </div>
             <div id="planejamento">
-                @if($planejamento->id != null)
                     @if(Auth::user()->tipo_usuario_id == 2)
                         @include('solicitacao.planejamento',['tipo'=>5,'avaliacao_id'=>$avaliacao->id,'id'=>$planejamento->id])
                     @elseif(Auth::user()->tipo_usuario_id == 3 && $solicitacao->status == 'avaliado'
@@ -67,7 +66,6 @@
                     @else
                         @include('solicitacao.planejamento')
                     @endif
-                @endif
             </div>
         </div>
 
