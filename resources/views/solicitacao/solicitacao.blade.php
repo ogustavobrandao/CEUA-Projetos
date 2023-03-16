@@ -78,10 +78,10 @@
             </div>
 
             <div class="col-sm-4">
-                <label for="area_conhecimento">Área de Conhecimento:<strong style="color: red">*</strong></label>
+                <label for="area_conhecimento">Área e Subárea do Conhecimento:<strong style="color: red">*</strong></label>
                 <select class="form-control @error('area_conhecimento') is-invalid @enderror" id="area_conhecimento"
                         name="area_conhecimento">
-                    <option disabled selected>Selecione a Área de Conhecimento</option>
+                    <option disabled selected>Área e Subárea do Conhecimento</option>
                     <option value="ciencias_agrarias"
                             @if(!empty($solicitacao) && $solicitacao->area_conhecimento == 'ciencias_agrarias') selected @endif>
                         Ciências Agrárias
