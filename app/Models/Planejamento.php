@@ -12,6 +12,7 @@ class Planejamento extends Model
     protected $fillable = [
         'grau_invasividade',
         'anexo_formula',
+        'anexo_amostra_planejamento',
         'outras_infos',
         'analise_estatistica',
         'especificar_grupo',

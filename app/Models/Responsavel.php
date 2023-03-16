@@ -14,6 +14,7 @@ class Responsavel extends Model
         'treinamento',
         'vinculo_instituicao',
         'experiencia_previa',
+        'termo_responsabilidade',
         'solicitacao_id',
         'departamento_id',
     ];
@@ -21,13 +22,10 @@ class Responsavel extends Model
     public static $rules = [
         'nome' => 'required|string|min:5',
         'departamento_id' => 'required',
-        'experiencia_previa' => 'mimes:pdf',
-        'treinamento' => 'mimes:pdf'
     ];
 
     public static $messages = [
         '*.required' => 'O :attribute é um campo obrigatório.',
-        '*.mimes' => 'O anexo do campo :attribute só pode ser do tipo PDF',
         'nome.required' => 'O nome é um campo obrigatório.',
         'nome.string' => 'O nome deve ser um texto',
         'nome.min' => 'O nome deve possuir no minimo 5 caracteres',

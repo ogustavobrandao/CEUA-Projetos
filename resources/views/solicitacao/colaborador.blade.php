@@ -52,6 +52,15 @@
             '@enderror' +
             '</div>' +
             '<div class="col-sm-4">' +
+            '<label for="cpf">CPF:<strong style="color: red">*</strong></label>' +
+            '<input class="form-control @error('cpf') is-invalid @enderror" id="cpf" type="cpf" name="colaborador[' + cont + '][cpf]" value="{{ old('cpf') }}" required autocomplete="cpf" autofocus>' +
+            '@error('cpf')' +
+            '<span class="invalid-feedback" role="alert">' +
+            '<strong>{{ $message }}</strong>' +
+            '</span>' +
+            '@enderror' +
+            '</div>' +
+            '<div class="col-sm-4 mt-2">' +
             '<label for="telefone">Telefone:<strong style="color: red">*</strong></label>' +
             '<input class="form-control @error('telefone') is-invalid @enderror" id="telefone" type="text" name="colaborador[' + cont + '][telefone]" value="{{ old('telefone') }}" required autocomplete="telefone" autofocus>' +
             '@error('telefone')' +
@@ -72,20 +81,12 @@
             '@endforeach' +
             '</select>' +
             '</div>' +
-            '<div class="col-sm-6">' +
-            '<label for="nivel_academico">Nível Acadêmico:<strong style="color: red">*</strong></label>' +
-            '<input class="form-control @error('nivel_academico') is-invalid @enderror" id="nivel_academico" type="text" name="colaborador[' + cont + '][nivel_academico]" value="{{ old('nivel_academico') }}" required autocomplete="nivel_academico" autofocus>' +
-            '@error('nivel_academico') ' +
-            '<span class="invalid-feedback" role="alert">' +
-            '<strong>{{ $message }}</strong>' +
-            '</span>' +
-            '@enderror' +
-            '</div>' +
             '<div class="col-sm-6 mt-2">' +
                 '<label for="grau_escolaridade">Grau de Escolaridade:<strong style="color: red">*</strong></label>' +
                 '<select class="form-control" id="grau_escolaridade" name="colaborador[' + cont + '][grau_escolaridade]">' +
                     '<option disabled selected>Selecione um Grau de Escolaridade</option>' +
                     '<option @if(old('grau_escolaridade') == "graduacao_completa") selected @endif value="graduacao_completa">Graduação Completa</option>' +
+                    '<option @if(old('grau_escolaridade') == "graduacao_incompleta") selected @endif value="graduacao_incompleta">Graduação Incompleta</option>' +
                     '<option @if(old('grau_escolaridade') == "pos_graduacao_incompleta") selected @endif value="pos_graduacao_incompleta">Pós-Gradução Incompleta</option>' +
                     '<option @if(old('grau_escolaridade') == "pos_graduacao_completa") selected @endif value="pos_graduacao_completa">Pós-Gradução Completa</option>' +
                     '<option @if(old('grau_escolaridade') == "mestrado_incompleto") selected @endif value="mestrado_incompleto">Mestrado Incompleto</option>' +
@@ -99,7 +100,7 @@
             '<div class="row">' +
             '<h3 class="subtitulo">Informações Complementares</h3>' +
             '<div class="col-sm-6">' +
-            '<label for="experiencia_previa">Experiência Previa (anos):<strong style="color: red">*</strong></label>' +
+            '<label for="experiencia_previa">Experiência Prévia (anos):<strong style="color: red">*</strong></label>' +
             '<input class="form-control @error('experiencia_previa') is-invalid @enderror" id="experiencia_previa" type="text" name="colaborador[' + cont + '][experiencia_previa]" value="{{ old('experiencia_previa') }}" required autocomplete="experiencia_previa" autofocus>' +
             '@error('experiencia_previa')' +
             '<span class="invalid-feedback" role="alert">' +
@@ -126,8 +127,8 @@
     $('#colab' + {{$key+1}}).find('#colab_id').val("{{$colab->id}}");
     $('#colab' + {{$key+1}}).find('#nome').val("{{$colab->nome}}");
     $('#colab' + {{$key+1}}).find('#email').val("{{$colab->contato->email}}");
+    $('#colab' + {{$key+1}}).find('#cpf').val("{{$colab->cpf}}");
     $('#colab' + {{$key+1}}).find('#telefone').val("{{$colab->contato->telefone}}");
-    $('#colab' + {{$key+1}}).find('#nivel_academico').val("{{$colab->nivel_academico}}");
     $('#colab' + {{$key+1}}).find('#treinamento').val("{{$colab->treinamento}}");
     $('#colab' + {{$key+1}}).find('#experiencia_previa').val("{{$colab->experiencia_previa}}");
     $('#colab' + {{$key+1}}).find('#instituicao').val("{{$colab->instituicao->id}}");

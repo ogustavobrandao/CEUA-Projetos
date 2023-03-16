@@ -10,6 +10,10 @@ class Operacao extends Model
     use HasFactory;
 
     protected $fillable = [
+        'detalhes_cirurgia',
+        'detalhes_observacao_recuperacao',
+        'detalhes_outros_cuidados_recuperacao',
+        'detalhes_analgesia_recuperacao',
         'observacao_recuperacao',
         'outros_cuidados_recuperacao',
         'analgesia_recuperacao',

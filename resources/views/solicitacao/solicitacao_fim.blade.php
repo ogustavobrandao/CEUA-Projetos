@@ -7,7 +7,7 @@
 
             <div class="col-sm-12 mt-2">
                 <label for="resumo">Resumo do Projeto de Pesquisa / de Extensão / de Aula Prática / de Treinamento:<strong style="color: red">*</strong></label>
-                <textarea class="form-control @error('resumo') is-invalid @enderror" name="resumo" id="resumo" maxlength="400" autocomplete="resumo" autofocus
+                <textarea class="form-control @error('resumo') is-invalid @enderror" name="resumo" id="resumo" autocomplete="resumo" autofocus
                           required>@if(!empty($solicitacao->dadosComplementares) && $solicitacao->dadosComplementares->resumo != null){{$solicitacao->dadosComplementares->resumo}}@else{{old('resumo')}}@endif</textarea>
                 @error('resumo')
                 <span class="invalid-feedback" role="alert">

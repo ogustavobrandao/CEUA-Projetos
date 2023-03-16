@@ -16,7 +16,9 @@ class ModeloAnimal extends Model
         'nome_vulgar',
         'procedencia',
         'termo_consentimento',
+        'licencas_previas',
         'solicitacao_id',
+        'numero_cqb',
     ];
 
     public static $rules = [
@@ -25,7 +27,7 @@ class ModeloAnimal extends Model
         'nome_cientifico' => 'required|string|min:5',
         'nome_vulgar' => 'required|string|min:5',
         'procedencia' => 'required',
-        'termo_consentimento' => 'required',
+        'numero_cqb' => 'required',
     ];
 
     public static $messages = [

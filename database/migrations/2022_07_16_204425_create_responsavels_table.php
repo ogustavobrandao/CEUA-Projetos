@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('responsavels', function (Blueprint $table) {
             $table->id();
             $table->string('nome');
-            $table->string('treinamento')->nullable();
-            $table->string('experiencia_previa')->nullable();
+            $table->text('treinamento')->nullable();
+            $table->text('experiencia_previa')->nullable();
             $table->string('vinculo_instituicao');
             $table->string('grau_escolaridade');
             $table->unsignedBigInteger('departamento_id');
