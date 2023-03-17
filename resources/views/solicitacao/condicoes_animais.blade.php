@@ -25,7 +25,7 @@
             </div>
 
             <div class="col-sm-12 mt-2">
-                <label for="local">Local onde será mantido o animal durante o procedimento experimental (biotério, fazenda, aviário, laboratório, outro):<strong style="color: red">*</strong></label>
+                <label for="local">Endereço e local onde será mantido o animal durante o procedimento experimental (biotério, fazenda, aviário, laboratório, outro):<strong style="color: red">*</strong></label>
                 <textarea class="form-control @error('local') is-invalid @enderror" id="local" name="local" required autocomplete="local"
                           autofocus>@if(!empty($condicoes_animal) && $condicoes_animal->local != null){{$condicoes_animal->local}}@else{{old('local')}}@endif</textarea>
                 @error('local')
