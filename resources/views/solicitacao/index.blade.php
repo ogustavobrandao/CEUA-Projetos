@@ -8,11 +8,19 @@
             <div class="card shadow-lg p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_0">
                 <div class="row">
                     <div class="col-md-12">
-                        <h2 class="titulo" id="titulo_0">1. Dados Iniciais
-                            <a class="float-end" id="0_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
-                            <a class="float-end" id="0_btn_down" style="display: none"><i
-                                    class="fa-solid fa-circle-chevron-down"></i></a>
-                        </h2>
+                        @if(Auth::user()->tipo_usuario_id == 2)
+                            <h2 class="titulo" id="titulo_0">1. Dados Iniciais <strong style="color: red">*</strong>
+                                <a class="float-end" id="0_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
+                                <a class="float-end" id="0_btn_down" style="display: none"><i
+                                        class="fa-solid fa-circle-chevron-down"></i></a>
+                            </h2>
+                        @else
+                            <h2 class="titulo" id="titulo_0">1. Dados Iniciais
+                                <a class="float-end" id="0_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
+                                <a class="float-end" id="0_btn_down" style="display: none"><i
+                                        class="fa-solid fa-circle-chevron-down"></i></a>
+                            </h2>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -31,11 +39,19 @@
             <div class="card shadow-lg p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_1">
                 <div class="row">
                     <div class="col-md-12">
-                        <h2 class="titulo" id="titulo_1">2. Dados do Responsável
-                            <a class="float-end" id="1_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
-                            <a class="float-end" id="1_btn_down" style="display: none"><i
-                                    class="fa-solid fa-circle-chevron-down"></i></a>
-                        </h2>
+                        @if(Auth::user()->tipo_usuario_id == 2)
+                            <h2 class="titulo" id="titulo_1">2. Dados do Responsável <strong style="color: red">*</strong>
+                                <a class="float-end" id="1_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
+                                <a class="float-end" id="1_btn_down" style="display: none"><i
+                                        class="fa-solid fa-circle-chevron-down"></i></a>
+                            </h2>
+                        @else
+                            <h2 class="titulo" id="titulo_1">2. Dados do Responsável
+                                <a class="float-end" id="1_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
+                                <a class="float-end" id="1_btn_down" style="display: none"><i
+                                        class="fa-solid fa-circle-chevron-down"></i></a>
+                            </h2>
+                        @endif
 
                     </div>
                 </div>
@@ -57,22 +73,39 @@
             <div class="card shadow-lg p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_2">
                 <div class="row">
                     <div class="col-md-12">
-                        <h2 class="titulo" id="titulo_2">3. Dados do(s) Colaborador(es)
-
-                            @if(!isset($solicitacao->responsavel))
-                                <small style="color: red; font-weight: bold">Necessária a criação de um
-                                    responsável</small>
-                            @endif
-                            <a class="float-end" id="2_btn_up"><i
-                                    class="fa-solid fa-circle-chevron-up"></i></a>
-                            <a class="float-end" id="2_btn_down" style="display: none"><i
-                                    class="fa-solid fa-circle-chevron-down"></i></a>
-                            @if(!isset($disabled) && isset($solicitacao->responsavel))
-                                <a class="float-end mr-2" onclick="criarColaborador()" style="color: green"
-                                   title="Adicionar Colaborador">
-                                    <i class="fa-solid fa-circle-plus fa-2xl"></i></a>
-                            @endif
-                        </h2>
+                        @if(Auth::user()->tipo_usuario_id == 2)
+                            <h2 class="titulo" id="titulo_2">3. Dados do(s) Colaborador(es) <strong style="color: red">*</strong>
+                                @if(!isset($solicitacao->responsavel))
+                                    <small style="color: red; font-weight: bold">Necessária a criação de um
+                                        responsável</small>
+                                @endif
+                                <a class="float-end" id="2_btn_up"><i
+                                        class="fa-solid fa-circle-chevron-up"></i></a>
+                                <a class="float-end" id="2_btn_down" style="display: none"><i
+                                        class="fa-solid fa-circle-chevron-down"></i></a>
+                                @if(!isset($disabled) && isset($solicitacao->responsavel))
+                                    <a class="float-end mr-2" onclick="criarColaborador()" style="color: green"
+                                        title="Adicionar Colaborador">
+                                        <i class="fa-solid fa-circle-plus fa-2xl"></i></a>
+                                @endif
+                            </h2>
+                        @else
+                            <h2 lass="titulo" id="titulo_2">3. Dados do(s) Colaborador(es)
+                                @if(!isset($solicitacao->responsavel))
+                                    <small style="color: red; font-weight: bold">Necessária a criação de um
+                                        responsável</small>
+                                @endif
+                                <a class="float-end" id="2_btn_up"><i
+                                        class="fa-solid fa-circle-chevron-up"></i></a>
+                                <a class="float-end" id="2_btn_down" style="display: none"><i
+                                        class="fa-solid fa-circle-chevron-down"></i></a>
+                                @if(!isset($disabled) && isset($solicitacao->responsavel))
+                                    <a class="float-end mr-2" onclick="criarColaborador()" style="color: green"
+                                        title="Adicionar Colaborador">
+                                        <i class="fa-solid fa-circle-plus fa-2xl"></i></a>
+                                @endif
+                            </h2>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -91,11 +124,19 @@
             <div class="card shadow-lg p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_3">
                 <div class="row">
                     <div class="col-md-12">
-                        <h2 class="titulo" id="titulo_3">4. Dados Complementares
-                            <a class="float-end" id="3_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
-                            <a class="float-end" id="3_btn_down" style="display: none"><i
-                                    class="fa-solid fa-circle-chevron-down"></i></a>
-                        </h2>
+                        @if(Auth::user()->tipo_usuario_id == 2)
+                            <h2 class="titulo" id="titulo_3">4. Dados Complementares <strong style="color: red">*</strong>
+                                <a class="float-end" id="3_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
+                                <a class="float-end" id="3_btn_down" style="display: none"><i
+                                        class="fa-solid fa-circle-chevron-down"></i></a>
+                            </h2>
+                        @else
+                            <h2 class="titulo" id="titulo_3">4. Dados Complementares
+                                <a class="float-end" id="3_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
+                                <a class="float-end" id="3_btn_down" style="display: none"><i
+                                        class="fa-solid fa-circle-chevron-down"></i></a>
+                            </h2>
+                        @endif
 
                     </div>
                 </div>
@@ -146,16 +187,30 @@
             <div class="card shadow-lg p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_4">
                 <div class="row">
                     <div class="col-md-12">
-                        <h3 class="titulo" id="titulo_4">5. Dados dos Modelos Animais
+                       @if(Auth::user()->tipo_usuario_id == 2)
+                            <h3 class="titulo" id="titulo_4">5. Dados dos Modelos Animais <strong style="color: white">*</strong>
 
-                            @if(Auth::user()->tipo_usuario_id == 3  && $solicitacao->status != 'avaliado')
-                                <a class="float-end "
-                                   data-toggle="modal"
-                                   data-target="#modeloAnimalModal"
-                                   style="color: green"
-                                   title="Adicionar Modelo Animal"><i
-                                        class="fa-solid fa-circle-plus fa-2xl"></i></a></h3>
-                        @endif
+                                @if(Auth::user()->tipo_usuario_id == 3  && $solicitacao->status != 'avaliado')
+                                    <a class="float-end "
+                                    data-toggle="modal"
+                                    data-target="#modeloAnimalModal"
+                                    style="color: green"
+                                    title="Adicionar Modelo Animal"><i
+                                            class="fa-solid fa-circle-plus fa-2xl"></i></a></h3>
+                            @endif
+                        @else
+                            <h3 class="titulo" id="titulo_4">5. Dados dos Modelos Animais 
+
+                                @if(Auth::user()->tipo_usuario_id == 3  && $solicitacao->status != 'avaliado')
+                                    <a class="float-end "
+                                    data-toggle="modal"
+                                    data-target="#modeloAnimalModal"
+                                    style="color: green"
+                                    title="Adicionar Modelo Animal"><i
+                                            class="fa-solid fa-circle-plus fa-2xl"></i></a></h3>
+                            @endif
+
+                        @endif        
 
                     </div>
                 </div>
