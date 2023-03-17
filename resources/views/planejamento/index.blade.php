@@ -14,10 +14,17 @@
             <div class="card shadow-lg p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_4">
                 <div class="row">
                     <div class="col-md-12">
-                        <h2 class="titulo" id="titulo_4">Dados Base do Modelo Animal
-                            <a class="float-end" id="4_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
-                            <a class="float-end" id="4_btn_down" style="display: none"><i class="fa-solid fa-circle-chevron-down"></i></a>
-                        </h2>
+                       @if(Auth::user()->tipo_usuario_id == 2)
+                            <h2 class="titulo" id="titulo_4">Dados Base do Modelo Animal <strong style="color: red">*</strong>
+                                <a class="float-end" id="4_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
+                                <a class="float-end" id="4_btn_down" style="display: none"><i class="fa-solid fa-circle-chevron-down"></i></a>
+                            </h2>
+                        @else
+                            <h2 class="titulo" id="titulo_4">Dados Base do Modelo Animal 
+                                <a class="float-end" id="4_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
+                                <a class="float-end" id="4_btn_down" style="display: none"><i class="fa-solid fa-circle-chevron-down"></i></a>
+                            </h2>
+                        @endif 
                     </div>
                 </div>
             </div>
@@ -50,10 +57,17 @@
             <div class="card shadow-lg p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_5">
                 <div class="row">
                     <div class="col-md-12">
-                        <h2 class="titulo" id="titulo_5">Dados Base do Planejamento
-                            <a class="float-end" id="5_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
-                            <a class="float-end" id="5_btn_down" style="display: none"><i class="fa-solid fa-circle-chevron-down"></i></a>
-                        </h2>
+                        @if(Auth::user()->tipo_usuario_id == 2)
+                            <h2 class="titulo" id="titulo_5">Dados Base do Planejamento <strong style="color: red">*</strong>
+                                <a class="float-end" id="5_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
+                                <a class="float-end" id="5_btn_down" style="display: none"><i class="fa-solid fa-circle-chevron-down"></i></a>
+                            </h2>
+                        @else
+                            <h2 class="titulo" id="titulo_5">Dados Base do Planejamento 
+                                <a class="float-end" id="5_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
+                                <a class="float-end" id="5_btn_down" style="display: none"><i class="fa-solid fa-circle-chevron-down"></i></a>
+                            </h2>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -78,10 +92,17 @@
             <div class="card shadow-lg p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_6">
                 <div class="row">
                     <div class="col-md-12">
-                        <h2 class="titulo" id="titulo_6">Condição Animal
-                            <a class="float-end" id="6_btn_up"><i class="fa-solid fa-circle-chevron-down"></i></a>
-                            <a class="float-end" id="6_btn_down" style="display: none"><i class="fa-solid fa-circle-chevron-up"></i></a>
-                        </h2>
+                        @if(Auth::user()->tipo_usuario_id == 2)
+                            <h2 class="titulo" id="titulo_6">Condição Animal <strong style="color: red">*</strong>
+                                <a class="float-end" id="6_btn_up"><i class="fa-solid fa-circle-chevron-down"></i></a>
+                                <a class="float-end" id="6_btn_down" style="display: none"><i class="fa-solid fa-circle-chevron-up"></i></a>
+                            </h2>
+                        @else
+                            <h2 class="titulo" id="titulo_6">Condição Animal 
+                                <a class="float-end" id="6_btn_up"><i class="fa-solid fa-circle-chevron-down"></i></a>
+                                <a class="float-end" id="6_btn_down" style="display: none"><i class="fa-solid fa-circle-chevron-up"></i></a>
+                            </h2>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -100,10 +121,17 @@
             <div class="card shadow-lg p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_7">
                 <div class="row">
                     <div class="col-md-12">
-                        <h2 class="titulo" id="titulo_7">Procedimento
-                            <a class="float-end" id="7_btn_up"><i class="fa-solid fa-circle-chevron-down"></i></a>
-                            <a class="float-end" id="7_btn_down" style="display: none"><i class="fa-solid fa-circle-chevron-up"></i></a>
-                        </h2>
+                       @if(Auth::user()->tipo_usuario_id == 2)
+                            <h2 class="titulo" id="titulo_7">Procedimento <strong style="color: red">*</strong>
+                                <a class="float-end" id="7_btn_up"><i class="fa-solid fa-circle-chevron-down"></i></a>
+                                <a class="float-end" id="7_btn_down" style="display: none"><i class="fa-solid fa-circle-chevron-up"></i></a>
+                            </h2>
+                        @else
+                            <h2 class="titulo" id="titulo_7">Procedimento
+                                <a class="float-end" id="7_btn_up"><i class="fa-solid fa-circle-chevron-down"></i></a>
+                                <a class="float-end" id="7_btn_down" style="display: none"><i class="fa-solid fa-circle-chevron-up"></i></a>
+                            </h2>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -122,10 +150,17 @@
             <div class="card shadow-lg p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_8">
                 <div class="row">
                     <div class="col-md-12">
-                        <h2 class="titulo" id="titulo_8">Cirurgia
+                        @if(Auth::user()->tipo_usuario_id == 2)
+                            <h2 class="titulo" id="titulo_8">Cirurgia <strong style="color: red">*</strong>
+                                    <a class="float-end" id="8_btn_up"><i class="fa-solid fa-circle-chevron-down"></i></a>
+                                    <a class="float-end" id="8_btn_down" style="display: none"><i class="fa-solid fa-circle-chevron-up"></i></a>
+                            </h2>
+                        @else
+                            <h2 class="titulo" id="titulo_8">Cirurgia
                                 <a class="float-end" id="8_btn_up"><i class="fa-solid fa-circle-chevron-down"></i></a>
                                 <a class="float-end" id="8_btn_down" style="display: none"><i class="fa-solid fa-circle-chevron-up"></i></a>
-                        </h2>
+                            </h2>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -145,10 +180,17 @@
             <div class="card shadow-lg p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_9">
                 <div class="row">
                     <div class="col-md-12">
-                        <h2 class="titulo" id="titulo_9">Finalização
-                            <a class="float-end" id="9_btn_up"><i class="fa-solid fa-circle-chevron-down"></i></a>
-                            <a class="float-end" id="9_btn_down" style="display: none"><i class="fa-solid fa-circle-chevron-up"></i></a>
-                        </h2>
+                       @if(Auth::user()->tipo_usuario_id == 2)
+                            <h2 class="titulo" id="titulo_9">Finalização <strong style="color: red">*</strong>
+                                <a class="float-end" id="9_btn_up"><i class="fa-solid fa-circle-chevron-down"></i></a>
+                                <a class="float-end" id="9_btn_down" style="display: none"><i class="fa-solid fa-circle-chevron-up"></i></a>
+                            </h2>
+                        @else
+                            <h2 class="titulo" id="titulo_9">Finalização
+                                <a class="float-end" id="9_btn_up"><i class="fa-solid fa-circle-chevron-down"></i></a>
+                                <a class="float-end" id="9_btn_down" style="display: none"><i class="fa-solid fa-circle-chevron-up"></i></a>
+                            </h2>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -168,10 +210,17 @@
             <div class="card shadow-lg p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_10">
                 <div class="row">
                     <div class="col-md-12">
-                        <h2 class="titulo" id="titulo_10">Resultado
-                            <a class="float-end" id="10_btn_up"><i class="fa-solid fa-circle-chevron-down"></i></a>
-                            <a class="float-end" id="10_btn_down" style="display: none"><i class="fa-solid fa-circle-chevron-up"></i></a>
-                        </h2>
+                        @if(Auth::user()->tipo_usuario_id == 2)
+                            <h2 class="titulo" id="titulo_10">Resultado <strong style="color: red">*</strong>
+                                <a class="float-end" id="10_btn_up"><i class="fa-solid fa-circle-chevron-down"></i></a>
+                                <a class="float-end" id="10_btn_down" style="display: none"><i class="fa-solid fa-circle-chevron-up"></i></a>
+                            </h2>
+                        @else
+                            <h2 class="titulo" id="titulo_10">Resultado
+                                <a class="float-end" id="10_btn_up"><i class="fa-solid fa-circle-chevron-down"></i></a>
+                                <a class="float-end" id="10_btn_down" style="display: none"><i class="fa-solid fa-circle-chevron-up"></i></a>
+                            </h2>
+                        @endif
                     </div>
                 </div>
             </div>
