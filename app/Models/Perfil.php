@@ -18,7 +18,7 @@ class Perfil extends Model
         'total',
         'idade',
         'grupo_animal',
-        'flag_grupo_animal',
+        'tipo_grupo_animal',
         'modelo_animal_id',
         'periodo'
     ];
