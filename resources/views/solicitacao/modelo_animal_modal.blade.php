@@ -93,6 +93,138 @@
             @endif
         </div>
 
+        <div class="col-sm-3" id="anexo_outra_procedencia" style="display: none;">
+            <label for="anexo_outra_procedencia">Especifique a procedência:</label>
+            <input class="form-control @error('') is-invalid @enderror" name="tipo_outra_procedencia" id="tipo_outra_procedencia" autocomplete="tipo_outra_procedencia" autofocus
+            required @if(isset($modelo_animal->perfil) && $modelo_animal->tipo_outra_procedencia != null) value="{{$modelo_animal->tipo_outra_procedencia}}"@endif>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-6 mt-2" id="anexo_animal_silvestre_captura">
+                <label>Captura:<strong style="color: red">*</strong></label>
+                <div class="row ml-1">
+                    <div class="col-sm-2">
+                        <input class="form-check-input" type="radio" name="flag_captura"
+                               id="captura_sim" value="true"
+                               @if(isset($modelo_animal) && $modelo_animal->flag_captura) checked @endif
+                        <label class="form-check-label" for="flag_captura">Sim</label>
+                    </div>
+                    <div class="col-sm-2">
+                        <input class="form-check-input" type="radio" name="flag_captura"
+                               id="captura_nao" value="false"
+                               @if(isset($modelo_animal) && !$modelo_animal->flag_captura) checked @endif >
+                        <label class="form-check-label" for="flag_captura">
+                            Não
+                        </label>
+                    </div>
+                    @error('flag_captura')
+                    <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
+                    <div class="col-sm-13 mt-2" id="anexo_captura" style="display: none;">
+                        <label for="anexo_captura">Descreva:<strong style="color: red">*</strong></label>
+                        <input class="form-control @error('captura') is-invalid @enderror" id="captura" type="text" name="captura"
+                        @if(isset($modelo_animal) && ($modelo_animal->captura != null)) value="{{$modelo_animal->captura}}"
+                        @else value="{{old('captura')}}" @endif required autocomplete="captura" autofocus>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="col-sm-6 mt-2" id="anexo_animal_silvestre_coleta">
+                <label>Coleta de Espécimes:<strong style="color: red">*</strong></label>
+                <div class="row ml-1">
+                    <div class="col-sm-2">
+                        <input class="form-check-input" type="radio" name="flag_coleta_especimes"
+                               id="coleta_especimes_sim" value="true"
+                               @if(isset($modelo_animal) && $modelo_animal->flag_coleta_especimes) checked @endif
+                        <label class="form-check-label" for="flag_coleta_especimes">Sim</label>
+                    </div>
+                    <div class="col-sm-2">
+                        <input class="form-check-input" type="radio" name="flag_coleta_especimes"
+                               id="coleta_especimes_nao" value="false"
+                               @if(isset($modelo_animal) && !$modelo_animal->flag_coleta_especimes) checked @endif >
+                        <label class="form-check-label" for="flag_coleta_especimes">
+                            Não
+                        </label>
+                    </div>
+                    @error('flag_coleta_especimes')
+                    <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
+                    <div class="col-sm-13 mt-2" id="anexo_coleta_especimes" style="display: none;">
+                        <label for="anexo_coleta_especimes">Descreva:<strong style="color: red">*</strong></label>
+                        <input class="form-control @error('coleta_especimes') is-invalid @enderror" id="coleta_especimes" type="text" name="coleta_especimes"
+                        @if(isset($modelo_animal) && ($modelo_animal->coleta_especimes != null)) value="{{$modelo_animal->coleta_especimes}}"
+                        @else value="{{old('coleta_especimes')}}" @endif required autocomplete="coleta_especimes" autofocus>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="col-sm-6 mt-2" id="anexo_animal_marcacao">
+                <label>Marcação:<strong style="color: red">*</strong></label>
+                <div class="row ml-1">
+                    <div class="col-sm-2">
+                        <input class="form-check-input" type="radio" name="flag_marcacao"
+                               id="animal_marcacao_sim" value="true"
+                               @if(isset($modelo_animal) && $modelo_animal->flag_marcacao) checked @endif
+                        <label class="form-check-label" for="flag_marcacao">Sim</label>
+                    </div>
+                    <div class="col-sm-2">
+                        <input class="form-check-input" type="radio" name="flag_marcacao"
+                               id="animal_marcacao_nao" value="false"
+                               @if(isset($modelo_animal) && !$modelo_animal->flag_marcacao) checked @endif >
+                        <label class="form-check-label" for="flag_marcacao">
+                            Não
+                        </label>
+                    </div>
+                    @error('flag_marcacao')
+                    <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
+                    <div class="col-sm-13 mt-2" id="anexo_marcacao" style="display: none;">
+                        <label for="anexo_marcacao">Descreva:<strong style="color: red">*</strong></label>
+                        <input class="form-control @error('marcacao') is-invalid @enderror" id="marcacao" type="text" name="marcacao"
+                        @if(isset($modelo_animal) && ($modelo_animal->marcacao != null)) value="{{$modelo_animal->marcacao}}"
+                        @else value="{{old('marcacao')}}" @endif required autocomplete="marcacao" autofocus>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="col-sm-6 mt-2" id="anexo_outras_informações">
+                <label>Outros:<strong style="color: red">*</strong></label>
+                <div class="row ml-1">
+                    <div class="col-sm-2">
+                        <input class="form-check-input" type="radio" name="flag_outras_info"
+                               id="outras_info_sim" value="true"
+                               @if(isset($modelo_animal) && $modelo_animal->flag_outras_info) checked @endif
+                        <label class="form-check-label" for="flag_outras_info">Sim</label>
+                    </div>
+                    <div class="col-sm-2">
+                        <input class="form-check-input" type="radio" name="flag_outras_info"
+                               id="outras_info_nao" value="false"
+                               @if(isset($modelo_animal) && !$modelo_animal->flag_outras_info) checked @endif >
+                        <label class="form-check-label" for="flag_outras_info">
+                            Não
+                        </label>
+                    </div>
+                    @error('flag_outras_info')
+                    <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
+                    <div class="col-sm-13 mt-2" id="anexo_outras_info" style="display: none;">
+                        <label for="anexo_outras_info">Descreva:<strong style="color: red">*</strong></label>
+                        <input class="form-control @error('outras_info') is-invalid @enderror" id="outras_info" type="text" name="outras_info"
+                        @if(isset($modelo_animal) && ($modelo_animal->outras_info != null)) value="{{$modelo_animal->outras_info}}"
+                        @else value="{{old('outras_info')}}" @endif required autocomplete="outras_info" autofocus>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="col-sm-6">
             <label for="experiencia">O Animal é Geneticamente Modificado?<strong style="color: red">*</strong></label>
             <div class="row ml-1">
@@ -126,7 +258,7 @@
     </div>
 
     <div class="row mt-2">
-        <h3 class="subtitulo">Tipo e Característica</h3>
+        <h3 class="subtitulo">Tipo Animal</h3>
         <div class="col-sm-6">
             <label for="grupo_animal">Grupo Animal:<strong style="color: red">*</strong></label>
             <select class="form-control @error('grupo_animal') is-invalid @enderror" id="grupo_animal"
@@ -255,6 +387,13 @@
                 <strong>{{ $message }}</strong>
             </span>
             @enderror
+        </div>
+
+        <div class="col-sm-3" id="anexo_outro_tipo" style="display: none;">
+            <label for="anexo_outro_tipo">Especifique:</label>
+            <input class="form-control @error('') is-invalid @enderror" name="tipo_grupo_animal" id="tipo_grupo_animal" autocomplete="tipo_grupo_animal" autofocus
+            required @if(isset($modelo_animal) && ($modelo_animal->perfil != null)) value="{{$modelo_animal->perfil->tipo_grupo_animal}}"
+            @else value="{{old('tipo_grupo_animal')}}" @endif required autocomplete="tipo_grupo_animal" autofocus> 
         </div>
 
         <div class="col-sm-6">
@@ -458,6 +597,34 @@
         $("#anexo_cqb").hide();
         @endif
 
+
+        @if(isset($modelo_animal) && $modelo_animal->procedencia == "animal_silvestre")
+            $("#procedencia").change(function () {
+                if ($(this).val() == "animal_silvestre") {
+                    $("#anexo_animal_silvestre_captura").show().find('input, radio').prop('disabled', false);
+                    $("#anexo_animal_silvestre_coleta").show().find('input, radio').prop('disabled', false);
+                    $("#anexo_animal_marcacao").show().find('input, radio').prop('disabled', false);
+                    $("#anexo_outras_informações").show().find('input, radio').prop('disabled', false);
+                }else {
+                    $("#anexo_animal_silvestre_captura").hide().find('input, radio').prop('disabled', true);
+                    $("#anexo_animal_silvestre_coleta").hide().find('input, radio').prop('disabled', true);
+                    $("#anexo_animal_marcacao").hide().find('input, radio').prop('disabled', true);
+                    $("#anexo_outras_informações").hide().find('input, radio').prop('disabled', true);
+                }
+            });
+        @endif
+
+        @if(isset($modelo_animal) && $modelo_animal->procedencia == "outra_procedencia")
+            $("#procedencia").change(function () {
+                if ($(this).val() == "outra_procedencia") {
+                    $("#anexo_outra_procedencia").show().find('input, radio').prop('disabled', false);
+                }else {
+                    $("#anexo_outra_procedencia").hide().find('input, radio').prop('disabled', true);
+                }
+            });
+        @endif
+        
+
         $("#geneticamente_modificado_sim").click(function () {
             $("#anexo_cqb").show().find('input, radio').prop('disabled', false);
         });
@@ -466,16 +633,91 @@
             $("#anexo_cqb").hide().find('input, radio').prop('disabled', true);
         });
 
+        @if (isset($modelo_animal) && $modelo_animal->flag_captura == true)
+            $("#anexo_captura").show().find('input, radio').prop('disabled', false);
+        @else  
+            $("#anexo_captura").hide().find('input, radio').prop('disabled', true);
+        @endif
+
+        $("#captura_sim").click(function () {
+            $("#anexo_captura").show().find('input, radio').prop('disabled', false);
+        });
+
+        $("#captura_nao").click(function () {
+            $("#anexo_captura").hide().find('input, radio').prop('disabled', true);
+        });
+
+        @if (isset($modelo_animal) && $modelo_animal->flag_coleta_especimes == true)
+            $("#anexo_coleta_especimes").show().find('input, radio').prop('disabled', false);
+        @else
+            $("#anexo_coleta_especimes").hide().find('input, radio').prop('disabled', true);
+        @endif
+
+        $("#coleta_especimes_sim").click(function () {
+            $("#anexo_coleta_especimes").show().find('input, radio').prop('disabled', false);
+        });
+
+        $("#coleta_especimes_nao").click(function () {
+            $("#anexo_coleta_especimes").hide().find('input, radio').prop('disabled', true);
+        });
+
+        @if (isset($modelo_animal) && $modelo_animal->flag_marcacao == true)
+            $("#anexo_marcacao").show().find('input, radio').prop('disabled', false);
+        @else
+            $("#anexo_marcacao").hide().find('input, radio').prop('disabled', true);
+        @endif
+
+        $("#animal_marcacao_sim").click(function () {
+            $("#anexo_marcacao").show().find('input, radio').prop('disabled', false);
+        });
+
+        $("#animal_marcacao_nao").click(function () {
+            $("#anexo_marcacao").hide().find('input, radio').prop('disabled', true);
+        });
+
+        @if (isset($modelo_animal) && $modelo_animal->flag_outras_info == true)
+            $("#anexo_outras_info").show().find('input, radio').prop('disabled', false);
+        @else
+            $("#anexo_outras_info").hide().find('input, radio').prop('disabled', true);
+        @endif
+
+        $("#outras_info_sim").click(function () {
+            $("#anexo_outras_info").show().find('input, radio').prop('disabled', false);
+        });
+
+        $("#outras_info_nao").click(function () {
+            $("#anexo_outras_info").hide().find('input, radio').prop('disabled', true);
+        });
+        
+        @if(isset($modelo_animal->perfil) && $modelo_animal->perfil->grupo_animal == "outro")
+            $("#grupo_animal").change(function () {
+                if ($(this).val() == "outro") {
+                    $("#anexo_outro_tipo").show().find('input, radio').prop('disabled', false);
+                }else {
+                    $("#anexo_outro_tipo").hide().find('input, radio').prop('disabled', true);
+                }
+            });
+        @endif
+
         $("#grupo_animal").change(function () {
-            if ($(this).val() == "outro") {
-                $("#anexo_outro_tipo").show().find('input, radio').prop('disabled', false);
+                if ($(this).val() == "outro") {
+                    $("#anexo_outro_tipo").show().find('input, radio').prop('disabled', false);
+                }else {
+                    $("#anexo_outro_tipo").hide().find('input, radio').prop('disabled', true);
+                }
+            });
+
+        $("#procedencia").change(function () {
+            if ($(this).val() == "outra_procedencia") {
+                $("#anexo_outra_procedencia").show().find('input, radio').prop('disabled', false);
             }else {
-                $("#anexo_outro_tipo").hide().find('input, radio').prop('disabled', true);
+                $("#anexo_outra_procedencia").hide().find('input, radio').prop('disabled', true);
             }
         });
 
     });
 </script>
+
 
 
 

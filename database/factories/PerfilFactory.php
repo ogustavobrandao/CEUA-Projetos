@@ -12,8 +12,8 @@ class PerfilFactory extends Factory
     public function definition()
     {
         return [
-            'grupo_animal' => 'Grupo 5',
-            'tipo_grupo_animal' => 'Tipo Grupo 5',
+            'grupo_animal' => 'outro',
+            'tipo_grupo_animal' => 'Descolados',
             'linhagem' => 'Linhagem',
             'idade' => '10',
             'periodo' => 'Anos',

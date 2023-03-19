@@ -87,7 +87,7 @@
             {{-- Campos de textos das Informações --}}
 
             <div class="col-sm-12 mt-2" id="estresse" style="display: none;">
-                <label for="estresse">Estresse / dor Intencional nos Animais:<strong style="color: red">*</strong></label>
+                <label for="estresse">Descreva o estresse / dor Intencional nos animais e justifique:<strong style="color: red">*</strong></label>
                 <textarea class="form-control @error('estresse') is-invalid @enderror" name="estresse" id="estresse"
                           autocomplete="estresse" autofocus
                           required disabled>@if(!empty($procedimento) && $procedimento->estresse != null){{$procedimento->estresse}}

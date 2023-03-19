@@ -78,7 +78,12 @@
             </div>
 
             <div class="col-sm-4">
-                <label for="area_conhecimento">Área e Subárea do Conhecimento:<strong style="color: red">*</strong></label>
+                <label for="area_conhecimento">Área e Subárea do Conhecimento:<strong style="color: red">*</strong>
+                    <a target="_blank"
+                    href="http://lattes.cnpq.br/documents/11871/24930/TabeladeAreasdoConhecimento.pdf/d192ff6b-3e0a-4074-a74d-c280521bd5f7"
+                    title="Para mais informações sobre das áreas e subáreas de conhecimento, acessar documento do CNPQ." style="color: darkred">
+                     <i class="fa-solid fa-circle-info fa-lg"></i>
+                 </a></label>
                 <select class="form-control @error('area_conhecimento') is-invalid @enderror" id="area_conhecimento"
                         name="area_conhecimento">
                     <option disabled selected>Área e Subárea do Conhecimento</option>

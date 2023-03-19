@@ -59,8 +59,6 @@
                 </div>
             </div>
 
-            <h3 class="subtitulo">Outras Informações</h3>
-
             <div class="col-sm-12 mt-2">
                 <label for="destino">Destino dos Animais Mortos e / ou Tecidos / Fragmentos:<strong style="color: red">*</strong></label>
                 <textarea class="form-control @error('destino') is-invalid @enderror" name="destino" id="destino"

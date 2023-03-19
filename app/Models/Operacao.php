@@ -15,6 +15,7 @@ class Operacao extends Model
         'detalhes_outros_cuidados_recuperacao',
         'detalhes_analgesia_recuperacao',
         'observacao_recuperacao',
+        'detalhes_nao_uso_analgesia_recuperacao',
         'outros_cuidados_recuperacao',
         'analgesia_recuperacao',
     ];
