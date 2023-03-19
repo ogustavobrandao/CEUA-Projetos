@@ -63,10 +63,10 @@
                     </div>
                 </div>
                     <div class="col-sm-8 mt-2" id="anexo_observacao_recuperacao" style="display: none;">
-                        <label for="anexo_observacao_recuperacao">Descrição:<strong style="color: red">*</strong></label>
+                        <label for="anexo_observacao_recuperacao">Período de observação (em horas):<strong style="color: red">*</strong></label>
                         <textarea class="form-control @error('detalhes_observacao_recuperacao') is-invalid @enderror" name="detalhes_observacao_recuperacao" id="detalhes_observacao_recuperacao" autocomplete="detalhes_cirurgia" autofocus
                                   required> @if(!empty($operacao) && $operacao->detalhes_observacao_recuperacao != null){{$operacao->detalhes_observacao_recuperacao}}@else{{old('detalhes_observacao_recuperacao')}}@endif </textarea>
-                        @error('cirurgia')
+                        @error('detalhes_observacao_recuperacao')
                         <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
@@ -95,10 +95,21 @@
                     </div>
                 </div>
                     <div class="col-sm-8 mt-2" id="anexo_analgesia_recuperacao" style="display: none;">
-                        <label for="anexo_analgesia_recuperacao">Descrição:<strong style="color: red">*</strong></label>
+                        <label for="anexo_analgesia_recuperacao">Descreva o Fármaco, Dose (UI ou mg/kg), Via de Adminstração, Frequência e Duração:<strong style="color: red">*</strong></label>
                         <textarea class="form-control @error('detalhes_analgesia_recuperacao') is-invalid @enderror" name="detalhes_analgesia_recuperacao" id="detalhes_analgesia_recuperacao" autocomplete="detalhes_analgesia_recuperacao" autofocus
                                   required> @if(!empty($operacao) && $operacao->detalhes_analgesia_recuperacao != null){{$operacao->detalhes_analgesia_recuperacao}}@else{{old('detalhes_analgesia_recuperacao')}}@endif </textarea>
-                        @error('cirurgia')
+                        @error('detalhes_analgesia_recuperacao')
+                        <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                        @enderror
+                    </div>
+
+                    <div class="col-sm-8 mt-2" id="anexo_nao_uso_analgesia_recuperacao" style="display: none;">
+                        <label for="anexo_nao_uso_analgesia_recuperacao">Justifique o NÃO-uso de analgesia pós-operatório:<strong style="color: red">*</strong></label>
+                        <textarea class="form-control @error('detalhes_nao_uso_analgesia_recuperacao') is-invalid @enderror" name="detalhes_nao_uso_analgesia_recuperacao" id="detalhes_nao_uso_analgesia_recuperacao" autocomplete="detalhes_nao_uso_analgesia_recuperacao" autofocus
+                                  required> @if(!empty($operacao) && $operacao->detalhes_nao_uso_analgesia_recuperacao != null){{$operacao->detalhes_nao_uso_analgesia_recuperacao}}@else{{old('detalhes_nao_uso_analgesia_recuperacao')}}@endif </textarea>
+                        @error('detalhes_nao_uso_analgesia_recuperacao')
                         <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
@@ -177,9 +188,9 @@
         @if(isset($operacao) && ($operacao->analgesia_recuperacao != null))
         $("#analgesia_recuperacao_sim").attr('checked', true);
         $("#anexo_analgesia_recuperacao").show();
-        @else
+        @elseif (isset($operacao) && ($operacao->detalhes_nao_uso_analgesia_recuperacao != null))
         $("#analgesia_recuperacao_nao").attr('checked', true);
-        $("#anexo_analgesia_recuperacao").hide();
+        $("#anexo_nao_uso_analgesia_recuperacao").hide();
         @endif
 
         $("#cirurgia_sim").click(function () {
@@ -220,9 +231,11 @@
 
         $("#analgesia_recuperacao_sim").click(function () {
             $("#anexo_analgesia_recuperacao").show().find('input, radio').prop('disabled', false);
+            $("#anexo_nao_uso_analgesia_recuperacao").hide().find('input, radio').prop('disabled', true);
         });
 
         $("#analgesia_recuperacao_nao").click(function () {
+            $("#anexo_nao_uso_analgesia_recuperacao").show().find('input, radio').prop('disabled', false);
             $("#anexo_analgesia_recuperacao").hide().find('input, radio').prop('disabled', true);
         });
 
