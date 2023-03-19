@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('nome');
             $table->text('treinamento')->nullable();
-            $table->text('experiencia_previa')->nullable();
+            $table->string('experiencia_previa')->nullable();
             $table->string('vinculo_instituicao');
             $table->string('grau_escolaridade');
             $table->unsignedBigInteger('departamento_id');
