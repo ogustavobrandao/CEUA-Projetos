@@ -24,7 +24,16 @@ class ModeloAnimalFactory extends Factory
             'justificativa' => 'Justificativa',
             'geneticamente_modificado' => true,
             'numero_cqb' => '123456789',
-            'procedencia' => 'Procedencia',
+            'procedencia' => 'animal_silvestre',
+            'flag_captura' => true,
+            'captura' => 'Captura',
+            'flag_coleta_especimes' => true,
+            'tipo_outra_procedencia' => 'tipo_outra_procedencia',
+            'coleta_especimes' => 'Coleta de Especimes',
+            'flag_marcacao' => true,
+            'marcacao' => 'Marcacao',
+            'flag_outras_info' => true ,
+            'outras_info' => 'Outras Informacoes',
             'solicitacao_id' => 1
         ];
     }
