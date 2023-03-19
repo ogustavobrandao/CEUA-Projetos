@@ -90,7 +90,7 @@
                                 @endif
                             </h2>
                         @else
-                            <h2 lass="titulo" id="titulo_2">3. Dados do(s) Colaborador(es)
+                            <h2 class="titulo" id="titulo_2">3. Dados do(s) Colaborador(es)
                                 @if(!isset($solicitacao->responsavel))
                                     <small style="color: red; font-weight: bold">Necessária a criação de um
                                         responsável</small>
