@@ -548,10 +548,11 @@
                  <i class="fa-solid fa-circle-info fa-lg"></i>
              </a>
             </label>
+            <p>Caso seja mais de um documento, anexar em um só PDF todos os documentos juntos.</p>
             @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2)
-                {{-- <a class="btn btn-primary"
+                <a class="btn btn-primary"
                    href="{{route('licencas_previas.download', ['modelo_animal_id' => $modelo_animal->id])}}">Baixar
-                   Licenças</a> --}}
+                   Licenças</a>
             @else
                 @if(!empty($modelo_animal))
                     <input class="form-control @error('licencas_previas') is-invalid @enderror"
