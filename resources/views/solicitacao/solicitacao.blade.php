@@ -15,7 +15,7 @@
 
             <div class="col-sm-4">
                 <label for="inicio">Início:<strong style="color: red">*</strong></label>
-                <input class="form-control @error('inicio') is-invalid @enderror" id="inicio" type="datetime-local"
+                <input class="form-control @error('inicio') is-invalid @enderror" id="inicio" type="date"
                        name="inicio"
                        @if(!empty($solicitacao) && $solicitacao->inicio != null) value="{{$solicitacao->inicio}}"
                        @else value="{{old('inicio')}}" @endif
@@ -31,7 +31,7 @@
             <div class="col-sm-4">
 
                 <label for="inicio">Fim:<strong style="color: red">*</strong></label>
-                <input class="form-control @error('fim') is-invalid @enderror" id="fim" type="datetime-local" name="fim"
+                <input class="form-control @error('fim') is-invalid @enderror" id="fim" type="date" name="fim"
                        @if(!empty($solicitacao) && $solicitacao->fim != null) value="{{$solicitacao->fim}}"
                        @else value="{{old('fim')}}" @endif
                        required

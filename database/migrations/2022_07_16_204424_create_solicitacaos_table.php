@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('solicitacaos', function (Blueprint $table) {
             $table->id();
             $table->string('titulo_en')->nullable();
-            $table->dateTime('inicio')->nullable();
-            $table->dateTime('fim')->nullable();
+            $table->date('inicio')->nullable();
+            $table->date('fim')->nullable();
             $table->string('tipo')->nullable();
             $table->string('titulo_pt')->nullable();
             $table->string('area_conhecimento')->nullable();
