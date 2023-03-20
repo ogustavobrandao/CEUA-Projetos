@@ -11,6 +11,7 @@ class Responsavel extends Model
 
     protected $fillable = [
         'nome',
+        'cpf',
         'treinamento',
         'vinculo_instituicao',
         'experiencia_previa',
@@ -22,6 +23,7 @@ class Responsavel extends Model
     public static $rules = [
         'nome' => 'required|string|min:5',
         'departamento_id' => 'required',
+        'cpf' => 'required',
     ];
 
     public static $messages = [

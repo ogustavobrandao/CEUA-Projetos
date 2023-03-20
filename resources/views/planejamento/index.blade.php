@@ -206,7 +206,7 @@
             </div>
         </div>
 
-        <div class="mb-4">
+        {{-- <div class="mb-4">
             <div class="card shadow-lg p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_10">
                 <div class="row">
                     <div class="col-md-12">
@@ -235,8 +235,7 @@
                 @endif
             </div>
         </div>
-
-    </div>
+    </div> --}}
 
     <div class="row col-md-10 m-0">
         <div class="col-4 pl-0">

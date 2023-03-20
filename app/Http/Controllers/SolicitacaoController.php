@@ -127,13 +127,22 @@ class SolicitacaoController extends Controller
     {
         Validator::make($request->all(), Responsavel::$rules, Responsavel::$messages)->validate();
         Validator::make($request->all(), Contato::$rules, Contato::$messages)->validate();
-
+        
         $solicitacao = Solicitacao::find($request->solicitacao_id);
 
         if (isset($solicitacao->responsavel)) {
             $responsavel = $solicitacao->responsavel;
         } else {
             $responsavel = new Responsavel();
+        }
+        if (($request->hasFile('experiencia_previa') && $request->file('experiencia_previa')->isValid())) {
+            $anexo = $request->experiencia_previa->extension();
+            $nomeAnexo = "experiencia_" . $solicitacao->id . date('Ymd') . date('His') . '.' . $anexo;
+            if ($responsavel->experiencia_revia != null) {
+                $nomeAnexo = $responsavel->experiencia_previa;
+            }
+            $request->experiencia_previa->storeAs('experiencias/', $nomeAnexo);
+            $request->experiencia_previa = $nomeAnexo;
         }
 
         if(($request->hasFile('termo_responsabilidade') && $request->file('termo_responsabilidade')->isValid())) {
@@ -145,28 +154,6 @@ class SolicitacaoController extends Controller
             $request->termo_responsabilidade->storeAs('termos_responsabilidades/', $nomeAnexo);
             $request->termo_responsabilidade = $nomeAnexo;
         }
-        // if (($request->hasFile('experiencia_previa') && $request->file('experiencia_previa')->isValid())) {
-        //     $anexo = $request->experiencia_previa->extension();
-        //     $nomeAnexo = "experiencia_" . $solicitacao->id . date('Ymd') . date('His') . '.' . $anexo;
-        //     if ($responsavel->experiencia_revia != null) {
-        //         $nomeAnexo = $responsavel->experiencia_previa;
-        //     }
-        //     $request->experiencia_previa->storeAs('experiencias/', $nomeAnexo);
-        //     $request->experiencia_previa = $nomeAnexo;
-        // }
-
-        // if (($request->hasFile('treinamento') && $request->file('treinamento')->isValid())) {
-        //     $anexo = $request->treinamento->extension();
-        //     $nomeAnexo = "treinamento_" . $solicitacao->id . date('Ymd') . date('His') . '.' . $anexo;
-        //     if ($responsavel->treinamento != null) {
-        //         $nomeAnexo = $responsavel->treinamento;
-        //     }
-        //     $request->treinamento->storeAs('treinamentos/', $nomeAnexo);
-        //     $request->treinamento = $nomeAnexo;
-        // }
-        // else {
-        //     $request->treinamento = $responsavel->treinamento;
-        // }
 
         $responsavel->solicitacao_id = $request->solicitacao_id;
         $responsavel->nome = $request->nome;
@@ -221,6 +208,25 @@ class SolicitacaoController extends Controller
         //Validator::make($request->all(), Colaborador::$rules, Colaborador::$messages)->validate();
         $solicitacao = Solicitacao::find($request->solicitacao_id);
         $listaColab = [];
+
+        // if(($request->hasFile('termo_responsabilidade') && $request->file('termo_responsabilidade')->isValid())) {
+        //     $anexo = $request->termo_responsabilidade->extension();
+        //     $nomeAnexo = "termo_responsabilidade_" . $solicitacao->id . date('Ymd') . date('His') . '.' . $anexo;
+        //     if ($responsavel->termo_responsabilidade != null) {
+        //         $nomeAnexo = $responsavel->termo_responsabilidade;
+        //     }
+        //     $request->termo_responsabilidade->storeAs('termos_responsabilidades/', $nomeAnexo);
+        //     $request->termo_responsabilidade = $nomeAnexo;
+        // }
+        // if (($request->hasFile('experiencia_previa') && $request->file('experiencia_previa')->isValid())) {
+        //     $anexo = $request->experiencia_previa->extension();
+        //     $nomeAnexo = "experiencia_" . $solicitacao->id . date('Ymd') . date('His') . '.' . $anexo;
+        //     if ($responsavel->experiencia_revia != null) {
+        //         $nomeAnexo = $responsavel->experiencia_previa;
+        //     }
+        //     $request->experiencia_previa->storeAs('experiencias/', $nomeAnexo);
+        //     $request->experiencia_previa = $nomeAnexo;
+        // }
 
         if (isset($request->colaborador)) {
             foreach ($request->colaborador as $colab) {
@@ -283,7 +289,6 @@ class SolicitacaoController extends Controller
 
     public function criar_modelo_animal(Request $request)
     {
-        
         Validator::make($request->all(), array_merge(ModeloAnimal::$rules, Perfil::$rules), array_merge(ModeloAnimal::$messages, Perfil::$messages))->validateWithBag('modelo');
 
         $data = $request->all();
@@ -321,7 +326,7 @@ class SolicitacaoController extends Controller
     }
 
     public function atualizar_modelo_animal(Request $request)
-    {
+    {   
         $modelo_animal = ModeloAnimal::find($request->modelo_animal_id);
 
         if (($request->hasFile('termo_consentimento') && $request->file('termo_consentimento')->isValid())) {
@@ -345,6 +350,7 @@ class SolicitacaoController extends Controller
         $perfil->linhagem = $request->linhagem;
         $perfil->idade = $request->idade;
         $perfil->tipo_grupo_animal = $request->tipo_grupo_animal;
+        $perfil->tipo_outra_procedencia = $request->tipo_outra_procedencia;
         $perfil->peso = $request->peso;
         $perfil->quantidade = $request->quantidade;
         $perfil->machos = $request->machos;
@@ -427,11 +433,11 @@ class SolicitacaoController extends Controller
         return Storage::download('termos/' . $modelo_animal->termo_consentimento);
     }
 
-    public function downloadTreinamento($responsavel_id)
-    {
-        $responsavel = Responsavel::find($responsavel_id);
-        return Storage::download('treinamentos/' . $responsavel->treinamento);
-    }
+    // public function downloadTreinamento($responsavel_id)
+    // {
+    //     $responsavel = Responsavel::find($responsavel_id);
+    //     return Storage::download('treinamentos/' . $responsavel->treinamento);
+    // }
 
     public function downloadExperiencia($responsavel_id)
     {
@@ -637,7 +643,6 @@ class SolicitacaoController extends Controller
 
     public function criar_operacao(Request $request)
     {
-        
         Validator::make($request->all(), Operacao::$rules, Operacao::$messages)->validate();
 
         $planejamento = Planejamento::find($request->planejamento_id);
@@ -654,6 +659,7 @@ class SolicitacaoController extends Controller
             $operacao->detalhes_observacao_recuperacao = null;
             $operacao->detalhes_outros_cuidados_recuperacao = null;
             $operacao->detalhes_analgesia_recuperacao = null;
+            $operacao->detalhes_nao_uso_analgesia_recuperacao = null;
             $operacao->observacao_recuperacao = null;
             $operacao->outros_cuidados_recuperacao = null;
             $operacao->analgesia_recuperacao = null;
@@ -663,6 +669,7 @@ class SolicitacaoController extends Controller
             $operacao->detalhes_outros_cuidados_recuperacao = $request->detalhes_outros_cuidados_recuperacao;
             $operacao->detalhes_analgesia_recuperacao = $request->detalhes_analgesia_recuperacao;
             $operacao->observacao_recuperacao = $request->observacao_recuperacao;
+            $operacao->detalhes_nao_uso_analgesia_recuperacao = $request->detalhes_nao_uso_analgesia_recuperacao;
             $operacao->outros_cuidados_recuperacao = $request->outros_cuidados_recuperacao;
             $operacao->analgesia_recuperacao = $request->analgesia_recuperacao;
         }
