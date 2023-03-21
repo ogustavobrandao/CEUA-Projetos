@@ -21,7 +21,7 @@ class Responsavel extends Model
     ];
 
     public static $rules = [
-        'nome' => 'required|string|min:5',
+        'nome' => 'required|string',
         'departamento_id' => 'required',
         'cpf' => 'required',
     ];
@@ -29,8 +29,9 @@ class Responsavel extends Model
     public static $messages = [
         '*.required' => 'O :attribute é um campo obrigatório.',
         'nome.required' => 'O nome é um campo obrigatório.',
+        'departamento_id.required' => 'O departamento é um campo obrigatório.',
+        'cpf.required' => 'O CPF é um campo obrigatório.',
         'nome.string' => 'O nome deve ser um texto',
-        'nome.min' => 'O nome deve possuir no minimo 5 caracteres',
     ];
 
     public function colaboradores(){
