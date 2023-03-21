@@ -154,7 +154,7 @@ class SolicitacaoController extends Controller
             $request->termo_responsabilidade->storeAs('termos_responsabilidades/', $nomeAnexo);
             $request->termo_responsabilidade = $nomeAnexo;
         }
-        
+
         $responsavel->solicitacao_id = $request->solicitacao_id;
         $responsavel->nome = $request->nome;
         $responsavel->cpf = $request->cpf;
@@ -350,7 +350,6 @@ class SolicitacaoController extends Controller
         $perfil->linhagem = $request->linhagem;
         $perfil->idade = $request->idade;
         $perfil->tipo_grupo_animal = $request->tipo_grupo_animal;
-        $perfil->tipo_outra_procedencia = $request->tipo_outra_procedencia;
         $perfil->peso = $request->peso;
         $perfil->quantidade = $request->quantidade;
         $perfil->machos = $request->machos;
