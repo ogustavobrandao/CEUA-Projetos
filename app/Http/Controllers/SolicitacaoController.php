@@ -154,7 +154,7 @@ class SolicitacaoController extends Controller
             $request->termo_responsabilidade->storeAs('termos_responsabilidades/', $nomeAnexo);
             $request->termo_responsabilidade = $nomeAnexo;
         }
-
+        
         $responsavel->solicitacao_id = $request->solicitacao_id;
         $responsavel->nome = $request->nome;
         $responsavel->cpf = $request->cpf;
