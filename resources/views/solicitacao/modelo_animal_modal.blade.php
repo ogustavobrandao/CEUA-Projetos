@@ -225,7 +225,7 @@
             </div>
         </div>
 
-        <div class="col-sm-6">
+        <div class="col-sm-6 mt-2">
             <label for="experiencia">O Animal é Geneticamente Modificado?<strong style="color: red">*</strong></label>
             <div class="row ml-1">
                 <div class="col-sm-2">
@@ -391,9 +391,8 @@
 
         <div class="col-sm-3" id="anexo_outro_tipo" style="display: none;">
             <label for="anexo_outro_tipo">Especifique:</label>
-            <input class="form-control @error('') is-invalid @enderror" name="tipo_grupo_animal" id="tipo_grupo_animal" autocomplete="tipo_grupo_animal" autofocus
-            required @if(isset($modelo_animal) && ($modelo_animal->perfil != null)) value="{{$modelo_animal->perfil->tipo_grupo_animal}}"
-            @else value="{{old('tipo_grupo_animal')}}" @endif required autocomplete="tipo_grupo_animal" autofocus> 
+            <input class="form-control @error('') is-invalid @enderror" name="tipo_grupo_animal" autocomplete="tipo_grupo_animal" autofocus
+            required @if(!empty($modelo_animal->perfil) && $modelo_animal->perfil->tipo_grupo_animal != null) value="{{$modelo_animal->perfil->tipo_grupo_animal}}"@endif>
         </div>
 
         <div class="col-sm-6">
@@ -613,9 +612,7 @@
                     $("#anexo_outras_informações").hide().find('input, radio').prop('disabled', true);
                 }
             });
-        @endif
-
-        @if(isset($modelo_animal) && $modelo_animal->procedencia == "outra_procedencia")
+        @elseif(isset($modelo_animal) && $modelo_animal->procedencia == "outra_procedencia")
             $("#procedencia").change(function () {
                 if ($(this).val() == "outra_procedencia") {
                     $("#anexo_outra_procedencia").show().find('input, radio').prop('disabled', false);
@@ -623,6 +620,12 @@
                     $("#anexo_outra_procedencia").hide().find('input, radio').prop('disabled', true);
                 }
             });
+        @else
+                $("#anexo_animal_silvestre_captura").hide().find('input, radio').prop('disabled', true);
+                $("#anexo_animal_silvestre_coleta").hide().find('input, radio').prop('disabled', true);
+                $("#anexo_animal_marcacao").hide().find('input, radio').prop('disabled', true);
+                $("#anexo_outras_informações").hide().find('input, radio').prop('disabled', true);
+                $("#anexo_outra_procedencia").hide().find('input, radio').prop('disabled', true);
         @endif
         
 
@@ -691,6 +694,7 @@
         });
         
         @if(isset($modelo_animal->perfil) && $modelo_animal->perfil->grupo_animal == "outro")
+            $("#anexo_outro_tipo").show().find('input, radio').prop('disabled', false);
             $("#grupo_animal").change(function () {
                 if ($(this).val() == "outro") {
                     $("#anexo_outro_tipo").show().find('input, radio').prop('disabled', false);
@@ -698,13 +702,17 @@
                     $("#anexo_outro_tipo").hide().find('input, radio').prop('disabled', true);
                 }
             });
+        @else
+            $("#anexo_outro_tipo").hide().find('input, radio').prop('disabled', true);
         @endif
 
         $("#grupo_animal").change(function () {
                 if ($(this).val() == "outro") {
+                    $("#anexo_outro_tipo").show();
                     $("#anexo_outro_tipo").show().find('input, radio').prop('disabled', false);
                 }else {
-                    $("#anexo_outro_tipo").hide().find('input, radio').prop('disabled', true);
+                    $("#anexo_outro_tipo").hide();
+                    // $("#anexo_outro_tipo").hide().find('input, radio').prop('disabled', true);
                 }
             });
 
