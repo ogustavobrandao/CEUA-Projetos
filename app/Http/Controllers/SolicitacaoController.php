@@ -26,9 +26,6 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Storage;
-use Phalcon\Forms\Element\Date;
 
 class SolicitacaoController extends Controller
 {
@@ -209,25 +206,6 @@ class SolicitacaoController extends Controller
         $solicitacao = Solicitacao::find($request->solicitacao_id);
         $listaColab = [];
 
-        // if(($request->hasFile('termo_responsabilidade') && $request->file('termo_responsabilidade')->isValid())) {
-        //     $anexo = $request->termo_responsabilidade->extension();
-        //     $nomeAnexo = "termo_responsabilidade_" . $solicitacao->id . date('Ymd') . date('His') . '.' . $anexo;
-        //     if ($responsavel->termo_responsabilidade != null) {
-        //         $nomeAnexo = $responsavel->termo_responsabilidade;
-        //     }
-        //     $request->termo_responsabilidade->storeAs('termos_responsabilidades/', $nomeAnexo);
-        //     $request->termo_responsabilidade = $nomeAnexo;
-        // }
-        // if (($request->hasFile('experiencia_previa') && $request->file('experiencia_previa')->isValid())) {
-        //     $anexo = $request->experiencia_previa->extension();
-        //     $nomeAnexo = "experiencia_" . $solicitacao->id . date('Ymd') . date('His') . '.' . $anexo;
-        //     if ($responsavel->experiencia_revia != null) {
-        //         $nomeAnexo = $responsavel->experiencia_previa;
-        //     }
-        //     $request->experiencia_previa->storeAs('experiencias/', $nomeAnexo);
-        //     $request->experiencia_previa = $nomeAnexo;
-        // }
-
         if (isset($request->colaborador)) {
             foreach ($request->colaborador as $colab) {
                 if ($colab['colab_id'] != null) {
@@ -292,12 +270,14 @@ class SolicitacaoController extends Controller
         Validator::make($request->all(), array_merge(ModeloAnimal::$rules, Perfil::$rules), array_merge(ModeloAnimal::$messages, Perfil::$messages))->validateWithBag('modelo');
 
         $data = $request->all();
+        
         if (($request->hasFile('termo_consentimento') && $request->file('termo_consentimento')->isValid())) {
             $anexo = $request->termo_consentimento->extension();
             $nomeAnexo = "tcle_" . $request->solicitacao_id . date('Ymd') . date('His') . '.' . $anexo;
             $request->termo_consentimento->storeAs('termos/', $nomeAnexo);
             $data['termo_consentimento'] = $nomeAnexo;
         }
+        
 
         if (($request->hasFile('licencas_previas') && $request->file('licencas_previas')->isValid())) {
             $anexo = $request->licencas_previas->extension();
@@ -307,7 +287,6 @@ class SolicitacaoController extends Controller
         }
 
         $modelo_animal = ModeloAnimal::create($data);
-
 
         $perfil = new Perfil();
         $perfil->grupo_animal = $request->grupo_animal;
@@ -335,11 +314,11 @@ class SolicitacaoController extends Controller
             $request->termo_consentimento = $nomeAnexo;
         }
 
+        
         if (($request->hasFile('licencas_previas') && $request->file('licencas_previas')->isValid())) {
-            $anexo = $request->licencas_previas->extension();
-            $nomeAnexo = "licencasPrevia_" . $request->solicitacao_id . date('Ymd') . date('His') . '.' . $anexo;
+            $nomeAnexo = $modelo_animal->licencas_previas;
             $request->licencas_previas->storeAs('licencas_previas/', $nomeAnexo);
-            $data['licencas_previas'] = $nomeAnexo;
+            $request->licencas_previas = $nomeAnexo;
         }
 
         $modelo_animal->update($request->all());
@@ -446,6 +425,7 @@ class SolicitacaoController extends Controller
 
     public function index_planejamento($modelo_animal_id)
     {
+        
         $modelo_animal = ModeloAnimal::find($modelo_animal_id);
         $planejamento = Planejamento::where('modelo_animal_id', $modelo_animal_id)->first();
         $solicitacao = Solicitacao::find($modelo_animal->solicitacao_id);

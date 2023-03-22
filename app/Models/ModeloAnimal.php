@@ -32,11 +32,9 @@ class ModeloAnimal extends Model
 
     public static $rules = [
         'justificativa' => 'required|string',
-        'geneticamente_modificado' => 'required',
         'nome_cientifico' => 'required|string',
         'nome_vulgar' => 'required|string',
         'procedencia' => 'required',
-        'numero_cqb' => 'required',
     ];
 
     public static $messages = [

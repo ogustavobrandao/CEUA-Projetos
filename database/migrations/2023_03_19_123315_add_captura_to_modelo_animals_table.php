@@ -14,8 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::table('modelo_animals', function (Blueprint $table) {
-            $table->text('captura');
-            $table->boolean('flag_captura');
+            $table->text('captura')->nullable();;
+            $table->boolean('flag_captura')->nullable();;
         });
     }
 

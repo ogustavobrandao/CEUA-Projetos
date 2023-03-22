@@ -204,6 +204,17 @@
                     @include('solicitacao.eutanasia',['tipo'=>9])
                 @endif
             </div>
+
+            <div id="resultado" style="display: none;">
+                @if(Auth::user()->tipo_usuario_id == 2)
+                    @include('solicitacao.resultado',['tipo'=>10,'avaliacao_id'=>$avaliacao->id,'id'=>$resultado->id])
+                @elseif(Auth::user()->tipo_usuario_id == 3 && $solicitacao->status == 'avaliado'
+                        && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia')
+                    @include('solicitacao.resultado',['tipo'=>10,'id'=>$resultado->id,'status'=>$avaliacaoResultado->status])
+                @else
+                    @include('solicitacao.resultado')
+                @endif
+            </div>
         </div>
 
         {{-- <div class="mb-4">
@@ -311,10 +322,10 @@
                 alterarCorCard(9, '{{$avaliacaoEutanasia->status}}');
             @endif
 
-            // Resultado
-            @if(isset($avaliacaoResultado) != null )
-                alterarCorCard(10, '{{$avaliacaoResultado->status}}');
-            @endif
+            // // Resultado
+            // @if(isset($avaliacaoResultado) != null )
+            //     alterarCorCard(10, '{{$avaliacaoResultado->status}}');
+            // @endif
 
         });
 
@@ -396,18 +407,18 @@
             $('#9_btn_up').show();
         });
 
-        // Resultado
-        $('#10_btn_up').on('click', function () {
-            $('#resultado').slideToggle(800);
-            $(this).hide();
-            $('#10_btn_down').show();
-        });
+        // // Resultado
+        // $('#10_btn_up').on('click', function () {
+        //     $('#resultado').slideToggle(800);
+        //     $(this).hide();
+        //     $('#10_btn_down').show();
+        // });
 
-        $('#10_btn_down').on('click', function () {
-            $('#resultado').slideToggle(800);
-            $(this).hide();
-            $('#10_btn_up').show();
-        });
+        // $('#10_btn_down').on('click', function () {
+        //     $('#resultado').slideToggle(800);
+        //     $(this).hide();
+        //     $('#10_btn_up').show();
+        // });
 
         <!-- Ajax para avaliações individuais -->
         function showAvaliacaoIndividual(tipo,avaliacao_id,id) {

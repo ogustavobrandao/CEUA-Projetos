@@ -56,9 +56,15 @@
             </div>
             <div class="col-sm-6">
                 @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2)
+                    @if($planejamento->anexo_amostra_planejamento == null)
+                        <br>
+                        <a class="btn btn-secondary"
+                        href="#">Não Enviado</a>
+                    @else
                     <a class="btn btn-primary"
                        href="{{route('anexo_amostra_planejamento.download', ['planejamento_id' => $planejamento->id])}}">Baixar
                         Fórmula</a>
+                    @endif
                 @else
                     @if(!empty($planejamento))
                         <input class="form-control @error('anexo_amostra_planejamento') is-invalid @enderror" id="anexo_amostra_planejamento"
@@ -97,9 +103,15 @@
             </div>
             <div class="col-sm-6">
                 @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2)
-                    <a class="btn btn-primary"
-                       href="{{route('planejamento.formula.download', ['planejamento_id' => $planejamento->id])}}">Baixar
-                        Fórmula</a>
+                    @if($planejamento->anexo_formula == null)
+                        <br>
+                        <a class="btn btn-secondary"
+                        href="#">Não Enviado</a>
+                    @else
+                        <a class="btn btn-primary"
+                        href="{{route('planejamento.formula.download', ['planejamento_id' => $planejamento->id])}}">Baixar
+                            Fórmula</a>
+                    @endif
                 @else
                     @if(!empty($planejamento))
                         <input class="form-control @error('anexo_formula') is-invalid @enderror" id="anexo_formula"

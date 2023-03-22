@@ -164,14 +164,18 @@
 
         <div class="row">
             <h3 class="subtitulo">Informações Complementares</h3>
+            @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id != 2)
             <div class="col-sm-2">
+            <label>Experiência Prévia:</label>
+            @endif
+            @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2)
+            <div class="col-sm-15">
                 <label>Experiência Prévia:</label>
-                @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2)
                     @if($solicitacao->responsavel->experiencia_previa == null)
                         <a class="btn btn-secondary"
                            href="#">Não Enviado</a>
                     @else
-                        <a class="btn btn-primary"
+                        <a class="btn btn-primary m-3"
                            href="{{route('experiencia.download', ['responsavel_id' => $solicitacao->responsavel->id])}}">Baixar
                             Experiência Prévia</a>
                     @endif
@@ -196,7 +200,7 @@
                 </div>
         </div>
 
-        <div class="col-sm-4" id="anexo_experiencia" style="display: none;">
+        <div class="col-sm-4 mt-4" id="anexo_experiencia" style="display: none;">
             <label>Anexar Comprovante de Experiência Prévia:</label>
             <input class="form-control @error('experiencia_previa') is-invalid @enderror"
                    id="experiencia_previa"
@@ -215,14 +219,18 @@
         </div>
         @endif
 
+            @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id != 2)
             <div class="col-sm-2">
+            <label>Termo de Responsabilidade:</label>
+            @endif
+            @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2)
+            <div class="col-sm-15">
                 <label>Termo de Responsabilidade:</label>
-                @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2)
                     @if($solicitacao->responsavel->termo_responsabilidade == null)<br>
                         <a class="btn btn-secondary"
                         href="#">Não Enviado</a>
                     @else
-                        <a class="btn btn-primary"
+                        <a class="btn btn-primary m-3"
                             href="{{route('termo_responsabilidade.downloadTermoResponsabilidade', ['responsavel_id' => $solicitacao->responsavel->id])}}">Baixar
                                 Termo de Responsabilidade</a>
                     @endif
@@ -244,7 +252,7 @@
                     </div>
                 </div>
                 
-                <div class="col-sm-4" id="anexo_termo_responsabilidade" style="display: none;">
+                <div class="col-sm-4 mt-4" id="anexo_termo_responsabilidade" style="display: none;">
                     <label>Anexar Termo de Responsabilidade:</label>
                     {{-- <li><a href="" target="blank">Modelo Termo de Responsabilidade</a></li> --}}
                     <input class="form-control @error('termo_responsabilidade') is-invalid @enderror"
@@ -265,16 +273,20 @@
                 @endif
         
             <div class="row">
+                @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id != 2)
                 <div class="col-sm-2">
+                <label for="treinamento">Treinamento:</label>
+                @endif
+                @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2)
+                <div class="col-sm-15">
                     <label for="treinamento">Treinamento:</label>
-                    @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2)
                         @if($solicitacao->responsavel->treinamento == null)
                             <br>
                             <a class="btn btn-secondary"
                             href="#">Não Enviado</a>
                         @else
-                        <div class="col-sm-12">
-                            <div class="col-m-12 mt-2">
+                        <div class="col-m-12">
+                            <div class="col-m-10">
                                 <label for="treinamento">Descrição:<strong style="color: red">*</strong></label>
                                 <textarea class="form-control @error('treinamento') is-invalid @enderror" name="treinamento" id="treinamento" autocomplete="treinamento" autofocus
                                 required>@if(!empty($solicitacao->responsavel) && $solicitacao->responsavel->treinamento != null){{$solicitacao->responsavel->treinamento}}@else{{old('treinamento')}}@endif</textarea>
@@ -293,7 +305,7 @@
                                     @if(!empty($solicitacao->responsavel) && $solicitacao->responsavel->treinamento != null) checked @endif>
                                 <label class="form-check-label" for="treinamento">Sim</label>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-sm-2">
                                 <input class="form-check-input" type="radio" name="treinamento_radio" id="treinamento_nao"
                                     @if(!empty($solicitacao->responsavel) && $solicitacao->responsavel->treinamento == null || $solicitacao->responsavel == null) checked
                                     @endif value="false">
@@ -303,40 +315,30 @@
                             </div>
                         </div>
                 </div>
-                    @if (!empty($solicitacao->responsavel) && $solicitacao->responsavel->treinamento != null)
-                    <div class="col-sm-9 mt-2" id="treinamento" style="display: none;">
+            
+                    <div class="col-sm-7 mt-2" id="treinamento" style="display: none;">
                         <label>Descreva:</label>
                         <textarea class="form-control @error('treinamento') is-invalid @enderror" name="treinamento" id="treinamento" autocomplete="treinamento" autofocus
-                        required> @if(empty($solicitacao_responsavel) && $solicitacao->responsavel->treinamento != null) {{$solicitacao->responsavel->treinamento}} @else{{old('treinamento')}}@endif </textarea>
+                        required> @if(!empty($solicitacao->responsavel) && $solicitacao->responsavel->treinamento != null) {{$solicitacao->responsavel->treinamento}} @else{{old('treinamento')}}@endif </textarea>
                         @error('treinamento')
                         <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
                         @enderror
                     </div>
-                    @else
-                    <div class="col-sm-9 mt-2" id="treinamento" style="display: none;">
-                        <label>Descreva:</label>
-                        <textarea class="form-control @error('treinamento') is-invalid @enderror" name="treinamento" id="treinamento" autocomplete="treinamento" autofocus
-                        required> @if(!empty($solicitacao_responsavel) && $solicitacao->responsavel->treinamento != null) {{$solicitacao->responsavel->treinamento}} @else{{old('treinamento')}}@endif </textarea>
-                        @error('treinamento')
-                        <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                        @enderror
-                    </div>
-                    @endif
-                    
-                @endif
                 </div>
+                @endif
+                
+            
         @if (\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2)
             </div>
             </div>
-            @include('component.botoes_form')
-            
+        </div>
+        </div>
+            @include('component.botoes_new_form')
         @else
-            </div>
-            @include('component.botoes_form')
+        </div>
+        @include('component.botoes_new_form')
         @endif
     </form>
 </div>
