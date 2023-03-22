@@ -155,7 +155,6 @@
         </div>
     </div>
 
-
     <!-- Modal de Criação de Modelo Animal -->
     <div class="modal fade" id="modeloAnimalModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
          aria-hidden="true">

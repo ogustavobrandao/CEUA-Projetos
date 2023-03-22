@@ -151,7 +151,7 @@
                 <strong>{{ $message }}</strong>
                 </span>
                 @enderror
-                <div class="col-sm-13 mt-2" id="anexo_coleta_especimes" style="display: none;">
+                <div class="col-sm-13 m-2" id="anexo_coleta_especimes" style="display: none;">
                     <label for="anexo_coleta_especimes">Descreva:<strong style="color: red">*</strong></label>
                     <input class="form-control @error('coleta_especimes') is-invalid @enderror" id="coleta_especimes" type="text" name="coleta_especimes"
                     @if(isset($modelo_animal) && ($modelo_animal->coleta_especimes != null)) value="{{$modelo_animal->coleta_especimes}}"
@@ -503,6 +503,10 @@
                 <a class="btn btn-primary"
                 href="{{route('termo.download', ['modelo_animal_id' => $modelo_animal->id])}}">Baixar
                     Termo de Consentimento</a>
+                @else
+                    <br>
+                    <a class="btn btn-secondary"
+                    href="#">Não Enviado</a>
                 @endif
             @else
                 @if(!empty($modelo_animal))
@@ -546,9 +550,15 @@
             </label>
             <p>Caso seja mais de um documento, anexar em um só PDF todos os documentos juntos.</p>
             @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2)
+                @if (!empty($modelo_animal->licencas_previas))
                 <a class="btn btn-primary"
-                   href="{{route('licencas_previas.download', ['modelo_animal_id' => $modelo_animal->id])}}">Baixar
-                   Licenças</a>
+                href="{{route('licencas_previas.download', ['modelo_animal_id' => $modelo_animal])}}">Baixar
+                Licenças</a>
+                @else
+                    <br>
+                    <a class="btn btn-secondary"
+                    href="#">Não Enviado</a>
+                @endif
             @else
                 @if(!empty($modelo_animal))
                     <input class="form-control @error('licencas_previas') is-invalid @enderror"
@@ -594,6 +604,19 @@
         $("#anexo_cqb").hide();
         @endif
 
+        $("#procedencia").change(function () {
+                if ($(this).val() == "animal_silvestre") {
+                    $("#anexo_animal_silvestre_captura").show().find('input, radio').prop('disabled', false);
+                    $("#anexo_animal_silvestre_coleta").show().find('input, radio').prop('disabled', false);
+                    $("#anexo_animal_marcacao").show().find('input, radio').prop('disabled', false);
+                    $("#anexo_outras_informações").show().find('input, radio').prop('disabled', false);
+                }else {
+                    $("#anexo_animal_silvestre_captura").hide().find('input, radio').prop('disabled', true);
+                    $("#anexo_animal_silvestre_coleta").hide().find('input, radio').prop('disabled', true);
+                    $("#anexo_animal_marcacao").hide().find('input, radio').prop('disabled', true);
+                    $("#anexo_outras_informações").hide().find('input, radio').prop('disabled', true);
+                }
+            });
 
         @if(isset($modelo_animal) && $modelo_animal->procedencia == "animal_silvestre")
             $("#procedencia").change(function () {
@@ -723,6 +746,8 @@
 
     });
 </script>
+
+
 
 
 

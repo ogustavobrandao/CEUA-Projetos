@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('modelo_animals', function (Blueprint $table) {
-            $table->string('tipo_outra_procedencia');
+            $table->string('tipo_outra_procedencia')->nullable();
         });
     }
 
