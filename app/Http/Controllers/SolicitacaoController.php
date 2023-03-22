@@ -23,6 +23,9 @@ use App\Models\Responsavel;
 use App\Models\Resultado;
 use App\Models\Solicitacao;
 use App\Models\User;
+use App\Models\GrandeArea;
+use App\Models\Area;
+use App\Models\SubArea;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -34,6 +37,9 @@ class SolicitacaoController extends Controller
     {
         $solicitacao = Solicitacao::find($solicitacao_id);
         $instituicaos = Instituicao::all();
+        $grandeAreas = GrandeArea::all();
+        $areas = Area::all();
+        $subAreas = SubArea::all();
 
         if(Auth::user()->tipo_usuario_id == 3 && $solicitacao->status == 'avaliado' && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia'){
             $avaliacao = Avaliacao::where('solicitacao_id', $solicitacao_id)->where('user_id', $solicitacao->avaliacao->first()->user_id)->first();
@@ -44,18 +50,22 @@ class SolicitacaoController extends Controller
             $avaliacaoResponsavel = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)->where('responsavel_id', $solicitacao->responsavel->id)->first();
             $avaliacaoColaborador = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)->where('tipo', 2)->first();
 
-            return view('solicitacao.index', compact('solicitacao',
+
+            return view('solicitacao.index', compact('solicitacao', 'grandeAreas', 'areas', 'subAreas',
                 'instituicaos','avaliacaoDadosComp', 'avaliacaoDadosini', 'avaliacaoResponsavel', 'avaliacaoColaborador','avaliacao'));
 
         }
 
-        return view('solicitacao.index', compact('solicitacao', 'instituicaos'));
+        return view('solicitacao.index', compact('solicitacao', 'instituicaos', 'grandeAreas', 'areas', 'subAreas'));
     }
 
     public function avaliarSolicitacao($solicitacao_id)
     {
         $solicitacao = Solicitacao::find($solicitacao_id);
         $instituicaos = Instituicao::all();
+        $grandeAreas = GrandeArea::all();
+        $areas = Area::all();
+        $subAreas = SubArea::all();
 
         $disabled = true;
         $responsavel = $solicitacao->responsavel;
@@ -71,7 +81,7 @@ class SolicitacaoController extends Controller
         $avaliacaoResponsavel = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)->where('responsavel_id', $responsavel->id)->first();
         $avaliacaoColaborador = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)->where('tipo', 2)->first();
 
-        return view('solicitacao.index', compact('disabled', 'solicitacao',
+        return view('solicitacao.index', compact('disabled', 'solicitacao', 'grandeAreas', 'areas', 'subAreas',
             'instituicaos', 'responsavel', 'colaboradores', 'modelo_animais', 'avaliacao',
             'avaliacaoDadosComp', 'avaliacaoDadosini', 'avaliacaoResponsavel', 'avaliacaoColaborador'));
 
@@ -103,8 +113,9 @@ class SolicitacaoController extends Controller
         return redirect(route('solicitacao.index', ['solicitacao_id' => $solicitacao->id]));
     }
 
+
     public function criar(Request $request)
-    {
+    {   
         Validator::make($request->all(), Solicitacao::$rules, Solicitacao::$messages)->validate();
 
         $solicitacao = Solicitacao::find($request->solicitacao_id);
@@ -112,9 +123,15 @@ class SolicitacaoController extends Controller
         $solicitacao->titulo_en = $request->titulo_en;
         $solicitacao->inicio = $request->inicio;
         $solicitacao->fim = $request->fim;
-        $solicitacao->area_conhecimento = $request->area_conhecimento;
-        if (isset($request->outra_area_conhecimento))
-            $solicitacao->outra_area_conhecimento = $request->outra_area_conhecimento;
+        if($request->grande_area_id != null){
+            $solicitacao->grande_area_id = $request->grande_area_id;
+        }
+        if($request->area_id != null){
+            $solicitacao->area_id = $request->area_id;
+        }
+        if($request->sub_area_id != null){
+            $solicitacao->sub_area_id = $request->sub_area_id;
+        }
         $solicitacao->update();
 
         return redirect(route('solicitacao.index', ['solicitacao_id' => $request->solicitacao_id]));

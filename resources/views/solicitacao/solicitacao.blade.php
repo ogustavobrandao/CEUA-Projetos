@@ -77,75 +77,64 @@
                 @enderror
             </div>
 
-            <div class="col-sm-4">
-                <label for="area_conhecimento">Área e Subárea do Conhecimento:<strong style="color: red">*</strong>
+            <div class="col-12 mt-2">
+                <h3 class="subtitulo">Área e Subárea do Conhecimento
                     <a target="_blank"
                     href="http://lattes.cnpq.br/documents/11871/24930/TabeladeAreasdoConhecimento.pdf/d192ff6b-3e0a-4074-a74d-c280521bd5f7"
                     title="Para mais informações sobre das áreas e subáreas de conhecimento, acessar documento do CNPQ." style="color: darkred">
                      <i class="fa-solid fa-circle-info fa-lg"></i>
-                 </a></label>
-                <select class="form-control @error('area_conhecimento') is-invalid @enderror" id="area_conhecimento"
-                        name="area_conhecimento">
-                    <option disabled selected>Área e Subárea do Conhecimento</option>
-                    <option value="ciencias_agrarias"
-                            @if(!empty($solicitacao) && $solicitacao->area_conhecimento == 'ciencias_agrarias') selected @endif>
-                        Ciências Agrárias
-                    </option>
-                    <option value="ciencias_biologicas"
-                            @if(!empty($solicitacao) && $solicitacao->area_conhecimento == 'ciencias_biologicas') selected @endif>
-                        Ciências Biológicas
-                    </option>
-                    <option value="ciencias_saude"
-                            @if(!empty($solicitacao) && $solicitacao->area_conhecimento == 'ciencias_saude') selected @endif>
-                        Ciências da Saúde
-                    </option>
-                    <option value="ciencias_exatas_terra"
-                            @if(!empty($solicitacao) && $solicitacao->area_conhecimento == 'ciencias_exatas_terra') selected @endif>
-                        Ciências Exatas e da Terra
-                    </option>
-                    <option value="ciencias_humanas"
-                            @if(!empty($solicitacao) && $solicitacao->area_conhecimento == 'ciencias_humanas') selected @endif>
-                        Ciências Humanas
-                    </option>
-                    <option value="ciencias_sociais_aplicadas"
-                            @if(!empty($solicitacao) && $solicitacao->area_conhecimento == 'ciencias_sociais_aplicadas') selected @endif>
-                        Ciências Sociais Aplicadas
-                    <option value="ciencias_ambientais"
-                            @if(!empty($solicitacao) && $solicitacao->area_conhecimento == 'ciencias_ambientais') selected @endif>
-                        Ciências Ambientais
-                    </option>
-                    <option value="engenharias"
-                            @if(!empty($solicitacao) && $solicitacao->area_conhecimento == 'engenharias') selected @endif>
-                        Engenharias
-                    </option>
-                    <option value="linguistica_letras_artes"
-                            @if(!empty($solicitacao) && $solicitacao->area_conhecimento == 'linguistica_letras_artes') selected @endif>
-                        Linguística, Letras e Artes
-                    </option>
-                    <option value="outras"
-                            @if(!empty($solicitacao) && $solicitacao->area_conhecimento == 'outras') selected @endif>
-                        Outras
-                    </option>
-                </select>
-                @error('area_conhecimento')
-                <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-                @enderror
+                    </a>
+                </h3>
             </div>
+
+            <div class="form-group col-md-4">
+                <label for="grande_area_id" class="col-form-label">{{ __('Grande Área') }} <span style="color: red; font-weight:bold">*</span></label>
+                  <select class="form-control @error('grande_area_id') is-invalid @enderror" id="grande_area_id" name="grande_area_id" onchange="areas()" >
+                    <option value="" disabled selected hidden>Selecione a Grande Área</option>
+                    @foreach($grandeAreas as $grandeArea)
+                    <option @if(old('grande_area_id') !== null ? old('grande_area_id') : (isset($solicitacao) ? $solicitacao->grande_area_id : '')
+                            == $grandeArea->id ) selected @endif value="{{$grandeArea->id}}">{{$grandeArea->nome}}</option>
+                    @endforeach
+                  </select>
+                  @error('grandeArea')
+                  <span class="invalid-feedback" role="alert" style="overflow: visible; display:block">
+                    <strong>{{ $message }}</strong>
+                  </span>
+                  @enderror
+              </div>
+              <div class="form-group col-md-4">
+                <label for="area_id" class="col-form-label">{{ __('Área') }} <span style="color: red; font-weight:bold">*</span></label>
+                  <input type="hidden" id="oldarea_id" value="{{ old('area_id') }}">
+                  <select class="form-control @error('area_id') is-invalid @enderror" id="area_id" name="area_id" onchange="subareas()" >
+                    <option value="" disabled selected hidden>Selecione a Área</option>
+                    @foreach($areas as $area)
+                    <option @if(old('area_id') !== null ? old('area_id') : (isset($solicitacao) ? $solicitacao->area_id : '') == $area->id ) selected @endif value="{{$area->id}}">{{$area->nome}}</option>
+                    @endforeach
+                    </select>
+                  @error('area')
+                  <span class="invalid-feedback" role="alert" style="overflow: visible; display:block">
+                    <strong>{{ $message }}</strong>
+                  </span>
+                  @enderror
+              </div>
+              <div class="form-group col-md-4">
+                <label for="sub_area_id" class="col-form-label">{{ __('Subárea') }} <span style="color: red; font-weight:bold">*</span></label>
+                  <input type="hidden" id="oldsub_area_id" value="{{ old('sub_area_id') }}">
+                  <select class="form-control @error('sub_area_id') is-invalid @enderror" id="sub_area_id" name="sub_area_id" >
+                    <option value="" disabled selected hidden>Selecione a Subárea</option>
+                    @foreach($subAreas as $subArea)
+                    <option @if(old('sub_area_id') !== null ? old('sub_area_id') : (isset($solicitacao) ? $solicitacao->sub_area_id : '')
+                            ==$subArea->id ) selected @endif value="{{$subArea->id}}">{{$subArea->nome}}</option>
+                    @endforeach
+                  </select>
+
+                  @error('subArea')
+                  <span class="invalid-feedback" role="alert" style="overflow: visible; display:block">
+                    <strong>{{ $message }}</strong>
+                  </span>
+                  @enderror
+              </div>
         </div>
-
-
-        <div id="outra_area_conhecimento_div" class="row mt-2" style="display: none">
-            <div class="col-4">
-                <label for="outra_area_conhecimento">Outra Área de Conhecimento:<strong
-                        style="color: red">*</strong></label>
-                <input class="form-control" id="outra_area_conhecimento" type="text" name="outra_area_conhecimento"
-                       value="@if(!empty($solicitacao) && $solicitacao->outra_area_conhecimento != null) {{$solicitacao->outra_area_conhecimento}} @else {{ old('outra_area_conhecimento') }} @endif"
-                       autocomplete="outra_area_conhecimento" autofocus>
-            </div>
-        </div>
-
 
         @include('component.botoes_new_form')
     </form>
@@ -172,4 +161,83 @@
 
         }
     });
+
+     /*
+  * FUNCAO: Gerar as areas
+  *
+  */
+  function areas() {
+      var grandeArea = $('#grandeArea').val();
+      $.ajax({
+          type: 'POST',
+          url: '{{ route('area.consulta') }}',
+          data: 'id='+grandeArea ,
+          headers:
+          {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          success: (dados) => {
+
+          if (dados.length > 0) {
+            if($('#oldArea').val() == null || $('#oldArea').val() == ""){
+              var option = '<option selected disabled>-- Área --</option>';
+            }
+            $.each(dados, function(i, obj) {
+              if($('#oldArea').val() != null && $('#oldArea').val() == obj.id){
+                option += '<option selected value="' + obj.id + '">' + obj.nome + '</option>';
+              }else{
+                option += '<option value="' + obj.id + '">' + obj.nome + '</option>';
+              }
+            })
+          } else {
+            var option = "<option selected disabled>-- Área --</option>";
+          }
+          $('#area').html(option).show();
+          subareas();
+        },
+          error: (data) => {
+              console.log(data);
+          }
+
+      })
+    }
+  /*
+  * FUNCAO: Gerar as subareas
+  *
+  */
+  function subareas() {
+      var area = $('#area').val();
+      $.ajax({
+          type: 'POST',
+          url: '{{ route('subarea.consulta') }}',
+          data: 'id='+area ,
+          headers:
+          {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          success: (dados)=> {
+          if (dados.length > 0) {
+            if($('#oldSubArea').val() == null || $('#oldSubArea').val() == ""){
+              var option = '<option selected disabled>-- Subárea --</option>';
+            }
+            $.each(dados, function(i, obj) {
+              if($('#oldSubArea').val() != null && $('#oldSubArea').val() == obj.id){
+                option += '<option selected value="' + obj.id + '">' + obj.nome + '</option>';
+              }else{
+                option += '<option value="' + obj.id + '">' + obj.nome + '</option>';
+              }
+            })
+          } else {
+            var option = "<option selected disabled>-- Subárea --</option>";
+          }
+          $('#subArea').html(option).show();
+        },
+          error: (dados) => {
+              console.log(dados);
+          }
+
+      })
+
+    }
+
 </script>
