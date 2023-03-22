@@ -20,13 +20,13 @@ return new class extends Migration
             $table->date('fim')->nullable();
             $table->string('tipo')->nullable();
             $table->string('titulo_pt')->nullable();
-            $table->string('area_conhecimento')->nullable();
-            $table->string('outra_area_conhecimento')->nullable();
             $table->string('status')->nullable();
             $table->bigInteger('avaliador_atual_id')->nullable();
             $table->unsignedBigInteger('user_id');
-
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->bigInteger('grande_area_id')->nullable();
+            $table->bigInteger('area_id')->nullable();
+            $table->bigInteger('sub_area_id')->nullable();
             $table->timestamps();
         });
     }

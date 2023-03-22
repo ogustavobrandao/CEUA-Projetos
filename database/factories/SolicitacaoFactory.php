@@ -23,7 +23,6 @@ class SolicitacaoFactory extends Factory
             'tipo' => 'Extensão',
             'titulo_pt' => 'Titulo Portugues',
             'inicio' => today(),
-            'area_conhecimento' => 'Area de conhecimento',
         ];
     }
 }

@@ -15,7 +15,9 @@ class Solicitacao extends Model
         'inicio',
         'fim',
         'tipo',
-        'area_conhecimento',
+        'grandeArea',
+        'area',
+        'subArea',
         'usuario_id',
     ];
 
@@ -24,7 +26,6 @@ class Solicitacao extends Model
         'titulo_pt' => 'required|string|min:5',
         'inicio' => 'required|date',
         'fim' => 'required|date',
-        'area_conhecimento' => 'required',
     ];
 
     public static $messages = [
@@ -35,7 +36,6 @@ class Solicitacao extends Model
         'titulo_en.min' => 'O titulo em inglês deve possuir no minimo 5 caracteres',
         'inicio.required' => 'A data de inicio é obrigatória',
         'fim.required' => 'A data de fim é obrigatória',
-        'area_conhecimento.required' => 'A área de conhecimento é obrigatória',
     ];
 
     public function avaliacao()

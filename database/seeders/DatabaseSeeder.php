@@ -2,9 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\DadosComplementares;
-use App\Models\Departamento;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -32,6 +29,9 @@ class DatabaseSeeder extends Seeder
             OperacaoSeeder::class,
             ProcedimentoSeeder::class,
             ResultadoSeeder::class,
+            GrandeAreaSeeder::class,
+            AreaSeeder::class,
+            SubAreaSeeder::class,
         ]);
     }
 }
