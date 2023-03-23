@@ -84,7 +84,7 @@
         @include('component.botoes_new_form')
     </form>
 
-    <form id="form11" method="POST" action="{{route('solicitacao.resultado.criar')}}">
+    {{-- <form id="form11" method="POST" action="{{route('solicitacao.resultado.criar')}}">
         @csrf
         <input type="hidden" name="planejamento_id" @if(!empty($planejamento)) value="{{$planejamento->id}}" @endif>
         <div class="row col-md-12" style=" @if(Auth::user()->tipo_usuario_id == 2) pointer-events: none @endif">
@@ -163,7 +163,7 @@
 
         @include('component.botoes_new_form')
 
-    </form>
+    </form> --}}
 
 </div>
 

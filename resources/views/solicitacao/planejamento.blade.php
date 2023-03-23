@@ -63,7 +63,7 @@
                     @else
                     <a class="btn btn-primary"
                        href="{{route('anexo_amostra_planejamento.download', ['planejamento_id' => $planejamento->id])}}">Baixar
-                        Fórmula</a>
+                        Amostra</a>
                     @endif
                 @else
                     @if(!empty($planejamento))

@@ -4,8 +4,6 @@
         @csrf
         <input type="hidden" name="planejamento_id" @if(!empty($planejamento)) value="{{$planejamento->id}}" @endif>
         <div class="row col-md-12" style=" @if(Auth::user()->tipo_usuario_id == 2) pointer-events: none @endif">
-            <h3 class="subtitulo">Informações</h3>
-
             <div class="col-sm-6 mt-2">
                 <label for="abate">Abate:<strong style="color: red">*</strong></label>
                 <div class="row ml-1">

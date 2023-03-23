@@ -316,7 +316,7 @@
                         </div>
                 </div>
             
-                    <div class="col-sm-7 mt-2" id="treinamento" style="display: none;">
+                    <div class="col-sm-10 mt-2" id="treinamento" style="display: none;">
                         <label>Descreva:</label>
                         <textarea class="form-control @error('treinamento') is-invalid @enderror" name="treinamento" id="treinamento" autocomplete="treinamento" autofocus
                         required> @if(!empty($solicitacao->responsavel) && $solicitacao->responsavel->treinamento != null) {{$solicitacao->responsavel->treinamento}} @else{{old('treinamento')}}@endif </textarea>
