@@ -80,9 +80,8 @@
             </span>
                 @enderror
             </div>
-
         </div>
-
+        @include('component.botoes_new_form')
     </form>
 
     <form id="form11" method="POST" action="{{route('solicitacao.resultado.criar')}}">
