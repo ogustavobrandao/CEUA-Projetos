@@ -197,22 +197,14 @@
             <div id="eutanasia" style="display: none;">
                 @if(Auth::user()->tipo_usuario_id == 2)
                     @include('solicitacao.eutanasia',['tipo'=>9,'avaliacao_id'=>$avaliacao->id,'id'=>$eutanasia->id])
-                @elseif(Auth::user()->tipo_usuario_id == 3 && $solicitacao->status == 'avaliado'
-                        && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia')
-                    @include('solicitacao.eutanasia',['tipo'=>9,'id'=>$eutanasia->id,'status'=>$avaliacaoEutanasia->status])
-                @else
-                    @include('solicitacao.eutanasia',['tipo'=>9])
-                @endif
-            </div>
-
-            <div id="resultado" style="display: none;">
-                @if(Auth::user()->tipo_usuario_id == 2)
                     @include('solicitacao.resultado',['tipo'=>10,'avaliacao_id'=>$avaliacao->id,'id'=>$resultado->id])
                 @elseif(Auth::user()->tipo_usuario_id == 3 && $solicitacao->status == 'avaliado'
                         && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia')
+                    @include('solicitacao.eutanasia',['tipo'=>9,'id'=>$eutanasia->id,'status'=>$avaliacaoEutanasia->status])
                     @include('solicitacao.resultado',['tipo'=>10,'id'=>$resultado->id,'status'=>$avaliacaoResultado->status])
                 @else
-                    @include('solicitacao.resultado')
+                    @include('solicitacao.eutanasia',['tipo'=>9])
+                    @include('solicitacao.resultado',['tipo'=>10])
                 @endif
             </div>
         </div>
@@ -322,10 +314,10 @@
                 alterarCorCard(9, '{{$avaliacaoEutanasia->status}}');
             @endif
 
-            // // Resultado
-            // @if(isset($avaliacaoResultado) != null )
-            //     alterarCorCard(10, '{{$avaliacaoResultado->status}}');
-            // @endif
+            // Resultado
+            @if(isset($avaliacaoResultado) != null )
+                alterarCorCard(10, '{{$avaliacaoResultado->status}}');
+            @endif
 
         });
 
