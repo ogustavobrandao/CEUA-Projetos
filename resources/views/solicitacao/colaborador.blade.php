@@ -5,7 +5,7 @@
         <input type="hidden" name="solicitacao_id" value="{{$solicitacao->id}}">
         <div id="listaColaborador">
         </div>
-
+        
         @include('component.botoes_new_form')
     </form>
 
@@ -81,7 +81,7 @@
             '@endforeach' +
             '</select>' +
             '</div>' +
-            '<div class="col-sm-6 mt-2">' +
+            '<div class="col-sm-6">' +
                 '<label for="grau_escolaridade">Grau de Escolaridade:<strong style="color: red">*</strong></label>' +
                 '<select class="form-control" id="grau_escolaridade" name="colaborador[' + cont + '][grau_escolaridade]">' +
                     '<option disabled selected>Selecione um Grau de Escolaridade</option>' +
@@ -99,17 +99,52 @@
             '</div>' +
             '<div class="row">' +
             '<h3 class="subtitulo">Informações Complementares</h3>' +
+            '@if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id != 2)' +
             '<div class="col-sm-6">' +
-            '<label for="experiencia_previa">Experiência Prévia (anos):<strong style="color: red">*</strong></label>' +
-            '<input class="form-control @error('experiencia_previa') is-invalid @enderror" id="experiencia_previa" type="text" name="colaborador[' + cont + '][experiencia_previa]" value="{{ old('experiencia_previa') }}" required autocomplete="experiencia_previa" autofocus>' +
+            '<label>Experiência Prévia:<strong style="color: red">*</strong></label>' +
+            '@endif' +
+            '@if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2)' +
+            '<div class="col-sm-15">' +
+                '<label>Experiência Prévia:<strong style="color: red">*</strong></label>' +
+                    '@if('experiencia_previa' == null)<br>' +
+                        '<a class="btn btn-secondary" href="#">Não Enviado</a>' +
+                    '@else' +
+                        '<a class="btn btn-primary m-3" href="{{route('experiencias_previasColaborador.download', ['colaborador_id' => ['+ cont +']])}}">Baixar Experiência Prévia</a>' +
+                    '@endif' +
+            '@else' +
+            '<input class="form-control @error('experiencia_previa') is-invalid @enderror" id="experiencia_previa" enctype="multipart/form-data" type="file" name="colaborador[' + cont + '][experiencia_previa]" value="{{ old('experiencia_previa') }}" @if(empty([' + cont + ']['experiencia_previa'])) style="width: 135px" @endif>' +
             '@error('experiencia_previa')' +
             '<span class="invalid-feedback" role="alert">' +
             '<strong>{{ $message }}</strong>' +
             '</span>' +
             '@enderror' +
+            '@if(empty([' + cont + ']['experiencia_previa'])) <span style="border: 1px gray solid; border-radius: 10px; text-align: center; width: 180px; position: absolute; bottom: 0px; left: 155px; height: 38px; padding-top: 5px; background-color: #dcfadf">Um Arquivo Já Foi Enviado</span> @endif' +
             '</div>' +
+            '@endif' +
+            '@if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id != 2)' +
             '<div class="col-sm-6">' +
-            '<label for="treinamento">Treinamento (especificar):<strong style="color: red">*</strong></label>' +
+            '<label>Termo de Responsabilidade:<strong style="color: red">*</strong></label>' +
+            '@endif' +
+            '@if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2)' +
+            '<div class="col-sm-15">' +
+                '<label>Termo de Responsabilidade:<strong style="color: red">*</strong></label>' +
+                    '@if('termo_responsabilidade' == null)<br>' +
+                        '<a class="btn btn-secondary" href="#">Não Enviado</a>' +
+                    '@else' +
+                        '<a class="btn btn-primary m-3" href="{{route('termo_responsabilidadeColaborador.download', ['colaborador_id' => ['+ cont +']])}}">Baixar Termo de Responsabilidade</a>' +
+                    '@endif' +
+            '@else' +
+            '<input class="form-control @error('termo_responsabilidade') is-invalid @enderror" id="termo_responsabilidade" enctype="multipart/form-data" type="file" name="colaborador[' + cont + '][termo_responsabilidade]" value="{{ old('termo_responsabilidade') }}" @if(empty([' + cont + ']['termo_responsabilidade'])) style="width: 135px" @endif>' +
+            '@error('termo_responsabilidade')' +
+            '<span class="invalid-feedback" role="alert">' +
+            '<strong>{{ $message }}</strong>' +
+            '</span>' +
+            '@enderror' +
+            '@if(empty([' + cont + ']['termo_responsabilidade'])) <span style="border: 1px gray solid; border-radius: 10px; text-align: center; width: 180px; position: absolute; bottom: 0px; left: 155px; height: 38px; padding-top: 5px; background-color: #dcfadf">Um Arquivo Já Foi Enviado</span> @endif' +
+            '</div>' +
+            '@endif' +
+            '<div class="col-sm-11 mt-2">' +
+            '<label for="treinamento">Treinamento:<strong style="color: red">*</strong></label>' +
             '<input class="form-control @error('treinamento') is-invalid @enderror" id="treinamento" type="text" name="colaborador[' + cont + '][treinamento]" value="{{ old('treinamento') }}" required autocomplete="treinamento" autofocus>' +
             '@error('treinamento')' +
             '<span class="invalid-feedback" role="alert">' +
@@ -129,12 +164,15 @@
     $('#colab' + {{$key+1}}).find('#email').val("{{$colab->contato->email}}");
     $('#colab' + {{$key+1}}).find('#cpf').val("{{$colab->cpf}}");
     $('#colab' + {{$key+1}}).find('#telefone').val("{{$colab->contato->telefone}}");
-    $('#colab' + {{$key+1}}).find('#treinamento').val("{{$colab->treinamento}}");
-    $('#colab' + {{$key+1}}).find('#experiencia_previa').val("{{$colab->experiencia_previa}}");
     $('#colab' + {{$key+1}}).find('#instituicao').val("{{$colab->instituicao->id}}");
     $('#colab' + {{$key+1}}).find('#grau_escolaridade').val("{{$colab->grau_escolaridade}}");
+    $('#colab' + {{$key+1}}).find('#treinamento').val("{{$colab->treinamento}}");
+    $('#colab' + {{$key+1}}).find('#experiencia_previa').val("{{$colab->experiencia_previa}}");
+    $('#colab' + {{$key+1}}).find('#termo_responsabilidade').val("{{$colab->termo_responsabilidade}}");
     @endforeach
     @endif
 
 </script>
+
+
 
