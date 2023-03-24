@@ -15,6 +15,7 @@ class Colaborador extends Model
         'treinamento',
         'grau_escolaridade',
         'experiencia_previa',
+        'termo_responsabilidade',
         'instituicao_id',
         'responsavel_id',
     ];
@@ -23,7 +24,10 @@ class Colaborador extends Model
         'nome' => 'required|string|min:5',
         'treinamento' => 'required',
         'cpf' => 'required',
+        'instituicao_id' => 'required',
         'experiencia_previa' => 'required',
+        'treinamento' => 'required',
+        'termo_responsabilidade' => 'required',
         'grau_escolaridade' => 'required',
     ];
 
@@ -31,8 +35,11 @@ class Colaborador extends Model
         'nome.required' => 'O nome é um campo obrigatório.',
         'nome.string' => 'O nome deve ser um texto',
         'nome.min' => 'O nome deve possuir no minimo 5 caracteres',
-        'treinamento.required' => 'O envio do treinamento é obrigatório',
+        'instituicao_id.required' => 'A instituição é um campo obrigatório',
+        'cpf.required' => 'O CPF é um campo obrigatório',
+        'treinamento.required' => 'O preenchimento do treinamento é obrigatório',
         'experiencia_previa.required' => 'O envio da experiência previa é obrigatório',
+        'termo_responsabilidade.required' => 'O envio do termo de responsabilidade é obrigatório',
         'grau_escolaridade.required' => 'O grau de escolaridade é um campo obrigatório',
     ];
 
