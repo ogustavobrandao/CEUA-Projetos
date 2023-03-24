@@ -27,6 +27,7 @@ use App\Models\GrandeArea;
 use App\Models\Area;
 use App\Models\SubArea;
 use Carbon\Carbon;
+use Illuminate\Support\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -218,8 +219,8 @@ class SolicitacaoController extends Controller
     }
 
     public function criar_colaborador(Request $request)
-    {
-        //Validator::make($request->all(), Colaborador::$rules, Colaborador::$messages)->validate();
+    {   
+        // Validator::make($request->all(), Colaborador::$rules, Colaborador::$messages)->validate();
         $solicitacao = Solicitacao::find($request->solicitacao_id);
         $listaColab = [];
 
@@ -234,7 +235,15 @@ class SolicitacaoController extends Controller
                 $colaborador->cpf = $colab['cpf'];
                 $colaborador->instituicao_id = $colab['instituicao_id'];
                 $colaborador->grau_escolaridade = $colab['grau_escolaridade'];
-                $colaborador->experiencia_previa = $colab['experiencia_previa'];
+                
+                $nomeAnexo = "experiencias_previasColaborador" . $colab['experiencia_previa'] . date('Ymd') . date('His');
+                // $colab['experiencia_previa']->storeAs('experiencias_previasColaborador/', $nomeAnexo);
+                $colaborador->experiencia_previa = $nomeAnexo;
+
+                $nomeAnexo = "termos_responsabilidadesColaborador" . $colab['termo_responsabilidade'] . date('Ymd') . date('His');
+                // $colab['termo_responsabilidade']->storeAs('termos_responsabilidadesColaborador/', $nomeAnexo);
+                $colaborador->termo_responsabilidade =  $nomeAnexo;
+
                 $colaborador->treinamento = $colab['treinamento'];
                 $colaborador->responsavel_id = $solicitacao->responsavel->id;
 
@@ -285,7 +294,7 @@ class SolicitacaoController extends Controller
     public function criar_modelo_animal(Request $request)
     {
         Validator::make($request->all(), array_merge(ModeloAnimal::$rules, Perfil::$rules), array_merge(ModeloAnimal::$messages, Perfil::$messages))->validateWithBag('modelo');
-
+        
         $data = $request->all();
         
         if (($request->hasFile('termo_consentimento') && $request->file('termo_consentimento')->isValid())) {
@@ -294,16 +303,17 @@ class SolicitacaoController extends Controller
             $request->termo_consentimento->storeAs('termos/', $nomeAnexo);
             $data['termo_consentimento'] = $nomeAnexo;
         }
-        
 
-        if (($request->hasFile('licencas_previas') && $request->file('licencas_previas')->isValid())) {
-            $anexo = $request->licencas_previas->extension();
-            $nomeAnexo = "licencasPrevia_" . $request->solicitacao_id . date('Ymd') . date('His') . '.' . $anexo;
+        if(($request->hasFile('licencas_previas') && $request->file('licencas_previas')->isValid())) {
+            $anexo = $request->termo_consentimento->extension();
+            $nomeAnexo = "licencas_previas" . $request->solicitacao_id . date('Ymd') . date('His') . '.' . $anexo;
             $request->licencas_previas->storeAs('licencas_previas/', $nomeAnexo);
             $data['licencas_previas'] = $nomeAnexo;
         }
 
         $modelo_animal = ModeloAnimal::create($data);
+        
+
 
         $perfil = new Perfil();
         $perfil->grupo_animal = $request->grupo_animal;
@@ -323,6 +333,7 @@ class SolicitacaoController extends Controller
 
     public function atualizar_modelo_animal(Request $request)
     {   
+        
         $modelo_animal = ModeloAnimal::find($request->modelo_animal_id);
 
         if (($request->hasFile('termo_consentimento') && $request->file('termo_consentimento')->isValid())) {
@@ -330,7 +341,6 @@ class SolicitacaoController extends Controller
             $request->termo_consentimento->storeAs('termos/', $nomeAnexo);
             $request->termo_consentimento = $nomeAnexo;
         }
-
         
         if (($request->hasFile('licencas_previas') && $request->file('licencas_previas')->isValid())) {
             $nomeAnexo = $modelo_animal->licencas_previas;
@@ -397,6 +407,19 @@ class SolicitacaoController extends Controller
 
         return redirect(route('solicitacao.form', ['solicitacao_id' => $request->solicitacao_id]));
     }
+
+    public function downloadExperienciaPreviaColaborador($colaborador_id)
+    {
+        $colaborador = Colaborador::find($colaborador_id);
+        return Storage::download('experiencias_previasColaborador/' . $colaborador->experiencia_previa);
+    }
+
+    public function downloadTermoResponsabilidadeColaborador($colaborador_id)
+    {
+        $colaborador = Colaborador::find($colaborador_id);
+        return Storage::download('termos_responsabilidadesColaborador/' . $colaborador->termo_responsabilidade);
+    }
+
 
     public function downloadAnexoAmostraPlanejamento($planejamento_id)
     {
