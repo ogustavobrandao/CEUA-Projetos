@@ -51,7 +51,7 @@
                 @enderror
             </div>
 
-            <div class="col-sm-12 mt-2">
+            {{-- <div class="col-sm-12 mt-2">
                 <label>Anexar <span style="color: darkred">PDF</span> de amostra:</label>
             </div>
             <div class="col-sm-6">
@@ -91,7 +91,7 @@
                         @enderror
                     @endif
                 @endif
-            </div>
+            </div> --}}
 
         </div>
 

@@ -220,7 +220,7 @@
                     <table class="table">
                         <thead>
                         <tr>
-                            <th scope="col">Nome Ciêntifico</th>
+                            <th scope="col">Nome Científico</th>
                             <th scope="col">Procedência</th>
                             <th scope="col">Linhagem</th>
                             <th scope="col">Idade</th>
