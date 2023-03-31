@@ -110,6 +110,10 @@ Route::group(['middleware' => 'checkAvaliador'], function () {
 Route::post('/areas/', 'AreaController@consulta')->name('area.consulta');
 Route::post('/subarea/', 'SubAreaController@consulta')->name('subarea.consulta');
 
+//Gerar PDF
+Route::get('pdf', [App\Http\Controllers\PDFViewController::class, 'gerarPDF'])->name('pdf.gerarPDF');
+
+
 //Avaliação Individual - Ajustar middlware para Avaliador e Proprietario
 Route::get('/avaliacao_individual/{tipo}/{avaliacao_id}/{id}', [App\Http\Controllers\AvaliacaoIndividualController::class, 'exibir'])->name('avaliador.avaliacao_ind.exibir');
 Route::get('/avaliacao_individual/verificar/modelo/{modelo_animal_id}/{avaliacao_id}', [App\Http\Controllers\AvaliacaoIndividualController::class, 'verificarAvalModelo'])->name('avaliador.avaliacao_ind.verificar.modelo');
