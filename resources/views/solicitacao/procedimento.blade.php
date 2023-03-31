@@ -28,7 +28,7 @@
             </div>
 
             <div class="col-sm-4 mt-2">
-                <label for="anestesico_radio">Uso de anestésicos com Dose (UI ou mg/kg), via de administração:<strong style="color: red">*</strong></label>
+                <label for="anestesico_radio">Uso de anestésicos com dose (UI ou mg/kg), via de administração:<strong style="color: red">*</strong></label>
                 <div class="row ml-1">
                     <div class="col-sm-2">
                         <input class="form-check-input" type="radio" name="anestesico_radio" id="anestesico_sim"
@@ -66,7 +66,7 @@
             </div>
 
             <div class="col-sm-4 mt-2">
-                <label for="analgesico_radio">Uso de analgésicos com Dose (UI ou mg/kg), via de administração:<strong style="color: red">*</strong></label>
+                <label for="analgesico_radio">Uso de analgésicos com dose (UI ou mg/kg), via de administração:<strong style="color: red">*</strong></label>
                 <div class="row ml-1">
                     <div class="col-sm-2">
                         <input class="form-check-input" type="radio" name="analgesico_radio" id="analgesico_sim"
@@ -101,7 +101,7 @@
             </div>
 
             <div class="col-sm-12 mt-2" id="anestesico" style="display: none;">
-                <label for="anestesico">Uso de anestésicos com Dose (UI ou mg/kg), via de administração:<strong style="color: red">*</strong></label>
+                <label for="anestesico">Uso de anestésicos com dose (UI ou mg/kg), via de administração:<strong style="color: red">*</strong></label>
                 <textarea class="form-control @error('anestesico') is-invalid @enderror" name="anestesico"
                           id="anestesico" autocomplete="anestesico" autofocus
                           required disabled>@if(!empty($procedimento) && $procedimento->anestesico != null){{$procedimento->anestesico}}
@@ -129,7 +129,7 @@
             </div>
 
             <div class="col-sm-12 mt-3" id="analgesico" style="display: none;">
-                <label for="analgesico">Uso de analgésicos com Dose (UI ou mg/kg), via de administração:<strong style="color: red">*</strong></label>
+                <label for="analgesico">Uso de analgésicos com dose (UI ou mg/kg), via de administração:<strong style="color: red">*</strong></label>
                 <textarea class="form-control @error('analgesico') is-invalid @enderror" name="analgesico"
                           id="analgesico" autocomplete="analgesico" autofocus
                           required disabled>@if(!empty($procedimento) && $procedimento->analgesico != null){{$procedimento->analgesico}}
