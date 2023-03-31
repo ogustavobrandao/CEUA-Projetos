@@ -89,9 +89,9 @@ class DepartamentoSeeder extends Seeder
         \App\Models\Departamento::factory(1)->create(['nome' => 'Pedagógico | Camaragibe - PE', 'unidade_id' => 25]);
         \App\Models\Departamento::factory(1)->create(['nome' => 'Acadêmico | Camaragibe - PE', 'unidade_id' => 25]);
         \App\Models\Departamento::factory(1)->create(['nome' => 'Administrativo | Camaragibe - PE', 'unidade_id' => 25]);
-        \App\Models\Departamento::factory(1)->create(['nome' => 'Pedagógico | Camaragibe - PE', 'unidade_id' => 26]);
-        \App\Models\Departamento::factory(1)->create(['nome' => 'Acadêmico | Camaragibe - PE', 'unidade_id' => 26]);
-        \App\Models\Departamento::factory(1)->create(['nome' => 'Administrativo | Camaragibe - PE', 'unidade_id' => 26]);
+        \App\Models\Departamento::factory(1)->create(['nome' => 'Pedagógico | Garanhuns - PE', 'unidade_id' => 26]);
+        \App\Models\Departamento::factory(1)->create(['nome' => 'Acadêmico | Garanhuns - PE', 'unidade_id' => 26]);
+        \App\Models\Departamento::factory(1)->create(['nome' => 'Administrativo | Garanhuns - PE', 'unidade_id' => 26]);
         \App\Models\Departamento::factory(1)->create(['nome' => 'Pedagógico | Narazé da Mata - PE', 'unidade_id' => 27]);
         \App\Models\Departamento::factory(1)->create(['nome' => 'Acadêmico | Narazé da Mata - PE', 'unidade_id' => 27]);
         \App\Models\Departamento::factory(1)->create(['nome' => 'Administrativo | Narazé da Mata - PE', 'unidade_id' => 27]);

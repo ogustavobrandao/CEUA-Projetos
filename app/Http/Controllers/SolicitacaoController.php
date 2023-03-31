@@ -52,8 +52,8 @@ class SolicitacaoController extends Controller
             $avaliacaoColaborador = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)->where('tipo', 2)->first();
 
 
-            return view('solicitacao.index', compact('solicitacao', 'grandeAreas', 'areas', 'subAreas',
-                'instituicaos','avaliacaoDadosComp', 'avaliacaoDadosini', 'avaliacaoResponsavel', 'avaliacaoColaborador','avaliacao'));
+            return view('solicitacao.index', compact('solicitacao', 
+                'instituicaos','grandeAreas', 'areas', 'subAreas','avaliacaoDadosComp', 'avaliacaoDadosini', 'avaliacaoResponsavel', 'avaliacaoColaborador','avaliacao'));
 
         }
 
@@ -62,6 +62,7 @@ class SolicitacaoController extends Controller
 
     public function avaliarSolicitacao($solicitacao_id)
     {
+        
         $solicitacao = Solicitacao::find($solicitacao_id);
         $instituicaos = Instituicao::all();
         $grandeAreas = GrandeArea::all();
@@ -124,15 +125,9 @@ class SolicitacaoController extends Controller
         $solicitacao->titulo_en = $request->titulo_en;
         $solicitacao->inicio = $request->inicio;
         $solicitacao->fim = $request->fim;
-        if($request->grande_area_id != null){
-            $solicitacao->grande_area_id = $request->grande_area_id;
-        }
-        if($request->area_id != null){
-            $solicitacao->area_id = $request->area_id;
-        }
-        if($request->sub_area_id != null){
-            $solicitacao->sub_area_id = $request->sub_area_id;
-        }
+        $solicitacao->grande_area_id = $request->grandeArea;
+        $solicitacao->area_id = $request->area;
+        $solicitacao->sub_area_id = $request->subArea;
         $solicitacao->update();
 
         return redirect(route('solicitacao.index', ['solicitacao_id' => $request->solicitacao_id]));
