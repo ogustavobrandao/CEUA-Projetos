@@ -8,9 +8,13 @@
                 <div class="col-sm-4 mt-2">
                     <label for="cirurgia">Cirurgia:<strong style="color: red">*</strong></label>
                     <div class="row ml-1">
-                        <div class="col-sm-2">
-                            <input class="form-check-input" type="radio" name="cirurgia" id="cirurgia_sim" value="true">
-                            <label class="form-check-label" for="cirurgia">Sim</label>
+                        <div class="col-sm-3">
+                            <input class="form-check-input" type="radio" name="cirurgia" id="cirurgia_sim_unica" value="true">
+                            <label class="form-check-label" for="cirurgia">Sim, única</label>
+                        </div>
+                        <div class="col-sm-4">
+                            <input class="form-check-input" type="radio" name="cirurgia" id="cirurgia_sim_multipla" value="true">
+                            <label class="form-check-label" for="cirurgia">Sim, múltipla</label>
                         </div>
                         <div class="col-sm-2">
                             <input class="form-check-input" type="radio" name="cirurgia" id="cirurgia_nao" value="false"
@@ -18,14 +22,6 @@
                             <label class="form-check-label" for="cirurgia">
                                 Não
                             </label>
-                        </div>
-                        <div class="col-sm-2">
-                            <input class="form-check-input" type="radio" name="cirurgia" id="cirurgia_unica" value="true">
-                            <label class="form-check-label" for="cirurgia">Única </label>
-                        </div>
-                        <div class="col-sm-2">
-                            <input class="form-check-input" type="radio" name="cirurgia" id="cirurgia_multipla" value="true">
-                            <label class="form-check-label" for="cirurgia">Múltipla</label>
                         </div>
                     </div>
                 </div>
@@ -158,7 +154,7 @@
     $(document).ready(function () {
 
         @if(isset($operacao))
-        $("#cirurgia_sim").attr('checked', true);
+        $("#cirurgia_sim_unica").attr('checked', true);
         $("#anexo_cirurgia").show();
         $("#pos_operatorio").show();
         @else
@@ -193,21 +189,14 @@
         $("#anexo_nao_uso_analgesia_recuperacao").hide();
         @endif
 
-        $("#cirurgia_sim").click(function () {
+        $("#cirurgia_sim_unica").click(function () {
             $("#anexo_cirurgia").show().find('input, radio').prop('disabled', false);
             $("#pos_operatorio1").show().find('input, radio').prop('disabled', false);
             $("#pos_operatorio2").show().find('input, radio').prop('disabled', false);
             $("#pos_operatorio3").show().find('input, radio').prop('disabled', false);
         });
 
-        $("#cirurgia_unica").click(function () {
-            $("#anexo_cirurgia").show().find('input, radio').prop('disabled', false);
-            $("#pos_operatorio1").show().find('input, radio').prop('disabled', false);
-            $("#pos_operatorio2").show().find('input, radio').prop('disabled', false);
-            $("#pos_operatorio3").show().find('input, radio').prop('disabled', false);
-        });
-
-        $("#cirurgia_multipla").click(function () {
+        $("#cirurgia_sim_multipla").click(function () {
             $("#anexo_cirurgia").show().find('input, radio').prop('disabled', false);
             $("#pos_operatorio1").show().find('input, radio').prop('disabled', false);
             $("#pos_operatorio2").show().find('input, radio').prop('disabled', false);
