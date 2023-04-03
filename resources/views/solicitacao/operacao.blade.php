@@ -8,18 +8,20 @@
                 <div class="col-sm-4 mt-2">
                     <label for="cirurgia">Cirurgia:<strong style="color: red">*</strong></label>
                     <div class="row ml-1">
-                        <div class="col-sm-3">
-                            <input class="form-check-input" type="radio" name="cirurgia" id="cirurgia_sim_unica" value="true">
-                            <label class="form-check-label" for="cirurgia">Sim, única</label>
-                        </div>
                         <div class="col-sm-4">
-                            <input class="form-check-input" type="radio" name="cirurgia" id="cirurgia_sim_multipla" value="true">
-                            <label class="form-check-label" for="cirurgia">Sim, múltipla</label>
+                            <input class="form-check-input" type="radio" name="flag_cirurgia" id="cirurgia_sim_unica" value="true_unica" 
+                            @if(!empty($operacao) && $operacao->flag_cirurgia == "true_unica") checked @endif>
+                            <label class="form-check-label" for="flag_cirurgia">Sim, única</label>
+                        </div>
+                        <div class="col-sm-5">
+                            <input class="form-check-input" type="radio" name="flag_cirurgia" id="cirurgia_sim_multipla" value="true_multipla"
+                            @if(!empty($operacao) && $operacao->flag_cirurgia == "true_multipla") checked @endif>
+                            <label class="form-check-label" for="flag_cirurgia">Sim, múltipla</label >
                         </div>
                         <div class="col-sm-2">
-                            <input class="form-check-input" type="radio" name="cirurgia" id="cirurgia_nao" value="false"
+                            <input class="form-check-input" type="radio" name="flag_cirurgia" id="cirurgia_nao" value="false"
                                    checked>
-                            <label class="form-check-label" for="cirurgia">
+                            <label class="form-check-label" for="flag_cirurgia">
                                 Não
                             </label>
                         </div>
@@ -153,8 +155,14 @@
 <script>
     $(document).ready(function () {
 
-        @if(isset($operacao))
+        @if(isset($operacao) && ($operacao->flag_cirurgia == "true_unica"))
         $("#cirurgia_sim_unica").attr('checked', true);
+        $("#cirurgia_sim_unica").click();
+        $("#anexo_cirurgia").show();
+        $("#pos_operatorio").show();
+        @elseif(isset($operacao) && ($operacao->flag_cirurgia == "true_multipla"))
+        $("#cirurgia_sim_multipla").attr('checked', true);
+        $("#cirurgia_sim_multipla").click();
         $("#anexo_cirurgia").show();
         $("#pos_operatorio").show();
         @else
@@ -181,12 +189,12 @@
         $("#anexo_outros_cuidados_recuperacao").hide();
         @endif
 
-        @if(isset($operacao) && ($operacao->analgesia_recuperacao != null))
+        @if(isset($operacao) && ($operacao->analgesia_recuperacao == true))
         $("#analgesia_recuperacao_sim").attr('checked', true);
         $("#anexo_analgesia_recuperacao").show();
-        @elseif (isset($operacao) && ($operacao->detalhes_nao_uso_analgesia_recuperacao != null))
+        @else
         $("#analgesia_recuperacao_nao").attr('checked', true);
-        $("#anexo_nao_uso_analgesia_recuperacao").hide();
+        $("#anexo_nao_uso_analgesia_recuperacao").show();
         @endif
 
         $("#cirurgia_sim_unica").click(function () {
@@ -234,12 +242,6 @@
 
         $("#outros_cuidados_recuperacao_nao").click(function () {
             $("#anexo_outros_cuidados_recuperacao").hide().find('input, radio').prop('disabled', true);
-        });
-
-        $("#cirurgia_nao").click(function () {
-            $("#pos_operatorio1").hide().find('input, radio').prop('disabled', true);
-            $("#pos_operatorio2").hide().find('input, radio').prop('disabled', true);
-            $("#pos_operatorio3").hide().find('input, radio').prop('disabled', true);
         });
 
 
