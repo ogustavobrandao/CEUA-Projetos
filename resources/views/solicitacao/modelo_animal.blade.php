@@ -284,7 +284,7 @@
                     </option>
                     <option value="camudongo_heterogenico"
                         @if(isset($modelo_animal->perfil) && $modelo_animal->perfil->grupo_animal == "camudongo_heterogenico") selected @endif>
-                    Camundongo heterogênico
+                    Camundongo Heterogênico
                     </option>
                     <option value="camudongo_isogenico"
                         @if(isset($modelo_animal->perfil) && $modelo_animal->perfil->grupo_animal == "camudongo_isogenico") selected @endif>

@@ -18,6 +18,7 @@ class Operacao extends Model
         'detalhes_nao_uso_analgesia_recuperacao',
         'outros_cuidados_recuperacao',
         'analgesia_recuperacao',
+        'flag_cirurgia',
     ];
 
     public static $rules = [
