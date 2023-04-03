@@ -328,7 +328,6 @@ class SolicitacaoController extends Controller
 
     public function atualizar_modelo_animal(Request $request)
     {   
-        
         $modelo_animal = ModeloAnimal::find($request->modelo_animal_id);
 
         if (($request->hasFile('termo_consentimento') && $request->file('termo_consentimento')->isValid())) {
@@ -656,7 +655,7 @@ class SolicitacaoController extends Controller
     }
 
     public function criar_operacao(Request $request)
-    {
+    {   
         Validator::make($request->all(), Operacao::$rules, Operacao::$messages)->validate();
 
         $planejamento = Planejamento::find($request->planejamento_id);
@@ -668,7 +667,7 @@ class SolicitacaoController extends Controller
             $operacao->planejamento_id = $planejamento->id;
         }
 
-        if ($request->cirurgia != "true") {
+        if ($request->flag_cirurgia == "false") {
             $operacao->detalhes_cirurgia = null;
             $operacao->detalhes_observacao_recuperacao = null;
             $operacao->detalhes_outros_cuidados_recuperacao = null;
@@ -677,6 +676,7 @@ class SolicitacaoController extends Controller
             $operacao->observacao_recuperacao = null;
             $operacao->outros_cuidados_recuperacao = null;
             $operacao->analgesia_recuperacao = null;
+            $operacao->flag_cirurgia = null;
         } else {
             $operacao->detalhes_cirurgia = $request->detalhes_cirurgia;
             $operacao->detalhes_observacao_recuperacao = $request->detalhes_observacao_recuperacao;
@@ -686,6 +686,7 @@ class SolicitacaoController extends Controller
             $operacao->detalhes_nao_uso_analgesia_recuperacao = $request->detalhes_nao_uso_analgesia_recuperacao;
             $operacao->outros_cuidados_recuperacao = $request->outros_cuidados_recuperacao;
             $operacao->analgesia_recuperacao = $request->analgesia_recuperacao;
+            $operacao->flag_cirurgia = $request->flag_cirurgia;
         }
 
         if (isset($planejamento->operacao)) {
