@@ -224,11 +224,11 @@
             <label>Termo de Responsabilidade:</label>
             @endif
             @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2)
-            <div class="col-sm-15">
+            <div class="col-sm-15 mt-2">
                 <label>Termo de Responsabilidade:</label>
                     @if($solicitacao->responsavel->termo_responsabilidade == null)<br>
                         <a class="btn btn-secondary"
-                        href="#">Não Enviado</a>
+                        href="">Não Enviado</a>
                     @else
                         <a class="btn btn-primary m-3"
                             href="{{route('termo_responsabilidade.downloadTermoResponsabilidade', ['responsavel_id' => $solicitacao->responsavel->id])}}">Baixar
@@ -251,6 +251,7 @@
                         </div>
                     </div>
                 </div>
+            </div>
                 
                 <div class="col-sm-4 mt-4" id="anexo_termo_responsabilidade" style="display: none;">
                     <label>Anexar Termo de Responsabilidade:</label>
@@ -271,23 +272,22 @@
                     @endif
                 </div>
                 @endif
-        
+
             <div class="row">
                 @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id != 2)
-                <div class="col-sm-2">
+                <div class="col-sm-2 mt-1">
                 <label for="treinamento">Treinamento:</label>
                 @endif
                 @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2)
-                <div class="col-sm-15">
-                    <label for="treinamento">Treinamento:</label>
+                <div class="col-sm-15 mt-1">
                         @if($solicitacao->responsavel->treinamento == null)
                             <br>
                             <a class="btn btn-secondary"
                             href="#">Não Enviado</a>
                         @else
                         <div class="col-m-12">
-                            <div class="col-m-10">
-                                <label for="treinamento">Descrição:<strong style="color: red">*</strong></label>
+                            <div class="col-m-10 mt-2">
+                                <label for="treinamento">Descrição Treinamento:<strong style="color: red">*</strong></label>
                                 <textarea class="form-control @error('treinamento') is-invalid @enderror" name="treinamento" id="treinamento" autocomplete="treinamento" autofocus
                                 required>@if(!empty($solicitacao->responsavel) && $solicitacao->responsavel->treinamento != null){{$solicitacao->responsavel->treinamento}}@else{{old('treinamento')}}@endif</textarea>
                                 @error('treinamento')
