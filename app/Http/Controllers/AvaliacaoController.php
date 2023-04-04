@@ -28,7 +28,8 @@ class AvaliacaoController extends Controller
         $licenca = new Licenca();
         $licenca->inicio = $request->inicio;
         $licenca->fim = $request->fim;
-        $licenca->codigo = strtoupper(hash('ripemd160', $solicitacao->id.$request->inicio.$request->fim));
+        $licenca->codigo = "CEUAUFAPE" . date('Y', strtotime($solicitacao->updated_at)) . date('m', strtotime($solicitacao->updated_at)) . date('d', strtotime($solicitacao->updated_at)) . $solicitacao->id;
+        // $licenca->codigo = strtoupper(hash('ripemd160', $solicitacao->id.$request->inicio.$request->fim));
         $licenca->avaliacao_id = $avaliacao->id;
         $licenca->save();
 
