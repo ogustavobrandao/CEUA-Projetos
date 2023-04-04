@@ -498,6 +498,7 @@
             @endif
         </div>
 
+        <div class="row">
         <div class="col-sm-12 mt-3">
             <label for="termo_consentimento">Termo de Consentimento Livre e Esclarecido (TCLE):<strong style="color: red">*</strong></label>
             @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2)
@@ -542,16 +543,15 @@
                 @endif
             @endif
         </div>
+    </div>
 
         <div class="col-sm-12 mt-3">
-            <label for="licencas_previas">Licenças Prévias de outras instituições (IBAMA, FUNAI, CNEN, CTNBio, CGEN, ICMBio.):
-                <a target="_blank"
-                href="https://www2.dti.ufv.br/ceua/scripts/grau-invasividade.html"
-                title="A autorização da CEUA não requer a existência de licença prévia de outras instituições. Entretanto, o responsável deverá obter todas as autorizações legais cabíveis que a natureza do projeto exige antes do início das atividades com animais como, por exemplo, autorizações de instituições como Instituto Brasileiro do Meio Ambiente e dos Recursos Naturais Renováveis - IBAMA, Fundação Nacional do Índio - FUNAI, Comissão Nacional de Energia Nuclear - CNEN, Conselho de Gestão do Patrimônio Genético - CGEN, Comissão Técnica Nacional de Biossegurança - CTNBio, Instituto Chico Mendes de Conservação da Biodiversidade - ICMBio, dentre outras." style="color: darkred">
-                 <i class="fa-solid fa-circle-info fa-lg"></i>
-             </a>
-            </label>
-            <p>Caso seja mais de um documento, anexar em um só PDF todos os documentos juntos.</p>
+            <label for="licencas_previas">Licenças Prévias de outras instituições (IBAMA, FUNAI, CNEN, CTNBio, CGEN, ICMBio.):</label>
+            <small>Caso seja mais de um documento, anexar em um só PDF.</small>
+            <a target="_blank"
+            href="https://www2.dti.ufv.br/ceua/scripts/grau-invasividade.html"
+            title="A autorização da CEUA não requer a existência de licença prévia de outras instituições. Entretanto, o responsável deverá obter todas as autorizações legais cabíveis que a natureza do projeto exige antes do início das atividades com animais como, por exemplo, autorizações de instituições como Instituto Brasileiro do Meio Ambiente e dos Recursos Naturais Renováveis - IBAMA, Fundação Nacional do Índio - FUNAI, Comissão Nacional de Energia Nuclear - CNEN, Conselho de Gestão do Patrimônio Genético - CGEN, Comissão Técnica Nacional de Biossegurança - CTNBio, Instituto Chico Mendes de Conservação da Biodiversidade - ICMBio, dentre outras." style="color: darkred">
+             <i class="fa-solid fa-circle-info fa-lg"></i></a>
             @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2)
                 @if (!empty($modelo_animal->licencas_previas))
                     <a class="btn btn-primary"
