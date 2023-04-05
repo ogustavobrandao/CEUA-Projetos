@@ -35,6 +35,7 @@ class ModeloAnimal extends Model
         'nome_cientifico' => 'required|string',
         'nome_vulgar' => 'required|string',
         'procedencia' => 'required',
+        'termo_consentimento' => 'required',
     ];
 
     public static $messages = [

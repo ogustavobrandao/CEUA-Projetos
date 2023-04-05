@@ -58,7 +58,6 @@ class Planejamento extends Model
     public static $rules = [
         'num_animais_grupo' => 'required | numeric | min:0',
         'especificar_grupo' => 'required',
-        'anexo_formula' => 'mimes:pdf',
         'criterios' => 'required',
         'desc_materiais_metodos' => 'required',
         'analise_estatistica' => 'required',
@@ -68,7 +67,6 @@ class Planejamento extends Model
     ];
 
     public static $messages = [
-        'anexo_formula.mimes' => 'O anexo da fórmula deve ser do tipo pdf',
         '*.required'  => 'O :attribute é obrigatório',
         '*.numeric'  => 'O :attribute deve ser um número',
         'num_animais_grupo.min' => 'O número deve ser acima ou igual a 0'
