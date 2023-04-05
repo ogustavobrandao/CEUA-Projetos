@@ -111,7 +111,8 @@ Route::post('/areas/', 'AreaController@consulta')->name('area.consulta');
 Route::post('/subarea/', 'SubAreaController@consulta')->name('subarea.consulta');
 
 //Gerar PDF
-Route::get('/pdf/{solicitacao_id}', [App\Http\Controllers\PDFViewController::class, 'gerarPDF'])->name('pdf.gerarPDF');
+Route::get('/pdf/{solicitacao_id}', [App\Http\Controllers\PDFViewController::class, 'gerarPDFSolicitacao'])->name('pdf.gerarPDFSolicitacao');
+Route::get('/pdf/avaliacao/{solicitacao_id}', [App\Http\Controllers\PDFViewController::class, 'gerarPDFAprovado'])->name('pdf.gerarPDFAprovado');
 
 
 //Avaliação Individual - Ajustar middlware para Avaliador e Proprietario

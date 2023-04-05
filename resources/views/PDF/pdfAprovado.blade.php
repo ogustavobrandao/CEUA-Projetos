@@ -7,7 +7,8 @@
     <title>PDF</title>
 </head>
 <body>
-	<h2>CEUA -> Dados da Solicitação | Pedido de nº: {{ $solicitacao->id }}</h2>
+	<h2>CEUA -> Solicitação Aprovada | Pedido de nº: {{ $solicitacao->id }}</h2>
+    <h3>Licença -> {{ $licenca->codigo }}</h3>
 
 	{{-- DADOS INICIAIS --}}
 	<div class="col mt-3">
