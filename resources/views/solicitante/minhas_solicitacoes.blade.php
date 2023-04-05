@@ -43,13 +43,16 @@
                     @elseif(($solicitacao->status == "nao_avaliado" && $solicitacao->avaliacao->first() == null))
                         <a class="btn" href="{{route('solicitacao.index', ['solicitacao_id' => $solicitacao->id])}}" style="border-color: #1B1C42; background-color: #c0ddf6"
                            title="Editar Solicitação."><i class="fa-solid fa-up-right-from-square"></i></a>
+                           <a class="btn" href="{{route('pdf.gerarPDFSolicitacao', ['solicitacao_id' => $solicitacao->id])}}" style="border-color: #1B1C42; background-color: #c0ddf6"
+                            title="Gerar PDF."><i class="fa-solid fa-circle-down"></i></a>
                     @elseif($solicitacao->status == "avaliando")
-                        <a class="btn" href="{{route('pdf.gerarPDF', ['solicitacao_id' => $solicitacao->id])}}" style="border-color: #1B1C42; background-color: #c0ddf6"
+                        <a class="btn" href="{{route('pdf.gerarPDFSolicitacao', ['solicitacao_id' => $solicitacao->id])}}" style="border-color: #1B1C42; background-color: #c0ddf6"
                             title="Gerar PDF."><i class="fa-solid fa-circle-down"></i></a>
                     @elseif($solicitacao->status == "avaliado" && $solicitacao->avaliacao->first()->status == "aprovadaPendencia")
                         @if(\Illuminate\Support\Carbon::parse(($solicitacao->updated_at))->diffInDays(\Illuminate\Support\Carbon::parse($solicitacao->avaliacao->first()->updated_at)) <= 30)
                         <a class="btn" href="{{route('solicitacao.index', ['solicitacao_id' => $solicitacao->id])}}" style="border-color: #1B1C42; background-color: #c0ddf6"
                            title="Editar Solicitação."><i class="fa-solid fa-up-right-from-square"></i></a>
+                        
                           
                         @endif
                     @elseif(($solicitacao->avaliacao->first()->status == "reprovada") ||
@@ -59,6 +62,8 @@
                         @if($solicitacao->avaliacao->first()->status == "aprovado")
                             <a class="btn" style="border-color: #1B1C42; background-color: #c0ddf6" data-toggle="modal" data-target="#licencaModal{{$solicitacao->id}}" title="Licença."><i
                                     class="fa-regular fa-id-card"></i></a>
+                            <a class="btn" href="{{route('pdf.gerarPDFAprovado', ['solicitacao_id' => $solicitacao->id])}}" style="border-color: #1B1C42; background-color: #c0ddf6"
+                                        title="Gerar PDF."><i class="fa-solid fa-circle-down"></i></a>
                         @endif
                     @endif
 

@@ -112,13 +112,13 @@
                         '<a class="btn btn-primary m-3" href="{{route('experiencias_previasColaborador.download', ['colaborador_id' => ['+ cont +']])}}">Baixar Experiência Prévia</a>' +
                     '@endif' +
             '@else' +
-            '<input class="form-control @error('experiencia_previa') is-invalid @enderror" id="experiencia_previa" enctype="multipart/form-data" type="file" name="colaborador[' + cont + '][experiencia_previa]" value="{{ old('experiencia_previa') }}" @if(empty([' + cont + '][experiencia_previa])) style="width: 135px" @endif>' +
+            '<input class="form-control @error('experiencia_previa') is-invalid @enderror" id="experiencia_previa" enctype="multipart/form-data" type="file" name="colaborador[' + cont + '][experiencia_previa]" value="{{ old('experiencia_previa') }}" @if(('experiencia_previa') != null) style="width: 135px" @endif>' +
             '@error('experiencia_previa')' +
             '<span class="invalid-feedback" role="alert">' +
             '<strong>{{ $message }}</strong>' +
             '</span>' +
             '@enderror' +
-            '@if(empty([' + cont + '][experiencia_previa])) <span style="border: 1px gray solid; border-radius: 10px; text-align: center; width: 180px; position: absolute; bottom: 0px; left: 155px; height: 38px; padding-top: 5px; background-color: #dcfadf">Um Arquivo Já Foi Enviado</span> @endif' +
+            '@if(('experiencia_previa') != null) <span style="border: 1px gray solid; border-radius: 10px; text-align: center; width: 180px; position: absolute; bottom: 0px; left: 155px; height: 38px; padding-top: 5px; background-color: #dcfadf">Um Arquivo Já Foi Enviado</span> @endif' +
             '</div>' +
             '@endif' +
             '@if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id != 2)' +
@@ -134,13 +134,13 @@
                         '<a class="btn btn-primary m-3" href="{{route('termo_responsabilidadeColaborador.download', ['colaborador_id' => ['+ cont +']])}}">Baixar Termo de Responsabilidade</a>' +
                     '@endif' +
             '@else' +
-            '<input class="form-control @error('termo_responsabilidade') is-invalid @enderror" id="termo_responsabilidade" enctype="multipart/form-data" type="file" name="colaborador[' + cont + '][termo_responsabilidade]" value="{{ old('termo_responsabilidade') }}" @if(empty([' + cont + '][termo_responsabilidade])) style="width: 135px" @endif>' +
+            '<input class="form-control @error('termo_responsabilidade') is-invalid @enderror" id="termo_responsabilidade" enctype="multipart/form-data" type="file" name="colaborador[' + cont + '][termo_responsabilidade]" value="{{ old('termo_responsabilidade') }}" @if(('termo_responsabilidade') != null) style="width: 135px" @endif>' +
             '@error('termo_responsabilidade')' +
             '<span class="invalid-feedback" role="alert">' +
             '<strong>{{ $message }}</strong>' +
             '</span>' +
             '@enderror' +
-            '@if(empty([' + cont + '][termo_responsabilidade])) <span style="border: 1px gray solid; border-radius: 10px; text-align: center; width: 180px; position: absolute; bottom: 0px; left: 155px; height: 38px; padding-top: 5px; background-color: #dcfadf">Um Arquivo Já Foi Enviado</span> @endif' +
+            '@if(('termo_responsabilidade') != null) <span style="border: 1px gray solid; border-radius: 10px; text-align: center; width: 180px; position: absolute; bottom: 0px; left: 155px; height: 38px; padding-top: 5px; background-color: #dcfadf">Um Arquivo Já Foi Enviado</span> @endif' +
             '</div>' +
             '@endif' +
             '<div class="col-m-11 mt-2">' +

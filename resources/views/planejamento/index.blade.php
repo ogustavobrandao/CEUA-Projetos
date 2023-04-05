@@ -203,8 +203,8 @@
                     @include('solicitacao.eutanasia',['tipo'=>9,'id'=>$eutanasia->id,'status'=>$avaliacaoEutanasia->status])
                     @include('solicitacao.resultado',['tipo'=>10,'id'=>$resultado->id,'status'=>$avaliacaoResultado->status])
                 @else
-                    @include('solicitacao.eutanasia',['tipo'=>9])
-                    @include('solicitacao.resultado',['tipo'=>10])
+                    @include('solicitacao.eutanasia')
+                    @include('solicitacao.resultado')
                 @endif
             </div>
         </div>
@@ -284,10 +284,10 @@
                 alterarCorCard(9, '{{$avaliacaoEutanasia->status}}');
             @endif
 
-            // // Resultado
-            // @if(isset($avaliacaoResultado) != null )
-            //     alterarCorCard(10, '{{$avaliacaoResultado->status}}');
-            // @endif
+            // Resultado
+            @if(isset($avaliacaoResultado) != null )
+                alterarCorCard(10, '{{$avaliacaoResultado->status}}');
+            @endif
 
         });
 
@@ -369,18 +369,18 @@
             $('#9_btn_up').show();
         });
 
-        // // Resultado
-        // $('#10_btn_up').on('click', function () {
-        //     $('#resultado').slideToggle(800);
-        //     $(this).hide();
-        //     $('#10_btn_down').show();
-        // });
+        // Resultado
+        $('#10_btn_up').on('click', function () {
+            $('#resultado').slideToggle(800);
+            $(this).hide();
+            $('#10_btn_down').show();
+        });
 
-        // $('#10_btn_down').on('click', function () {
-        //     $('#resultado').slideToggle(800);
-        //     $(this).hide();
-        //     $('#10_btn_up').show();
-        // });
+        $('#10_btn_down').on('click', function () {
+            $('#resultado').slideToggle(800);
+            $(this).hide();
+            $('#10_btn_up').show();
+        });
 
         <!-- Ajax para avaliações individuais -->
         function showAvaliacaoIndividual(tipo,avaliacao_id,id) {
