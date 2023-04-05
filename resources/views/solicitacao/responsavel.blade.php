@@ -251,7 +251,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
                 
                 <div class="col-sm-4 mt-4" id="anexo_termo_responsabilidade" style="display: none;">
                     <label>Anexar Termo de Responsabilidade:</label>
@@ -275,12 +274,13 @@
 
             <div class="row">
                 @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id != 2)
-                <div class="col-sm-2 mt-1">
+                <div class="col-sm-2 mt-2">
                 <label for="treinamento">Treinamento:</label>
                 @endif
                 @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2)
                 <div class="col-sm-15 mt-1">
                         @if($solicitacao->responsavel->treinamento == null)
+                            <label for="treinamento">Treinamento:</label>
                             <br>
                             <a class="btn btn-secondary"
                             href="#">Não Enviado</a>
