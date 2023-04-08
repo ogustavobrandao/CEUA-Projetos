@@ -29,7 +29,7 @@ class PDFViewController extends Controller
         $responsavel = $solicitacao->responsavel;
         $colaboradores = $solicitacao->responsavel->colaboradores;
         $modelo_animal = ModeloAnimal::find($solicitacao_id);
-        $planejamento = Planejamento::find($modelo_animal->id);
+        $planejamento = Planejamento::where('modelo_animal_id', $modelo_animal->id)->first();
         $condicoes_animal = CondicoesAnimal::where('planejamento_id', $planejamento->id)->first();
         $procedimento = Procedimento::where('planejamento_id', $planejamento->id)->first();
         $operacao = Operacao::where('planejamento_id', $planejamento->id)->first();
@@ -50,7 +50,7 @@ class PDFViewController extends Controller
         $responsavel = $solicitacao->responsavel;
         $colaboradores = $solicitacao->responsavel->colaboradores;
         $modelo_animal = ModeloAnimal::find($solicitacao_id);
-        $planejamento = Planejamento::find($modelo_animal->id);
+        $planejamento = Planejamento::where('modelo_animal_id', $modelo_animal->id)->first();
         $condicoes_animal = CondicoesAnimal::where('planejamento_id', $planejamento->id)->first();
         $procedimento = Procedimento::where('planejamento_id', $planejamento->id)->first();
         $operacao = Operacao::where('planejamento_id', $planejamento->id)->first();
