@@ -15,17 +15,17 @@ class UsuarioSeeder extends Seeder
     public function run()
     {
         \App\Models\User::factory(1)->create([
-            'email' => 'admin@admin.com'
+            'email' => 'admin@ufape.edu.br'
         ]);
 
         \App\Models\User::factory(1)->create([
-            'email' => 'avaliador@avaliador.com',
+            'email' => 'avaliador@ufape.edu.br',
             'tipo_usuario_id' => 2
 
         ]);
 
         \App\Models\User::factory(1)->create([
-            'email' => 'solicitante@solicitante.com',
+            'email' => 'solicitante@ufape.edu.br',
             'tipo_usuario_id' => 3
         ]);
 

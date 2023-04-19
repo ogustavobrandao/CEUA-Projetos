@@ -1,9 +1,9 @@
 <footer class="container-fluid pt-1 mt-5" style="background-color: #F8FAFC">
     <div class="container-fluid px-lg-5">
         <div class="row justify-content-between  my-2">
-            <div class="col-md-4 text-center py-1">
+            <div class="col-md-4 d-flex align-items-center justify-content-center py-1">
                 <a class="navbar-brand mx-3" href="">
-                    <img width="130px" src="{{asset('images/logo.png')}}">
+                    <img width="130px" src="{{asset('images/ceua-nome.png')}}">
                 </a>
             </div>
 
@@ -17,9 +17,9 @@
                     <div class="col-md-12" style="margin-bottom: 1rem;">
                         <div class="row justify-content-center">
                             <div class="col-1"></div>
-                            <div class="col-5">
+                            <div class="col-5 d-flex align-items-center justify-content-end">
                                 <a href="http://ufape.edu.br/" target="_blank"><img
-                                        src="{{ asset('images/logo_ufape_blue2.png') }}" alt="Logo" width="160px;" style="float: right"></a>
+                                        src="{{ asset('images/_BRASÃO_COLORIDO_SIGLA_PNG.png') }}" alt="Logo" width="60px;" style="float: right"></a>
                             </div>
                             <div class="col-5">
                                 <a href="http://lmts.uag.ufrpe.br/" target="_blank"><img
