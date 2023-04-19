@@ -17,7 +17,7 @@
                     <div class="col-md-12" style="margin-bottom: 1rem;">
                         <div class="row justify-content-center">
                             <div class="col-1"></div>
-                            <div class="col-5">
+                            <div class="col-5 d-flex align-items-center justify-content-end">
                                 <a href="http://ufape.edu.br/" target="_blank"><img
                                         src="{{ asset('images/_BRASÃO_COLORIDO_SIGLA_PNG.png') }}" alt="Logo" width="60px;" style="float: right"></a>
                             </div>
