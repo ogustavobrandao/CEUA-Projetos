@@ -19,7 +19,7 @@
                             <div class="col-1"></div>
                             <div class="col-5">
                                 <a href="http://ufape.edu.br/" target="_blank"><img
-                                        src="{{ asset('images/logo_ufape_blue2.png') }}" alt="Logo" width="160px;" style="float: right"></a>
+                                        src="{{ asset('images/_BRASÃO_COLORIDO_SIGLA_PNG.png') }}" alt="Logo" width="60px;" style="float: right"></a>
                             </div>
                             <div class="col-5">
                                 <a href="http://lmts.uag.ufrpe.br/" target="_blank"><img
