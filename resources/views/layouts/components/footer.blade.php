@@ -1,7 +1,7 @@
 <footer class="container-fluid pt-1 mt-5" style="background-color: #F8FAFC">
     <div class="container-fluid px-lg-5">
         <div class="row justify-content-between  my-2">
-            <div class="col-md-4 text-center py-1">
+            <div class="col-md-4 d-flex align-items-center justify-content-center py-1">
                 <a class="navbar-brand mx-3" href="">
                     <img width="130px" src="{{asset('images/ceua-nome.png')}}">
                 </a>
