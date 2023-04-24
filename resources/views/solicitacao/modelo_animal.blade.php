@@ -104,7 +104,7 @@
                 <div class="col-sm-2">
                     <input class="form-check-input" type="radio" name="flag_captura"
                            id="captura_sim" value="true"
-                           @if(isset($modelo_animal) && $modelo_animal->flag_captura) checked @endif
+                           @if(isset($modelo_animal) && $modelo_animal->flag_captura) checked @endif >
                     <label class="form-check-label" for="flag_captura">Sim</label>
                 </div>
                 <div class="col-sm-2">
@@ -135,7 +135,7 @@
                 <div class="col-sm-2">
                     <input class="form-check-input" type="radio" name="flag_coleta_especimes"
                            id="coleta_especimes_sim" value="true"
-                           @if(isset($modelo_animal) && $modelo_animal->flag_coleta_especimes) checked @endif
+                           @if(isset($modelo_animal) && $modelo_animal->flag_coleta_especimes) checked @endif >
                     <label class="form-check-label" for="flag_coleta_especimes">Sim</label>
                 </div>
                 <div class="col-sm-2">
@@ -166,7 +166,7 @@
                 <div class="col-sm-2">
                     <input class="form-check-input" type="radio" name="flag_marcacao"
                            id="animal_marcacao_sim" value="true"
-                           @if(isset($modelo_animal) && $modelo_animal->flag_marcacao) checked @endif
+                           @if(isset($modelo_animal) && $modelo_animal->flag_marcacao) checked @endif >
                     <label class="form-check-label" for="flag_marcacao">Sim</label>
                 </div>
                 <div class="col-sm-2">
@@ -197,7 +197,7 @@
                 <div class="col-sm-2">
                     <input class="form-check-input" type="radio" name="flag_outras_info"
                            id="outras_info_sim" value="true"
-                           @if(isset($modelo_animal) && $modelo_animal->flag_outras_info) checked @endif
+                           @if(isset($modelo_animal) && $modelo_animal->flag_outras_info) checked @endif >
                     <label class="form-check-label" for="flag_outras_info">Sim</label>
                 </div>
                 <div class="col-sm-2">
@@ -228,15 +228,15 @@
             <div class="row ml-1">
                 <div class="col-sm-2">
                     <input class="form-check-input" type="radio" name="geneticamente_modificado"
-                           id="geneticamente_modificado_sim" value="true"
-                           @if(isset($modelo_animal) && $modelo_animal->geneticamente_modificado) checked @endif
-                    <label class="form-check-label" for="geneticamente_modificado">Sim</label>
+                           id="geneticamente_modificado_sim"
+                           @if(isset($modelo_animal) && $modelo_animal->geneticamente_modificado) checked @endif >
+                    <label class="form-check-label" for="geneticamente_modificado_sim">Sim</label>
                 </div>
                 <div class="col-sm-2">
                     <input class="form-check-input" type="radio" name="geneticamente_modificado"
-                           id="geneticamente_modificado_nao" value="false"
-                           @if(isset($modelo_animal) && !$modelo_animal->geneticamente_modificado) checked @endif >
-                    <label class="form-check-label" for="geneticamente_modificado">
+                           id="geneticamente_modificado_nao"
+                           @if(isset($modelo_animal) && !$modelo_animal->geneticamente_modificado) checked @endif value="false">
+                    <label class="form-check-label" for="geneticamente_modificado_nao">
                         Não
                     </label>
                 </div>
@@ -546,7 +546,7 @@
             href="https://www2.dti.ufv.br/ceua/scripts/grau-invasividade.html"
             title="A autorização da CEUA não requer a existência de licença prévia de outras instituições. Entretanto, o responsável deverá obter todas as autorizações legais cabíveis que a natureza do projeto exige antes do início das atividades com animais como, por exemplo, autorizações de instituições como Instituto Brasileiro do Meio Ambiente e dos Recursos Naturais Renováveis - IBAMA, Fundação Nacional do Índio - FUNAI, Comissão Nacional de Energia Nuclear - CNEN, Conselho de Gestão do Patrimônio Genético - CGEN, Comissão Técnica Nacional de Biossegurança - CTNBio, Instituto Chico Mendes de Conservação da Biodiversidade - ICMBio, dentre outras." style="color: darkred">
              <i class="fa-solid fa-circle-info fa-lg"></i></a>
-            <small>Caso seja mais de um documento, anexar em um só PDF.</small>
+            <small>Caso seja mais de um documento, anexar em um único PDF.</small>
             @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2)
                 @if (!empty($modelo_animal->licencas_previas))
                     <a class="btn btn-primary"
