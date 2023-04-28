@@ -36,6 +36,7 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="{{ asset ('css/app.css') }}">
+    @livewireStyles
 </head>
 <body>
 @include('layouts.components.navbar2')
@@ -47,6 +48,7 @@
     </div>
     @include('layouts.components.footer')
 </div>
+@livewireScripts
 </body>
 </html>
 

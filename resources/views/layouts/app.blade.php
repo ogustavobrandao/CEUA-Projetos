@@ -33,6 +33,7 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="{{ asset ('css/app.css') }}">
+    @livewireStyles
 </head>
 <body>
 
@@ -59,6 +60,7 @@
     </div>
 @endauth
 @include('layouts.components.footer')
+@livewireScripts
 </body>
 </html>
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
