@@ -9,6 +9,8 @@ class Colaborador extends Model
 {
     use HasFactory;
 
+    protected $connection = 'pgsql';
+
     protected $fillable = [
         'nome',
         'cpf',
