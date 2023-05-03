@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('login')
-    <style>
+    {{-- <style>
         .home_background {
             width: 100%;
             height: 100%;
@@ -9,7 +9,7 @@
             background-repeat: no-repeat, no-repeat;
             background-size: cover;
         }
-    </style>
+    </style> --}}
 
     <div class="container-fluid">
         <div class="row">
@@ -93,9 +93,11 @@
                                         {{ __('Entrar') }}
                                     </button>
                                 </div>
-                                <div class="col-md-12 text-left fw-bold mt-2">
-                                        Não possui uma conta? Cadastre-se
-                                </div>
+                                @if (Route::has('register'))
+                                    <div class="col-md-12 text-left fw-bold mt-2">
+                                            Não possui uma conta? <a href="{{ route('register') }}">Cadastre-se</a>
+                                    </div>
+                                @endif
                             </div>
                         </form>
                     </div>

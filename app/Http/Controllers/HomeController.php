@@ -9,13 +9,9 @@ class HomeController extends Controller
 {
     public function home()
     {
-        if (Auth::check()) {
-            if(Auth::user()->tipo_usuario_id == 1){
-                return redirect()->route('solicitacao.admin.index');
-            }
-            return view('home');
-        } else {
-            return view('welcome');
+        if(Auth::user()->tipo_usuario_id == 1){
+            return redirect()->route('solicitacao.admin.index');
         }
+        return view('home');
     }
 }
