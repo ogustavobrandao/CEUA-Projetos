@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\Instituicao;
+use App\Models\Unidade;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -46,7 +47,8 @@ class RegisterController extends Controller
     public function showRegistrationForm()
     {
         $instituicaos = Instituicao::all();
-        return view('auth.register', compact('instituicaos'));
+        $unidades = Unidade::all();
+        return view('auth.register', compact('instituicaos', 'unidades'));
     }
 
 

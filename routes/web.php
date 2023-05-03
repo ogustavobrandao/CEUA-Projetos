@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -12,19 +13,22 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Auth::routes();
-Route::get('/', [App\Http\Controllers\HomeController::class, 'home'])->name('welcome');
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'home'])->name('home');
+Auth::routes(['verify' => true]);
 
-Route::group(['middleware' => 'auth'], function(){
+Route::get('/', function () {
+    return view('welcome');
+})->name("welcome");
 
+Route::group(['middleware' => ['auth', 'verified']], function(){
+
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'home'])->name('home');
     Route::get('editar/perfil', [\App\Http\Controllers\UsuarioController::class, 'editar_perfil'])->name('user.perfil.editar');
     Route::get('editar/senha', [\App\Http\Controllers\UsuarioController::class, 'editar_senha'])->name('user.senha.editar');
     Route::post('alterar/senha', [\App\Http\Controllers\UsuarioController::class, 'alterar_senha'])->name('user.senha.alterar');
     Route::post('alterar/perfil', [\App\Http\Controllers\UsuarioController::class, 'alterar_perfil'])->name('user.perfil.alterar');
 });
 
-Route::group(['middleware' => 'checkAdministrador'], function () {
+Route::group(['middleware' => ['auth', 'verified', 'checkAdministrador']], function () {
     Route::post('/instituicao/store', [App\Http\Controllers\InstituicaoController::class, 'store'])->name('instituicao.store');
     Route::post('/instituicao/update', [App\Http\Controllers\InstituicaoController::class, 'update'])->name('instituicao.update');
     Route::get('/instituicao/index', [App\Http\Controllers\InstituicaoController::class, 'index'])->name('instituicao.index');
@@ -49,7 +53,7 @@ Route::group(['middleware' => 'checkAdministrador'], function () {
     Route::post('/solicitacao/remover_avaliador', [App\Http\Controllers\AvaliadorController::class, 'remover'])->name('avaliador.remover');
 });
 
-Route::group(['middleware' => 'checkProprietarioAvaliador'], function () {
+Route::group(['middleware' => ['auth', 'verified','checkProprietarioAvaliador']], function () {
     Route::get('/formulario/{solicitacao_id}', [App\Http\Controllers\SolicitacaoController::class, 'form'])->name('solicitacao.form');
     Route::get('/formulario/{solicitacao_id}/{num_pagina}', [App\Http\Controllers\SolicitacaoController::class, 'alterarPagina'])->name('solicitacao.alterar.pagina');
 
@@ -66,7 +70,7 @@ Route::group(['middleware' => 'checkProprietarioAvaliador'], function () {
 });
 
 
-Route::group(['middleware' => 'checkProprietario'], function () {
+Route::group(['middleware' => ['auth', 'verified', 'checkProprietario']], function () {
     Route::get('/solicitacao/index_solicitante', [App\Http\Controllers\SolicitacaoController::class, 'index_solicitante'])->name('solicitacao.solicitante.index');
     Route::post('/solicitacao/inicio', [App\Http\Controllers\SolicitacaoController::class, 'inicio'])->name('solicitacao.inicio');
     Route::post('/solicitacao/criar', [App\Http\Controllers\SolicitacaoController::class, 'criar'])->name('solicitacao.criar');
@@ -92,7 +96,7 @@ Route::group(['middleware' => 'checkProprietario'], function () {
 
 });
 
-Route::group(['middleware' => 'checkAvaliador'], function () {
+Route::group(['middleware' => ['auth', 'verified', 'checkAvaliador']], function () {
     Route::get('/solicitacao/index_avaliador', [App\Http\Controllers\SolicitacaoController::class, 'index_avaliador'])->name('solicitacao.avaliador.index');
     Route::post('/avaliador/aprovar', [App\Http\Controllers\AvaliacaoController::class, 'aprovarSolicitacao'])->name('avaliador.solicitacao.aprovar');
     Route::post('/avaliador/aprovarPendencia', [App\Http\Controllers\AvaliacaoController::class, 'aprovarPendenciaSolicitacao'])->name('avaliador.solicitacao.aprovarPendencia');

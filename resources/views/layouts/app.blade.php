@@ -48,6 +48,9 @@
 
 @include('layouts.components.navbar2')
 @yield('login')
+@guest
+    @yield('content')
+@endguest
 @auth
     <div class="mx-4" id="app">
         <div class="row my-5">

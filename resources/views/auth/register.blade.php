@@ -16,9 +16,9 @@
                 <input class="form-control @error('name') is-invalid @enderror" id="name" type="text" name="name" value="{{ old('name') }}" required autocomplete="name"
                        autofocus>
                 @error('name')
-                <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
                 @enderror
             </div>
 
@@ -27,9 +27,9 @@
                 <input class="form-control @error('email') is-invalid @enderror" id="email" type="email" name="email" value="{{ old('email') }}" required autocomplete="email"
                        autofocus>
                 @error('email')
-                <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
                 @enderror
             </div>
 
@@ -38,9 +38,9 @@
                 <input class="form-control @error('cpf') is-invalid @enderror" id="cpf" type="text" name="cpf" value="{{ old('cpf') }}" required autocomplete="cpf"
                        autofocus>
                 @error('cpf')
-                <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
                 @enderror
             </div>
         </div>
@@ -50,9 +50,9 @@
                 <label for="password">{{ __('Senha') }}<strong style="color: red">*</strong></label>
                 <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
                 @error('password')
-                <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
                 @enderror
             </div>
             <div class="col-sm-5">
@@ -71,12 +71,11 @@
                     @foreach($instituicaos as $instituicao)
                         <option @if(old('instituicao') == $instituicao->id) selected @endif value="{{$instituicao->id}}">{{$instituicao->nome}}</option>
                     @endforeach
-
                 </select>
                 @error('instituicao')
-                <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
                 @enderror
             </div>
             <div class="col-sm-5">
@@ -85,6 +84,9 @@
                     <option selected disabled>
                         Selecione uma Unidade
                     </option>
+                    @foreach($unidades as $unidade)
+                        <option @if(old('unidade') == $unidade->id) selected @endif value="{{$unidade->id}}">{{$unidade->nome}}</option>
+                    @endforeach
                 </select>
             </div>
         </div>
