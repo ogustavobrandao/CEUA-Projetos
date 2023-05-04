@@ -2,6 +2,7 @@
     <form id="form2" method="POST" action="{{route('solicitacao.colaborador.criar')}}">
         @csrf
         <input type="hidden" name="solicitacao_id" value="{{$solicitacao->id}}">
+        @if($colaboradores != null)
         @foreach ($colaboradores as $colaborador)
             <div class="mt-2">
                 <div class="row">
@@ -142,5 +143,6 @@
             </div>
         @endforeach
         @include('component.botoes_new_form')
+        @endif
     </form>
 </div>
