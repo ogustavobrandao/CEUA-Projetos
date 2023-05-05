@@ -39,7 +39,7 @@ class StoreUsuarioRequest extends FormRequest
     {
         return [
             'name.regex'                    => "O nome informado é inválido",
-            'cpf.required'                  => 'O campo CPF é obrigatório',
+            'cpf.required'                  => 'O CPF é obrigatório',
             'cpf.min'                       => 'Tamanho do CPF não é válido',
             'cpf.max'                       => 'Tamanho do CPF não é válido',
             'cpf.unique'                    => 'O CPF informado já está cadastrado',
