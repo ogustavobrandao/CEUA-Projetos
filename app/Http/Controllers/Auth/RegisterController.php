@@ -60,10 +60,18 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+        $data['cpf'] = preg_replace('/[^0-9]/', '', $data['cpf']);
+        $data['celular'] = preg_replace('/[^0-9]/', '', $data['celular']);
+        
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'name'          => ['required', 'string', 'min:10', 'max:255'],
+            'email'         => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password'      => ['required', 'string', 'min:8', 'confirmed'],
+            'cpf'           => ['required', 'cpf', 'min:11', 'max:11', 'unique:users'],
+            'celular'       => ['required', 'min:11', 'max:11'],
+            'rg'            => ['required', 'string', 'min:7', 'max:14'],
+            'instituicao'   => ['required', 'numeric'],
+            'unidade'       => ['required', 'numeric']
         ]);
     }
 
@@ -75,11 +83,14 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'cpf' => $data['cpf'],
+            'cpf' => preg_replace('/[^0-9]/', '', $data['cpf']),
+            'rg' => preg_replace('/[^0-9]/', '', $data['rg']),
+            'celular' => preg_replace('/[^0-9]/', '', $data['celular']),
             'unidade_id' => $data['unidade'],
             'tipo_usuario_id' => $data['tipo_usuario_id'],
         ]);

@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreUsuarioRequest;
+use App\Http\Requests\UpdateUsuarioRequest;
+use App\Interfaces\IUsuarioService;
 use App\Models\Instituicao;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -11,25 +14,20 @@ use Illuminate\Support\Facades\Validator;
 
 class UsuarioController extends Controller
 {
-    public function index(){
-        $usuarios = User::all();
-        $instituicaos = Instituicao::all();
-        return view('admin.usuarios_index', compact('usuarios', 'instituicaos'));
+    private $usuarioService;
+
+    public function __construct(IUsuarioService $usuarioService) {
+        $this->usuarioService = $usuarioService;
     }
 
-    public function store(Request $request){
-        Validator::make($request->all(), User::$rules, user::$messages)->validate();
+    public function index() {
+        $dadosUsuario = $this->usuarioService->index();
+        return view('admin.usuarios_index', ["usuarios" => $dadosUsuario[0], "instituicaos" => $dadosUsuario[1]]);
+    }
 
-        $usuario = new User();
-        $usuario->name = $request->name;
-        $usuario->email = $request->email;
-        $usuario->cpf = $request->cpf;
-        $usuario->password = Hash::make($request->password);
-        $usuario->unidade_id = $request->unidade;
-        $usuario->tipo_usuario_id = $request->tipo;
-        $usuario->save();
-
-        return redirect(route('usuarios.index'));
+    public function store(StoreUsuarioRequest $request) {
+        $this->usuarioService->cadastrarUsuario($request->validated());
+        return redirect(route('usuarios.index'))->with('sucesso', 'Usuário cadastrado com sucesso com senha padrão password!');
     }
 
     public function editar_perfil()
@@ -73,19 +71,8 @@ class UsuarioController extends Controller
         return redirect()->back()->with('success', 'Senha alterada com sucesso!');
     }
 
-    public function update(Request $request){
-        Validator::make($request->all(), User::$rules, user::$messages)->validate();
-
-        $usuario = User::find($request->usuario_id);
-        $usuario->name = $request->name;
-        $usuario->email = $request->email;
-        $usuario->cpf = $request->cpf;
-        $usuario->password = Hash::make($request->password);
-        $usuario->unidade_id = $request->unidade;
-        $usuario->tipo_usuario_id = $request->tipo;
-        $usuario->update();
-
-        return redirect(route('usuarios.index'));
+    public function update(UpdateUsuarioRequest $request) {
+        $this->usuarioService->atualizarUsuario($request->validated());
+        return redirect(route('usuarios.index'))->with('sucesso', 'Usuário editado com sucesso!');
     }
-
 }
