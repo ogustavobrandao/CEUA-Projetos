@@ -95,7 +95,7 @@
                                                 <a class="btn btn-primary m-3" href="{{route('experiencias_previasColaborador.download', ['colaborador_id' => $colaborador->id])}}">Baixar Experiência Prévia</a>
                                             @endif
                                         @else
-                                            <input @if($colaborador->experiencia_previa == null) required @endif class="form-control @error('colaborador[{{$loop->index}}][experiencia_previa]') is-invalid @enderror" enctype="multipart/form-data" type="file" name="colaborador[{{$loop->index}}][experiencia_previa]" @if(('experiencia_previa') != null) style="width: 135px" @endif>
+                                            <input @if($colaborador->experiencia_previa == null) required @endif class="form-control @error('colaborador[{{$loop->index}}][experiencia_previa]') is-invalid @enderror" id="experiencia_previa" enctype="multipart/form-data" type="file" name="colaborador[{{$loop->index}}][experiencia_previa]" @if(($colaborador->experiencia_previa) != null) style="width: 135px" @endif>
                                             @error('colaborador[{{$loop->index}}][experiencia_previa]')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
