@@ -68,9 +68,15 @@
 
             </div>
         </div>
-
         <div class="mb-4">
-            @livewire('form-colaborador', ['solicitacao' => $solicitacao])
+            @if(Auth::user()->tipo_usuario_id == 2)
+                @include('livewire.form-colaborador',['solicitacao' => $solicitacao, 'avaliacao' => $avaliacao])
+                {{-- @livewire('form-colaborador', ['solicitacao' => $solicitacao, 'avaliacao' => $avaliacao]) --}}
+            @else
+                @include('livewire.form-colaborador',['solicitacao' => $solicitacao])
+                {{-- @livewire('form-colaborador', ['solicitacao' => $solicitacao]) --}}
+            @endif
+            
         </div>
         <div class="mb-4">
             <div class="card shadow-lg p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_3">
