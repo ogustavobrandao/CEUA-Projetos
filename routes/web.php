@@ -126,3 +126,11 @@ Route::get('/avaliacao_individual/verificar/modelo/{modelo_animal_id}/{avaliacao
 Route::post('/unidades', [App\Http\Controllers\UnidadeController::class, 'consulta'])->name('unidade.consulta');
 Route::post('/departamentos', [App\Http\Controllers\DepartamentoController::class, 'consulta'])->name('departamento.consulta');
 
+//Contatos
+Route::get('/contato', [App\Http\Controllers\ContatoController::class, 'contato'])->name('contato');
+Route::get('/sobre', [App\Http\Controllers\ContatoController::class, 'sobre'])->name('sobre');
+Route::get('/fluxograma', [App\Http\Controllers\ContatoController::class, 'fluxograma'])->name('fluxograma_documentos');
+Route::get('/leis_decretos', [App\Http\Controllers\ContatoController::class, 'leis_decretos'])->name('leis_decretos');
+Route::get('/membros', [App\Http\Controllers\ContatoController::class, 'membros'])->name('membros');
+Route::get('/ceua', [App\Http\Controllers\ContatoController::class, 'ceua'])->name('ceua');
+Route::get('/calendarioReunioes', [App\Http\Controllers\ContatoController::class, 'calendarioReunioes'])->name('calendarioReunioes');

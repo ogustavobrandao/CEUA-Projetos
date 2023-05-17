@@ -20,10 +20,7 @@
                             Comitê de Ética no Uso de Animais
                         </h1>
                         <p class="mt-2 mb-4 text-justify" style="font-size: 20px; ">
-                            A CEUA tem como objetivo deliberar sobre a aprovação ou não de projetos de pesquisa para
-                            estudos
-                            que versem sobre mecanismos de doença e tratamento em câncer, nos quais sejam
-                            utilizados protocolos experimentais com animais
+                            A CEUA-UFAPE tem como responsabilidade apreciar os projetos da tríade (Ensino, Pesquisa e Extensão) que desenvolvam atividades as quais façam uso de animais, vinculados a esta instituição de Ensino Superior. Esta Comissão é deliberativa e normativa e suas atribuições estão sob a égide da legislação do CONCEA, em especial, da Resolução Normativa CONCEA nº 51, de 19.05.2021, porém também tem caráter consultivo e educativo.
                         </p>
                     </div>
                 </div>

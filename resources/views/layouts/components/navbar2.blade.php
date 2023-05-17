@@ -31,16 +31,33 @@
             @guest
                 @if (Route::has('login'))
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="#">{{ __('Sobre') }}</a>
+                        <a class="nav-link text-white" href="{{ route('calendarioReunioes') }}">{{ __('Calendário das Reuniões') }}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="#">{{ __('Contato') }}</a>
+                        <a class="nav-link text-white" href="{{ route('ceua') }}">{{ __('CEUA') }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="{{ route('membros') }}">{{ __('Membros') }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="{{ route('leis_decretos') }}">{{ __('Leis e Decretos') }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="{{ route('fluxograma_documentos') }}">{{ __('Fluxograma Documentos') }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="{{ route('contato') }}">{{ __('Contato') }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="{{ route('sobre') }}">{{ __('Sobre') }}</a>
                     </li>
                 @endif
 
 
             @else
                 <li class="nav-item dropdown">
+
+                    
                     <a id="navbarDropdown" class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v- style="color: black">
                         <span class="font-weight-bolder">Olá, </span>{{ Auth::user()->name }}
                     </a>
