@@ -7,7 +7,7 @@
     <div class="row" style="border-bottom: #131833 2px solid">
         <span class="titulo text-center">CEUA</span>
     </div>
-    <br>
+    <br><br>
 
     <div class="about-section">
 
