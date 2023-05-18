@@ -56,7 +56,6 @@
         </div>
 
         <!-- Adicione mais membros conforme necessário -->
-
     </div>
 </div>
 
@@ -79,18 +78,18 @@
         padding: 20px;
         background-color: #f5f5f5;
         margin-bottom: 20px;
+        border-radius: 8px;
     }
 
     .member h4 {
         margin-bottom: 10px;
+        color: #131833;
     }
 
     .member-role {
         font-weight: bold;
-    }
-
-    .member-description {
         color: #555;
+        margin-top: 5px;
     }
 </style>
 

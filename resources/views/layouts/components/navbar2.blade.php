@@ -30,27 +30,29 @@
             <!-- Authentication Links -->
             @guest
                 @if (Route::has('login'))
+                   
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="{{ route('calendarioReunioes') }}">{{ __('Calendário das Reuniões') }}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="{{ route('ceua') }}">{{ __('CEUA') }}</a>
+                        <a class="nav-link text-white" href="{{ route('ceua') }}">{{ __('A CEUA') }}</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-white" href="{{ route('membros') }}">{{ __('Membros') }}</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link text-white" href="{{ route('calendarioReunioes') }}">{{ __('Calendário de reuniões') }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="{{ route('fluxograma_documentos') }}">{{ __('Fluxograma dos documentos') }}</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link text-white" href="{{ route('leis_decretos') }}">{{ __('Leis e Decretos') }}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="{{ route('fluxograma_documentos') }}">{{ __('Fluxograma Documentos') }}</a>
+                        <a class="nav-link text-white" href="{{ route('sobre') }}">{{ __('Sobre o sistema') }}</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-white" href="{{ route('contato') }}">{{ __('Contato') }}</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="{{ route('sobre') }}">{{ __('Sobre') }}</a>
-                    </li>
+                   
                 @endif
 
 
