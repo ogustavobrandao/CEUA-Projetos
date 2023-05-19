@@ -41,7 +41,7 @@
                         <a class="nav-link text-white" href="{{ route('calendarioReunioes') }}">{{ __('Calendário de reuniões') }}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="{{ route('fluxograma_documentos') }}">{{ __('Fluxograma dos documentos') }}</a>
+                        <a class="nav-link text-white" href="{{ route('fluxograma_documentos') }}">{{ __('Fluxograma de submissão e documentos') }}</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-white" href="{{ route('leis_decretos') }}">{{ __('Leis e Decretos') }}</a>
