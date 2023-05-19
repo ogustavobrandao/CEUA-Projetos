@@ -5,7 +5,7 @@
 <div class="container">
     <br>
     <div class="row" style="border-bottom: #131833 2px solid">
-        <span class="titulo text-center">FLUXOGRAMA DOCUMENTOS</span>
+        <span class="titulo text-center">FLUXOGRAMA DE SUBMISSÃO E DOCUMENTOS</span>
     </div>
     
     <br>
