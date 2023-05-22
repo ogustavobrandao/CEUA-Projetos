@@ -3,7 +3,7 @@
         <div class="row justify-content-between  my-2">
             <div class="col-md-4 d-flex align-items-center justify-content-center py-1">
                 <a class="navbar-brand mx-3" href="">
-                    <img width="130px" src="{{asset('images/ceua-nome.png')}}">
+                    <img width="230px" src="{{asset('images/CEUA-logo.png')}}">
                 </a>
             </div>
 
