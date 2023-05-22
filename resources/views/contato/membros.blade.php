@@ -40,7 +40,7 @@
             <h4>SAMMARA DRINNY DE SIQUEIRA CORREIA</h4>
         </div>
 
-        <h4>Membros suplentes os docentes</h4>
+        <h4>Suplentes</h4>
         <br>
 
         <div class="member">

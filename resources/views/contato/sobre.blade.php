@@ -13,7 +13,7 @@
             <h3 class="text-center">CEUA - Comissão de Ética no Uso de Animais</h3>
             <br>
             <h5><p>
-                Bem-vindo ao CEUA - Comissão de Ética no Uso de Animais. Somos uma plataforma online dedicada à promoção e regulamentação do uso ético de animais em pesquisas científicas e atividades acadêmicas.
+                Bem-vindo à CEUA - Comissão de Ética no Uso de Animais. Somos uma plataforma online dedicada à promoção e regulamentação do uso ético de animais em pesquisas científicas e atividades acadêmicas.
             </p></h5>
         </div>
     </div>
