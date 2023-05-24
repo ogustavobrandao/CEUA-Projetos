@@ -10,6 +10,18 @@
 
     <br>
     <div class="legislation-section">
+        <h3 class="">Regimento Interno</h3>
+        <br>
+        <ul class="legislation-list">
+            <h5><li>
+                <a href="https://drive.google.com/file/d/1VSx5IGiGhfrSkUtCGgrIQ8JjFWYpY8_o/view?usp=sharing" class="legislation-link">RESOLUÇÃO Nº 014/2022</a>
+                - Dispõe sobre o Regimento Interno da Comissão de Ética no Uso de Animais da Universidade Federal do Agreste de Pernambuco.
+            </li></h5>
+        </ul>
+    </div>
+    <br>
+
+    <div class="legislation-section">
         <h3 class="">Leis</h3>
         <br>
         <h4>Procedimentos para o uso científico de animais</h4>
