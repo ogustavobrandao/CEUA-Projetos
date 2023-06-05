@@ -16,10 +16,12 @@ use Illuminate\Support\Facades\Route;
 Auth::routes(['verify' => true]);
 
 Route::get('/', function () {
+    if (Auth::check())
+        return view('home');
     return view('welcome');
 })->name("welcome");
 
-Route::group(['middleware' => ['auth', 'verified']], function(){
+Route::group(['middleware' => ['auth', 'verified']], function () {
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'home'])->name('home');
     Route::get('editar/perfil', [\App\Http\Controllers\UsuarioController::class, 'editar_perfil'])->name('user.perfil.editar');
@@ -53,7 +55,7 @@ Route::group(['middleware' => ['auth', 'verified', 'checkAdministrador']], funct
     Route::post('/solicitacao/remover_avaliador', [App\Http\Controllers\AvaliadorController::class, 'remover'])->name('avaliador.remover');
 });
 
-Route::group(['middleware' => ['auth', 'verified','checkProprietarioAvaliador']], function () {
+Route::group(['middleware' => ['auth', 'verified', 'checkProprietarioAvaliador']], function () {
     Route::get('/formulario/{solicitacao_id}', [App\Http\Controllers\SolicitacaoController::class, 'form'])->name('solicitacao.form');
     Route::get('/formulario/{solicitacao_id}/{num_pagina}', [App\Http\Controllers\SolicitacaoController::class, 'alterarPagina'])->name('solicitacao.alterar.pagina');
 
