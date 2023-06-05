@@ -1,11 +1,10 @@
 @extends('layouts.formulario')
 
 @section('content')
-
     <h2 class="titulo_h2" id="expand_dados_solicitacao"><span class="titulo_spam">Dados da Solicitação</span></h2>
-    <div id="dados_solicitacao" class="col-md-10 my-2">
+    <div id="dados_solicitacao" class="my-2">
         <div class="mb-4">
-            <div class="card shadow-lg p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_0">
+            <div class="card p-3 " style="border-radius: 10px 10px 0px 0px;" id="fundo_0">
                 <div class="row">
                     <div class="col-md-12">
                         @if(Auth::user()->tipo_usuario_id == 2)
@@ -14,6 +13,7 @@
                                 <a class="float-end" id="0_btn_down" style="display: none"><i
                                         class="fa-solid fa-circle-chevron-down"></i></a>
                             </h2>
+                            <div class="linha"></div>
                         @else
                             <h2 class="titulo" id="titulo_0">1. Dados Iniciais
                                 <a class="float-end" id="0_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
@@ -36,7 +36,7 @@
             </div>
         </div>
         <div class="mb-4">
-            <div class="card shadow-lg p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_1">
+            <div class="card p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_1">
                 <div class="row">
                     <div class="col-md-12">
                         @if(Auth::user()->tipo_usuario_id == 2)
@@ -76,10 +76,10 @@
                 @include('livewire.form-colaborador',['solicitacao' => $solicitacao])
                 {{-- @livewire('form-colaborador', ['solicitacao' => $solicitacao]) --}}
             @endif
-            
+
         </div>
         <div class="mb-4">
-            <div class="card shadow-lg p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_3">
+            <div class="card p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_3">
                 <div class="row">
                     <div class="col-md-12">
                         @if(Auth::user()->tipo_usuario_id == 2)
@@ -139,9 +139,9 @@
     </div>
 
 
-    <div id="dados_solicitacao" class="col-md-10">
+    <div id="dados_solicitacao">
         <div class="mb-4">
-            <div class="card shadow-lg p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_4">
+            <div class="card p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_4">
                 <div class="row">
                     <div class="col-md-12">
                        @if(Auth::user()->tipo_usuario_id == 2)
@@ -173,7 +173,7 @@
                 </div>
             </div>
             @if(isset($solicitacao->modelosAnimais))
-                <div class="card shadow-lg p-3 bg-white" style="border-radius: 0px 0px 10px 10px;">
+                <div class="card p-3 bg-white" style="border-radius: 0px 0px 10px 10px;">
 
                     <table class="table">
                         <thead>

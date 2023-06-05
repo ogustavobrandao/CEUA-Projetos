@@ -43,8 +43,12 @@
 <div id="app">
     @yield('login')
     <div class="row my-5 justify-content-center">
-        @include('layouts.components.messages')
-        @yield('content')
+
+        <div class="col-10 offset-0 mt-5 pt-3 shadow-lg  Background-container">
+            @include('layouts.components.messages')
+            @yield('content')
+        </div>
+
     </div>
     @include('layouts.components.footer')
 </div>

@@ -1,4 +1,6 @@
-<nav class="navbar navbar-expand-md navbar-dark bg-black">
+<div class="navbar navbar-expand-md navbar-dark navbar_color1 pb-md-5"></div>
+<nav class="navbar navbar-expand-md navbar-dark navbar_color">
+
     <a class="navbar-brand ml-4" href="{{ route('welcome') }}">
         {{ config('app.name', 'Laravel') }}
     </a>
@@ -30,7 +32,7 @@
             <!-- Authentication Links -->
             @guest
                 @if (Route::has('login'))
-                   
+
                     <li class="nav-item">
                         <a class="nav-link text-white" href="{{ route('ceua') }}">{{ __('A CEUA') }}</a>
                     </li>
@@ -52,14 +54,14 @@
                     <li class="nav-item">
                         <a class="nav-link text-white" href="{{ route('contato') }}">{{ __('Contato') }}</a>
                     </li>
-                   
+
                 @endif
 
 
             @else
                 <li class="nav-item dropdown">
 
-                    
+
                     <a id="navbarDropdown" class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v- style="color: black">
                         <span class="font-weight-bolder">Olá, </span>{{ Auth::user()->name }}
                     </a>

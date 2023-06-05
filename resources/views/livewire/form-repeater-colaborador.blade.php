@@ -1,4 +1,4 @@
-<div class="card shadow-lg p-3 bg-white">
+<div class="card p-3 bg-white">
     <form id="form2" method="POST" action="{{route('solicitacao.colaborador.criar')}}">
         @csrf
         <input type="hidden" name="solicitacao_id" value="{{$solicitacao->id}}">

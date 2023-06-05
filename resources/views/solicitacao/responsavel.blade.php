@@ -1,4 +1,4 @@
-<div class="card shadow-lg p-3 bg-white" style="border-radius: 0px 0px 10px 10px">
+<div class="card p-3 bg-white" style="border-radius: 0px 0px 10px 10px">
     <form id="form1" method="POST" action="{{route('solicitacao.responsavel.criar')}}" enctype="multipart/form-data">
         @csrf
         <input type="hidden" name="solicitacao_id" value="{{$solicitacao->id}}">
@@ -251,7 +251,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="col-sm-4 mt-4" id="anexo_termo_responsabilidade" style="display: none;">
                     <label>Anexar Termo de Responsabilidade:</label>
                     {{-- <li><a href="" target="blank">Modelo Termo de Responsabilidade</a></li> --}}
@@ -315,7 +315,7 @@
                             </div>
                         </div>
                 </div>
-            
+
                     <div class="col-sm-10 mt-2" id="treinamento" style="display: none;">
                         <label>Descreva:</label>
                         <textarea class="form-control @error('treinamento') is-invalid @enderror" name="treinamento" id="treinamento" autocomplete="treinamento" autofocus
@@ -328,8 +328,8 @@
                     </div>
                 </div>
                 @endif
-                
-            
+
+
         @if (\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2)
             </div>
             </div>
@@ -370,13 +370,13 @@
             $("#termo_responsabilidade_nao").attr('checked', true);
             $("#termo_responsabilidade_nao").click();
         @endif
-        
+
     });
 
     $("#treinamento_sim").click(function () {
         $("#treinamento").show().find('input, textarea').prop('disabled', false);
     });
-    
+
     $("#treinamento_nao").click(function () {
         $("#treinamento").hide().find('input, textarea').prop('disabled', true);
         $("#treinamento").prop('required', false);
@@ -384,7 +384,7 @@
 
     $("#experiencia_previa_sim").click(function () {
         $("#anexo_experiencia").show().find('input, textarea').prop('disabled', false);
-        
+
     });
 
     $("#experiencia_previa_nao").click(function () {

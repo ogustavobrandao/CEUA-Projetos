@@ -1,5 +1,5 @@
 <div id="listaColaborador">
-    <div class="card shadow-lg p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_2">
+    <div class="card p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_2">
         <div class="row">
             <div class="col-md-12">
                 @if(Auth::user()->tipo_usuario_id == 2)
