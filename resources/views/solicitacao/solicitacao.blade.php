@@ -1,4 +1,4 @@
-<div class="card shadow-lg p-3 bg-white" style="border-radius: 0px 0px 10px 10px">
+<div class="card p-3 bg-white" style="border-radius: 0px 0px 10px 10px">
     <form id="form0" method="POST" action="{{route('solicitacao.criar')}}">
         @csrf
         <input type="hidden" name="solicitacao_id" value="{{$solicitacao->id}}">
