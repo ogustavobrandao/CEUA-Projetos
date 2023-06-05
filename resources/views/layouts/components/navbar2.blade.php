@@ -1,4 +1,3 @@
-<div class="navbar navbar-expand-md navbar-dark navbar_color1 pb-md-5"></div>
 <nav class="navbar navbar-expand-md navbar-dark navbar_color">
 
     <a class="navbar-brand ml-4" href="{{ route('welcome') }}">

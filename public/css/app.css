@@ -89,6 +89,10 @@ body {
     overflow-x:hidden;
 }
 
+.textoRodape {
+    color: white;
+}
+
 .Background-container{
     background: rgba(245, 234, 236, 0.2);
     border-radius: 10px;
