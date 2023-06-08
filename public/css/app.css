@@ -56,10 +56,14 @@ html {
 
 
 .navbar_color{
-    background-color: #972E3F;
+    background-color: #972E3F !important;
 }
 .navbar_color1{
     background-color: #071D41;
+}
+
+.color_bt-cadastrar{
+    background-color: #E6E6E6 !important;
 }
 
 article,
@@ -7058,6 +7062,10 @@ button.bg-primary:focus {
 
 .bg-secondary {
     background-color: #6c757d !important;
+}
+
+.bg-cinza{
+    background-color: #F8F9FA;
 }
 
 a.bg-secondary:hover,

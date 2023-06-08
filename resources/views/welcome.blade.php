@@ -2,12 +2,13 @@
 @section('login')
 <style>
 .home_background {
-    width: 100%;
+   width: 100%;
     height: 100%;
     min-height: 400px;
-    background-image: url({{asset('images/background.jpg')}});
-    background-repeat: no-repeat, no-repeat;
-    background-size: cover;
+    background-image: url({{asset('images/CEUA_logo_vinho.png')}});
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 80%;
 }
 
 .home_content {
@@ -51,84 +52,78 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-6 p-0">
+        <div class="col-md-6 p-0 d-flex justify-content-center align-items-center">
             <div class="home_background">
-                <div class="home_content">
-                    <h1 class="my-lg-5 text-left mb-4" style="font-size: 35px;">
-                        Comissão de Ética no Uso de Animais
-                    </h1>
-                    <p class="mt-2 mb-4" style="font-size: 20px;">
-                        A CEUA-UFAPE tem como responsabilidade apreciar os projetos da tríade (Ensino, Pesquisa e Extensão) que desenvolvam atividades as quais façam uso de animais, vinculados a esta instituição de Ensino Superior. Esta Comissão é deliberativa e normativa e suas atribuições estão sob a égide da legislação do CONCEA, em especial, da Resolução Normativa CONCEA nº 51, de 19.05.2021, porém também tem caráter consultivo e educativo.
-                    </p>
-                </div>
             </div>
         </div>
 
         <div class="col-md-6 p-0">
             <div class="login_form d-flex align-items-center justify-content-center">
-                <div class="col-9 mt-4">
-                    <h3>Login</h3>
-                    <form method="POST" action="{{ route('login') }}">
+                <div class="col-12">
+
+                    <form class="shadow p-5 bg-cinza" method="POST" action="{{ route('login') }}">
+                        <h3>Entrar</h3>
+                        <hr class="bg-secondary w-80 mt-3">
                         @csrf
                         <div class="row justify-content-center mt-2">
                             <div class="col-sm-12">
-                                <label for="email">E-mail:</label>
+                                <label class="text-black-50" for="email">E-mail:</label>
                                 <input class="form-control @error('email') is-invalid @enderror" id="email"
                                        type="email" name="email" value="{{ old('email') }}" required
                                        autocomplete="email"
                                        autofocus>
                                 @error('email')
                                 <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
+                <strong>{{ $message }}</strong>
+            </span>
                                 @enderror
                             </div>
                         </div>
 
                         <div class="row justify-content-center mt-2">
                             <div class="col-sm-12">
-                                <label for="password">{{ __('Senha') }}</label>
-
+                                <label class="text-black-50" for="password">{{ __('Senha') }}</label>
                                 <input id="password" type="password"
                                        class="form-control @error('password') is-invalid @enderror" name="password"
                                        required autocomplete="current-password">
-
                                 @error('password')
                                 <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
+                <strong>{{ $message }}</strong>
+            </span>
                                 @enderror
                             </div>
                         </div>
 
                         <div class="row justify-content-center my-3">
-                            <div class="col-m-5">
+                            <div class="col-md-12">
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" name="remember"
                                            id="remember" {{ old('remember') ? 'checked' : '' }}>
-
                                     <label class="form-check-label" for="remember">
                                         {{ __('Manter-se conectado') }}
                                     </label>
                                 </div>
                             </div>
-                            <div class="col-m-8 m-0">
+                            <div class="justify-content-center ">
                                 @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        Problemas para se conectar? <u>Clique aqui</u>
+                                    <a class="form-check-label text-black" href="{{ route('password.request') }}" style="color: #fff;">
+                                        Problemas para se conectar? <u class="form-check-label text-primary">Clique aqui</u>
                                     </a>
                                 @endif
                             </div>
                         </div>
+
                         <div class="row">
-                            <div class="col-md-12 text-center">
-                                <button type="submit" class="btn btn-primary w-100">
+                            <div class="col-md-6 text-center pl-0">
+                                <button type="submit" class="btn w-75 navbar_color text-white font-weight-bold">
                                     {{ __('Entrar') }}
                                 </button>
                             </div>
                             @if (Route::has('register'))
-                                <div class="col-md-12 text-left register_link">
-                                    Não possui uma conta? <a href="{{ route('register') }}">Cadastre-se</a>
+                                <div class="col-md-6 text-center pr-0">
+                                    <a href="{{ route('register') }}" class="btn w-75 color_bt-cadastrar font-weight-bold">
+                                        Cadastar-se
+                                    </a>
                                 </div>
                             @endif
                         </div>
