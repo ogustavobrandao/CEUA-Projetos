@@ -2,13 +2,7 @@
 @section('login')
 <style>
 .home_background {
-   width: 100%;
-    height: 100%;
-    min-height: 400px;
     background-image: url({{asset('images/CEUA_logo_vinho.png')}});
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 80%;
 }
 
 .home_content {
@@ -65,7 +59,7 @@
                         <h3>Entrar</h3>
                         <hr class="bg-secondary w-80 mt-3">
                         @csrf
-                        <div class="row justify-content-center mt-2">
+                        <div class="row justify-content-center mt-2 ">
                             <div class="col-sm-12">
                                 <label class="text-black-50" for="email">E-mail:</label>
                                 <input class="form-control @error('email') is-invalid @enderror" id="email"
@@ -96,7 +90,7 @@
 
                         <div class="row justify-content-center my-3">
                             <div class="col-md-12">
-                                <div class="form-check">
+                                <div class="form-check mb-3">
                                     <input class="form-check-input" type="checkbox" name="remember"
                                            id="remember" {{ old('remember') ? 'checked' : '' }}>
                                     <label class="form-check-label" for="remember">
@@ -104,7 +98,7 @@
                                     </label>
                                 </div>
                             </div>
-                            <div class="justify-content-center ">
+                            <div class="justify-content-center mb-3">
                                 @if (Route::has('password.request'))
                                     <a class="form-check-label text-black" href="{{ route('password.request') }}" style="color: #fff;">
                                         Problemas para se conectar? <u class="form-check-label text-primary">Clique aqui</u>
