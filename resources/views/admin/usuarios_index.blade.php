@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="row mb-4 borda-bottom">
+    <div class="row mb-4 border-bottom">
         <div class="col-md-9">
             <h3 class="text-center">Usuários</h3>
         </div>
         <div class="col-md-3">
-            <button type="button" class="btn btn-primary w-100 pb-1" data-toggle="modal" data-target="#cadastroModal">
+            <button type="button" class="btn navbar_color text-white pb-1 w-100" data-toggle="modal" data-target="#cadastroModal">
                 Cadastrar Usuário
             </button>
         </div>
@@ -61,10 +61,10 @@
                         <div class="row justify-content-center mt-2">
                             <div class="col-sm-5">
                                 <label for="name">Nome:<strong style="color: red">*</strong></label>
-                                <input class="form-control @error('name') is-invalid @enderror name" id="name" type="text" name="name" value="{{ old('name') }}" 
-                                    minlength="10" maxlength="255" required autocomplete="name" autofocus>
+                                <input class="form-control @error('name') is-invalid @enderror name" id="name" type="text" name="name" value="{{ old('name') }}"
+                                       minlength="10" maxlength="255" required autocomplete="name" autofocus>
                                 @error('name')
-                                    <span class="invalid-feedback" role="alert">
+                                <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
@@ -72,10 +72,10 @@
 
                             <div class="col-sm-5">
                                 <label for="email">E-mail:<strong style="color: red">*</strong></label>
-                                <input class="form-control @error('email') is-invalid @enderror" id="email" type="email" name="email" value="{{ old('email') }}" 
-                                    minlength="10" maxlength="255" required autocomplete="email" autofocus>
+                                <input class="form-control @error('email') is-invalid @enderror" id="email" type="email" name="email" value="{{ old('email') }}"
+                                       minlength="10" maxlength="255" required autocomplete="email" autofocus>
                                 @error('email')
-                                    <span class="invalid-feedback" role="alert">
+                                <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
@@ -87,7 +87,7 @@
                                 <label for="cpf">CPF:<strong style="color: red">*</strong></label>
                                 <input class="form-control @error('cpf') is-invalid @enderror cpf" id="cpf" type="text" name="cpf" value="{{ old('cpf') }}" required autocomplete="cpf" autofocus>
                                 @error('cpf')
-                                    <span class="invalid-feedback" role="alert">
+                                <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
@@ -95,10 +95,10 @@
 
                             <div class="col-sm-5">
                                 <label for="rg">RG:<strong style="color: red">*</strong></label>
-                                <input class="form-control @error('rg') is-invalid @enderror" id="rg" type="text" name="rg" value="{{ old('rg') }}" 
-                                    minlength="7" maxlength="14" required autofocus>
+                                <input class="form-control @error('rg') is-invalid @enderror" id="rg" type="text" name="rg" value="{{ old('rg') }}"
+                                       minlength="7" maxlength="14" required autofocus>
                                 @error('rg')
-                                    <span class="invalid-feedback" role="alert">
+                                <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
@@ -108,10 +108,10 @@
                         <div class="row justify-content-center mt-2">
                             <div class="col-sm-5">
                                 <label for="celular">Celular:<strong style="color: red">*</strong></label>
-                                <input class="form-control @error('celular') is-invalid @enderror celular" id="celular" type="text" name="celular" value="{{ old('celular') }}" 
-                                    minlength="11" maxlength="11" required autofocus>
+                                <input class="form-control @error('celular') is-invalid @enderror celular" id="celular" type="text" name="celular" value="{{ old('celular') }}"
+                                       minlength="11" maxlength="11" required autofocus>
                                 @error('celular')
-                                    <span class="invalid-feedback" role="alert">
+                                <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
@@ -131,7 +131,7 @@
                                     </option>
                                 </select>
                                 @error('tipo_usuario_id')
-                                    <span class="invalid-feedback" role="alert">
+                                <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
@@ -152,7 +152,7 @@
                                     @endforeach
                                 </select>
                                 @error('instituicao_id')
-                                    <span class="invalid-feedback" role="alert">
+                                <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
@@ -165,7 +165,7 @@
                                     </option>
                                 </select>
                                 @error('unidade_id')
-                                    <span class="invalid-feedback" role="alert">
+                                <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
@@ -199,10 +199,10 @@
                             <div class="row justify-content-center mt-2">
                                 <div class="col-sm-5">
                                     <label for="name">Nome:<strong style="color: red">*</strong></label>
-                                    <input class="form-control @error('name') is-invalid @enderror name" id="name-usuario-{{$usuario->id}}" type="text" name="name" value="{{ $usuario->name }}" 
-                                        minlength="10" maxlength="255" required autocomplete="name" autofocus>
+                                    <input class="form-control @error('name') is-invalid @enderror name" id="name-usuario-{{$usuario->id}}" type="text" name="name" value="{{ $usuario->name }}"
+                                           minlength="10" maxlength="255" required autocomplete="name" autofocus>
                                     @error('name')
-                                        <span class="invalid-feedback" role="alert">
+                                    <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
@@ -210,10 +210,10 @@
 
                                 <div class="col-sm-5">
                                     <label for="email">E-mail:<strong style="color: red">*</strong></label>
-                                    <input class="form-control @error('email') is-invalid @enderror" id="email-usuario-{{$usuario->id}}" type="email" name="email" value="{{ $usuario->email  }}" 
-                                        minlength="10" maxlength="255" required autocomplete="email" autofocus>
+                                    <input class="form-control @error('email') is-invalid @enderror" id="email-usuario-{{$usuario->id}}" type="email" name="email" value="{{ $usuario->email  }}"
+                                           minlength="10" maxlength="255" required autocomplete="email" autofocus>
                                     @error('email')
-                                        <span class="invalid-feedback" role="alert">
+                                    <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
@@ -226,7 +226,7 @@
                                     <input class="form-control @error('cpf') is-invalid @enderror cpf" id="cpf-usuario-{{$usuario->id}}" type="text" name="cpf" value="{{ $usuario->cpf }}" required autocomplete="cpf"
                                            autofocus>
                                     @error('cpf')
-                                        <span class="invalid-feedback" role="alert">
+                                    <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
@@ -234,10 +234,10 @@
 
                                 <div class="col-sm-5">
                                     <label for="rg">RG:<strong style="color: red">*</strong></label>
-                                    <input class="form-control @error('rg') is-invalid @enderror" id="rg-usuario-{{$usuario->id}}" type="text" name="rg" value="{{ $usuario->rg }}" 
-                                        minlength="7" maxlength="14" required autofocus>
+                                    <input class="form-control @error('rg') is-invalid @enderror" id="rg-usuario-{{$usuario->id}}" type="text" name="rg" value="{{ $usuario->rg }}"
+                                           minlength="7" maxlength="14" required autofocus>
                                     @error('rg')
-                                        <span class="invalid-feedback" role="alert">
+                                    <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
@@ -248,9 +248,9 @@
                                 <div class="col-sm-5">
                                     <label for="celular">Celular:<strong style="color: red">*</strong></label>
                                     <input class="form-control @error('celular') is-invalid @enderror celular" id="celular-usuario{{$usuario->id}}" type="text" name="celular" value="{{ $usuario->celular }}"
-                                        minlength="11" maxlength="11" required autofocus>
+                                           minlength="11" maxlength="11" required autofocus>
                                     @error('celular')
-                                        <span class="invalid-feedback" role="alert">
+                                    <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
@@ -270,7 +270,7 @@
                                         </option>
                                     </select>
                                     @error('tipo_usuario_id')
-                                        <span class="invalid-feedback" role="alert">
+                                    <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
@@ -282,7 +282,7 @@
                                     <label for="password">{{ __('Senha') }}<strong style="color: red">*</strong></label>
                                     <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
                                     @error('password')
-                                        <span class="invalid-feedback" role="alert">
+                                    <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
@@ -306,7 +306,7 @@
 
                                     </select>
                                     @error('instituicao')
-                                        <span class="invalid-feedback" role="alert">
+                                    <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
@@ -319,7 +319,7 @@
                                         </option>
                                     </select>
                                     @error('unidade_id')
-                                        <span class="invalid-feedback" role="alert">
+                                    <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
