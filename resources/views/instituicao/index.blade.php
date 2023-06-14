@@ -6,7 +6,7 @@
             <h3 class="text-center">Instituições</h3>
         </div>
         <div class="col-md-3">
-            <button type="button" class="btn btn-primary w-100 pb-1" data-toggle="modal" data-target="#cadastroModal">
+            <button type="button" class="btn navbar_color text-white w-100 pb-1" data-toggle="modal" data-target="#cadastroModal">
                 Cadastrar Instituição
             </button>
         </div>
