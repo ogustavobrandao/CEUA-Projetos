@@ -13,14 +13,16 @@
             </button>
         </div>
     @endif
-    <div class="row my-4 borda-bottom">
-        <div class="col-md-12">
-            <h3 class="text-center">Solicitações</h3>
-        </div>
 
-    </div>
 
     <table class="table table-hover">
+        <div class="row my-4">
+            <div class="col-md-12">
+                <h3 class="text-center">Solicitações</h3>
+                <hr class="bg-secondary w-80 mt-3">
+            </div>
+
+        </div>
         <thead>
         <tr>
             <th scope="col">Título</th>
