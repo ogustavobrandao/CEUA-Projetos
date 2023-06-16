@@ -37,7 +37,7 @@
             </li>
             
             <li>
-                <a href="https://docs.google.com/document/d/1rxGXmFXkWpm7bh5tLBV7qyFE9l5bQpAU/edit?usp=sharing&ouid=107356873840947650097&rtpof=true&sd=true" class="legislation-link">Modelo de Ofício de Encaminhamento</a>
+                <a href="https://docs.google.com/document/d/1ld-R2B0aX2kjPKBSWmdJg0nhfddc-GaD/edit?usp=sharing&ouid=107356873840947650097&rtpof=true&sd=true" class="legislation-link">Modelo de Ofício de Encaminhamento</a>
             </li>
             
             <li>
