@@ -11084,3 +11084,8 @@ label {
     border: none;
     outline: none;
 }
+
+.search-bar-input {
+    background-color: #F5F4F4;
+    border-radius:5px 0px 0px 5px
+}
