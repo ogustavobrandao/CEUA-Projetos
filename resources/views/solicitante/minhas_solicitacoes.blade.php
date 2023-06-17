@@ -3,7 +3,7 @@
 @section('content')
     <div class="row container-fluid min-vh justify-content-center">
         <div class="col-10">
-            <div class="shadow p-5">
+            <div class="shadow-lg p-5">
                 <div class="row mb-4 pt-3 ">
 
                     <div class="col-md-12">
