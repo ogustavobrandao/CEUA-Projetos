@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container-fluid d-flex align-items-center justify-content-center min-vh-100">
+    <div class="container-fluid align-items-center justify-content-center min-vh">
         <div class="row justify-content-center">
-            <div class="col-md-12">
+            <div class="col-6" style="margin-top: 100px">
                 <div class="card shadow">
-                    <div class="card-header font-weight-bold">{{ __('Reset Password') }}</div>
+                    <div class="card-header font-weight-bold">Email de redefinição</div>
 
                     <div class="card-body">
                         @if (session('status'))
@@ -18,11 +18,12 @@
                             @csrf
 
                             <div class="row mb-3">
-                                <label for="email" class="col-md-0 col-form-label text-black-50">{{ __('Email Address') }}</label>
-
-                                <div class="col-md-0">
-                                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-
+                                <div class="col-12">
+                                    <label for="email" class="text-black-50">E-Mail</label>
+                                    <input id="email" type="email"
+                                           class="form-control @error('email') is-invalid @enderror"
+                                           name="email" value="{{ old('email') }}" required autocomplete="email"
+                                           autofocus>
                                     @error('email')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -31,10 +32,10 @@
                                 </div>
                             </div>
 
-                            <div class="row mb-0">
-                                <div class=" offset-md-2">
+                            <div class="row">
+                                <div class="col-4">
                                     <button type="submit" class="btn navbar_color text-white">
-                                        {{ __('Send Password Reset Link') }}
+                                        Enviar E-Mail
                                     </button>
                                 </div>
                             </div>
