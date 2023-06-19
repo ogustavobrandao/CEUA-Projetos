@@ -40,15 +40,12 @@
     </div>
     <div id="dados_colaborador">
         @if(Auth::user()->tipo_usuario_id == 2)
-            @include('livewire.form-repeater-colaborador', ['solicitacao' => $solicitacao, 'colaboradores' => $solicitacao->responsavel?->colaboradores, 'avaliacao_id' => $avaliacao->id, 'id' => -1, 'tipo'=>2])
-            {{-- @livewire('form-repeater-colaborador', ['solicitacao' => $solicitacao, 'colaboradores' => $solicitacao->responsavel?->colaboradores, 'avaliacao_id' => $avaliacao->id, 'id' => -1, 'tipo' => 2]) --}}
+            @livewire('form-repeater-colaborador', ['solicitacao' => $solicitacao, 'colaboradores' => $solicitacao->responsavel?->colaboradores, 'avaliacao_id' => $avaliacao->id, 'id' => -1, 'tipo'=>2])
         @elseif(Auth::user()->tipo_usuario_id == 3 && $solicitacao->status == 'avaliado'
                 && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia')
-            @include('livewire.form-repeater-colaborador', ['solicitacao' => $solicitacao, 'colaboradores' => $solicitacao->responsavel?->colaboradores, 'tipo'=>2, 'id' => -1, 'status' => $solicitacao->avaliacao->first()->avaliacao_individual->where('tipo',2)->first()->status])
-            {{-- @livewire('form-repeater-colaborador', ['solicitacao' => $solicitacao, 'colaboradores' => $solicitacao->responsavel?->colaboradores, 'tipo' => 2, 'id' => -1, 'status' => $solicitacao->avaliacao->first()->avaliacao_individual->where('tipo',2)->first()->status]) --}}
+            @livewire('form-repeater-colaborador', ['solicitacao' => $solicitacao, 'colaboradores' => $solicitacao->responsavel?->colaboradores, 'tipo'=>2, 'id' => -1, 'status' => $solicitacao->avaliacao->first()->avaliacao_individual->where('tipo',2)->first()->status])
         @else
-            @include('livewire.form-repeater-colaborador', ['solicitacao' => $solicitacao, 'colaboradores' => $solicitacao->responsavel?->colaboradores])
-            {{-- @livewire('form-repeater-colaborador', ['solicitacao' => $solicitacao, 'colaboradores' => $solicitacao->responsavel?->colaboradores]) --}}
+            @livewire('form-repeater-colaborador', ['solicitacao' => $solicitacao, 'colaboradores' => $solicitacao->responsavel?->colaboradores])
         @endif
     </div>
 </div>

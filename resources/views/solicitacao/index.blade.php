@@ -73,11 +73,9 @@
                 </div>
                 <div class="mb-4">
                     @if(Auth::user()->tipo_usuario_id == 2)
-                        @include('livewire.form-colaborador',['solicitacao' => $solicitacao, 'avaliacao' => $avaliacao])
-                        {{-- @livewire('form-colaborador', ['solicitacao' => $solicitacao, 'avaliacao' => $avaliacao]) --}}
+                        @livewire('form-colaborador', ['solicitacao' => $solicitacao, 'avaliacao' => $avaliacao])
                     @else
-                        @include('livewire.form-colaborador',['solicitacao' => $solicitacao])
-                        {{-- @livewire('form-colaborador', ['solicitacao' => $solicitacao]) --}}
+                        @livewire('form-colaborador', ['solicitacao' => $solicitacao])
                     @endif
 
                 </div>
