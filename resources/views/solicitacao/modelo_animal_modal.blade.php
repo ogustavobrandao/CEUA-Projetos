@@ -490,7 +490,7 @@
                    name="quantidade"
                    @if(isset($modelo_animal->perfil)) value="{{$modelo_animal->perfil->quantidade}}"
                    @else value="{{old('quantidade')}}" @endif required autocomplete="quantidade"
-                   autofocus>
+                   autofocus disabled>
             @if($errors->modelo->has('quantidade'))
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $errors->modelo->first('quantidade') }}</strong>
@@ -586,8 +586,10 @@
     </div>
 </div>
 
+<script src="{{ asset('js/masks.js') }}"></script>
 <script>
     $(document).ready(function () {
+        $("#anexo_cqb").hide().find('input, radio').prop('disabled', true);
 
         @if(isset($modelo_animal) && $modelo_animal->geneticamente_modificado == true)
         $("#geneticamente_modificado_sim").attr('checked', true);
@@ -737,6 +739,20 @@
             }
         });
 
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        function calcularTotal() {
+            var machos = parseInt($('#machos').val()) || 0;
+            var femeas = parseInt($('#femeas').val()) || 0;
+            var total = machos + femeas;
+            $('#quantidade').val(total);
+        }
+        calcularTotal();
+        $('#machos, #femeas').on('input', function() {
+            calcularTotal();
+        });
     });
 </script>
 
