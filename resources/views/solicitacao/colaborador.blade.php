@@ -5,12 +5,11 @@
         <input type="hidden" name="solicitacao_id" value="{{$solicitacao->id}}">
         <div id="listaColaborador">
         </div>
-        
+
         @include('component.botoes_new_form')
     </form>
 
 </div>
-
 <script>
     cont = 0;
 
@@ -82,18 +81,18 @@
             '</select>' +
             '</div>' +
             '<div class="col-sm-6">' +
-                '<label for="grau_escolaridade">Grau de Escolaridade:<strong style="color: red">*</strong></label>' +
-                '<select class="form-control" id="grau_escolaridade" name="colaborador[' + cont + '][grau_escolaridade]">' +
-                    '<option disabled selected>Selecione um Grau de Escolaridade</option>' +
-                    '<option @if(old('grau_escolaridade') == "graduacao_completa") selected @endif value="graduacao_completa">Graduação Completa</option>' +
-                    '<option @if(old('grau_escolaridade') == "graduacao_incompleta") selected @endif value="graduacao_incompleta">Graduação Incompleta</option>' +
-                    '<option @if(old('grau_escolaridade') == "pos_graduacao_incompleta") selected @endif value="pos_graduacao_incompleta">Pós-Gradução Incompleta</option>' +
-                    '<option @if(old('grau_escolaridade') == "pos_graduacao_completa") selected @endif value="pos_graduacao_completa">Pós-Gradução Completa</option>' +
-                    '<option @if(old('grau_escolaridade') == "mestrado_incompleto") selected @endif value="mestrado_incompleto">Mestrado Incompleto</option>' +
-                    '<option @if(old('grau_escolaridade') == "mestrado_completo") selected @endif value="mestrado_completo">Mestrado Completo</option>' +
-                    '<option @if(old('grau_escolaridade') == "doutorado_completo") selected @endif value="doutorado_completo">Doutorado Incompleto</option>' +
-                    '<option @if(old('grau_escolaridade') == "doutorado_incompleto") selected @endif value="doutorado_incompleto">Doutorado Completo</option>' +
-                '</select>' +
+            '<label for="grau_escolaridade">Grau de Escolaridade:<strong style="color: red">*</strong></label>' +
+            '<select class="form-control" id="grau_escolaridade" name="colaborador[' + cont + '][grau_escolaridade]">' +
+            '<option disabled selected>Selecione um Grau de Escolaridade</option>' +
+            '<option @if(old('grau_escolaridade') == "graduacao_completa") selected @endif value="graduacao_completa">Graduação Completa</option>' +
+            '<option @if(old('grau_escolaridade') == "graduacao_incompleta") selected @endif value="graduacao_incompleta">Graduação Incompleta</option>' +
+            '<option @if(old('grau_escolaridade') == "pos_graduacao_incompleta") selected @endif value="pos_graduacao_incompleta">Pós-Gradução Incompleta</option>' +
+            '<option @if(old('grau_escolaridade') == "pos_graduacao_completa") selected @endif value="pos_graduacao_completa">Pós-Gradução Completa</option>' +
+            '<option @if(old('grau_escolaridade') == "mestrado_incompleto") selected @endif value="mestrado_incompleto">Mestrado Incompleto</option>' +
+            '<option @if(old('grau_escolaridade') == "mestrado_completo") selected @endif value="mestrado_completo">Mestrado Completo</option>' +
+            '<option @if(old('grau_escolaridade') == "doutorado_completo") selected @endif value="doutorado_completo">Doutorado Incompleto</option>' +
+            '<option @if(old('grau_escolaridade') == "doutorado_incompleto") selected @endif value="doutorado_incompleto">Doutorado Completo</option>' +
+            '</select>' +
             '</div>' +
             '</div>' +
             '</div>' +
@@ -105,12 +104,12 @@
             '@endif' +
             '@if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2)' +
             '<div class="col-sm-15">' +
-                '<label>Experiência Prévia:<strong style="color: red">*</strong></label>' +
-                    '@if(old('experiencia_previa') == null)<br>' +
-                        '<a class="btn btn-secondary" href="#">Não Enviado</a>' +
-                    '@else' +
-                        '<a class="btn btn-primary m-3" href="{{route('experiencias_previasColaborador.download', ['colaborador_id' => ['+ cont +']])}}">Baixar Experiência Prévia</a>' +
-                    '@endif' +
+            '<label>Experiência Prévia:<strong style="color: red">*</strong></label>' +
+            '@if(old('experiencia_previa') == null)<br>' +
+            '<a class="btn btn-secondary" href="#">Não Enviado</a>' +
+            '@else' +
+            '<a class="btn btn-primary m-3" href="{{route('experiencias_previasColaborador.download', ['colaborador_id' => ['+ cont +']])}}">Baixar Experiência Prévia</a>' +
+            '@endif' +
             '@else' +
             '<input class="form-control @error('experiencia_previa') is-invalid @enderror" id="experiencia_previa" enctype="multipart/form-data" type="file" name="colaborador[' + cont + '][experiencia_previa]" value="{{ old('experiencia_previa') }}" @if(('experiencia_previa') != null) style="width: 135px" @endif>' +
             '@error('experiencia_previa')' +
@@ -127,12 +126,12 @@
             '@endif' +
             '@if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2)' +
             '<div class="col-sm-15 mt-2">' +
-                '<label>Termo de Responsabilidade:<strong style="color: red">*</strong></label>' +
-                '@if(old('termo_responsabilidade') == null)<br>' +
-                        '<a class="btn btn-secondary" href="#">Não Enviado</a>' +
-                    '@else' +
-                        '<a class="btn btn-primary m-3" href="{{route('termo_responsabilidadeColaborador.download', ['colaborador_id' => ['+ cont +']])}}">Baixar Termo de Responsabilidade</a>' +
-                    '@endif' +
+            '<label>Termo de Responsabilidade:<strong style="color: red">*</strong></label>' +
+            '@if(old('termo_responsabilidade') == null)<br>' +
+            '<a class="btn btn-secondary" href="#">Não Enviado</a>' +
+            '@else' +
+            '<a class="btn btn-primary m-3" href="{{route('termo_responsabilidadeColaborador.download', ['colaborador_id' => ['+ cont +']])}}">Baixar Termo de Responsabilidade</a>' +
+            '@endif' +
             '@else' +
             '<input class="form-control @error('termo_responsabilidade') is-invalid @enderror" id="termo_responsabilidade" enctype="multipart/form-data" type="file" name="colaborador[' + cont + '][termo_responsabilidade]" value="{{ old('termo_responsabilidade') }}" @if(('termo_responsabilidade') != null) style="width: 135px" @endif>' +
             '@error('termo_responsabilidade')' +
@@ -154,6 +153,37 @@
             '</div>' +
             '</div></div></div>'
         );
+        $('.cpf').mask('000.000.000-00');
+
+        let SPMaskBehavior = function (val) {
+            return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00000';
+        };
+
+        let spOptions = {
+            onKeyPress: function (val, e, field, options) {
+                field.mask(SPMaskBehavior.apply({}, arguments), options);
+            }
+        };
+
+        $('.celular').mask(SPMaskBehavior, spOptions);
+
+        $(".name").mask("#", {
+            maxlength: true,
+            translation: {
+                '#': {pattern: /^[A-Za-záâãéêíóôõúçÁÂÃÉÊÍÓÔÕÚÇ\s]+$/, recursive: true}
+            }
+        });
+
+        $('#cpf').mask('000.000.000-00');
+        $('#telefone').mask(SPMaskBehavior, spOptions);
+        $("#name").mask("#", {
+            maxlength: true,
+            translation: {
+                '#': {pattern: /^[A-Za-záâãéêíóôõúçÁÂÃÉÊÍÓÔÕÚÇ\s]+$/, recursive: true}
+            }
+        });
+
+
     }
 
     @if(isset($solicitacao->responsavel->colaboradores))

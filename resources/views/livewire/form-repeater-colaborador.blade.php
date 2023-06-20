@@ -39,7 +39,7 @@
                             </div>
                             <div class="col-sm-4">
                                 <label for="cpf">CPF:<strong style="color: red">*</strong></label>
-                                <input class="form-control @error('colaborador[{{$loop->index}}][cpf]') is-invalid @enderror" type="cpf" name="colaborador[{{$loop->index}}][cpf]" value="{{ old('colaborador['.$loop->index.'][cpf]', $colaborador->cpf) }}" required autocomplete="cpf" autofocus>
+                                <input id="cpf" class="form-control @error('colaborador[{{$loop->index}}][cpf]') is-invalid @enderror" pattern="\d{3}.\d{3}.\d{3}-\d{2}" title="Digite um CPF válido: 999.999.999-99" type="cpf" name="colaborador[{{$loop->index}}][cpf]" value="{{ old('colaborador['.$loop->index.'][cpf]', $colaborador->cpf) }}" required autocomplete="cpf" autofocus>
                                 @error('colaborador[{{$loop->index}}][cpf]')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -48,7 +48,7 @@
                             </div>
                             <div class="col-sm-4 mt-2">
                                 <label for="telefone">Telefone:<strong style="color: red">*</strong></label>
-                                <input class="form-control @error('colaborador[{{$loop->index}}][telefone]') is-invalid @enderror" type="text" name="colaborador[{{$loop->index}}][telefone]" value="{{ old('colaborador['.$loop->index.'][telefone]', $colaborador->contato?->telefone) }}" required autocomplete="telefone" autofocus>
+                                <input class="form-control @error('colaborador[{{$loop->index}}][telefone]') is-invalid @enderror" type="text" name="colaborador[{{$loop->index}}][telefone]" pattern="([0-9]{2}) [0-9]{4,5}-[0-9]{4}" title="Digite um número de telefone válido: (99) 99999-9999" value="{{ old('colaborador['.$loop->index.'][telefone]', $colaborador->contato?->telefone) }}" required autocomplete="telefone" autofocus>
                                 @error('colaborador[{{$loop->index}}][telefone]')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -146,3 +146,4 @@
         @endif
     </form>
 </div>
+

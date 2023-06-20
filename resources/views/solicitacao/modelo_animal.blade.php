@@ -379,7 +379,7 @@
                         Outro a especificar
                     </option>
                 </select>
-                
+
             @error('grupo_animal')
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
@@ -392,7 +392,7 @@
             <input class="form-control @error('') is-invalid @enderror" name="tipo_grupo_animal" autocomplete="tipo_grupo_animal" autofocus
             required @if(!empty($modelo_animal->perfil) && $modelo_animal->perfil->tipo_grupo_animal != null) value="{{$modelo_animal->perfil->tipo_grupo_animal}}"@endif>
         </div>
-        
+
         <div class="col-sm-6">
             <label for="linhagem">Linhagem / Raça:<strong style="color: red">*</strong></label>
             <input class="form-control @error('linhagem') is-invalid @enderror" id="linhagem" type="text"
@@ -539,7 +539,7 @@
                 @endif
             @endif
         </div>
-        
+
         <div class="col-sm-12 mt-3">
             <label for="licencas_previas">Licenças Prévias de outras instituições (IBAMA, FUNAI, CNEN, CTNBio, CGEN, ICMBio.):</label>
             <a target="_blank"
@@ -564,7 +564,7 @@
                            type="file" name="licencas_previas"
                            value="" autocomplete="licencas_previas"
                            @if($modelo_animal->licencas_previas != null) style="width: 135px" @endif>
-                
+
                     @if($modelo_animal->licencas_previas != null)
                         <span
                             style="border: 1px gray solid; border-radius: 10px; text-align: center; width: 250px; position: absolute; bottom: 0px; left: 155px; height: 38px; padding-top: 5px; background-color: #dcfadf">Um Arquivo Já Foi Enviado</span>
@@ -635,7 +635,7 @@
                 $("#anexo_outras_informações").hide().find('input, radio').prop('disabled', true);
                 $("#anexo_outra_procedencia").hide().find('input, radio').prop('disabled', true);
         @endif
-        
+
 
         $("#geneticamente_modificado_sim").click(function () {
             $("#anexo_cqb").show().find('input, radio').prop('disabled', false);
@@ -647,7 +647,7 @@
 
         @if (isset($modelo_animal) && $modelo_animal->flag_captura == true)
             $("#anexo_captura").show().find('input, radio').prop('disabled', false);
-        @else  
+        @else
             $("#anexo_captura").hide().find('input, radio').prop('disabled', true);
         @endif
 
@@ -700,7 +700,7 @@
         $("#outras_info_nao").click(function () {
             $("#anexo_outras_info").hide().find('input, radio').prop('disabled', true);
         });
-        
+
         @if(isset($modelo_animal->perfil) && $modelo_animal->perfil->grupo_animal == "outro")
             $("#anexo_outro_tipo").show().find('input, radio').prop('disabled', false);
             $("#grupo_animal").change(function () {

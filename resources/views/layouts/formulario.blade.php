@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
@@ -31,7 +32,6 @@
           integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
-
     <!-- Styles -->
     <link rel="stylesheet" href="{{ asset ('css/app.css') }}">
     @livewireStyles
@@ -135,4 +135,38 @@
         departamentos();
     });
 
+</script>
+
+<script>
+    $(document).ready(function ($) {
+        $('.cpf').mask('000.000.000-00');
+
+        let SPMaskBehavior = function (val) {
+            return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00000';
+        };
+
+        let spOptions = {
+            onKeyPress: function (val, e, field, options) {
+                field.mask(SPMaskBehavior.apply({}, arguments), options);
+            }
+        };
+
+        $('.celular').mask(SPMaskBehavior, spOptions);
+
+        $(".name").mask("#", {
+            maxlength: true,
+            translation: {
+                '#': { pattern: /^[A-Za-záâãéêíóôõúçÁÂÃÉÊÍÓÔÕÚÇ\s]+$/, recursive: true }
+            }
+        });
+
+        $('#cpf').mask('000.000.000-00');
+        $('#celular').mask(SPMaskBehavior, spOptions);
+        $("#name").mask("#", {
+            maxlength: true,
+            translation: {
+                '#': { pattern: /^[A-Za-záâãéêíóôõúçÁÂÃÉÊÍÓÔÕÚÇ\s]+$/, recursive: true }
+            }
+        });
+    });
 </script>

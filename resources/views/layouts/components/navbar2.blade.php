@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-md navbar-dark navbar_color">
 
-    <a class="navbar-brand ml-4" href="{{ route('welcome') }}">
+    <a class="navbar-brand ml-4" href="{{ route('solicitacao.admin.index') }}">
         {{ config('app.name', 'Laravel') }}
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"

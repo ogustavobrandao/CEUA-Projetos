@@ -130,7 +130,7 @@
                     </div>
                 </div>
             </div>
-    
+
             <div class="col-sm-6 mt-2" id="anexo_animal_silvestre_coleta">
                 <label>Coleta de Espécimes:<strong style="color: red">*</strong></label>
                 <div class="row ml-1">
@@ -161,7 +161,7 @@
                     </div>
                 </div>
             </div>
-    
+
             <div class="col-sm-6 mt-2" id="anexo_animal_marcacao">
                 <label>Marcação:<strong style="color: red">*</strong></label>
                 <div class="row ml-1">
@@ -192,7 +192,7 @@
                     </div>
                 </div>
             </div>
-    
+
             <div class="col-sm-6 mt-2" id="anexo_outras_informações">
                 <label>Outros:<strong style="color: red">*</strong></label>
                 <div class="row ml-1">
@@ -251,7 +251,7 @@
                     <label for="anexo_cqb">Número CQB:<strong style="color: red">*</strong></label>
                     <input class="form-control @error('numero_cqb') is-invalid @enderror" id="numero_cqb" type="number" name="numero_cqb"
                     @if(isset($modelo_animal) && ($modelo_animal->numero_cqb != null)) value="{{$modelo_animal->numero_cqb}}"
-                    @else value="{{old('numero_cqb')}}" @endif required autocomplete="numero_cqb" autofocus>
+                    @else value="{{old('numero_cqb')}}" @endif required>
                 </div>
             </div>
         </div>
@@ -381,7 +381,7 @@
                         Outro a especificar
                     </option>
                 </select>
-                
+
             @error('grupo_animal')
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
@@ -490,7 +490,7 @@
                    name="quantidade"
                    @if(isset($modelo_animal->perfil)) value="{{$modelo_animal->perfil->quantidade}}"
                    @else value="{{old('quantidade')}}" @endif required autocomplete="quantidade"
-                   autofocus>
+                   autofocus disabled>
             @if($errors->modelo->has('quantidade'))
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $errors->modelo->first('quantidade') }}</strong>
@@ -511,7 +511,7 @@
                         <a class="btn btn-secondary"
                         href="#">Não Enviado</a>
                 @endif
-               
+
             @else
                 @if(!empty($modelo_animal))
                     <input class="form-control @error('termo_consentimento') is-invalid @enderror"
@@ -569,7 +569,7 @@
                            type="file" name="licencas_previas"
                            value="" autocomplete="licencas_previas"
                            @if($modelo_animal->licencas_previas != null) style="width: 135px" @endif>
-                
+
                     @if($modelo_animal->licencas_previas != null)
                         <span
                             style="border: 1px gray solid; border-radius: 10px; text-align: center; width: 250px; position: absolute; bottom: 0px; left: 155px; height: 38px; padding-top: 5px; background-color: #dcfadf">Um Arquivo Já Foi Enviado</span>
@@ -586,8 +586,10 @@
     </div>
 </div>
 
+<script src="{{ asset('js/masks.js') }}"></script>
 <script>
     $(document).ready(function () {
+        $("#anexo_cqb").hide().find('input, radio').prop('disabled', true);
 
         @if(isset($modelo_animal) && $modelo_animal->geneticamente_modificado == true)
         $("#geneticamente_modificado_sim").attr('checked', true);
@@ -640,7 +642,7 @@
                 $("#anexo_outras_informações").hide().find('input, radio').prop('disabled', true);
                 $("#anexo_outra_procedencia").hide().find('input, radio').prop('disabled', true);
         @endif
-        
+
 
         $("#geneticamente_modificado_sim").click(function () {
             $("#anexo_cqb").show().find('input, radio').prop('disabled', false);
@@ -652,7 +654,7 @@
 
         @if (isset($modelo_animal) && $modelo_animal->flag_captura == true)
             $("#anexo_captura").show().find('input, radio').prop('disabled', false);
-        @else  
+        @else
             $("#anexo_captura").hide().find('input, radio').prop('disabled', true);
         @endif
 
@@ -705,7 +707,7 @@
         $("#outras_info_nao").click(function () {
             $("#anexo_outras_info").hide().find('input, radio').prop('disabled', true);
         });
-        
+
         @if(isset($modelo_animal->perfil) && $modelo_animal->perfil->grupo_animal == "outro")
             $("#anexo_outro_tipo").show().find('input, radio').prop('disabled', false);
             $("#grupo_animal").change(function () {
@@ -737,6 +739,20 @@
             }
         });
 
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        function calcularTotal() {
+            var machos = parseInt($('#machos').val()) || 0;
+            var femeas = parseInt($('#femeas').val()) || 0;
+            var total = machos + femeas;
+            $('#quantidade').val(total);
+        }
+        calcularTotal();
+        $('#machos, #femeas').on('input', function() {
+            calcularTotal();
+        });
     });
 </script>
 
