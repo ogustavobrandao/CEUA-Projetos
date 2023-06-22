@@ -490,7 +490,7 @@
                    name="quantidade"
                    @if(isset($modelo_animal->perfil)) value="{{$modelo_animal->perfil->quantidade}}"
                    @else value="{{old('quantidade')}}" @endif required autocomplete="quantidade"
-                   autofocus disabled>
+                   autofocus readonly>
             @if($errors->modelo->has('quantidade'))
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $errors->modelo->first('quantidade') }}</strong>
