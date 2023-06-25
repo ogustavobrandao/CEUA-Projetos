@@ -17,7 +17,7 @@
 
         <div class="member">
             <h3>LMTS</h3>
-            <h4><a href="mailto:lmts@ufrpe.br" class="col-md-1 p-0">lmts@ufrpe.br</a></h4>
+            <h4><a href="mailto:lmts@ufape.edu.br" class="col-md-1 p-0">lmts@ufape.edu.br</a></h4>
         </div>
     </div>
 </div>
