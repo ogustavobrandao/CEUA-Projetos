@@ -20,6 +20,9 @@
         </ul>
     </div>
     <br>
+    <div class="row" style="border-bottom: #131833 2px solid">
+    </div>
+    <br>
 
     <div class="legislation-section">
         <h3 class="">Leis</h3>
@@ -39,6 +42,9 @@
             </li></h5>
         </ul>
     </div>
+    <br>
+    <div class="row" style="border-bottom: #131833 2px solid">
+    </div>
 
     <br>
     <div class="decrees-section">
@@ -52,6 +58,9 @@
                 - Dispõe sobre a composição do Conselho Nacional de Controle de Experimentação Animal - CONCEA, estabelece as normas para o seu funcionamento e de sua Secretaria-Executiva, cria o Cadastro das Instituições de Uso Científico de Animais - CIUCA, mediante a regulamentação da Lei nº 11.794, de 08/10/2008.
             </li></h5>
         </ul>
+    </div>
+    <br>
+    <div class="row" style="border-bottom: #131833 2px solid">
     </div>
 
     <br>
@@ -345,5 +354,17 @@
     </ul>
 
 </div>
+
+<style>
+    .legislation-link {
+    color: blue;
+    text-decoration: none;
+}
+
+.titulo {
+    font-size: 24px;
+    font-weight: bold;
+}
+</style>
 
 @endsection
