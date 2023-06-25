@@ -217,10 +217,10 @@
 
                                         </td>
                                         <td>
-                                            {{$modelo_animal->perfil->linhagem}}
+                                            {{$modelo_animal->perfil->linhagem ?? 'Não preenchido'}}
                                         </td>
                                         <td>
-                                            {{$modelo_animal->perfil->idade}}
+                                            {{$modelo_animal->perfil->idade ?? 'Não preenchido'}}
                                         </td>
                                         <td class="text-center">
                                             @if(Auth::user()->tipo_usuario_id == 2)

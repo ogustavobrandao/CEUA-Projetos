@@ -21,23 +21,6 @@ class Solicitacao extends Model
         'usuario_id',
     ];
 
-    public static $rules = [
-        'titulo_en' => 'string|min:5',
-        'titulo_pt' => 'required|string|min:5',
-        'inicio' => 'required|date',
-        'fim' => 'required|date',
-    ];
-
-    public static $messages = [
-        'titulo_pt.required' => 'O titulo em português é um campo obrigatório.',
-        'titulo_pt.string' => 'O titulo em português deve ser um texto',
-        'titulo_en.string' => 'O titulo em inglês deve ser um texto',
-        'titulo_pt.min' => 'O titulo em português deve possuir no minimo 5 caracteres',
-        'titulo_en.min' => 'O titulo em inglês deve possuir no minimo 5 caracteres',
-        'inicio.required' => 'A data de inicio é obrigatória',
-        'fim.required' => 'A data de fim é obrigatória',
-    ];
-
     public function avaliacao()
     {
         return $this->hasMany('App\Models\Avaliacao');
