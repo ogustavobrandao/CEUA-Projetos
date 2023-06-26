@@ -3,7 +3,8 @@
 @section('content')
     <div class="row justify-content-center">
         <div class="col-11">
-            <h2 class="titulo_h2 border-bottom" id="expand_dados_solicitacao"><span class="font-weight-bold">Solicitação</span></h2>
+            <h2 class="titulo_h2 border-bottom" id="expand_dados_solicitacao"><span
+                    class="font-weight-bold">Solicitação</span></h2>
             <div id="dados_solicitacao" class="my-2">
                 <div class="mb-4">
                     <div class="card p-3 " style="border-radius: 10px 10px 0px 0px;" id="fundo_0">
@@ -73,7 +74,7 @@
                 </div>
                 <div class="mb-4">
                     @if(Auth::user()->tipo_usuario_id == 2)
-                        @livewire('form-colaborador', ['solicitacao' => $solicitacao, 'avaliacao' => $avaliacao])
+                        @livewire('form-colaborador', ['solicitacao' => $solicitacao, 'avaliacao' => $avaliacao, 'tipo' => 2, 'id' => -1])
                     @else
                         @livewire('form-colaborador', ['solicitacao' => $solicitacao])
                     @endif
@@ -216,10 +217,10 @@
 
                                         </td>
                                         <td>
-                                            {{$modelo_animal->perfil->linhagem}}
+                                            {{$modelo_animal->perfil->linhagem ?? 'Não preenchido'}}
                                         </td>
                                         <td>
-                                            {{$modelo_animal->perfil->idade}}
+                                            {{$modelo_animal->perfil->idade ?? 'Não preenchido'}}
                                         </td>
                                         <td class="text-center">
                                             @if(Auth::user()->tipo_usuario_id == 2)
@@ -250,25 +251,11 @@
                         <input type="hidden" id="dadosComplementaresAval" value="0">
                         <input type="hidden" id="dadosModeloAnimalAval" value="0">
 
-                        <div class="row mt-4">
-                            <div class="col-4">
+                        <div class="row mt-4 row">
+                            <div class="col-3">
                                 <a class="btn btn-secondary w-100"
                                    href="{{route('solicitacao.solicitante.index')}}">Voltar</a>
                             </div>
-                            <div class="col-4">
-                                @if(Auth::user()->tipo_usuario_id == 2)
-                                    {{-- Reprovar Solicitação--}}
-                                    <form method="POST" action="{{route('avaliador.solicitacao.reprovar')}}">
-                                        @csrf
-                                        <input type="hidden" name="avaliacao_id" value="{{$avaliacao->id}}">
-                                        <input type="hidden" name="solicitacao_id" value="{{$solicitacao->id}}">
-                                        <button type="submit" class="btn w-100 btn-danger" title="Reprovar Solicitação."
-                                                id="reprovarAvaliacao">Reprovar
-                                        </button>
-                                    </form>
-                                @endif
-                            </div>
-
                             <div class="col-4">
                                 @if(Auth::user()->tipo_usuario_id == 2)
                                     {{-- Aprovar Solicitação --}}
@@ -281,7 +268,7 @@
                                         @csrf
                                         <input type="hidden" name="avaliacao_id" value="{{$avaliacao->id}}">
                                         <input type="hidden" name="solicitacao_id" value="{{$solicitacao->id}}">
-                                        <button type="submit" class="btn w-100 btn-primary"
+                                        <button type="submit" class="btn w-100 bnt-pendencia font-weight-bold"
                                                 title="Aprovar Solicitação Com Pendências."
                                                 id="pendenciaAvaliacao">Aprovar com pendências
                                         </button>
@@ -299,8 +286,22 @@
 
                                 @else
                                     @if(Auth::user()->tipo_usuario_id != 2 && Auth::user()->tipo_usuario_id != 1)
-                                        <button class="btn btn-secondary w-100" disabled>Concluir Solicitação</button>
+                                        <button class="btn btn-secondary w-75" disabled>Concluir Solicitação</button>
                                     @endif
+                                @endif
+                            </div>
+                            <div class="col-3">
+                                @if(Auth::user()->tipo_usuario_id == 2)
+                                    {{-- Reprovar Solicitação--}}
+                                    <form method="POST" action="{{route('avaliador.solicitacao.reprovar')}}">
+                                        @csrf
+                                        <input type="hidden" name="avaliacao_id" value="{{$avaliacao->id}}">
+                                        <input type="hidden" name="solicitacao_id" value="{{$solicitacao->id}}">
+                                        <button type="submit" class="btn w-75 btn-danger font-weight-bold"
+                                                title="Reprovar Solicitação."
+                                                id="reprovarAvaliacao">Reprovar
+                                        </button>
+                                    </form>
                                 @endif
                             </div>
 

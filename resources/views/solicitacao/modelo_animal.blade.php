@@ -488,7 +488,7 @@
                    name="quantidade"
                    @if(isset($modelo_animal->perfil)) value="{{$modelo_animal->perfil->quantidade}}"
                    @else value="{{old('quantidade')}}" @endif required autocomplete="quantidade"
-                   autofocus>
+                   autofocus readonly>
             @error('quantidade')
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
@@ -735,9 +735,17 @@
     });
 </script>
 
-
-
-
-
-
-
+<script>
+    $(document).ready(function() {
+        function calcularTotal() {
+            var machos = parseInt($('#machos').val()) || 0;
+            var femeas = parseInt($('#femeas').val()) || 0;
+            var total = machos + femeas;
+            $('#quantidade').val(total);
+        }
+        calcularTotal();
+        $('#machos, #femeas').on('input', function() {
+            calcularTotal();
+        });
+    });
+</script>

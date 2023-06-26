@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Solicitacao\CriarSolicitacaoRequest;
 use App\Models\AvaliacaoIndividual;
 use Illuminate\Support\Facades\Validator;
-use App\Mail\SendSolicitacaoStatus;
 use App\Mail\SendSolicitacaoReprovada;
 use App\Models\Avaliacao;
 use App\Models\Colaborador;
@@ -13,7 +13,6 @@ use App\Models\Contato;
 use App\Models\DadosComplementares;
 use App\Models\Eutanasia;
 use App\Models\Instituicao;
-use App\Models\Licenca;
 use App\Models\ModeloAnimal;
 use App\Models\Operacao;
 use App\Models\Perfil;
@@ -52,7 +51,7 @@ class SolicitacaoController extends Controller
             $avaliacaoColaborador = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)->where('tipo', 2)->first();
 
 
-            return view('solicitacao.index', compact('solicitacao', 
+            return view('solicitacao.index', compact('solicitacao',
                 'instituicaos','grandeAreas', 'areas', 'subAreas','avaliacaoDadosComp', 'avaliacaoDadosini', 'avaliacaoResponsavel', 'avaliacaoColaborador','avaliacao'));
 
         }
@@ -62,7 +61,6 @@ class SolicitacaoController extends Controller
 
     public function avaliarSolicitacao($solicitacao_id)
     {
-        
         $solicitacao = Solicitacao::find($solicitacao_id);
         $instituicaos = Instituicao::all();
         $grandeAreas = GrandeArea::all();
@@ -107,7 +105,7 @@ class SolicitacaoController extends Controller
         $solicitacao = new Solicitacao();
         $solicitacao->tipo = $request->tipo;
         $solicitacao->user_id = Auth::user()->id;
-    
+
 
         $solicitacao->save();
 
@@ -115,10 +113,8 @@ class SolicitacaoController extends Controller
     }
 
 
-    public function criar(Request $request)
-    {   
-        Validator::make($request->all(), Solicitacao::$rules, Solicitacao::$messages)->validate();
-
+    public function criar(CriarSolicitacaoRequest $request)
+    {
         $solicitacao = Solicitacao::find($request->solicitacao_id);
         $solicitacao->titulo_pt = $request->titulo_pt;
         $solicitacao->titulo_en = $request->titulo_en;
@@ -136,7 +132,7 @@ class SolicitacaoController extends Controller
     {
         Validator::make($request->all(), Responsavel::$rules, Responsavel::$messages)->validate();
         Validator::make($request->all(), Contato::$rules, Contato::$messages)->validate();
-        
+
         $solicitacao = Solicitacao::find($request->solicitacao_id);
 
         if (isset($solicitacao->responsavel)) {
@@ -213,7 +209,7 @@ class SolicitacaoController extends Controller
     }
 
     public function criar_colaborador(Request $request)
-    {   
+    {
         // Validator::make($request->all(), Colaborador::$rules, Colaborador::$messages)->validate();
         $solicitacao = Solicitacao::find($request->solicitacao_id);
         $listaColab = [];
@@ -229,7 +225,7 @@ class SolicitacaoController extends Controller
                 $colaborador->cpf = $colab['cpf'];
                 $colaborador->instituicao_id = $colab['instituicao_id'];
                 $colaborador->grau_escolaridade = $colab['grau_escolaridade'];
-                
+
                 $nomeAnexo = "experiencias_previasColaborador" . $colab['experiencia_previa'] . date('Ymd') . date('His');
                 // $colab['experiencia_previa']->storeAs('experiencias_previasColaborador/', $nomeAnexo);
                 $colaborador->experiencia_previa = $nomeAnexo;
@@ -288,9 +284,9 @@ class SolicitacaoController extends Controller
     public function criar_modelo_animal(Request $request)
     {
         Validator::make($request->all(), array_merge(ModeloAnimal::$rules, Perfil::$rules), array_merge(ModeloAnimal::$messages, Perfil::$messages))->validateWithBag('modelo');
-        
+
         $data = $request->all();
-        
+
         if (($request->hasFile('termo_consentimento') && $request->file('termo_consentimento')->isValid())) {
             $anexo = $request->termo_consentimento->extension();
             $nomeAnexo = "tcle_" . $request->solicitacao_id . date('Ymd') . date('His') . '.' . $anexo;
@@ -306,7 +302,7 @@ class SolicitacaoController extends Controller
         }
 
         $modelo_animal = ModeloAnimal::create($data);
-        
+
 
 
         $perfil = new Perfil();
@@ -326,7 +322,7 @@ class SolicitacaoController extends Controller
     }
 
     public function atualizar_modelo_animal(Request $request)
-    {   
+    {
         $modelo_animal = ModeloAnimal::find($request->modelo_animal_id);
 
         if (($request->hasFile('termo_consentimento') && $request->file('termo_consentimento')->isValid())) {
@@ -334,7 +330,7 @@ class SolicitacaoController extends Controller
             $request->termo_consentimento->storeAs('termos/', $nomeAnexo);
             $request->termo_consentimento = $nomeAnexo;
         }
-        
+
         if (($request->hasFile('licencas_previas') && $request->file('licencas_previas')->isValid())) {
             $nomeAnexo = $modelo_animal->licencas_previas;
             $request->licencas_previas->storeAs('licencas_previas/', $nomeAnexo);
@@ -342,7 +338,7 @@ class SolicitacaoController extends Controller
         }
 
         $modelo_animal->update($request->all());
-        
+
 
         $perfil = $modelo_animal->perfil;
         $perfil->grupo_animal = $request->grupo_animal;
@@ -458,7 +454,7 @@ class SolicitacaoController extends Controller
 
     public function index_planejamento($modelo_animal_id)
     {
-        
+
         $modelo_animal = ModeloAnimal::find($modelo_animal_id);
         $planejamento = Planejamento::where('modelo_animal_id', $modelo_animal_id)->first();
         $solicitacao = Solicitacao::find($modelo_animal->solicitacao_id);
@@ -654,7 +650,7 @@ class SolicitacaoController extends Controller
     }
 
     public function criar_operacao(Request $request)
-    {   
+    {
         Validator::make($request->all(), Operacao::$rules, Operacao::$messages)->validate();
 
         $planejamento = Planejamento::find($request->planejamento_id);

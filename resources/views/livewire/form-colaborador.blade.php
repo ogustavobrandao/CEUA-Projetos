@@ -12,7 +12,7 @@
                                 class="fa-solid fa-circle-chevron-up"></i></a>
                         <a class="float-end" id="2_btn_down" style="display: none"><i
                                 class="fa-solid fa-circle-chevron-down"></i></a>
-                        @if(!isset($disabled) && isset($solicitacao->responsavel))
+                        @if(!isset($disabled) && isset($solicitacao->responsavel) && auth()->user()->tipo_usuario_id != 2)
                             <a class="float-end mr-2" wire:click="$emit('adicionarColaborador')" style="color: green"
                                 title="Adicionar Colaborador">
                                 <i class="fa-solid fa-circle-plus fa-2xl"></i></a>
@@ -28,7 +28,7 @@
                                 class="fa-solid fa-circle-chevron-up"></i></a>
                         <a class="float-end" id="2_btn_down" style="display: none"><i
                                 class="fa-solid fa-circle-chevron-down"></i></a>
-                        @if(!isset($disabled) && isset($solicitacao->responsavel))
+                        @if(!isset($disabled) && isset($solicitacao->responsavel) && auth()->user()->tipo_usuario_id != 2)
                             <a class="float-end mr-2" wire:click="$emit('adicionarColaborador')" style="color: green"
                                 title="Adicionar Colaborador">
                                 <i class="fa-solid fa-circle-plus fa-2xl"></i></a>

@@ -1,55 +1,68 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="row mb-4 borda-bottom">
-        <div class="col-md-12">
-            <h3 class="text-center titulo">Minhas Avaliações</h3>
+    <div class="row container-fluid min-vh justify-content-center">
+        <div class="col-10">
+            <div class="shadow-lg p-5">
+                <div class="row mb-4 pt-3 ">
+                    <div class="col-md-12">
+                        <h3 class="text-center titulo">Minhas Avaliações</h3>
+                        <hr class="bg-secondary w-80 mt-3">
+                    </div>
+                </div>
+
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th class="text-center" scope="col">Solicitante</th>
+                        <th class="text-center" scope="col">Título</th>
+                        <th class="text-center" scope="col">Tipo</th>
+                        <th class="text-center" scope="col">Status</th>
+                        <th class="w-25 text-center" scope="col">Ações</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($avaliacoes as $avaliacao)
+                        <tr>
+                            <td class="text-center">{{$avaliacao->solicitacao->user->name}}</td>
+                            <td class="text-center">{{$avaliacao->solicitacao->titulo_pt}}</td>
+                            <td class="text-center">{{$avaliacao->solicitacao->tipo}}</td>
+                            <td class="text-center">
+                                @if($avaliacao->status == 'nao_realizado')
+                                    Não Avaliado
+                                @elseif($avaliacao->status == 'aprovado')
+                                    Aprovado
+                                @elseif($avaliacao->solicitacao->status == "avaliado" && $avaliacao->status == 'aprovadaPendencia')
+                                    Aprovada com pendência
+                                @elseif($avaliacao->solicitacao->status == "nao_avaliado" && $avaliacao->status == "aprovadaPendencia")
+                                    Re-Avaliar
+                                @else
+                                    Reprovado
+                                @endif</td>
+                            <td class="text-center">
+                                @if(($avaliacao->solicitacao->updated_at->diffInHours($horario) >= 2 && $avaliacao->solicitacao->updated_at < $horario)
+                                    || $avaliacao->solicitacao->avaliador_atual_id == Auth::user()->id
+                                    || $avaliacao->solicitacao->avaliador_atual_id == null)
+                                    @if($avaliacao->status == 'nao_realizado')
+                                        <a href="{{route('avaliador.solicitacao.avaliar', ['solicitacao_id' => $avaliacao->solicitacao->id])}}">Avaliar</a>
+                                    @elseif(($avaliacao->solicitacao->status == "nao_avaliado" && $avaliacao->status == "aprovadaPendencia"))
+                                        <a href="{{route('avaliador.solicitacao.avaliar', ['solicitacao_id' => $avaliacao->solicitacao->id])}}">Re-Avaliar</a>
+                                    @elseif($avaliacao->status == 'aprovada')
+                                        <a style="color: forestgreen; font-weight: bold">Aprovada</a>
+                                    @elseif($avaliacao->status == 'reprovada')
+                                        <a style="color: red; font-weight: bold">Reprovada</a>
+                                    @endif
+                                @else
+                                    <a style="color: red; font-weight: bold">Em avaliação</a>
+                                @endif
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-
-    <table class="table table-hover">
-        <thead>
-        <tr>
-            <th class="text-center" scope="col">Solicitante</th>
-            <th class="text-center" scope="col">Título</th>
-            <th class="text-center" scope="col">Tipo</th>
-            <th class="text-center" scope="col">Status</th>
-            <th class="w-25 text-center" scope="col">Ações</th>
-        </tr>
-        </thead>
-        <tbody>
-        @foreach($avaliacoes as $avaliacao)
-            <tr>
-                <td class="text-center">{{$avaliacao->solicitacao->user->name}}</td>
-                <td class="text-center">{{$avaliacao->solicitacao->titulo_pt}}</td>
-                <td class="text-center">{{$avaliacao->solicitacao->tipo}}</td>
-                <td class="text-center">
-                    @if($avaliacao->status == 'nao_realizado')Não Avaliado
-                    @elseif($avaliacao->status == 'aprovado') Aprovado
-                    @elseif($avaliacao->solicitacao->status == "avaliado" && $avaliacao->status == 'aprovadaPendencia') Aprovada com pendência
-                    @elseif($avaliacao->solicitacao->status == "nao_avaliado" && $avaliacao->status == "aprovadaPendencia") Re-Avaliar
-                    @else Reprovado @endif</td>
-                <td class="text-center">
-                    @if(($avaliacao->solicitacao->updated_at->diffInHours($horario) >= 2 && $avaliacao->solicitacao->updated_at < $horario)
-                        || $avaliacao->solicitacao->avaliador_atual_id == Auth::user()->id
-                        || $avaliacao->solicitacao->avaliador_atual_id == null)
-                        @if($avaliacao->status == 'nao_realizado')
-                            <a href="{{route('avaliador.solicitacao.avaliar', ['solicitacao_id' => $avaliacao->solicitacao->id])}}">Avaliar</a>
-                        @elseif(($avaliacao->solicitacao->status == "nao_avaliado" && $avaliacao->status == "aprovadaPendencia"))
-                            <a href="{{route('avaliador.solicitacao.avaliar', ['solicitacao_id' => $avaliacao->solicitacao->id])}}">Re-Avaliar</a>
-                        @elseif($avaliacao->status == 'aprovada')
-                            <a style="color: forestgreen; font-weight: bold">Aprovada</a>
-                        @elseif($avaliacao->status == 'reprovada')
-                            <a style="color: red; font-weight: bold">Reprovada</a>
-                        @endif
-                    @else
-                        <a style="color: red; font-weight: bold">Em avaliação</a>
-                    @endif
-                </td>
-            </tr>
-        @endforeach
-        </tbody>
-    </table>
 
     <script>
         $('.table').DataTable({
@@ -65,11 +78,23 @@
                     "next": "Próximo"
                 }
             },
+            "dom": '<"top"f>rt<"bottom"lp><"clear">',
             "order": [0, 1, 2, 3],
             "columnDefs": [{
                 "targets": [4],
                 "orderable": false
             }]
         });
+        $('.dataTables_filter').addClass('here');
+        $('.dataTables_filter').addClass('');
+        $('.here').removeClass('dataTables_filter');
+        $('.table-hover').removeClass('dataTable');
+        $('.here').find('input').addClass('search-input');
+
+        $('.search-input').addClass('search-bar-input border w-100')
+        $('.search-input').wrap('<div class="row col-12 my-3"><div class="col-md-8 m-0 p-0 search-bar-column" style="height: 60px"> </div></div>')
+
+        $('.here').find('label').contents().unwrap();
+        $('.search-bar-column').after('<div class="col-1 p-0 m-0 float-left search-img"><img src="{{asset('images/search.png')}}" height="42px" width="50px"><div>');
     </script>
 @endsection
