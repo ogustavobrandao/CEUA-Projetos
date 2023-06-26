@@ -74,7 +74,7 @@
                 </div>
                 <div class="mb-4">
                     @if(Auth::user()->tipo_usuario_id == 2)
-                        @livewire('form-colaborador', ['solicitacao' => $solicitacao, 'avaliacao' => $avaliacao])
+                        @livewire('form-colaborador', ['solicitacao' => $solicitacao, 'avaliacao' => $avaliacao, 'tipo' => 2, 'id' => -1])
                     @else
                         @livewire('form-colaborador', ['solicitacao' => $solicitacao])
                     @endif
