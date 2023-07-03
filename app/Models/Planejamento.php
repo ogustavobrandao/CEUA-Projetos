@@ -55,21 +55,4 @@ class Planejamento extends Model
         return $this->hasOne('App\Models\AvaliacaoIndividual');
     }
 
-    public static $rules = [
-        'num_animais_grupo' => 'required | numeric | min:0',
-        'especificar_grupo' => 'required',
-        'criterios' => 'required',
-        'desc_materiais_metodos' => 'required',
-        'analise_estatistica' => 'required',
-        'outras_infos' => 'required',
-        'grau_invasividade' => 'required',
-
-    ];
-
-    public static $messages = [
-        '*.required'  => 'O :attribute é obrigatório',
-        '*.numeric'  => 'O :attribute deve ser um número',
-        'num_animais_grupo.min' => 'O número deve ser acima ou igual a 0'
-    ];
-
 }
