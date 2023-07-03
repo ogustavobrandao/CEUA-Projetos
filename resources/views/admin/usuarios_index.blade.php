@@ -369,7 +369,13 @@
             </div>
         </div>
     @endforeach
-
+    @if($errors->any())
+        <script>
+            $(document).ready(function() {
+                $('#cadastroModal').modal('show');
+            });
+        </script>
+    @endif
 
     <script>
         $('.table').DataTable({
