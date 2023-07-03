@@ -74,7 +74,6 @@
                                     <input
                                         class="form-control @error('colaborador[{{$loop->index}}][telefone]') is-invalid @enderror"
                                         type="text" name="colaborador[{{$loop->index}}][telefone]"
-                                        pattern="([0-9]{2}) [0-9]{4,5}-[0-9]{4}"
                                         title="Digite um número de telefone válido: (99) 99999-9999"
                                         value="{{ old('colaborador['.$loop->index.'][telefone]', $colaborador->contato?->telefone) }}"
                                         required autocomplete="telefone" autofocus>

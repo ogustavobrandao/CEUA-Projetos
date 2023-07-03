@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreUsuarioRequest extends FormRequest
 {
@@ -26,7 +28,27 @@ class StoreUsuarioRequest extends FormRequest
         return [
             'name'              => ['required', 'string', 'min:10', 'max:255', 'regex:/^[A-Za-záâãéêíóôõúçÁÂÃÉÊÍÓÔÕÚÇ\s]+$/'],
             'email'             => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'cpf'               => ['required', 'cpf', 'min:11', 'max:11', 'unique:users'],
+            'cpf'               => [
+                'required',
+                'cpf',
+                'min:11',
+                'max:11',
+                function ($attribute, $value, $fail) {
+                    $user_by_cpf = User::where('cpf', $value)->first();
+
+                    if($user_by_cpf == null)
+                        return true;
+                    else{
+                        //verifica se o usuário que está sendo cadastrado é um avaliador e se existe outro usuário com o mesmo cpf
+                        $avaliador_by_cpf = User::where('cpf', $value)
+                            ->where('tipo_usuario_id', 2)->first();
+                        if($user_by_cpf->tipo_usuario_id != 2 && $this->request->get('tipo_usuario_id') == 2 && $avaliador_by_cpf == null)
+                            return true;
+                        else
+                            return $fail('Já existe um usuário que utiliza esse cpf no sistema.');
+                    }
+                }
+            ],
             'celular'           => ['required', 'min:11', 'max:11'],
             'rg'                => ['required', 'string', 'min:7', 'max:14', 'regex:/^[0-9]+$/'],
             'instituicao_id'    => ['required', 'numeric'],
