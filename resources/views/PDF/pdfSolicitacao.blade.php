@@ -15,7 +15,7 @@
 			<div class="col-md-12">
 					<h3 class="titulo" id="titulo_0">1. Dados Iniciais</h3>
 					<div class="col-sm-4">
-						<label for="tipo">Tipo: {{ $solicitacao->tipo }}</label>
+						<label for="tipo">Tipo: {{ $solicitacao->tipo ?? null }}</label>
 					</div>
 
 					<div class="col-sm-4">
@@ -292,7 +292,6 @@
 							<label>Número CQB: {{ $modelo_animal->numero_cqb ?? null}}</label>
 						</div>
 					@endif
-
 					@switch($modelo_animal->perfil->grupo_animal)
 						@case("anfibio")
 							<label>Tipo Animal: Anfíbio</label>
@@ -524,55 +523,55 @@
 
 					<h4>Procedimento</h4>
 
-					@if ($procedimento->estresse != null)
+					@if (isset($procedimento->estresse) &&$procedimento->estresse != null)
 						<div class="col-sm-12">
 							<label>Descreva o estresse / dor Intencional nos animais e justifique: {{ $procedimento->estresse ?? null}}</label>
 						</div>
 					@endif
 
-					@if ($procedimento->anestesico != null)
+					@if (isset($procedimento->anestesico) && $procedimento->anestesico != null)
 						<div class="col-sm-12">
 							<label>Uso de anestésicos com dose (UI ou mg/kg), via de administração:: {{ $procedimento->anestesico ?? null}}</label>
 						</div>
 					@endif
 
-					@if ($procedimento->relaxante != null)
+					@if (isset($procedimento->relaxante) && $procedimento->relaxante != null)
 						<div class="col-sm-12">
 							<label>Uso de Relaxante Muscular: {{ $procedimento->relaxante ?? null}}</label>
 						</div>
 					@endif
 
-					@if ($procedimento->analgesico != null)
+					@if (isset($procedimento->analgesico) && $procedimento->analgesico != null)
 						<div class="col-sm-12">
 							<label>Uso de analgésicos com dose (UI ou mg/kg), via de administração:: {{ $procedimento->analgesico ?? null}}</label>
 						</div>
 					@endif
 
-					@if ($procedimento->imobilizacao != null)
+					@if (isset($procedimento->imobilizacao) && $procedimento->imobilizacao != null)
 						<div class="col-sm-12">
 							<label>Imobilização / Contenção do Animal: {{ $procedimento->imobilizacao ?? null}}</label>
 						</div>
 					@endif
 
-					@if ($procedimento->inoculacao_substancia != null)
+					@if (isset($procedimento->inoculacao_substancia) && $procedimento->inoculacao_substancia != null)
 						<div class="col-sm-12">
 							<label>Exposição / Inoculação / Administração: {{ $procedimento->inoculacao_substancia ?? null}}</label>
 						</div>
 					@endif
 
-					@if ($procedimento->extracao != null)
+					@if (isset($procedimento->extracao) && $procedimento->extracao != null)
 						<div class="col-sm-12">
 							<label>Extração de Materiais Biológicos: {{ $procedimento->extracao ?? null}}</label>
 						</div>
 					@endif
 
-					@if ($procedimento->jejum != null)
+					@if (isset($procedimento->jejum) && $procedimento->jejum != null)
 						<div class="col-sm-12">
 							<label>Jejum (em horas): {{ $procedimento->jejum ?? null}}</label>
 						</div>
 					@endif
 
-					@if ($procedimento->restricao_hidrica)
+					@if (isset($procedimento->restricao_hidrica))
 						<div class="col-sm-12">
 							<label>Restrição Hídrica (em horas): {{ $procedimento->restricao_hidrica ?? null}}</label>
 						</div>
@@ -580,29 +579,29 @@
 
 					<h4>Cirurgia</h4>
 
-					@if ($operacao->flag_cirurgia == "cirurgia_sim_unica" || $operacao->flag_cirurgia == "cirurgia_sim_multipla")
+					@if (isset($operacao->flag_cirurgia) && ($operacao->flag_cirurgia == "cirurgia_sim_unica" || $operacao->flag_cirurgia == "cirurgia_sim_multipla"))
 						<div class="col-sm-12">
 							<label>Descrição: {{ $operacao->detalhes_cirurgia ?? null}}</label>
 						</div>
 					@endif
 
-					@if ($operacao->observacao_recuperacao == "true")
+					@if (isset($operacao->observacao_recuperacao) && $operacao->observacao_recuperacao == "true")
 						<div class="col-sm-12">
 							<label>Período de observação (em horas): {{ $operacao->detalhes_observacao_recuperacao ?? null}}</label>
 						</div>
 					@endif
 
-					@if ($operacao->analgesia_recuperacao  == "true")
+					@if (isset($operacao->analgesia_recuperacao) && $operacao->analgesia_recuperacao  == "true")
 						<div class="col-sm-12">
 							<label>Descreva o Fármaco, Dose (UI ou mg/kg), Via de Adminstração, Frequência e Duração: {{ $operacao->detalhes_analgesia_recuperacao ?? null}}</label>
 						</div>
-					@elseif ($operacao->analgesia_recuperacao  == "false")
+					@elseif (isset($operacao->analgesia_recuperacao) &&  $operacao->analgesia_recuperacao  == "false")
 						<div class="col-sm-12">
 							<label>Justifique o NÃO-uso de analgesia pós-operatório: {{ $operacao->detalhes_nao_uso_analgesia_recuperacao ?? null}}</label>
 						</div>
 					@endif
 
-					@if ($operacao->outros_cuidados_recuperacao == "true")
+					@if (isset($operacao->outros_cuidados_recuperacao) && $operacao->outros_cuidados_recuperacao == "true")
 						<div class="col-sm-12">
 							<label>Descrição: {{ $operacao->outros_cuidados_recuperacao ?? null}}</label>
 						</div>
@@ -610,7 +609,7 @@
 
 					<h4>Finalização</h4>
 
-					@if ($eutanasia->descricao != null)
+					@if (isset($eutanasia->descricao) && $eutanasia->descricao != null)
 						<div class="col-sm-12">
 							<label>Descrição: {{ $eutanasia->descricao ?? null}}</label>
 							<label>Substância, Dose, Via: {{ $eutanasia->metodo ?? null}}</label>
@@ -626,7 +625,7 @@
 						<label>Forma de Descarte da Carcaça: {{ $eutanasia->descarte ?? null}}</label>
 					</div>
 
-					@if ($resultado->abate != null)
+					@if (isset($resultado->abate) && $resultado->abate != null)
 						<div class="col-sm-12">
 							<label>Destino dos Animais Abatidos: {{ $resultado->abate ?? null}}</label>
 						</div>
