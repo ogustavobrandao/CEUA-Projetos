@@ -238,8 +238,11 @@
 
                 <div class="row col-md-10 m-0">
                     <div class="col-4 pl-0">
-                        <a type="button" class="btn btn-secondary w-100"
-                           href="{{route('solicitacao.index', ['solicitacao_id' => $solicitacao->id])}}">Voltar</a>
+                        @if(Auth::user()->tipo_usuario_id == 2)
+                            <a type="button" class="btn btn-secondary w-100" href="{{ route('avaliador.solicitacao.avaliar', ['solicitacao_id' => $solicitacao->id]) }}">Voltar</a>
+                        @elseif(Auth::user()->tipo_usuario_id == 3)
+                            <a type="button" class="btn btn-secondary w-100" href="{{ route('solicitacao.index', ['solicitacao_id' => $solicitacao->id]) }}">Voltar</a>
+                        @endif
                     </div>
                 </div>
 

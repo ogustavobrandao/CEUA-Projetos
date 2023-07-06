@@ -11,9 +11,9 @@ class FormRepeaterColaborador extends Component
     public $colaboradores;
     public $instituicaos;
     public $solicitacao;
-    public $avaliacao;
     public $tipo;
     public $avaliacao_id;
+    public $status;
 
     protected $listeners = ['adicionarColaborador'];
 
@@ -21,7 +21,6 @@ class FormRepeaterColaborador extends Component
     {
         $this->instituicaos = Instituicao::all();
         $this->colaboradores = $colaboradores;
-        $this->avaliacao_id = $this->avaliacao->id ?? null;
     }
 
     public function adicionarColaborador()

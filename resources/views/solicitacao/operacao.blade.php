@@ -9,7 +9,7 @@
                     <label for="cirurgia">Cirurgia:<strong style="color: red">*</strong></label>
                     <div class="row ml-1">
                         <div class="col-sm-4">
-                            <input class="form-check-input" type="radio" name="flag_cirurgia" id="cirurgia_sim_unica" value="true_unica" 
+                            <input class="form-check-input" type="radio" name="flag_cirurgia" id="cirurgia_sim_unica" value="true_unica"
                             @if(!empty($operacao) && $operacao->flag_cirurgia == "true_unica") checked @endif>
                             <label class="form-check-label" for="flag_cirurgia">Sim, única</label>
                         </div>
@@ -38,7 +38,7 @@
                     @enderror
                 </div>
             </div>
-            
+
             <div class="row" id="pos_operatorio1">
                 <h3 id="" class="subtitulo">Pós-Operatório</h3>
                 <div class="col-sm-4 mt-2">
@@ -71,7 +71,7 @@
                         @enderror
                     </div>
             </div>
-                
+
             <div class="row" id="pos_operatorio2">
                 <div class="col-sm-4 mt-2">
                     <label for="analgesia_recuperacao">Uso de Analgesia:<strong style="color: red">*</strong></label>
@@ -114,7 +114,7 @@
                         @enderror
                     </div>
             </div>
-            
+
 
             <div class="row" id="pos_operatorio3">
                 <div class="col-sm-4 mt-2">
@@ -243,6 +243,14 @@
         $("#outros_cuidados_recuperacao_nao").click(function () {
             $("#anexo_outros_cuidados_recuperacao").hide().find('input, radio').prop('disabled', true);
         });
+        @if(isset($operacao) && ($operacao->flag_cirurgia == "false")) {
+            $("#cirurgia_nao").click();
+            $("#anexo_cirurgia").hide().find('input, radio').prop('disabled', true);
+            $("#pos_operatorio1").hide().find('input, radio').prop('disabled', true);
+            $("#pos_operatorio2").hide().find('input, radio').prop('disabled', true);
+            $("#pos_operatorio3").hide().find('input, radio').prop('disabled', true);
+        }
+        @endif
 
 
     });

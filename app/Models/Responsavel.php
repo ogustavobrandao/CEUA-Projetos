@@ -20,20 +20,6 @@ class Responsavel extends Model
         'departamento_id',
     ];
 
-    public static $rules = [
-        'nome' => 'required|string',
-        'departamento_id' => 'required',
-        'cpf' => 'required',
-    ];
-
-    public static $messages = [
-        '*.required' => 'O :attribute é um campo obrigatório.',
-        'nome.required' => 'O nome é um campo obrigatório.',
-        'departamento_id.required' => 'O departamento é um campo obrigatório.',
-        'cpf.required' => 'O CPF é um campo obrigatório.',
-        'nome.string' => 'O nome deve ser um texto',
-    ];
-
     public function colaboradores(){
         return $this->hasMany('App\Models\Colaborador');
     }

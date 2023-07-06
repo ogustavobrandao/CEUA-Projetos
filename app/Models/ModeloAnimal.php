@@ -30,20 +30,6 @@ class ModeloAnimal extends Model
         'numero_cqb',
     ];
 
-    public static $rules = [
-        'justificativa' => 'required|string',
-        'nome_cientifico' => 'required|string',
-        'nome_vulgar' => 'required|string',
-        'procedencia' => 'required',
-        'termo_consentimento' => 'required',
-    ];
-
-    public static $messages = [
-        'required' =>  'O campo :attribute é obrigatório.',
-        'string' => 'O campo :attribute deve ser um texto',
-        'min' => 'O campo :attribute deve possuir no minimo 5 caracteres',
-    ];
-
     public function perfil(){
         return $this->hasOne('App\Models\Perfil');
     }

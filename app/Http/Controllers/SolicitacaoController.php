@@ -2,6 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Solicitacao\AtualizarModeloAnimalRequest;
+use App\Http\Requests\Solicitacao\CriarColaboradorRequest;
+use App\Http\Requests\Solicitacao\CriarCondicoesAnimalRequest;
+use App\Http\Requests\Solicitacao\CriarEutanasiaRequest;
+use App\Http\Requests\Solicitacao\CriarModeloAnimalRequest;
+use App\Http\Requests\Solicitacao\CriarOperacaoRequest;
+use App\Http\Requests\Solicitacao\CriarPlanejamentoRequest;
+use App\Http\Requests\Solicitacao\CriarProcedimentoRequest;
+use App\Http\Requests\Solicitacao\CriarResponsavelRequest;
+use App\Http\Requests\Solicitacao\CriarResultadoRequest;
+use App\Http\Requests\Solicitacao\CriarSolicitacaoFimRequest;
 use App\Http\Requests\Solicitacao\CriarSolicitacaoRequest;
 use App\Models\AvaliacaoIndividual;
 use Illuminate\Support\Facades\Validator;
@@ -128,10 +139,8 @@ class SolicitacaoController extends Controller
         return redirect(route('solicitacao.index', ['solicitacao_id' => $request->solicitacao_id]));
     }
 
-    public function criar_responsavel(Request $request)
+    public function criar_responsavel(CriarResponsavelRequest $request)
     {
-        Validator::make($request->all(), Responsavel::$rules, Responsavel::$messages)->validate();
-        Validator::make($request->all(), Contato::$rules, Contato::$messages)->validate();
 
         $solicitacao = Solicitacao::find($request->solicitacao_id);
 
@@ -203,14 +212,12 @@ class SolicitacaoController extends Controller
         } else {
             $contato->save();
         }
-
         return redirect(route('solicitacao.index', ['solicitacao_id' => $request->solicitacao_id]));
 
     }
 
-    public function criar_colaborador(Request $request)
+    public function criar_colaborador(CriarColaboradorRequest $request)
     {
-        // Validator::make($request->all(), Colaborador::$rules, Colaborador::$messages)->validate();
         $solicitacao = Solicitacao::find($request->solicitacao_id);
         $listaColab = [];
 
@@ -264,10 +271,9 @@ class SolicitacaoController extends Controller
         return redirect(route('solicitacao.index', ['solicitacao_id' => $request->solicitacao_id]));
     }
 
-    public function criar_solicitacao_fim(Request $request)
+    public function criar_solicitacao_fim(CriarSolicitacaoFimRequest $request)
     {
 
-        Validator::make($request->all(), DadosComplementares::$rules, DadosComplementares::$messages)->validate();
         $solicitacao = Solicitacao::find($request->solicitacao_id);
 
         if (isset($solicitacao->dadosComplementares)) {
@@ -281,10 +287,8 @@ class SolicitacaoController extends Controller
         return redirect(route('solicitacao.index', ['solicitacao_id' => $solicitacao->id]));
     }
 
-    public function criar_modelo_animal(Request $request)
+    public function criar_modelo_animal(CriarModeloAnimalRequest $request)
     {
-        Validator::make($request->all(), array_merge(ModeloAnimal::$rules, Perfil::$rules), array_merge(ModeloAnimal::$messages, Perfil::$messages))->validateWithBag('modelo');
-
         $data = $request->all();
 
         if (($request->hasFile('termo_consentimento') && $request->file('termo_consentimento')->isValid())) {
@@ -321,7 +325,7 @@ class SolicitacaoController extends Controller
         return redirect(route('solicitacao.index', ['solicitacao_id' => $request->solicitacao_id]))->with('success', 'Modelo Animal Criado com Sucesso!');
     }
 
-    public function atualizar_modelo_animal(Request $request)
+    public function atualizar_modelo_animal(AtualizarModeloAnimalRequest $request)
     {
         $modelo_animal = ModeloAnimal::find($request->modelo_animal_id);
 
@@ -454,7 +458,6 @@ class SolicitacaoController extends Controller
 
     public function index_planejamento($modelo_animal_id)
     {
-
         $modelo_animal = ModeloAnimal::find($modelo_animal_id);
         $planejamento = Planejamento::where('modelo_animal_id', $modelo_animal_id)->first();
         $solicitacao = Solicitacao::find($modelo_animal->solicitacao_id);
@@ -525,9 +528,9 @@ class SolicitacaoController extends Controller
                 'avaliacaoEutanasia', 'avaliacaoResultado', 'avaliacaoModeloAnimal'));
     }
 
-    public function criar_planejamento(Request $request)
+    public function criar_planejamento(CriarPlanejamentoRequest $request)
     {
-        Validator::make($request->all(), Planejamento::$rules, Planejamento::$messages)->validate();
+        $request->validated();
         $modelo_animal = ModeloAnimal::find($request->modelo_animal_id);
         if (isset($modelo_animal->planejamento)) {
             $planejamento = $modelo_animal->planejamento;
@@ -599,10 +602,9 @@ class SolicitacaoController extends Controller
         return redirect(route('solicitacao.planejamento.index', ['modelo_animal_id' => $planejamento->modelo_animal->id]));
     }
 
-    public function criar_condicoes_animal(Request $request)
+    public function criar_condicoes_animal(CriarCondicoesAnimalRequest $request)
     {
-        Validator::make($request->all(), CondicoesAnimal::$rules, CondicoesAnimal::$messages)->validate();
-
+        $request->validated();
         $planejamento = Planejamento::find($request->planejamento_id);
 
         if (isset($planejamento->condicoesAnimal)) {
@@ -631,10 +633,9 @@ class SolicitacaoController extends Controller
         return redirect(route('solicitacao.planejamento.index', ['modelo_animal_id' => $planejamento->modelo_animal->id]));
     }
 
-    public function criar_procedimento(Request $request)
+    public function criar_procedimento(CriarProcedimentoRequest $request)
     {
-        Validator::make($request->all(), Procedimento::$rules, Procedimento::$messages)->validate();
-
+        $request->validated();
         $planejamento = Planejamento::find($request->planejamento_id);
 
         if (isset($planejamento->procedimento)) {
@@ -649,10 +650,10 @@ class SolicitacaoController extends Controller
         return redirect(route('solicitacao.planejamento.index', ['modelo_animal_id' => $planejamento->modelo_animal->id]));
     }
 
-    public function criar_operacao(Request $request)
+    public function criar_operacao(CriarOperacaoRequest $request)
     {
-        Validator::make($request->all(), Operacao::$rules, Operacao::$messages)->validate();
 
+        $request->validated();
         $planejamento = Planejamento::find($request->planejamento_id);
 
         if (isset($planejamento->operacao)) {
@@ -694,11 +695,9 @@ class SolicitacaoController extends Controller
         return redirect(route('solicitacao.planejamento.index', ['modelo_animal_id' => $planejamento->modelo_animal->id]));
     }
 
-    public
-    function criar_eutanasia(Request $request)
+    public function criar_eutanasia(CriarEutanasiaRequest $request)
     {
-        Validator::make($request->all(), Eutanasia::$rules, Eutanasia::$messages)->validate();
-
+        $request->validated();
         $planejamento = Planejamento::find($request->planejamento_id);
 
         if (isset($planejamento->eutanasia)) {
@@ -730,11 +729,9 @@ class SolicitacaoController extends Controller
         return redirect(route('solicitacao.planejamento.index', ['modelo_animal_id' => $planejamento->modelo_animal->id]));
     }
 
-    public
-    function criar_resultado(Request $request)
+    public function criar_resultado(CriarResultadoRequest $request)
     {
-        Validator::make($request->all(), Resultado::$rules, Resultado::$messages)->validate();
-
+        $request->validated();
         $planejamento = Planejamento::find($request->planejamento_id);
 
         if (isset($planejamento->resultado)) {
@@ -770,8 +767,9 @@ class SolicitacaoController extends Controller
         $concluir = true;
         $solicitacao = Solicitacao::where('id', $solicitacao_id)->where('user_id', Auth::user()->id)->first();
         foreach ($solicitacao->modelosAnimais as $modelo) {
-            if (!isset($modelo->planejamento) && !isset($modelo->planejamento->operacao) && !isset($modelo->planejamento->eutanasia)
-                && !isset($modelo->planejamento->resultado) && !isset($modelo->planejamento->procedimento) && !isset($modelo->planejamento->condicoesAnimal)) {
+
+            if (!isset($modelo->planejamento) || !isset($modelo->planejamento->operacao) || !isset($modelo->planejamento->eutanasia)
+                || !isset($modelo->planejamento->resultado) || !isset($modelo->planejamento->procedimento) || !isset($modelo->planejamento->condicoesAnimal)) {
                 $concluir = false;
             }
         }
