@@ -253,8 +253,11 @@
 
                         <div class="row mt-4 row">
                             <div class="col-3">
-                                <a class="btn btn-secondary w-100"
-                                   href="{{route('solicitacao.solicitante.index')}}">Voltar</a>
+                                @if(Auth::user()->tipo_usuario_id == 2)
+                                    <a type="button" class="btn btn-secondary w-100" href="{{ route('solicitacao.avaliador.index') }}">Voltar</a>
+                                @elseif(Auth::user()->tipo_usuario_id == 3)
+                                    <a type="button" class="btn btn-secondary w-100" href="{{ route('solicitacao.solicitante.index') }}">Voltar</a>
+                                @endif
                             </div>
                             <div class="col-4">
                                 @if(Auth::user()->tipo_usuario_id == 2)
