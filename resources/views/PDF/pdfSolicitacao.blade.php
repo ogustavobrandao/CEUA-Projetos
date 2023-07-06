@@ -19,25 +19,25 @@
 					</div>
 
 					<div class="col-sm-4">
-						<label for="inicio">Início: {{date('d/m/Y', strtotime($solicitacao->inicio))}}</label>
+						<label for="inicio">Início: {{date('d/m/Y', strtotime($solicitacao->inicio ?? null))}}</label>
 					</div>
 
 					<div class="col-sm-4">
-						<label for="fim">Fim: {{date('d/m/Y', strtotime($solicitacao->fim))}}</label>
+						<label for="fim">Fim: {{date('d/m/Y', strtotime($solicitacao->fim ?? null))}}</label>
 					</div>
 
 					<div class="col-sm-4">
-						<label for="titulo_pt">Título em Português: {{ $solicitacao->titulo_pt }}</label>
+						<label for="titulo_pt">Título em Português: {{ $solicitacao->titulo_pt ?? null}}</label>
 					</div>
-			
+
 					<div class="col-sm-4">
-							<label for="titulo_en">Titulo em Inglês (apenas para projeto): {{ $solicitacao->titulo_en }}</label>
+							<label for="titulo_en">Titulo em Inglês (apenas para projeto): {{ $solicitacao->titulo_en ?? null }}</label>
 					</div>
-			
+
 					<div class="col-sm-4">
 						@foreach($grandeAreas as $grandeArea)
 							@if($grandeArea->id == $solicitacao->grande_area_id)
-								<label>Grande Área do Conhecimento: {{ $grandeArea->nome }}</label>
+								<label>Grande Área do Conhecimento: {{ $grandeArea->nome ?? null}}</label>
 							@endif
 						@endforeach
 					</div>
@@ -45,7 +45,7 @@
 					<div class="col-sm-4">
 						@foreach($areas as $area)
 							@if($area->id == $solicitacao->area_id)
-								<label>Área do Conhecimento: {{ $area->nome }}</label>
+								<label>Área do Conhecimento: {{ $area->nome ?? null}}</label>
 							@endif
 						@endforeach
 					</div>
@@ -53,9 +53,9 @@
 					<div class="col-sm-4">
 						@foreach($subAreas as $subArea)
 							@if($subArea->id == $solicitacao->sub_area_id)
-								<label>Subárea do Conhecimento: {{ $subArea->nome }}</label>
+								<label>Subárea do Conhecimento: {{ $subArea->nome ?? null}}</label>
 							@endif
-						@endforeach	
+						@endforeach
 					</div>
 			</div>
 		</div>
@@ -66,38 +66,38 @@
 		<div class="row">
 			<div class="col-md-12">
 					<h3 class="titulo" id="titulo_1">2. Dados do Responsável</h3>
-					
+
 					<div class="row">
 						<div class="col-sm-4">
-							<label for="nome">Nome Completo: {{ $solicitacao->responsavel->nome }}</label>
+							<label for="nome">Nome Completo: {{ $solicitacao->responsavel->nome ?? null}}</label>
 						</div>
-			
+
 						<div class="col-sm-4">
-							<label for="nome">E-mail: {{ $solicitacao->responsavel->contato->email }}</label>
+							<label for="nome">E-mail: {{ $solicitacao->responsavel->contato->email ?? null}}</label>
 						</div>
-			
+
 						<div class="col-sm-4">
-							<label for="telefone">Telefone: {{ $solicitacao->responsavel->contato->telefone }}</label>
+							<label for="telefone">Telefone: {{ $solicitacao->responsavel->contato->telefone ?? null}}</label>
 						</div>
-			
+
 						<div class="col-sm-4">
-							<label for="cpf">CPF: {{ $solicitacao->responsavel->cpf }}</label>
+							<label for="cpf">CPF: {{ $solicitacao->responsavel->cpf ?? null}}</label>
 						</div>
 
 						<div class="col-sm-4">
 							@foreach($instituicaos as $instituicao)
 								@if($instituicao->id == $solicitacao->responsavel->departamento->unidade->instituicao->id)
-									<label>Instituição: {{ $instituicao->nome }}</label>
+									<label>Instituição: {{ $instituicao->nome ?? null}}</label>
 								@endif
 							@endforeach
 						</div>
 
 						<div class="col-sm-4">
-							<label>Unidade: {{ $solicitacao->responsavel->departamento->unidade->nome }}</label>
+							<label>Unidade: {{ $solicitacao->responsavel->departamento->unidade->nome ?? null}}</label>
 						</div>
 
 						<div class="col-sm-4">
-							<label>Departamento: {{ $solicitacao->responsavel->departamento->nome }}</label>
+							<label>Departamento: {{ $solicitacao->responsavel->departamento->nome ?? null}}</label>
 						</div>
 
 						@switch($solicitacao->responsavel->vinculo_instituicao)
@@ -113,7 +113,7 @@
 							@case("pesquisador_graduacao_incompleto")
 								<label>Vínculo: Pesquisador/Graduação Incompleto</label>
 								@break
-						@endswitch	
+						@endswitch
 
 						@switch($solicitacao->responsavel->grau_escolaridade)
 							@case("graduacao_completa")
@@ -142,7 +142,7 @@
 								@break
 						@endswitch
 
-						<label>Treinamento: {{ $solicitacao->responsavel->treinamento }}</label>
+						<label>Treinamento: {{ $solicitacao->responsavel->treinamento ?? null}}</label>
 
 					</div>
 			</div>
@@ -156,14 +156,14 @@
 					<h3 class="titulo" id="titulo_2">3. Dados do(s) Colaborador(es)</h3>
 
 				@foreach($colaboradores as $key => $colab)
-				<label>Nome Completo: {{ $colab->nome }}</label>
-				<label>E-mail: {{ $colab->contato->email }}</label>
-				<label>Telefone: {{ $colab->contato->telefone }}</label>
-				<label>CPF: {{ $colab->cpf }}</label>
+				<label>Nome Completo: {{ $colab->nome ?? null}}</label>
+				<label>E-mail: {{ $colab->contato->email ?? null}}</label>
+				<label>Telefone: {{ $colab->contato->telefone ?? null}}</label>
+				<label>CPF: {{ $colab->cpf ?? null}}</label>
 
 				@foreach($instituicaos as $instituicao)
 					@if($instituicao->id == $colab->instituicao->id)
-						<label>Instituição: {{ $instituicao->nome }}</label>
+						<label>Instituição: {{ $instituicao->nome ?? null}}</label>
 					@endif
 				@endforeach
 
@@ -193,7 +193,7 @@
 						<label>Grau de Escolaridade: Doutorado Completo</label>
 						@break
 				@endswitch
-				<label>Treinamento: {{ $colab->treinamento }}</label>
+				<label>Treinamento: {{ $colab->treinamento ?? null}}</label>
 			@endforeach
 
 			</div>
@@ -207,48 +207,48 @@
 				<h3 class="titulo" id="titulo_3">4. Dados Complementares</h3>
 
 				<div class="col-sm-12">
-					<label for="resumo">Resumo do Projeto de Pesquisa / de Extensão / de Aula Prática / de Treinamento: {{$solicitacao->dadosComplementares->resumo}}</label>
+					<label for="resumo">Resumo do Projeto de Pesquisa / de Extensão / de Aula Prática / de Treinamento: {{$solicitacao->dadosComplementares->resumo ?? null}}</label>
 				</div>
-	
+
 				<div class="col-sm-12">
-					<label for="objetivos">Objetivos (na íntegra): {{$solicitacao->dadosComplementares->objetivos}}</label>
+					<label for="objetivos">Objetivos (na íntegra): {{$solicitacao->dadosComplementares->objetivos ?? null}}</label>
 				</div>
-	
+
 				<div class="col-sm-12">
-					<label for="justificativa">Justificativa: {{$solicitacao->dadosComplementares->justificativa}}</label>
+					<label for="justificativa">Justificativa: {{$solicitacao->dadosComplementares->justificativa ?? null}}</label>
 				</div>
-	
+
 				<div class="col-sm-12">
-					<label for="relevancia">Relevância: {{$solicitacao->dadosComplementares->relevancia}}</label>
+					<label for="relevancia">Relevância: {{$solicitacao->dadosComplementares->relevancia ?? null}}</label>
 				</div>
 			</div>
 		</div>
 	</div>
-	
+
 	{{-- MODELO ANIMAL --}}
 	<div class="card shadow-lg p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_4">
 		<div class="row">
 			<div class="col-md-12">
 					<h3 class="titulo" id="titulo_4">5. Dados dos Modelos Animais</h3>
-					
+
 					<h4>Modelo Animal</h4>
 
 					<div class="col-sm-12">
-						<label>Nome Científico: {{ $modelo_animal->nome_cientifico }}</label>
+						<label>Nome Científico: {{ $modelo_animal->nome_cientifico ?? null}}</label>
 					</div>
 
 					<div class="col-sm-12">
-						<label>Nome Vulgar: {{ $modelo_animal->nome_vulgar }}</label>
+						<label>Nome Vulgar: {{ $modelo_animal->nome_vulgar ?? null}}</label>
 					</div>
 
 					<div class="col-sm-12">
-						<label>Justificar o uso da Espécie Animal Escolhida: {{ $modelo_animal->justificativa }}</label>
+						<label>Justificar o uso da Espécie Animal Escolhida: {{ $modelo_animal->justificativa ?? null}}</label>
 					</div>
 
 					<h4>Procedência</h4>
 					@switch($modelo_animal->procedencia)
 						@case("animal_comprado")
-							
+
 							<label>Procedência: Animal Comprado</label>
 							@break
 						@case("animal_criacao")
@@ -282,14 +282,14 @@
 							<label>Procedência: Fazenda</label>
 							@break
 						@case("outra_procedencia")
-							<label>Procedência: {{ $modelo_animal->tipo_outra_procedencia }}</label>
+							<label>Procedência: {{ $modelo_animal->tipo_outra_procedencia  ?? null}}</label>
 						@break
 					@endswitch
 
 					@if ($modelo_animal->geneticamente_modificado == "true")
 						<div class="col-sm-12">
 							<label>O Animal é Geneticamente Modificado.</label>
-							<label>Número CQB: {{ $modelo_animal->numero_cqb }}</label>
+							<label>Número CQB: {{ $modelo_animal->numero_cqb ?? null}}</label>
 						</div>
 					@endif
 
@@ -379,60 +379,60 @@
 							<label>Tipo Animal: Suíno</label>
 							@break
 						@case("outro")
-							<label>Tipo Animal: {{ $modelo_animal->perfil->tipo_grupo_animal }}</label>
+							<label>Tipo Animal: {{ $modelo_animal->perfil->tipo_grupo_animal ?? null}}</label>
 							@break
 					@endswitch
-					
+
 					<div class="col-sm-12">
-						<label>Linhagem / Raça: {{ $modelo_animal->perfil->linhagem }}</label>
+						<label>Linhagem / Raça: {{ $modelo_animal->perfil->linhagem ?? null}}</label>
 					</div>
 
 					<div class="col-sm-12">
-						<label>Idade: {{ $modelo_animal->perfil->idade }} | @if ($modelo_animal->perfil->periodo == "Dias")Período: Dias @elseif ($modelo_animal->perfil->periodo == "Meses")Período: Meses @else Período: Anos @endif </label>
+						<label>Idade: {{ $modelo_animal->perfil->idade ?? null}} | @if ($modelo_animal->perfil->periodo == "Dias")Período: Dias @elseif ($modelo_animal->perfil->periodo == "Meses")Período: Meses @else Período: Anos @endif </label>
 					</div>
 
 					<div class="col-sm-12">
-						<label>Peso Aproximado: {{ $modelo_animal->perfil->peso }}</label>
+						<label>Peso Aproximado: {{ $modelo_animal->perfil->peso ?? null}}</label>
 					</div>
 
 					<div class="col-sm-12">
-						<label>Quantidade de Machos: {{ $modelo_animal->perfil->machos }}</label>
+						<label>Quantidade de Machos: {{ $modelo_animal->perfil->machos ?? null}}</label>
 					</div>
 
 					<div class="col-sm-12">
-						<label>Quantidade de Fêmeas: {{ $modelo_animal->perfil->femeas }}</label>
+						<label>Quantidade de Fêmeas: {{ $modelo_animal->perfil->femeas ?? null}}</label>
 					</div>
 
 					<div class="col-sm-12">
-						<label>Quantidade de Total: {{ $modelo_animal->perfil->quantidade }}</label>
+						<label>Quantidade de Total: {{ $modelo_animal->perfil->quantidade ?? null}}</label>
 					</div>
 
 					<h4>Planejamento</h4>
-					
+
 					<div class="col-sm-12">
-						<label>Número de Grupos: {{ $planejamento->num_animais_grupo }}</label>
+						<label>Número de Grupos: {{ $planejamento->num_animais_grupo ?? null}}</label>
 					</div>
 
 					<div class="col-sm-12">
 						<label>Especificar cada grupo (controle, tratado, utilizado para treinamento, se for o caso)
-							e número de animais por grupo: {{ $planejamento->especificar_grupo }}</label>
+							e número de animais por grupo: {{ $planejamento->especificar_grupo ?? null}}</label>
 					</div>
-					
+
 					<div class="col-sm-12">
 						<label>Quais critérios e / ou referências científicas foram utilizados para definir o
-							tamanho da amostra: {{ $planejamento->criterios }}</label>
+							tamanho da amostra: {{ $planejamento->criterios ?? null}}</label>
 					</div>
 
 					<div class="col-sm-12">
-						<label>Descrição de Materiais e Métodos: {{ $planejamento->desc_materiais_metodos }}</label>
+						<label>Descrição de Materiais e Métodos: {{ $planejamento->desc_materiais_metodos ?? null}}</label>
 					</div>
 
 					<div class="col-sm-12">
-						<label>Análise Estatística: {{ $planejamento->analise_estatistica }}</label>
+						<label>Análise Estatística: {{ $planejamento->analise_estatistica ?? null}}</label>
 					</div>
-					
+
 					<div class="col-sm-12">
-						<label>Outras Informações Relevantes: {{ $planejamento->outras_infos }}</label>
+						<label>Outras Informações Relevantes: {{ $planejamento->outras_infos ?? null}}</label>
 					</div>
 
 					@switch($planejamento->grau_invasividade)
@@ -455,15 +455,15 @@
 								Experimentos que causam dor de alta intensidade</label>
 							@break
 					@endswitch
-					
-					<h4>Condição Animal</h4>				
-					
+
+					<h4>Condição Animal</h4>
+
 					<div class="col-sm-12">
-						<label>Comentar obrigatoriamente sobre os itens abaixo e as demais condições que forem particulares à espécie: {{$condicoes_animal->condicoes_particulares}}</label>
+						<label>Comentar obrigatoriamente sobre os itens abaixo e as demais condições que forem particulares à espécie: {{$condicoes_animal->condicoes_particulares ?? null}}</label>
 					</div>
 
 					<div class="col-sm-12">
-						<label>Endereço e local onde será mantido o animal durante o procedimento experimental (biotério, fazenda, aviário, laboratório, outro): {{ $condicoes_animal->local }}</label>
+						<label>Endereço e local onde será mantido o animal durante o procedimento experimental (biotério, fazenda, aviário, laboratório, outro): {{ $condicoes_animal->local ?? null}}</label>
 					</div>
 
 					@switch($condicoes_animal->ambiente_alojamento)
@@ -486,7 +486,7 @@
 							<label>Ambiente de Alojamento: Outro</label>
 							@break
 					@endswitch
-					
+
 					@switch($condicoes_animal->tipo_cama)
 						@case("estrado")
 							<label>Tipo de Cama: Estrado</label>
@@ -501,80 +501,80 @@
 							<label>Tipo de Cama: Outro</label>
 							@break
 					@endswitch
-					
+
 					<div class="col-sm-12">
-						<label>Número de Animais por Ambiente de Contenção: {{ $condicoes_animal->num_animais_ambiente }}</label>
+						<label>Número de Animais por Ambiente de Contenção: {{ $condicoes_animal->num_animais_ambiente ?? null}}</label>
 					</div>
 
 					<div class="col-sm-12">
-						<label>Dimensões do Ambiente de Contenção dos Animais: {{ $condicoes_animal->dimensoes_ambiente }}</label>
-					</div>
-					
-					<div class="col-sm-12">
-						<label>Período Total de Manutenção dos Animais no Experimento: {{ $condicoes_animal->periodo }}</label>
+						<label>Dimensões do Ambiente de Contenção dos Animais: {{ $condicoes_animal->dimensoes_ambiente ?? null}}</label>
 					</div>
 
 					<div class="col-sm-12">
-						<label>Profissional Responsável: {{ $condicoes_animal->profissional_responsavel }}</label>
+						<label>Período Total de Manutenção dos Animais no Experimento: {{ $condicoes_animal->periodo ?? null}}</label>
 					</div>
 
 					<div class="col-sm-12">
-						<label>E-Mail do Responsável: {{ $condicoes_animal->email_responsavel }}</label>
+						<label>Profissional Responsável: {{ $condicoes_animal->profissional_responsavel ?? null}}</label>
+					</div>
+
+					<div class="col-sm-12">
+						<label>E-Mail do Responsável: {{ $condicoes_animal->email_responsavel ?? null}}</label>
 					</div>
 
 					<h4>Procedimento</h4>
 
 					@if ($procedimento->estresse != null)
 						<div class="col-sm-12">
-							<label>Descreva o estresse / dor Intencional nos animais e justifique: {{ $procedimento->estresse }}</label>
+							<label>Descreva o estresse / dor Intencional nos animais e justifique: {{ $procedimento->estresse ?? null}}</label>
 						</div>
 					@endif
 
 					@if ($procedimento->anestesico != null)
 						<div class="col-sm-12">
-							<label>Uso de anestésicos com dose (UI ou mg/kg), via de administração:: {{ $procedimento->anestesico }}</label>
+							<label>Uso de anestésicos com dose (UI ou mg/kg), via de administração:: {{ $procedimento->anestesico ?? null}}</label>
 						</div>
 					@endif
 
 					@if ($procedimento->relaxante != null)
 						<div class="col-sm-12">
-							<label>Uso de Relaxante Muscular: {{ $procedimento->relaxante }}</label>
+							<label>Uso de Relaxante Muscular: {{ $procedimento->relaxante ?? null}}</label>
 						</div>
 					@endif
 
 					@if ($procedimento->analgesico != null)
 						<div class="col-sm-12">
-							<label>Uso de analgésicos com dose (UI ou mg/kg), via de administração:: {{ $procedimento->analgesico }}</label>
+							<label>Uso de analgésicos com dose (UI ou mg/kg), via de administração:: {{ $procedimento->analgesico ?? null}}</label>
 						</div>
 					@endif
 
 					@if ($procedimento->imobilizacao != null)
 						<div class="col-sm-12">
-							<label>Imobilização / Contenção do Animal: {{ $procedimento->imobilizacao }}</label>
+							<label>Imobilização / Contenção do Animal: {{ $procedimento->imobilizacao ?? null}}</label>
 						</div>
 					@endif
 
 					@if ($procedimento->inoculacao_substancia != null)
 						<div class="col-sm-12">
-							<label>Exposição / Inoculação / Administração: {{ $procedimento->inoculacao_substancia }}</label>
+							<label>Exposição / Inoculação / Administração: {{ $procedimento->inoculacao_substancia ?? null}}</label>
 						</div>
 					@endif
 
 					@if ($procedimento->extracao != null)
 						<div class="col-sm-12">
-							<label>Extração de Materiais Biológicos: {{ $procedimento->extracao }}</label>
+							<label>Extração de Materiais Biológicos: {{ $procedimento->extracao ?? null}}</label>
 						</div>
 					@endif
 
 					@if ($procedimento->jejum != null)
 						<div class="col-sm-12">
-							<label>Jejum (em horas): {{ $procedimento->jejum }}</label>
+							<label>Jejum (em horas): {{ $procedimento->jejum ?? null}}</label>
 						</div>
 					@endif
 
 					@if ($procedimento->restricao_hidrica)
 						<div class="col-sm-12">
-							<label>Restrição Hídrica (em horas): {{ $procedimento->restricao_hidrica }}</label>
+							<label>Restrição Hídrica (em horas): {{ $procedimento->restricao_hidrica ?? null}}</label>
 						</div>
 					@endif
 
@@ -582,63 +582,63 @@
 
 					@if ($operacao->flag_cirurgia == "cirurgia_sim_unica" || $operacao->flag_cirurgia == "cirurgia_sim_multipla")
 						<div class="col-sm-12">
-							<label>Descrição: {{ $operacao->detalhes_cirurgia }}</label>
+							<label>Descrição: {{ $operacao->detalhes_cirurgia ?? null}}</label>
 						</div>
 					@endif
 
 					@if ($operacao->observacao_recuperacao == "true")
 						<div class="col-sm-12">
-							<label>Período de observação (em horas): {{ $operacao->detalhes_observacao_recuperacao }}</label>
+							<label>Período de observação (em horas): {{ $operacao->detalhes_observacao_recuperacao ?? null}}</label>
 						</div>
 					@endif
 
 					@if ($operacao->analgesia_recuperacao  == "true")
 						<div class="col-sm-12">
-							<label>Descreva o Fármaco, Dose (UI ou mg/kg), Via de Adminstração, Frequência e Duração: {{ $operacao->detalhes_analgesia_recuperacao }}</label>
+							<label>Descreva o Fármaco, Dose (UI ou mg/kg), Via de Adminstração, Frequência e Duração: {{ $operacao->detalhes_analgesia_recuperacao ?? null}}</label>
 						</div>
 					@elseif ($operacao->analgesia_recuperacao  == "false")
 						<div class="col-sm-12">
-							<label>Justifique o NÃO-uso de analgesia pós-operatório: {{ $operacao->detalhes_nao_uso_analgesia_recuperacao }}</label>
+							<label>Justifique o NÃO-uso de analgesia pós-operatório: {{ $operacao->detalhes_nao_uso_analgesia_recuperacao ?? null}}</label>
 						</div>
 					@endif
 
 					@if ($operacao->outros_cuidados_recuperacao == "true")
 						<div class="col-sm-12">
-							<label>Descrição: {{ $operacao->outros_cuidados_recuperacao }}</label>
+							<label>Descrição: {{ $operacao->outros_cuidados_recuperacao ?? null}}</label>
 						</div>
 					@endif
-						
+
 					<h4>Finalização</h4>
 
 					@if ($eutanasia->descricao != null)
 						<div class="col-sm-12">
-							<label>Descrição: {{ $eutanasia->descricao }}</label>
-							<label>Substância, Dose, Via: {{ $eutanasia->metodo }}</label>
-							<label>Caso Método Restrito, Justifique: {{ $eutanasia->justificativa_metodo }}</label>
+							<label>Descrição: {{ $eutanasia->descricao ?? null}}</label>
+							<label>Substância, Dose, Via: {{ $eutanasia->metodo ?? null}}</label>
+							<label>Caso Método Restrito, Justifique: {{ $eutanasia->justificativa_metodo ?? null}}</label>
 						</div>
 					@endif
-					
+
 					<div class="col-sm-12">
-						<label>Destino dos Animais Mortos e / ou Tecidos / Fragmentos: {{ $eutanasia->destino }}</label>
+						<label>Destino dos Animais Mortos e / ou Tecidos / Fragmentos: {{ $eutanasia->destino ?? null}}</label>
 					</div>
-					
+
 					<div class="col-sm-12">
-						<label>Forma de Descarte da Carcaça: {{ $eutanasia->descarte }}</label>
+						<label>Forma de Descarte da Carcaça: {{ $eutanasia->descarte ?? null}}</label>
 					</div>
 
 					@if ($resultado->abate != null)
 						<div class="col-sm-12">
-							<label>Destino dos Animais Abatidos: {{ $resultado->abate }}</label>
+							<label>Destino dos Animais Abatidos: {{ $resultado->abate ?? null}}</label>
 						</div>
 					@endif
-					
+
 					<div class="col-sm-12">
-						<label>Destino dos animais sobreviventes após a conclusão do experimento / aula ou retirados no decorrer do experimento / aula: {{ $resultado->destino_animais }}</label>
-						<label>Outras Informações Relevantes: {{ $resultado->outras_infos }}</label>
-						<label>Justificativa da não utilização de métodos alternativos e da necessidade do uso de animais: {{ $resultado->justificativa_metodos }}</label>
-						<label>Resumo do procedimento (relatar todos os procedimentos com os animais): {{ $resultado->resumo_procedimento }}</label>	
-					</div>	
-						
+						<label>Destino dos animais sobreviventes após a conclusão do experimento / aula ou retirados no decorrer do experimento / aula: {{ $resultado->destino_animais ?? null}}</label>
+						<label>Outras Informações Relevantes: {{ $resultado->outras_infos ?? null}}</label>
+						<label>Justificativa da não utilização de métodos alternativos e da necessidade do uso de animais: {{ $resultado->justificativa_metodos ?? null}}</label>
+						<label>Resumo do procedimento (relatar todos os procedimentos com os animais): {{ $resultado->resumo_procedimento ?? null}}</label>
+					</div>
+
 
 			</div>
 		</div>

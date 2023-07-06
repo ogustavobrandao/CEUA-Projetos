@@ -20,7 +20,7 @@ class PDFViewController extends Controller
 {
 
     public function gerarPDFSolicitacao($solicitacao_id)
-    {   
+    {
         $solicitacao = Solicitacao::find($solicitacao_id);
         $instituicaos = Instituicao::all();
         $grandeAreas = GrandeArea::all();
@@ -28,20 +28,21 @@ class PDFViewController extends Controller
         $subAreas = SubArea::all();
         $responsavel = $solicitacao->responsavel;
         $colaboradores = $solicitacao->responsavel->colaboradores;
-        $modelo_animal = ModeloAnimal::find($solicitacao_id);
-        $planejamento = Planejamento::where('modelo_animal_id', $modelo_animal->id)->first();
-        $condicoes_animal = CondicoesAnimal::where('planejamento_id', $planejamento->id)->first();
-        $procedimento = Procedimento::where('planejamento_id', $planejamento->id)->first();
-        $operacao = Operacao::where('planejamento_id', $planejamento->id)->first();
-        $eutanasia = Eutanasia::where('planejamento_id', $planejamento->id)->first();
-        $resultado = Resultado::where('planejamento_id', $planejamento->id)->first();
+        $modelo_animal = ModeloAnimal::where('solicitacao_id', $solicitacao_id)
+            ->first();
+        $planejamento = $modelo_animal->planejamento;
+        $condicoes_animal = $planejamento->condicoesAnimal;
+        $procedimento = $planejamento->procedimento;
+        $operacao = $planejamento->operacao;
+        $eutanasia = $planejamento->eutanasia;
+        $resultado = $planejamento->resultado;
 
         $pdf = PDF::loadView('PDF/pdfSolicitacao', compact('procedimento','solicitacao','condicoes_animal','instituicaos', 'grandeAreas', 'areas', 'subAreas', 'responsavel', 'colaboradores', 'modelo_animal', 'planejamento', 'operacao', 'eutanasia', 'resultado'));
         return $pdf->download('pedidoSolicitacao.pdf');
     }
 
     public function gerarPDFAprovado($solicitacao_id)
-    {   
+    {
         $solicitacao = Solicitacao::find($solicitacao_id);
         $instituicaos = Instituicao::all();
         $grandeAreas = GrandeArea::all();
