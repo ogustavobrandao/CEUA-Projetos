@@ -83,7 +83,7 @@
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
-                                    <form method="POST" action="{{route('avaliador.atribuir')}}">
+                                    <form method="POST" action="{{route('avaliador.atribuir')}}" id="adicionarAvaliadorForm{{$solicitacao->id}}">
                                         @csrf
                                         <input type="hidden" name="solicitacao_id" value="{{$solicitacao->id}}">
                                         <div class="modal-body">
@@ -110,7 +110,7 @@
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">
                                                 Fechar
                                             </button>
-                                            <button type="submit" class="btn btn-success">Atribuir</button>
+                                            <button id="submitAdicionarAvaliador{{$solicitacao->id}}" type="submit" class="btn btn-success" onclick="submitAdicionarAvaliador({{$solicitacao->id}})">Atribuir</button>
                                         </div>
                                     </form>
                                 </div>
@@ -128,7 +128,7 @@
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
-                                    <form method="POST" action="{{route('avaliador.remover')}}">
+                                    <form method="POST" id="removerAvaliadorForm{{$solicitacao->id}}" action="{{route('avaliador.remover')}}">
                                         @csrf
                                         <input type="hidden" name="solicitacao_id" value="{{$solicitacao->id}}">
                                         <div class="modal-body">
@@ -155,7 +155,7 @@
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">
                                                 Fechar
                                             </button>
-                                            <button type="submit" class="btn btn-success">Atribuir</button>
+                                            <button id="submitRemoverAvaliador{{$solicitacao->id}}" type="submit" class="btn btn-danger" onclick="submitRemoverAvaliador({{$solicitacao->id}})">Remover</button>
                                         </div>
                                     </form>
                                 </div>
@@ -168,8 +168,23 @@
         </div>
     </div>
 
+    <script>
+        function submitRemoverAvaliador(id) {
+            event.preventDefault();
+            $("#submitRemoverAvaliador" + id).prop("disabled", true);
+            $("#removerAvaliadorForm" + id).submit();
+        }
+
+        function submitAdicionarAvaliador(id) {
+            event.preventDefault();
+            $("#submitAdicionarAvaliador" + id).prop("disabled", true);
+            $("#adicionarAvaliadorForm" + id).submit();
+        }
+    </script>
+
 
     <script>
+
         $('.table').DataTable({
             searching: true,
             "language": {

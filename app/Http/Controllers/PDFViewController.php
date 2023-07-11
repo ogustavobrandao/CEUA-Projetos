@@ -7,11 +7,6 @@ use App\Models\SubArea;
 use App\Models\Solicitacao;
 use App\Models\ModeloAnimal;
 use App\Models\Planejamento;
-use App\Models\CondicoesAnimal;
-use App\Models\Procedimento;
-use App\Models\Operacao;
-use App\Models\Eutanasia;
-use App\Models\Resultado;
 use App\Models\Licenca;
 use App\Models\Avaliacao;
 use PDF;
@@ -28,16 +23,9 @@ class PDFViewController extends Controller
         $subAreas = SubArea::all();
         $responsavel = $solicitacao->responsavel;
         $colaboradores = $solicitacao->responsavel->colaboradores;
-        $modelo_animal = ModeloAnimal::where('solicitacao_id', $solicitacao_id)
-            ->first();
-        $planejamento = $modelo_animal->planejamento;
-        $condicoes_animal = $planejamento->condicoesAnimal;
-        $procedimento = $planejamento->procedimento;
-        $operacao = $planejamento->operacao;
-        $eutanasia = $planejamento->eutanasia;
-        $resultado = $planejamento->resultado;
+        $modelos_animais = ModeloAnimal::where('solicitacao_id', $solicitacao_id)->with("planejamento", "planejamento.operacao", "planejamento.condicoesAnimal", "planejamento.procedimento", "planejamento.eutanasia", "planejamento.resultado")->get();
 
-        $pdf = PDF::loadView('PDF/pdfSolicitacao', compact('procedimento','solicitacao','condicoes_animal','instituicaos', 'grandeAreas', 'areas', 'subAreas', 'responsavel', 'colaboradores', 'modelo_animal', 'planejamento', 'operacao', 'eutanasia', 'resultado'));
+        $pdf = PDF::loadView('PDF/pdfSolicitacao', compact('solicitacao', 'instituicaos', 'grandeAreas', 'areas', 'subAreas', 'responsavel', 'colaboradores', 'modelos_animais'));
         return $pdf->download('pedidoSolicitacao.pdf');
     }
 
@@ -50,17 +38,11 @@ class PDFViewController extends Controller
         $subAreas = SubArea::all();
         $responsavel = $solicitacao->responsavel;
         $colaboradores = $solicitacao->responsavel->colaboradores;
-        $modelo_animal = ModeloAnimal::find($solicitacao_id);
-        $planejamento = Planejamento::where('modelo_animal_id', $modelo_animal->id)->first();
-        $condicoes_animal = CondicoesAnimal::where('planejamento_id', $planejamento->id)->first();
-        $procedimento = Procedimento::where('planejamento_id', $planejamento->id)->first();
-        $operacao = Operacao::where('planejamento_id', $planejamento->id)->first();
-        $eutanasia = Eutanasia::where('planejamento_id', $planejamento->id)->first();
-        $resultado = Resultado::where('planejamento_id', $planejamento->id)->first();
-        $avaliacao = Avaliacao::where('solicitacao_id', $planejamento->id)->first();
+        $modelos_animais = ModeloAnimal::where('solicitacao_id', $solicitacao_id)->with("planejamento", "planejamento.operacao", "planejamento.condicoesAnimal", "planejamento.procedimento", "planejamento.eutanasia", "planejamento.resultado")->get();
+        $avaliacao = Avaliacao::where('solicitacao_id', $solicitacao->id)->first();
         $licenca = Licenca::where('avaliacao_id', $avaliacao->id)->first();
 
-        $pdf = PDF::loadView('PDF/pdfAprovado', compact('procedimento','solicitacao','condicoes_animal','instituicaos', 'grandeAreas', 'areas', 'subAreas', 'responsavel', 'colaboradores', 'modelo_animal', 'planejamento', 'operacao', 'eutanasia', 'resultado', 'licenca'));
+        $pdf = PDF::loadView('PDF/pdfAprovado', compact('solicitacao', 'instituicaos', 'grandeAreas', 'areas', 'subAreas', 'responsavel', 'colaboradores', 'modelos_animais', 'licenca'));
         return $pdf->download('pedidoAprovado.pdf');
     }
 }

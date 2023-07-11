@@ -15,6 +15,7 @@ use App\Http\Requests\Solicitacao\CriarResultadoRequest;
 use App\Http\Requests\Solicitacao\CriarSolicitacaoFimRequest;
 use App\Http\Requests\Solicitacao\CriarSolicitacaoRequest;
 use App\Models\AvaliacaoIndividual;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use App\Mail\SendSolicitacaoReprovada;
 use App\Models\Avaliacao;
@@ -41,6 +42,7 @@ use Illuminate\Support\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+
 class SolicitacaoController extends Controller
 {
 
@@ -52,7 +54,7 @@ class SolicitacaoController extends Controller
         $areas = Area::all();
         $subAreas = SubArea::all();
 
-        if(Auth::user()->tipo_usuario_id == 3 && $solicitacao->status == 'avaliado' && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia'){
+        if (Auth::user()->tipo_usuario_id == 3 && $solicitacao->status == 'avaliado' && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia') {
             $avaliacao = Avaliacao::where('solicitacao_id', $solicitacao_id)->where('user_id', $solicitacao->avaliacao->first()->user_id)->first();
 
 
@@ -63,7 +65,7 @@ class SolicitacaoController extends Controller
 
 
             return view('solicitacao.index', compact('solicitacao',
-                'instituicaos','grandeAreas', 'areas', 'subAreas','avaliacaoDadosComp', 'avaliacaoDadosini', 'avaliacaoResponsavel', 'avaliacaoColaborador','avaliacao'));
+                'instituicaos', 'grandeAreas', 'areas', 'subAreas', 'avaliacaoDadosComp', 'avaliacaoDadosini', 'avaliacaoResponsavel', 'avaliacaoColaborador', 'avaliacao'));
 
         }
 
@@ -159,7 +161,7 @@ class SolicitacaoController extends Controller
             $request->experiencia_previa = $nomeAnexo;
         }
 
-        if(($request->hasFile('termo_responsabilidade') && $request->file('termo_responsabilidade')->isValid())) {
+        if (($request->hasFile('termo_responsabilidade') && $request->file('termo_responsabilidade')->isValid())) {
             $anexo = $request->termo_responsabilidade->extension();
             $nomeAnexo = "termo_responsabilidade_" . $solicitacao->id . date('Ymd') . date('His') . '.' . $anexo;
             if ($responsavel->termo_responsabilidade != null) {
@@ -239,7 +241,7 @@ class SolicitacaoController extends Controller
 
                 $nomeAnexo = "termos_responsabilidadesColaborador" . $colab['termo_responsabilidade'] . date('Ymd') . date('His');
                 // $colab['termo_responsabilidade']->storeAs('termos_responsabilidadesColaborador/', $nomeAnexo);
-                $colaborador->termo_responsabilidade =  $nomeAnexo;
+                $colaborador->termo_responsabilidade = $nomeAnexo;
 
                 $colaborador->treinamento = $colab['treinamento'];
                 $colaborador->responsavel_id = $solicitacao->responsavel->id;
@@ -298,7 +300,7 @@ class SolicitacaoController extends Controller
             $data['termo_consentimento'] = $nomeAnexo;
         }
 
-        if(($request->hasFile('licencas_previas') && $request->file('licencas_previas')->isValid())) {
+        if (($request->hasFile('licencas_previas') && $request->file('licencas_previas')->isValid())) {
             $anexo = $request->termo_consentimento->extension();
             $nomeAnexo = "licencas_previas" . $request->solicitacao_id . date('Ymd') . date('His') . '.' . $anexo;
             $request->licencas_previas->storeAs('licencas_previas/', $nomeAnexo);
@@ -306,7 +308,6 @@ class SolicitacaoController extends Controller
         }
 
         $modelo_animal = ModeloAnimal::create($data);
-
 
 
         $perfil = new Perfil();
@@ -477,7 +478,7 @@ class SolicitacaoController extends Controller
             $resultado = null;
         }
 
-        if(Auth::user()->tipo_usuario_id == 3 && $solicitacao->status == 'avaliado' && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia'){
+        if (Auth::user()->tipo_usuario_id == 3 && $solicitacao->status == 'avaliado' && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia') {
             $avaliacao = Avaliacao::where('solicitacao_id', $solicitacao->id)->where('user_id', $solicitacao->avaliacao->first()->user_id)->first();
             // Avaliações Individuais
             $avaliacaoPlanejamento = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)->where('planejamento_id', $planejamento->id)->first();
@@ -753,16 +754,14 @@ class SolicitacaoController extends Controller
         return redirect(route('solicitacao.planejamento.index', ['modelo_animal_id' => $planejamento->modelo_animal->id]));
     }
 
-    public
-    function index_admin()
+    public function index_admin()
     {
         $solicitacoes = Solicitacao::where('status', '!=', 'avaliado')->get();
         $avaliadores = User::where('tipo_usuario_id', '2')->get();
         return view('admin.solicitacoes', compact('solicitacoes', 'avaliadores'));
     }
 
-    public
-    function concluir($solicitacao_id)
+    public function concluir($solicitacao_id)
     {
         $concluir = true;
         $solicitacao = Solicitacao::where('id', $solicitacao_id)->where('user_id', Auth::user()->id)->first();
@@ -774,7 +773,7 @@ class SolicitacaoController extends Controller
             }
         }
 
-        if($concluir == false){
+        if ($concluir == false) {
             return redirect()->back()->with('fail', 'É necessário preencher todas as informações obrigatórias!');
         }
         if ($solicitacao == null) {
