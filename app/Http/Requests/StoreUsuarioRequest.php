@@ -42,13 +42,14 @@ class StoreUsuarioRequest extends FormRequest
                         //verifica se o usuário que está sendo cadastrado é um avaliador ou solicitante e se existe outro usuário com o mesmo cpf e mesmo perfil
                         $avaliador_by_cpf = User::where('cpf', $value)
                             ->where('tipo_usuario_id', 2)->first();
+                        $verificarAvaliador = $user_by_cpf->tipo_usuario_id != 2 && $this->request->get('tipo_usuario_id') == 2 && $avaliador_by_cpf == null;
+
 
                         $solicitante_by_cpf = User::where('cpf', $value)
                             ->where('tipo_usuario_id', 3)->first();
+                        $verificarSolicitante = $user_by_cpf->tipo_usuario_id != 3 && $this->request->get('tipo_usuario_id') == 3 && $solicitante_by_cpf == null;
 
-                        if($user_by_cpf->tipo_usuario_id != 2 && $this->request->get('tipo_usuario_id') == 2 && $avaliador_by_cpf == null)
-                            return true;
-                        elseif($user_by_cpf->tipo_usuario_id != 3 && $this->request->get('tipo_usuario_id') == 3 && $solicitante_by_cpf == null)
+                        if($verificarAvaliador || $verificarSolicitante)
                             return true;
                         else
                             return $fail('Já existe um usuário que utiliza esse cpf no sistema.');
