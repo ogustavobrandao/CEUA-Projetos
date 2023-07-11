@@ -15,6 +15,7 @@ use App\Http\Requests\Solicitacao\CriarResultadoRequest;
 use App\Http\Requests\Solicitacao\CriarSolicitacaoFimRequest;
 use App\Http\Requests\Solicitacao\CriarSolicitacaoRequest;
 use App\Models\AvaliacaoIndividual;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use App\Mail\SendSolicitacaoReprovada;
 use App\Models\Avaliacao;
@@ -40,6 +41,7 @@ use Carbon\Carbon;
 use Illuminate\Support\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+
 
 class SolicitacaoController extends Controller
 {
