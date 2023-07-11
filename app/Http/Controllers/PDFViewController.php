@@ -39,9 +39,7 @@ class PDFViewController extends Controller
         $responsavel = $solicitacao->responsavel;
         $colaboradores = $solicitacao->responsavel->colaboradores;
         $modelos_animais = ModeloAnimal::where('solicitacao_id', $solicitacao_id)->with("planejamento", "planejamento.operacao", "planejamento.condicoesAnimal", "planejamento.procedimento", "planejamento.eutanasia", "planejamento.resultado")->get();
-        $modelo_animal = ModeloAnimal::find($solicitacao_id);
-        $planejamento = Planejamento::where('modelo_animal_id', $modelo_animal->id)->first();
-        $avaliacao = Avaliacao::where('solicitacao_id', $planejamento->id)->first();
+        $avaliacao = Avaliacao::where('solicitacao_id', $solicitacao->id)->first();
         $licenca = Licenca::where('avaliacao_id', $avaliacao->id)->first();
 
         $pdf = PDF::loadView('PDF/pdfAprovado', compact('solicitacao', 'instituicaos', 'grandeAreas', 'areas', 'subAreas', 'responsavel', 'colaboradores', 'modelos_animais', 'licenca'));
