@@ -282,12 +282,13 @@
                                     ($solicitacao->status == 'avaliado' && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia'))
                                     && (isset($solicitacao) && isset($solicitacao->responsavel) && count($solicitacao->modelosAnimais) > 0) )
 
-                                    <a class="btn w-100"
-                                       href="{{route('solicitacao.concluir', ['solicitacao_id' => $solicitacao->id])}}"
-                                       style="border-color: #1d68a7; color: #1d68a7; background-color: #c0ddf6"
-                                       title="Concluir Solicitação.">Concluir Solicitação</a>
+                                        <a id="concluir-btn" class="btn w-100"
+                                           href="#ModalConcluir"
+                                           data-toggle="modal"
+                                           style="border-color: #1d68a7; color: #1d68a7; background-color: #c0ddf6"
+                                           title="Concluir Solicitação">Concluir Solicitação</a>
 
-                                @else
+                                    @else
                                     @if(Auth::user()->tipo_usuario_id != 2 && Auth::user()->tipo_usuario_id != 1)
                                         <button class="btn btn-secondary w-75" disabled>Concluir Solicitação</button>
                                     @endif
@@ -404,6 +405,26 @@
                     </div>
                 </div>
             @endif
+        </div>
+    </div>
+    <!-- Modal de confirmação-->
+    <div class="modal fade" id="ModalConcluir" tabindex="-1" role="dialog" aria-labelledby="Modal_confir" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content ">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ModalConfir">Confirmar Conclusão da Solicitação</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body alert-danger">
+                    <p>Após confirmação, não será possivel editar a solicitação até que seja avaliada, você tem certeza que deseja concluir ?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <a href="{{ route('solicitacao.concluir', ['solicitacao_id' => $solicitacao->id]) }}" class="btn btn-success">Confirmar</a>
+                </div>
+            </div>
         </div>
     </div>
 

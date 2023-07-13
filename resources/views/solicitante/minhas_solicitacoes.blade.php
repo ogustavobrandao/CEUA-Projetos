@@ -51,11 +51,11 @@
                                        style="border-color: #1d68a7; color: #1d68a7; background-color: #c0ddf6"
                                        title="Continuar Preenchendo Solicitação."><i class="fa-solid fa-file"></i></a>
 
-                                @elseif(($solicitacao->status == "nao_avaliado" && $solicitacao->avaliacao->first() == null))
-                                    <a class="btn"
-                                       href="{{route('solicitacao.index', ['solicitacao_id' => $solicitacao->id])}}"
-                                       style="border-color: #1B1C42; background-color: #c0ddf6"
-                                       title="Editar Solicitação."><i class="fa-solid fa-up-right-from-square"></i></a>
+                                @elseif(($solicitacao->status == "nao_avaliado"))
+                                {{--<a class="btn"
+                                    href="{{route('solicitacao.index', ['solicitacao_id' => $solicitacao->id])}}"
+                                style="border-color: #1B1C42; background-color: #e700ff"
+                                title="Editar Solicitação."><i class="fa-solid fa-up-right-from-square"></i></a>--}}
                                     <a class="btn"
                                        href="{{route('pdf.gerarPDFSolicitacao', ['solicitacao_id' => $solicitacao->id])}}"
                                        style="border-color: #1B1C42; background-color: #c0ddf6"
