@@ -47,9 +47,12 @@
                                         <a href="{{route('avaliador.solicitacao.avaliar', ['solicitacao_id' => $avaliacao->solicitacao->id])}}">Avaliar</a>
                                     @elseif(($avaliacao->solicitacao->status == "nao_avaliado" && $avaliacao->status == "aprovadaPendencia"))
                                         <a href="{{route('avaliador.solicitacao.avaliar', ['solicitacao_id' => $avaliacao->solicitacao->id])}}">Re-Avaliar</a>
-                                    @elseif($avaliacao->status == 'aprovada')
-                                        <a style="color: forestgreen; font-weight: bold">Aprovada</a>
-                                    @elseif($avaliacao->status == 'reprovada')
+                                    @elseif($avaliacao->status == 'aprovado')
+                                        <a class="btn btn-info" style="color: white" data-toggle="modal"
+                                           data-target="#licencaModal_{{$avaliacao->id}}" title="Dados da licença">
+                                            <i class="fa-regular fa-id-card"></i>
+                                        </a>
+                                    @elseif($avaliacao->status == 'reprovado')
                                         <a style="color: red; font-weight: bold">Reprovada</a>
                                     @endif
                                 @else
@@ -57,12 +60,16 @@
                                 @endif
                             </td>
                         </tr>
+                        @if($avaliacao->status == 'aprovado')
+                            @include('avaliador.modal_licenca_temporario', compact('avaliacao'))
+                        @endif
                     @endforeach
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
+
 
     <script>
         $('.table').DataTable({
