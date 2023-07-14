@@ -306,25 +306,6 @@
 
                             <div class="row justify-content-center mt-2">
                                 <div class="col-sm-5">
-                                    <label for="password">{{ __('Senha') }}<strong style="color: red">*</strong></label>
-                                    <input id="password" type="password"
-                                           class="form-control @error('password') is-invalid @enderror" name="password"
-                                           required autocomplete="current-password">
-                                    @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                                <div class="col-sm-5">
-                                    <label for="password-confirm">{{ __('Confirmar Senha') }}<strong style="color: red">*</strong></label>
-                                    <input id="password-confirm" type="password" class="form-control"
-                                           name="password_confirmation" required autocomplete="new-password">
-                                </div>
-                            </div>
-
-                            <div class="row justify-content-center mt-2">
-                                <div class="col-sm-5">
                                     <label for="instituicao">{{ __('Instituição') }}<strong
                                             style="color: red">*</strong></label>
                                     <select class="form-control" id="instituicao{{$usuario->id}}" name="instituicao"
@@ -357,6 +338,25 @@
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
+                                </div>
+                            </div>
+                            <div class="py-2 border-bottom"></div>
+                            <div class="row justify-content-center mt-2">
+                                <div class="col-sm-5">
+                                    <label for="password">{{ __('Senha') }}</label>
+                                    <input id="password" type="password"
+                                           class="form-control @error('password') is-invalid @enderror" name="password"
+                                           autocomplete="current-password">
+                                    @error('password')
+                                    <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                                <div class="col-sm-5">
+                                    <label for="password-confirm">{{ __('Confirmar Senha') }}</label>
+                                    <input id="password-confirm" type="password" class="form-control"
+                                           name="password_confirmation" autocomplete="new-password">
                                 </div>
                             </div>
                         </div>
