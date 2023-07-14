@@ -28,7 +28,7 @@ class UpdateUsuarioRequest extends FormRequest
             'name'              => ['required', 'string', 'min:10', 'max:255', 'regex:/^[A-Za-záâãéêíóôõúçÁÂÃÉÊÍÓÔÕÚÇ\s]+$/'],
             'email'             => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($this->usuario_id)],
             'cpf'               => ['required', 'cpf', 'min:11', 'max:11', Rule::unique('users')->ignore($this->usuario_id)],
-            'password'          => ['required', 'string', 'min:8', 'confirmed'],
+            'password'          => ['nullable', 'string', 'min:8', 'confirmed'],
             'celular'           => ['required', 'min:11', 'max:11'],
             'rg'                => ['required', 'string', 'min:7', 'max:14', 'regex:/^[0-9]+$/'],
             'instituicao_id'    => ['required', 'numeric'],
