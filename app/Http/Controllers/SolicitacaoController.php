@@ -138,7 +138,7 @@ class SolicitacaoController extends Controller
         $solicitacao->sub_area_id = $request->subArea;
         $solicitacao->update();
 
-        return redirect(route('solicitacao.index', ['solicitacao_id' => $request->solicitacao_id]));
+        return json_encode(['message' => 'success']);
     }
 
     public function criar_responsavel(CriarResponsavelRequest $request)
