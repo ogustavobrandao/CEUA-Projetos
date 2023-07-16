@@ -783,4 +783,15 @@ class SolicitacaoController extends Controller
         $solicitacao->update();
         return redirect(route('solicitacao.solicitante.index'))->with(['success' => 'Solicitação concluída com sucesso!']);
     }
+    public function visualizar($id)
+    {
+        $solicitacao = Solicitacao::find($id);
+        $instituicaos = Instituicao::all();
+        $grandeAreas = GrandeArea::all();
+        $areas = Area::all();
+        $subAreas = SubArea::all();
+
+
+        return view('solicitacao.visualizar', compact('solicitacao', 'grandeAreas', 'areas', 'subAreas', 'instituicaos'));
+    }
 }
