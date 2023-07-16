@@ -165,11 +165,11 @@
 
         <div class="row">
             <h3 class="subtitulo">Informações Complementares</h3>
-            @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id != 2)
+            @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 3)
                 <div class="col-sm-2">
                     <label>Experiência Prévia:</label>
                     @endif
-                    @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2)
+                    @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2 || \Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 1)
                         <div class="col-sm-15">
                             <label>Experiência Prévia:</label>
                             @if($solicitacao->responsavel->experiencia_previa == null)
@@ -220,11 +220,11 @@
                 </div>
             @endif
 
-            @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id != 2)
+            @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 3)
                 <div class="col-sm-2">
                     <label>Termo de Responsabilidade:</label>
                     @endif
-                    @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2)
+                    @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2 || \Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 1)
                         <div class="col-sm-15 mt-2">
                             <label>Termo de Responsabilidade:</label>
                             @if($solicitacao->responsavel->termo_responsabilidade == null)
@@ -277,11 +277,11 @@
                     @endif
 
                     <div class="row">
-                        @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id != 2)
+                        @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 3)
                             <div class="col-sm-2 mt-2">
                                 <label for="treinamento">Treinamento:</label>
                                 @endif
-                                @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2)
+                                @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2 || \Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 1)
                                     <div class="col-sm-15 mt-1">
                                         @if($solicitacao->responsavel->treinamento == null)
                                             <label for="treinamento">Treinamento:</label>
@@ -348,9 +348,7 @@
                                     </div>
                             </div>
                         @endif
-
-
-                        @if (\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2)
+                        @if (\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2 || \Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 1)
                     </div>
                 </div>
         </div>

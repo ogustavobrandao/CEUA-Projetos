@@ -498,7 +498,7 @@
 
         <div class="col-sm-12 mt-3">
             <label for="termo_consentimento">Termo de Consentimento Livre e Esclarecido (TCLE):<strong style="color: red">*</strong></label>
-            @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2)
+            @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2 || \Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 1)
                 @if (!empty($modelo_animal->termo_consentimento))
                 <a class="btn btn-primary"
                 href="{{route('termo.download', ['modelo_animal_id' => $modelo_animal->id])}}">Baixar
@@ -547,7 +547,7 @@
             title="A autorização da CEUA não requer a existência de licença prévia de outras instituições. Entretanto, o responsável deverá obter todas as autorizações legais cabíveis que a natureza do projeto exige antes do início das atividades com animais como, por exemplo, autorizações de instituições como Instituto Brasileiro do Meio Ambiente e dos Recursos Naturais Renováveis - IBAMA, Fundação Nacional do Índio - FUNAI, Comissão Nacional de Energia Nuclear - CNEN, Conselho de Gestão do Patrimônio Genético - CGEN, Comissão Técnica Nacional de Biossegurança - CTNBio, Instituto Chico Mendes de Conservação da Biodiversidade - ICMBio, dentre outras." style="color: darkred">
              <i class="fa-solid fa-circle-info fa-lg"></i></a>
             <small>Caso seja mais de um documento, anexar em um único PDF.</small>
-            @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2)
+            @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2 || \Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 1)
                 @if (!empty($modelo_animal->licencas_previas))
                     <a class="btn btn-primary"
                     href="{{route('licencas_previas.download', ['modelo_animal_id' => $modelo_animal])}}">Baixar
@@ -580,7 +580,6 @@
         </div>
     </div>
 </div>
-
 <script>
     $(document).ready(function () {
 
@@ -748,4 +747,28 @@
             calcularTotal();
         });
     });
+    $(document).ready(function() {
+
+        var tipoUsuario = {{ Auth::user()->tipo_usuario_id }};
+
+        if (tipoUsuario === 1) {
+
+            $('input, select, textarea').prop('disabled', true);
+        }
+    });
+
+    window.onload = function() {
+        var isAdmin = <?php echo (Auth::user()->tipo_usuario_id == 1) ? 'true' : 'false'; ?>;
+
+        if (isAdmin) {
+            var forms = document.getElementsByTagName("form");
+            for (var i = forms.length - 1; i >= 0; i--) {
+                var form = forms[i];
+                while (form.firstChild) {
+                    form.parentNode.insertBefore(form.firstChild, form);
+                }
+                form.parentNode.removeChild(form);
+            }
+        }
+    }
 </script>
