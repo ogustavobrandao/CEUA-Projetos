@@ -76,7 +76,7 @@
                     @if(Auth::user()->tipo_usuario_id == 2)
                         @livewire('form-colaborador', ['solicitacao' => $solicitacao, 'avaliacao' => $avaliacao, 'tipo' => 2, 'id' => -1])
                     @else
-                        @livewire('form-colaborador', ['solicitacao' => $solicitacao])
+                        @include('solicitacao.colaborador', ['solicitacao' => $solicitacao])
                     @endif
 
                 </div>

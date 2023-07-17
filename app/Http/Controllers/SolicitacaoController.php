@@ -220,57 +220,25 @@ class SolicitacaoController extends Controller
 
     public function criar_colaborador(CriarColaboradorRequest $request)
     {
-        $solicitacao = Solicitacao::find($request->solicitacao_id);
-        $listaColab = [];
+        $data = $request->all();
 
-        if (isset($request->colaborador)) {
-            foreach ($request->colaborador as $colab) {
-                if ($colab['colab_id'] != null) {
-                    $colaborador = Colaborador::find($colab['colab_id']);
-                } else {
-                    $colaborador = new Colaborador();
-                }
-                $colaborador->nome = $colab['nome'];
-                $colaborador->cpf = $colab['cpf'];
-                $colaborador->instituicao_id = $colab['instituicao_id'];
-                $colaborador->grau_escolaridade = $colab['grau_escolaridade'];
 
-                $nomeAnexo = "experiencias_previasColaborador" . $colab['experiencia_previa'] . date('Ymd') . date('His');
-                // $colab['experiencia_previa']->storeAs('experiencias_previasColaborador/', $nomeAnexo);
-                $colaborador->experiencia_previa = $nomeAnexo;
+        $reponsavel = Solicitacao::find($request->all()['solicitacao_id'])->responsavel;
+        if(isset($responsavel)){
 
-                $nomeAnexo = "termos_responsabilidadesColaborador" . $colab['termo_responsabilidade'] . date('Ymd') . date('His');
-                // $colab['termo_responsabilidade']->storeAs('termos_responsabilidadesColaborador/', $nomeAnexo);
-                $colaborador->termo_responsabilidade = $nomeAnexo;
+            $data['responsavel_id'] = $reponsavel->id;
+            $colaborador = Colaborador::create($data);
 
-                $colaborador->treinamento = $colab['treinamento'];
-                $colaborador->responsavel_id = $solicitacao->responsavel->id;
+            $contato = new Contato();
 
-                if ($colab['colab_id'] != null) {
-                    $colaborador->update();
-                    $contato = $colaborador->contato;
-                } else {
-                    $colaborador->save();
-                    $contato = new Contato();;
-                }
+            $contato->email = $request->all()['email'];
+            $contato->telefone = $request->all()['telefone'];
+            $contato->colaborador_id = $colaborador->id;
+            $contato->save();
 
-                array_push($listaColab, $colaborador->id);
-                $contato->email = $colab['email'];
-                $contato->telefone = $colab['telefone'];
-                $contato->colaborador_id = $colaborador->id;
-
-                if ($colab['colab_id'] != null) {
-                    $contato->update();
-                } else {
-                    $contato->save();
-                }
-            }
+            return redirect(route('solicitacao.index', ['solicitacao_id' => $request->solicitacao_id]));
         }
-        //Deletar colaboradores não fornecidos no formulário
-        Colaborador::where('responsavel_id', $solicitacao->responsavel->id)->whereNotIn('id', $listaColab)->delete();
-
-        $solicitacao->update();
-        return redirect(route('solicitacao.index', ['solicitacao_id' => $request->solicitacao_id]));
+        return redirect()->back()->with('fail', 'Necessario cadastrar o responsavel primeiro!');
     }
 
     public function criar_solicitacao_fim(CriarSolicitacaoFimRequest $request)
@@ -289,7 +257,8 @@ class SolicitacaoController extends Controller
         return redirect(route('solicitacao.index', ['solicitacao_id' => $solicitacao->id]));
     }
 
-    public function criar_modelo_animal(CriarModeloAnimalRequest $request)
+    public
+    function criar_modelo_animal(CriarModeloAnimalRequest $request)
     {
         $data = $request->all();
 
@@ -326,7 +295,8 @@ class SolicitacaoController extends Controller
         return redirect(route('solicitacao.index', ['solicitacao_id' => $request->solicitacao_id]))->with('success', 'Modelo Animal Criado com Sucesso!');
     }
 
-    public function atualizar_modelo_animal(AtualizarModeloAnimalRequest $request)
+    public
+    function atualizar_modelo_animal(AtualizarModeloAnimalRequest $request)
     {
         $modelo_animal = ModeloAnimal::find($request->modelo_animal_id);
 
@@ -361,7 +331,8 @@ class SolicitacaoController extends Controller
         return redirect(route('solicitacao.planejamento.index', ['modelo_animal_id' => $request->modelo_animal_id]))->with('success', 'Modelo Animal Atualizado com Sucesso!');
     }
 
-    public function deletar_modelo_animal($id)
+    public
+    function deletar_modelo_animal($id)
     {
 
         ModeloAnimal::find($id)->delete();
@@ -369,7 +340,8 @@ class SolicitacaoController extends Controller
 
     }
 
-    public function criar_perfil(Request $request)
+    public
+    function criar_perfil(Request $request)
     {
         $solicitacao = Solicitacao::find($request->solicitacao_id);
         $modelo_animal = ModeloAnimal::where('solicitacao_id', $solicitacao->id)->first();
@@ -402,62 +374,71 @@ class SolicitacaoController extends Controller
         return redirect(route('solicitacao.form', ['solicitacao_id' => $request->solicitacao_id]));
     }
 
-    public function downloadExperienciaPreviaColaborador($colaborador_id)
+    public
+    function downloadExperienciaPreviaColaborador($colaborador_id)
     {
         $colaborador = Colaborador::find($colaborador_id);
         return Storage::download('experiencias_previasColaborador/' . $colaborador->experiencia_previa);
     }
 
-    public function downloadTermoResponsabilidadeColaborador($colaborador_id)
+    public
+    function downloadTermoResponsabilidadeColaborador($colaborador_id)
     {
         $colaborador = Colaborador::find($colaborador_id);
         return Storage::download('termos_responsabilidadesColaborador/' . $colaborador->termo_responsabilidade);
     }
 
 
-    public function downloadAnexoAmostraPlanejamento($planejamento_id)
+    public
+    function downloadAnexoAmostraPlanejamento($planejamento_id)
     {
         $planejamento = Planejamento::find($planejamento_id);
         return Storage::download('anexo_amostra_planejamento/' . $planejamento->anexo_amostra_planejamento);
     }
 
-    public function downloadLicencasPrevias($modelo_animal_id)
+    public
+    function downloadLicencasPrevias($modelo_animal_id)
     {
         $modelo_animal = ModeloAnimal::find($modelo_animal_id);
         return Storage::download('licencas_previas/' . $modelo_animal->licenca_previa);
     }
 
-    public function downloadTermoResponsabilidade($responsavel_id)
+    public
+    function downloadTermoResponsabilidade($responsavel_id)
     {
         $responsavel = Responsavel::find($responsavel_id);
         return Storage::download('termos_responsabilidades/' . $responsavel->termo_responsabilidade);
     }
 
-    public function downloadFormula($planejamento_id)
+    public
+    function downloadFormula($planejamento_id)
     {
         $planejamento = Planejamento::find($planejamento_id);
         return Storage::download('formulas/' . $planejamento->anexo_formula);
     }
 
-    public function downloadTermo($modelo_animal_id)
+    public
+    function downloadTermo($modelo_animal_id)
     {
         $modelo_animal = ModeloAnimal::find($modelo_animal_id);
         return Storage::download('termos/' . $modelo_animal->termo_consentimento);
     }
 
-    // public function downloadTreinamento($responsavel_id)
-    // {
-    //     $responsavel = Responsavel::find($responsavel_id);
-    //     return Storage::download('treinamentos/' . $responsavel->treinamento);
-    // }
+// public function downloadTreinamento($responsavel_id)
+// {
+//     $responsavel = Responsavel::find($responsavel_id);
+//     return Storage::download('treinamentos/' . $responsavel->treinamento);
+// }
 
-    public function downloadExperiencia($responsavel_id)
+    public
+    function downloadExperiencia($responsavel_id)
     {
         $responsavel = Responsavel::find($responsavel_id);
         return Storage::download('experiencias/' . $responsavel->experiencia_previa);
     }
 
-    public function index_planejamento($modelo_animal_id)
+    public
+    function index_planejamento($modelo_animal_id)
     {
         $modelo_animal = ModeloAnimal::find($modelo_animal_id);
         $planejamento = Planejamento::where('modelo_animal_id', $modelo_animal_id)->first();
@@ -499,7 +480,8 @@ class SolicitacaoController extends Controller
             compact('modelo_animal', 'planejamento', 'solicitacao', 'condicoes_animal', 'procedimento', 'operacao', 'eutanasia', 'resultado'));
     }
 
-    public function avaliarPlanejamento($modelo_animal_id)
+    public
+    function avaliarPlanejamento($modelo_animal_id)
     {
         $modelo_animal = ModeloAnimal::find($modelo_animal_id);
         $planejamento = Planejamento::where('modelo_animal_id', $modelo_animal_id)->first();
@@ -529,7 +511,8 @@ class SolicitacaoController extends Controller
                 'avaliacaoEutanasia', 'avaliacaoResultado', 'avaliacaoModeloAnimal'));
     }
 
-    public function criar_planejamento(CriarPlanejamentoRequest $request)
+    public
+    function criar_planejamento(CriarPlanejamentoRequest $request)
     {
         $request->validated();
         $modelo_animal = ModeloAnimal::find($request->modelo_animal_id);
@@ -603,7 +586,8 @@ class SolicitacaoController extends Controller
         return redirect(route('solicitacao.planejamento.index', ['modelo_animal_id' => $planejamento->modelo_animal->id]));
     }
 
-    public function criar_condicoes_animal(CriarCondicoesAnimalRequest $request)
+    public
+    function criar_condicoes_animal(CriarCondicoesAnimalRequest $request)
     {
         $request->validated();
         $planejamento = Planejamento::find($request->planejamento_id);
@@ -634,7 +618,8 @@ class SolicitacaoController extends Controller
         return redirect(route('solicitacao.planejamento.index', ['modelo_animal_id' => $planejamento->modelo_animal->id]));
     }
 
-    public function criar_procedimento(CriarProcedimentoRequest $request)
+    public
+    function criar_procedimento(CriarProcedimentoRequest $request)
     {
         $request->validated();
         $planejamento = Planejamento::find($request->planejamento_id);
@@ -651,7 +636,8 @@ class SolicitacaoController extends Controller
         return redirect(route('solicitacao.planejamento.index', ['modelo_animal_id' => $planejamento->modelo_animal->id]));
     }
 
-    public function criar_operacao(CriarOperacaoRequest $request)
+    public
+    function criar_operacao(CriarOperacaoRequest $request)
     {
 
         $request->validated();
@@ -696,7 +682,8 @@ class SolicitacaoController extends Controller
         return redirect(route('solicitacao.planejamento.index', ['modelo_animal_id' => $planejamento->modelo_animal->id]));
     }
 
-    public function criar_eutanasia(CriarEutanasiaRequest $request)
+    public
+    function criar_eutanasia(CriarEutanasiaRequest $request)
     {
         $request->validated();
         $planejamento = Planejamento::find($request->planejamento_id);
@@ -730,7 +717,8 @@ class SolicitacaoController extends Controller
         return redirect(route('solicitacao.planejamento.index', ['modelo_animal_id' => $planejamento->modelo_animal->id]));
     }
 
-    public function criar_resultado(CriarResultadoRequest $request)
+    public
+    function criar_resultado(CriarResultadoRequest $request)
     {
         $request->validated();
         $planejamento = Planejamento::find($request->planejamento_id);
@@ -754,14 +742,16 @@ class SolicitacaoController extends Controller
         return redirect(route('solicitacao.planejamento.index', ['modelo_animal_id' => $planejamento->modelo_animal->id]));
     }
 
-    public function index_admin()
+    public
+    function index_admin()
     {
         $solicitacoes = Solicitacao::where('status', '!=', 'avaliado')->get();
         $avaliadores = User::where('tipo_usuario_id', '2')->get();
         return view('admin.solicitacoes', compact('solicitacoes', 'avaliadores'));
     }
 
-    public function concluir($solicitacao_id)
+    public
+    function concluir($solicitacao_id)
     {
         $concluir = true;
         $solicitacao = Solicitacao::where('id', $solicitacao_id)->where('user_id', Auth::user()->id)->first();
@@ -783,7 +773,9 @@ class SolicitacaoController extends Controller
         $solicitacao->update();
         return redirect(route('solicitacao.solicitante.index'))->with(['success' => 'Solicitação concluída com sucesso!']);
     }
-    public function visualizar($id)
+
+    public
+    function visualizar($id)
     {
         $solicitacao = Solicitacao::find($id);
         $instituicaos = Instituicao::all();

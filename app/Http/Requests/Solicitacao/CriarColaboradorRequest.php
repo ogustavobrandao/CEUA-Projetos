@@ -11,17 +11,17 @@ class CriarColaboradorRequest extends FormRequest
 {
     public function rules()
     {
+
         return [
             'solicitacao_id' => 'required|integer',
-            'colaborador.*.nome' => 'required|string',
-            'colaborador.*.cpf' => 'required|string',
-            'colaborador.*.instituicao_id' => 'required|integer',
-            'colaborador.*.grau_escolaridade' => 'required|string',
-            'colaborador.*.experiencia_previa' => 'required|string',
-            'colaborador.*.termo_responsabilidade' => 'required|string',
-            'colaborador.*.treinamento' => 'required|string',
-            'colaborador.*.email' => 'required|email',
-            'colaborador.*.telefone' => 'required|string',
+            'nome' => 'required|string',
+            'cpf' => 'required|string',
+            'grau_escolaridade' => 'required|string',
+            'experiencia_previa' => 'required|string',
+            'termo_responsabilidade' => 'required|string',
+            'treinamento' => 'required|string',
+            'email' => 'required|email',
+            'telefone' => 'required|string',
 
         ];
     }
@@ -29,15 +29,15 @@ class CriarColaboradorRequest extends FormRequest
     public function messages()
     {
         return [
-            'colaborador.*.nome.required' => 'O nome é obrigatório.',
-            'colaborador.*.cpf.required' => 'O CPF é obrigatório.',
-            'colaborador.*.grau_escolaridade.required' => 'O grau de escolaridade é obrigatório.',
-            'colaborador.*.experiencia_previa.required' => 'A experiência prévia é obrigatória.',
-            'colaborador.*.termo_responsabilidade.required' => 'O termo de responsabilidade é obrigatório.',
-            'colaborador.*.treinamento.required' => 'O treinamento é obrigatório.',
-            'colaborador.*.email.required' => 'O email é obrigatório.',
-            'colaborador.*.email.email' => 'O email deve ser um endereço de email válido.',
-            'colaborador.*.telefone.required' => 'O telefone é obrigatório.',
+            'nome.required' => 'O nome é obrigatório.',
+            'cpf.required' => 'O CPF é obrigatório.',
+            'grau_escolaridade.required' => 'O grau de escolaridade é obrigatório.',
+            'experiencia_previa.required' => 'A experiência prévia é obrigatória.',
+            'termo_responsabilidade.required' => 'O termo de responsabilidade é obrigatório.',
+            'treinamento.required' => 'O treinamento é obrigatório.',
+            'email.required' => 'O email é obrigatório.',
+            'email.email' => 'O email deve ser um endereço de email válido.',
+            'telefone.required' => 'O telefone é obrigatório.',
 
         ];
     }
