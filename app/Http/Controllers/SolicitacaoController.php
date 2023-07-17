@@ -222,12 +222,13 @@ class SolicitacaoController extends Controller
     {
         $data = $request->all();
 
-
-        $reponsavel = Solicitacao::find($request->all()['solicitacao_id'])->responsavel;
+        $responsavel = Solicitacao::find($request->all()['solicitacao_id'])->responsavel;
         if(isset($responsavel)){
 
-            $data['responsavel_id'] = $reponsavel->id;
+            $data['responsavel_id'] = $responsavel->id;
             $colaborador = Colaborador::create($data);
+
+            //Implementar salvamento dos arquivos
 
             $contato = new Contato();
 
@@ -239,6 +240,27 @@ class SolicitacaoController extends Controller
             return redirect(route('solicitacao.index', ['solicitacao_id' => $request->solicitacao_id]));
         }
         return redirect()->back()->with('fail', 'Necessario cadastrar o responsavel primeiro!');
+    }
+
+    public function editar_colaborador(CriarColaboradorRequest $request)
+    {
+        $data = $request->all();
+        $colaborador = Colaborador::find($data['colaborador_id']);
+        $colaborador->update($data);
+
+        $colaborador->contato->update($data);
+
+        return redirect(route('solicitacao.index', ['solicitacao_id' => $request->solicitacao_id]));
+
+    }
+
+    public function deletar_colaborador($id)
+    {
+        $colaborador = Colaborador::find($id);
+        $solicitacao_id = $colaborador->responsavel->solicitacao->id;
+        $colaborador->delete();
+        return redirect(route('solicitacao.index', ['solicitacao_id' => $solicitacao_id]));
+
     }
 
     public function criar_solicitacao_fim(CriarSolicitacaoFimRequest $request)
