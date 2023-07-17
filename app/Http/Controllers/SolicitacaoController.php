@@ -280,7 +280,7 @@ class SolicitacaoController extends Controller
 
         $colaborador->contato->update($data);
 
-        return redirect(route('solicitacao.index', ['solicitacao_id' => $request->solicitacao_id]));
+        return redirect(route('solicitacao.index', ['solicitacao_id' => $request->solicitacao_id]))->with('success', 'Colaborador Alterado com Sucesso!');;
 
     }
 
