@@ -4,7 +4,7 @@ namespace App\Http\Requests\Solicitacao;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CriarColaboradorRequest extends FormRequest
+class EditarColaboradorRequest extends FormRequest
 {
     public function rules()
     {
@@ -14,8 +14,8 @@ class CriarColaboradorRequest extends FormRequest
             'nome' => 'required|string',
             'cpf' => 'required|string',
             'grau_escolaridade' => 'required|string',
-            'experiencia_previa' => 'required|file',
-            'termo_responsabilidade' => 'required|file',
+            'experiencia_previa' => 'file',
+            'termo_responsabilidade' => 'file',
             'treinamento' => 'required|string',
             'email' => 'required|email',
             'telefone' => 'required|string',

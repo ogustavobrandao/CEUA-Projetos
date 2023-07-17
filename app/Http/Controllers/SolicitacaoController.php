@@ -14,6 +14,7 @@ use App\Http\Requests\Solicitacao\CriarResponsavelRequest;
 use App\Http\Requests\Solicitacao\CriarResultadoRequest;
 use App\Http\Requests\Solicitacao\CriarSolicitacaoFimRequest;
 use App\Http\Requests\Solicitacao\CriarSolicitacaoRequest;
+use App\Http\Requests\Solicitacao\EditarColaboradorRequest;
 use App\Models\AvaliacaoIndividual;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -223,12 +224,12 @@ class SolicitacaoController extends Controller
         $data = $request->all();
 
         $responsavel = Solicitacao::find($request->all()['solicitacao_id'])->responsavel;
-        if(isset($responsavel)){
-
+        if (isset($responsavel)) {
             $data['responsavel_id'] = $responsavel->id;
-            $colaborador = Colaborador::create($data);
 
-            //Implementar salvamento dos arquivos
+            $data = array_merge($data, $this->salvarArquivosColaborador($request));
+
+            $colaborador = Colaborador::create($data);
 
             $contato = new Contato();
 
@@ -237,15 +238,44 @@ class SolicitacaoController extends Controller
             $contato->colaborador_id = $colaborador->id;
             $contato->save();
 
-            return redirect(route('solicitacao.index', ['solicitacao_id' => $request->solicitacao_id]));
+            return redirect(route('solicitacao.index', ['solicitacao_id' => $request->solicitacao_id]))->with('success', 'Colaborador Cadastrado com Sucesso!');
         }
         return redirect()->back()->with('fail', 'Necessario cadastrar o responsavel primeiro!');
     }
 
-    public function editar_colaborador(CriarColaboradorRequest $request)
+    private function salvarArquivosColaborador($request, $nomes = null)
+    {
+        $nomeAnexos = [];
+
+        if (($request->hasFile('experiencia_previa') && $request->file('experiencia_previa')->isValid())) {
+            $extensao = $request->experiencia_previa->extension();
+            $nomeAnexoExperiencia = "experiencia_" . $request->solicitacao_id . date('Ymd') . date('His') . '.' . $extensao;
+            $request->experiencia_previa->storeAs('colaborador/experiencias/', $nomes['experiencia_previa'] ?? $nomeAnexoExperiencia);
+            $nomeAnexos['experiencia_previa'] = $nomeAnexoExperiencia;
+        }
+
+        if (($request->hasFile('termo_responsabilidade') && $request->file('termo_responsabilidade')->isValid())) {
+            $extensao = $request->termo_responsabilidade->extension();
+            $nomeAnexoTermo = "termo_responsabilidade_" . $request->solicitacao_id . date('Ymd') . date('His') . '.' . $extensao;
+            $request->termo_responsabilidade->storeAs('colaborador/termo_responsabilidade/', $nomes['termo_responsabilidade'] ?? $nomeAnexoTermo);
+            $nomeAnexos['termo_responsabilidade'] = $nomeAnexoTermo;
+        }
+
+        return $nomeAnexos;
+    }
+
+    public function editar_colaborador(EditarColaboradorRequest $request)
     {
         $data = $request->all();
         $colaborador = Colaborador::find($data['colaborador_id']);
+
+        $names = [
+            'experiencia_previa' => $colaborador->experiencia_previa ?? null,
+            'termo_responsabilidade' => $colaborador->termo_responsabilidade ?? null
+        ];
+
+        $data = array_merge($data, $this->salvarArquivosColaborador($request, $names));
+
         $colaborador->update($data);
 
         $colaborador->contato->update($data);

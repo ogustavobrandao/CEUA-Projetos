@@ -10,7 +10,7 @@
             </div>
             <!-- Conteúdo do formulário para adicionar colaboradores -->
 
-            <form id="form2" method="POST" action="{{route('solicitacao.colaborador.criar')}}" >
+            <form id="form2" method="POST" action="{{route('solicitacao.colaborador.criar')}}" enctype="multipart/form-data">
                 @csrf
                 <input type="hidden" name="solicitacao_id" value="{{$solicitacao->id}}">
                 <div class="modal-body">

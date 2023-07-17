@@ -10,7 +10,7 @@
             </div>
             <!-- Conteúdo do formulário para adicionar colaboradores -->
 
-            <form id="form2" method="POST" action="{{route('solicitacao.colaborador.editar')}}" >
+            <form id="form2" method="POST" action="{{route('solicitacao.colaborador.editar')}}" enctype="multipart/form-data">
                 @csrf
                 <input type="hidden" name="solicitacao_id" value="{{$solicitacao->id}}">
                 <input type="hidden" name="colaborador_id" value="{{$colaborador->id}}">
@@ -98,15 +98,19 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <label>Experiência Prévia:<strong style="color: red">*</strong></label>
-                                <input required name="experiencia_previa" class="form-control"
-                                       id="experiencia_previa" enctype="multipart/form-data" type="file">
+                                <input name="experiencia_previa" class="form-control"
+                                       id="experiencia_previa" type="file" style="width: 135px">
+                                <span
+                                    style="border: 1px gray solid; border-radius: 10px; text-align: center; width: 180px; position: absolute; bottom: 0px; left: 155px; height: 38px; padding-top: 5px; background-color: #dcfadf">Um Arquivo Já Foi Enviado</span>
                             </div>
                             <div class="col-sm-6">
                                     <label>Termo de Responsabilidade:<strong
                                             style="color: red">*</strong>
                                     </label>
-                                    <input required class="form-control" id="termo_responsabilidade" enctype="multipart/form-data" type="file"
-                                           name="termo_responsabilidade">
+                                    <input class="form-control" id="termo_responsabilidade" type="file"
+                                           name="termo_responsabilidade" style="width: 135px">
+                                <span
+                                    style="border: 1px gray solid; border-radius: 10px; text-align: center; width: 180px; position: absolute; bottom: 0px; left: 155px; height: 38px; padding-top: 5px; background-color: #dcfadf">Um Arquivo Já Foi Enviado</span>
                             </div>
                         </div>
                         <div class="row">
