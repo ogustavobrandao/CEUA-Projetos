@@ -75,10 +75,11 @@
                 <div class="mb-4">
                     @if(Auth::user()->tipo_usuario_id == 2)
                         @include('solicitacao.colaborador.form', ['avaliacao_id' => $avaliacao->id, 'solicitacao' => $solicitacao, 'avaliacao' => $avaliacao, 'tipo'
-                        => 2, 'id' => -1])
+                                => 2, 'id' => -1])
                     @elseif(Auth::user()->tipo_usuario_id == 3 && $solicitacao->status == 'avaliado'
                                 && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia')
-                        @include('solicitacao.colaborador.form', ['solicitacao' => $solicitacao, 'status' => $solicitacao->avaliacao->first()->avaliacao_individual->where('tipo',2)->first()->status])
+                        @include('solicitacao.colaborador.form', ['solicitacao' => $solicitacao, 'status' => $solicitacao->avaliacao->first()->avaliacao_individual->where('tipo',2)->first()->status,
+                                 'tipo'=>2, 'id' => -1])
                     @else
                         @include('solicitacao.colaborador.form', ['solicitacao' => $solicitacao])
                     @endif
@@ -145,7 +146,6 @@
                     </div>
                 </div>
             </div>
-
 
             <div id="dados_solicitacao">
                 <div class="mb-4">

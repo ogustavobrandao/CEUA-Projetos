@@ -99,7 +99,7 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <label>Experiência Prévia:<strong style="color: red">*</strong></label>
-                                @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2)
+                                @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2 || \Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 1)
                                     @if($colaborador->experiencia_previa == null)
                                         <br>
                                         <a class="btn btn-secondary" href="#">Não Enviado</a>
@@ -122,7 +122,7 @@
                                     <label>Termo de Responsabilidade:<strong
                                             style="color: red">*</strong>
                                     </label>
-                                @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2)
+                                @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2 || \Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 1)
                                     @if($colaborador->termo_responsabilidade == null)
                                         <br>
                                         <a class="btn btn-secondary" href="#">Não Enviado</a>

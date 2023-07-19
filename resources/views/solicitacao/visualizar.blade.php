@@ -152,7 +152,7 @@
                     @endif
                 </div>
             </div>
-            <div class="row mt-4 row">
+            <div class="row mt-4 my-4 row">
                 <div class="col-3">
                         <a type="button" class="btn btn-secondary w-100" href="{{ route('solicitacao.admin.index') }}">Voltar</a>
                 </div>
