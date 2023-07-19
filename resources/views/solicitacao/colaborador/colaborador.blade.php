@@ -3,6 +3,7 @@
         <div class="col-md-12">
             @if(Auth::user()->tipo_usuario_id == 2 || Auth::user()->tipo_usuario_id == 1)
                 <h2 class="titulo" id="titulo_2">3. Dados do(s) Colaborador(es) <strong style="color: red">*</strong>
+                    @csrf
                     @if(!isset($solicitacao->responsavel))
                         <small style="color: red; font-weight: bold">Necessária a criação de um
                             responsável</small>
@@ -38,8 +39,8 @@
     </div>
 </div>
 <div id="dados_colaborador">
+    @if(isset($solicitacao->responsavel->colaboradores))
     <div class="card p-3 bg-white" style="border-radius: 0px 0px 10px 10px;">
-
         <table class="table">
             <thead>
             <tr>
@@ -66,18 +67,35 @@
                     <td>
                         {{$colaborador->contato->telefone}}
                     </td>
+                    @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 3)
                     <td class="text-center">
                         <a class="btn btn-primary"
                            data-toggle="modal"
                            data-target="#modalEditarColaborador{{$colaborador->id}}">Abrir</a>
                         <a class="btn btn-danger" href="{{route('solicitacao.colaborador.deletar', ['id' => $colaborador->id])}}">Deletar</a>
                     </td>
+                    @elseif(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2)
+                        <td class="text-center">
+                            <a class="btn btn-primary"
+                               data-toggle="modal"
+                               data-target="#modalEditarColaborador{{$colaborador->id}}">Abrir</a>
+                        </td>
+                    @endif
                 </tr>
                 @include('solicitacao.colaborador.colaborador_edicao_modal', ['solicitacao' => $solicitacao, 'colaborador' => $colaborador])
             @endforeach
             </tbody>
         </table>
+        @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2)
+                <div class="px-3 pb-4">
+                    @include('component.botoes_new_form', ['id' => -1])
+                </div>
+            <div></div>
+        @else
+            <div class="modal-footer"></div>
+        @endif
     </div>
+    @endif
 </div>
 </div>
 

@@ -76,6 +76,11 @@
                     @if(Auth::user()->tipo_usuario_id == 2)
                         @livewire('form-colaborador', ['solicitacao' => $solicitacao, 'avaliacao' => $avaliacao, 'tipo'
                         => 2, 'id' => -1])
+                        @include('solicitacao.colaborador.colaborador', ['avaliacao_id' => $avaliacao->id, 'solicitacao' => $solicitacao, 'avaliacao' => $avaliacao, 'tipo'
+                        => 2, 'id' => -1])
+                    @elseif(Auth::user()->tipo_usuario_id == 3 && $solicitacao->status == 'avaliado'
+                                && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia')
+                        @include('solicitacao.colaborador.colaborador', ['solicitacao' => $solicitacao, 'status' => $solicitacao->avaliacao->first()->avaliacao_individual->where('tipo',2)->first()->status])
                     @else
                         @include('solicitacao.colaborador.colaborador', ['solicitacao' => $solicitacao])
                     @endif
