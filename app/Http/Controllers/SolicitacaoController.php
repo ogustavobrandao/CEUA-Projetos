@@ -292,20 +292,22 @@ class SolicitacaoController extends Controller
             return redirect()->back()->with('fail', 'Colaborador não encontrado.');
         }
 
-        $diretorioExperiencias = 'colaborador/experiencias/';
-        $diretorioTermoResponsabilidade = 'colaborador/termo_responsabilidade/';
-
-        $arquivos = [
-            'experiencia_previa' => $colaborador->experiencia_previa,
-            'termo_responsabilidade' => $colaborador->termo_responsabilidade,
+        $caminhos = [
+            'colaborador/experiencias/',
+            'colaborador/termo_responsabilidade/'
         ];
 
-        foreach ($arquivos as $campo => $arquivo) {
+        $arquivos = [
+            $colaborador->experiencia_previa,
+            $colaborador->termo_responsabilidade,
+        ];
+
+        foreach ($arquivos as $index => $arquivo) {
             if (!empty($arquivo)) {
-                $diretorio = ($campo === 'experiencia_previa') ? $diretorioExperiencias : $diretorioTermoResponsabilidade;
-                $caminhoCompleto = Storage::path($diretorio . $arquivo);
+                $diretorioArquivo = $caminhos[$index] . $arquivo;
+                $caminhoCompleto = Storage::path($diretorioArquivo);
                 if (file_exists($caminhoCompleto)) {
-                    unlink($caminhoCompleto);
+                    Storage::delete($diretorioArquivo);
                 }
             }
         }

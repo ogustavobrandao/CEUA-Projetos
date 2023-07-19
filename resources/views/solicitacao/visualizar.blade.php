@@ -39,7 +39,7 @@
                     </div>
                 </div>
                 <div class="mb-4">
-                    @livewire('form-colaborador', ['solicitacao' => $solicitacao])
+                    @include('solicitacao.colaborador.form')
                 </div>
                 <div class="mb-4">
                     <div class="card p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_3">
