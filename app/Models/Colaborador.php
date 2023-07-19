@@ -33,5 +33,7 @@ class Colaborador extends Model
     public function instituicao(){
         return $this->belongsTo('App\Models\Instituicao');
     }
-
+    public function avaliacao_individual(){
+        return $this->hasOne(AvaliacaoIndividual::class);
+    }
 }

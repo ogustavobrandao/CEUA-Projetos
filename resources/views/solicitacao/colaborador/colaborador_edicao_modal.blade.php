@@ -94,23 +94,51 @@
                                 </select>
                             </div>
                         </div>
+                        <br>
                         <h5>Informações Complementares</h5>
                         <div class="row">
                             <div class="col-sm-6">
                                 <label>Experiência Prévia:<strong style="color: red">*</strong></label>
-                                <input name="experiencia_previa" class="form-control"
-                                       id="experiencia_previa" type="file" style="width: 135px">
-                                <span
-                                    style="border: 1px gray solid; border-radius: 10px; text-align: center; width: 180px; position: absolute; bottom: 0px; left: 155px; height: 38px; padding-top: 5px; background-color: #dcfadf">Um Arquivo Já Foi Enviado</span>
+                                @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2)
+                                    @if($colaborador->experiencia_previa == null)
+                                        <br>
+                                        <a class="btn btn-secondary" href="#">Não Enviado</a>
+                                    @else
+                                        <br>
+                                        <a class="btn btn-primary m-3"
+                                           href="{{route('experiencias_previasColaborador.download', ['colaborador_id' => $colaborador->id])}}">Baixar
+                                            Experiência Prévia</a>
+                                    @endif
+                                @else
+                                    <input name="experiencia_previa" class="form-control"
+                                           id="experiencia_previa" type="file" style="width: 135px">
+                                    @if($colaborador->experiencia_previa != null)
+                                        <span
+                                            style="border: 1px gray solid; border-radius: 10px; text-align: center; width: 180px; position: absolute; bottom: 0px; left: 155px; height: 38px; padding-top: 5px; background-color: #dcfadf">Um Arquivo Já Foi Enviado</span>
+                                    @endif
+                                @endif
                             </div>
                             <div class="col-sm-6">
                                     <label>Termo de Responsabilidade:<strong
                                             style="color: red">*</strong>
                                     </label>
+                                @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2)
+                                    @if($colaborador->termo_responsabilidade == null)
+                                        <br>
+                                        <a class="btn btn-secondary" href="#">Não Enviado</a>
+                                    @else
+                                        <a class="btn btn-primary m-3"
+                                           href="{{route('termo_responsabilidadeColaborador.download', ['colaborador_id' => $colaborador->id])}}">Baixar
+                                            Termo de Responsabilidade</a>
+                                    @endif
+                                @else
                                     <input class="form-control" id="termo_responsabilidade" type="file"
                                            name="termo_responsabilidade" style="width: 135px">
-                                <span
-                                    style="border: 1px gray solid; border-radius: 10px; text-align: center; width: 180px; position: absolute; bottom: 0px; left: 155px; height: 38px; padding-top: 5px; background-color: #dcfadf">Um Arquivo Já Foi Enviado</span>
+
+                                    @if($colaborador->termo_responsabilidade != null)
+                                        <span style="border: 1px gray solid; border-radius: 10px; text-align: center; width: 180px; position: absolute; bottom: 0px; left: 155px; height: 38px; padding-top: 5px; background-color: #dcfadf">Um Arquivo Já Foi Enviado</span>
+                                    @endif
+                                @endif
                             </div>
                         </div>
                         <div class="row">
@@ -125,10 +153,36 @@
                     </div>
 
                 </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-primary">Atualizar</button>
-            </div>
+                @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 3)
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Atualizar</button>
+                    </div>
+                @else
+                    <div class="modal-footer">
+                    <button class="btn btn-secondary w-auto" data-dismiss="modal">Voltar</button>
+                    </div>
+                @endif
+                @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2)
+                    <div class="px-3 pb-4">
+                        @include('component.botoes_new_form', ['id' => -1])
+                    </div>
+                    <div></div>
+                @else
+                    <div class="modal-footer"></div>
+                @endif
             </form>
         </div>
     </div>
 </div>
+<script src="{{ asset('js/masks.js') }}"></script>
+<script>
+
+
+    var isAdmin = <?php echo (Auth::user()->tipo_usuario_id == 1 || Auth::user()->tipo_usuario_id == 2) ? 'true' : 'false'; ?>;
+
+    if (isAdmin) {
+        $(document).ready(function () {
+            $('input, select, textarea').prop('disabled', true);
+        });
+    }
+</script>

@@ -20,6 +20,10 @@ class AvaliacaoIndividual extends Model
     public function responsavel(){
         return $this->belongsTo('App\Models\Responsavel');
     }
+    public function colaborador()
+    {
+        return $this->belongsTo('App\Models\Colaborador');
+    }
 
     public function resultado(){
         return $this->belongsTo('App\Models\Resultado');

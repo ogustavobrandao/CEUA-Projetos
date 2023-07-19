@@ -287,10 +287,34 @@ class SolicitacaoController extends Controller
     public function deletar_colaborador($id)
     {
         $colaborador = Colaborador::find($id);
-        $solicitacao_id = $colaborador->responsavel->solicitacao->id;
-        $colaborador->delete();
-        return redirect(route('solicitacao.index', ['solicitacao_id' => $solicitacao_id]));
 
+        if (!$colaborador) {
+            return redirect()->back()->with('fail', 'Colaborador não encontrado.');
+        }
+
+        $diretorioExperiencias = 'colaborador/experiencias/';
+        $diretorioTermoResponsabilidade = 'colaborador/termo_responsabilidade/';
+
+        $arquivos = [
+            'experiencia_previa' => $colaborador->experiencia_previa,
+            'termo_responsabilidade' => $colaborador->termo_responsabilidade,
+        ];
+
+        foreach ($arquivos as $campo => $arquivo) {
+            if (!empty($arquivo)) {
+                $diretorio = ($campo === 'experiencia_previa') ? $diretorioExperiencias : $diretorioTermoResponsabilidade;
+                $caminhoCompleto = Storage::path($diretorio . $arquivo);
+                if (file_exists($caminhoCompleto)) {
+                    unlink($caminhoCompleto);
+                }
+            }
+        }
+
+        $solicitacao_id = $colaborador->responsavel->solicitacao->id;
+
+        $colaborador->delete();
+
+        return redirect()->route('solicitacao.index', ['solicitacao_id' => $solicitacao_id]);
     }
 
     public function criar_solicitacao_fim(CriarSolicitacaoFimRequest $request)
@@ -309,8 +333,7 @@ class SolicitacaoController extends Controller
         return redirect(route('solicitacao.index', ['solicitacao_id' => $solicitacao->id]));
     }
 
-    public
-    function criar_modelo_animal(CriarModeloAnimalRequest $request)
+    public function criar_modelo_animal(CriarModeloAnimalRequest $request)
     {
         $data = $request->all();
 
