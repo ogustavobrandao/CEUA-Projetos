@@ -269,12 +269,15 @@ class SolicitacaoController extends Controller
         $data = $request->all();
         $colaborador = Colaborador::find($data['colaborador_id']);
 
-        $names = [
+        $nomes = [
             'experiencia_previa' => $colaborador->experiencia_previa ?? null,
             'termo_responsabilidade' => $colaborador->termo_responsabilidade ?? null
         ];
 
-        $data = array_merge($data, $this->salvarArquivosColaborador($request, $names));
+        unset($data["experiencia_previa"]);
+        unset($data["termo_responsabilidade"]);
+
+        $this->salvarArquivosColaborador($request, $nomes);
 
         $colaborador->update($data);
 
@@ -340,15 +343,15 @@ class SolicitacaoController extends Controller
         $data = $request->all();
 
         if (($request->hasFile('termo_consentimento') && $request->file('termo_consentimento')->isValid())) {
-            $anexo = $request->termo_consentimento->extension();
-            $nomeAnexo = "tcle_" . $request->solicitacao_id . date('Ymd') . date('His') . '.' . $anexo;
+            $extensao = $request->termo_consentimento->extension();
+            $nomeAnexo = "tcle_" . $request->solicitacao_id . date('Ymd') . date('His') . '.' . $extensao;
             $request->termo_consentimento->storeAs('termos/', $nomeAnexo);
             $data['termo_consentimento'] = $nomeAnexo;
         }
 
         if (($request->hasFile('licencas_previas') && $request->file('licencas_previas')->isValid())) {
-            $anexo = $request->termo_consentimento->extension();
-            $nomeAnexo = "licencas_previas" . $request->solicitacao_id . date('Ymd') . date('His') . '.' . $anexo;
+            $extensao = $request->licencas_previas->extension();
+            $nomeAnexo = "licencas_previas" . $request->solicitacao_id . date('Ymd') . date('His') . '.' . $extensao;
             $request->licencas_previas->storeAs('licencas_previas/', $nomeAnexo);
             $data['licencas_previas'] = $nomeAnexo;
         }
@@ -372,24 +375,32 @@ class SolicitacaoController extends Controller
         return redirect(route('solicitacao.index', ['solicitacao_id' => $request->solicitacao_id]))->with('success', 'Modelo Animal Criado com Sucesso!');
     }
 
-    public
-    function atualizar_modelo_animal(AtualizarModeloAnimalRequest $request)
+    public function atualizar_modelo_animal(AtualizarModeloAnimalRequest $request)
     {
         $modelo_animal = ModeloAnimal::find($request->modelo_animal_id);
 
+        $data = $request->all();
+
         if (($request->hasFile('termo_consentimento') && $request->file('termo_consentimento')->isValid())) {
-            $nomeAnexo = $modelo_animal->termo_consentimento;
-            $request->termo_consentimento->storeAs('termos/', $nomeAnexo);
-            $request->termo_consentimento = $nomeAnexo;
+            $extensao = $request->termo_consentimento->extension();
+            $nomeAnexo = "tcle_" . $request->solicitacao_id . date('Ymd') . date('His') . '.' . $extensao;
+            $request->termo_consentimento->storeAs('termos/', $modelo_animal->termo_consentimento ?? $nomeAnexo);
+            $data->termo_consentimento = $nomeAnexo;
         }
 
         if (($request->hasFile('licencas_previas') && $request->file('licencas_previas')->isValid())) {
-            $nomeAnexo = $modelo_animal->licencas_previas;
-            $request->licencas_previas->storeAs('licencas_previas/', $nomeAnexo);
-            $request->licencas_previas = $nomeAnexo;
+            $extensao = $request->licencas_previas->extension();
+            $nomeAnexo = "licencas_previas" . $request->solicitacao_id . date('Ymd') . date('His') . '.' . $extensao;
+            $request->licencas_previas->storeAs('licencas_previas/', $modelo_animal->licencas_previas ?? $nomeAnexo);
+            $data['licencas_previas'] = $nomeAnexo;
         }
 
-        $modelo_animal->update($request->all());
+        unset($data['termo_consentimento']);
+        if ($modelo_animal->licencas_previas != null)
+            unset($data['licencas_previas']);
+
+
+        $modelo_animal->update($data);
 
 
         $perfil = $modelo_animal->perfil;
@@ -408,8 +419,7 @@ class SolicitacaoController extends Controller
         return redirect(route('solicitacao.planejamento.index', ['modelo_animal_id' => $request->modelo_animal_id]))->with('success', 'Modelo Animal Atualizado com Sucesso!');
     }
 
-    public
-    function deletar_modelo_animal($id)
+    public function deletar_modelo_animal($id)
     {
 
         ModeloAnimal::find($id)->delete();
@@ -417,8 +427,7 @@ class SolicitacaoController extends Controller
 
     }
 
-    public
-    function criar_perfil(Request $request)
+    public function criar_perfil(Request $request)
     {
         $solicitacao = Solicitacao::find($request->solicitacao_id);
         $modelo_animal = ModeloAnimal::where('solicitacao_id', $solicitacao->id)->first();
@@ -451,44 +460,37 @@ class SolicitacaoController extends Controller
         return redirect(route('solicitacao.form', ['solicitacao_id' => $request->solicitacao_id]));
     }
 
-    public
-    function downloadExperienciaPreviaColaborador($colaborador_id)
+    public function downloadExperienciaPreviaColaborador($colaborador_id)
     {
         $colaborador = Colaborador::find($colaborador_id);
-        return Storage::download('experiencias_previasColaborador/' . $colaborador->experiencia_previa);
+        return Storage::download('colaborador/experiencias/' . $colaborador->experiencia_previa);
     }
 
-    public
-    function downloadTermoResponsabilidadeColaborador($colaborador_id)
+    public function downloadTermoResponsabilidadeColaborador($colaborador_id)
     {
         $colaborador = Colaborador::find($colaborador_id);
-        return Storage::download('termos_responsabilidadesColaborador/' . $colaborador->termo_responsabilidade);
+        return Storage::download('colaborador/termo_responsabilidade/' . $colaborador->termo_responsabilidade);
     }
 
-
-    public
-    function downloadAnexoAmostraPlanejamento($planejamento_id)
+    public function downloadAnexoAmostraPlanejamento($planejamento_id)
     {
         $planejamento = Planejamento::find($planejamento_id);
         return Storage::download('anexo_amostra_planejamento/' . $planejamento->anexo_amostra_planejamento);
     }
 
-    public
-    function downloadLicencasPrevias($modelo_animal_id)
+    public function downloadLicencasPrevias($modelo_animal_id)
     {
         $modelo_animal = ModeloAnimal::find($modelo_animal_id);
-        return Storage::download('licencas_previas/' . $modelo_animal->licenca_previa);
+        return Storage::download('licencas_previas/' . $modelo_animal->licencas_previas);
     }
 
-    public
-    function downloadTermoResponsabilidade($responsavel_id)
+    public function downloadTermoResponsabilidade($responsavel_id)
     {
         $responsavel = Responsavel::find($responsavel_id);
         return Storage::download('termos_responsabilidades/' . $responsavel->termo_responsabilidade);
     }
 
-    public
-    function downloadFormula($planejamento_id)
+    public function downloadFormula($planejamento_id)
     {
         $planejamento = Planejamento::find($planejamento_id);
         return Storage::download('formulas/' . $planejamento->anexo_formula);
@@ -588,8 +590,7 @@ class SolicitacaoController extends Controller
                 'avaliacaoEutanasia', 'avaliacaoResultado', 'avaliacaoModeloAnimal'));
     }
 
-    public
-    function criar_planejamento(CriarPlanejamentoRequest $request)
+    public function criar_planejamento(CriarPlanejamentoRequest $request)
     {
         $request->validated();
         $modelo_animal = ModeloAnimal::find($request->modelo_animal_id);
@@ -597,7 +598,7 @@ class SolicitacaoController extends Controller
             $planejamento = $modelo_animal->planejamento;
 
             if (($request->hasFile('anexo_formula') && $request->file('anexo_formula')->isValid())) {
-                if ($planejamento->anexo != null) {
+                if ($planejamento->anexo_formula != null) {
                     $nomeAnexo = $planejamento->anexo_formula;
                 } else {
                     $anexo = $request->anexo_formula->extension();
@@ -663,8 +664,7 @@ class SolicitacaoController extends Controller
         return redirect(route('solicitacao.planejamento.index', ['modelo_animal_id' => $planejamento->modelo_animal->id]));
     }
 
-    public
-    function criar_condicoes_animal(CriarCondicoesAnimalRequest $request)
+    public function criar_condicoes_animal(CriarCondicoesAnimalRequest $request)
     {
         $request->validated();
         $planejamento = Planejamento::find($request->planejamento_id);
@@ -695,8 +695,7 @@ class SolicitacaoController extends Controller
         return redirect(route('solicitacao.planejamento.index', ['modelo_animal_id' => $planejamento->modelo_animal->id]));
     }
 
-    public
-    function criar_procedimento(CriarProcedimentoRequest $request)
+    public function criar_procedimento(CriarProcedimentoRequest $request)
     {
         $request->validated();
         $planejamento = Planejamento::find($request->planejamento_id);

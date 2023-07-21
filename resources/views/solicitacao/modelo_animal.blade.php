@@ -582,6 +582,7 @@
 </div>
 <script>
     $(document).ready(function () {
+        $("#anexo_cqb").hide().find('input, radio').prop('disabled', true);
 
         @if(isset($modelo_animal) && $modelo_animal->geneticamente_modificado == true)
         $("#geneticamente_modificado_sim").attr('checked', true);
