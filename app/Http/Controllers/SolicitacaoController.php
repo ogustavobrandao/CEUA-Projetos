@@ -459,48 +459,67 @@ class SolicitacaoController extends Controller
 
         return redirect(route('solicitacao.form', ['solicitacao_id' => $request->solicitacao_id]));
     }
+    private function verifyPath($path)
+    {
+        $validPath = Storage::exists($path);
+        if (!$validPath)
+            return redirect()->back()->with('fail', 'Arquivo não encontrado, é necessário solicitar o reenvio!');
+    }
 
     public function downloadExperienciaPreviaColaborador($colaborador_id)
     {
         $colaborador = Colaborador::find($colaborador_id);
-        return Storage::download('colaborador/experiencias/' . $colaborador->experiencia_previa);
+        $path = 'colaborador/experiencias/' . $colaborador->experiencia_previa;
+        $this->verifyPath($path);
+        return Storage::download($path);
     }
 
     public function downloadTermoResponsabilidadeColaborador($colaborador_id)
     {
         $colaborador = Colaborador::find($colaborador_id);
-        return Storage::download('colaborador/termo_responsabilidade/' . $colaborador->termo_responsabilidade);
+        $path = 'colaborador/termo_responsabilidade/' . $colaborador->termo_responsabilidade;
+        $this->verifyPath($path);
+        return Storage::download($path);
     }
 
     public function downloadAnexoAmostraPlanejamento($planejamento_id)
     {
         $planejamento = Planejamento::find($planejamento_id);
-        return Storage::download('anexo_amostra_planejamento/' . $planejamento->anexo_amostra_planejamento);
+        $path = 'anexo_amostra_planejamento/' . $planejamento->anexo_amostra_planejamento;
+        $this->verifyPath($path);
+        return Storage::download($path);
     }
 
     public function downloadLicencasPrevias($modelo_animal_id)
     {
         $modelo_animal = ModeloAnimal::find($modelo_animal_id);
-        return Storage::download('licencas_previas/' . $modelo_animal->licencas_previas);
+        $path = 'licencas_previas/' . $modelo_animal->licencas_previas;
+        $this->verifyPath($path);
+        return Storage::download($path);
     }
 
     public function downloadTermoResponsabilidade($responsavel_id)
     {
         $responsavel = Responsavel::find($responsavel_id);
-        return Storage::download('termos_responsabilidades/' . $responsavel->termo_responsabilidade);
+        $path = 'termos_responsabilidades/' . $responsavel->termo_responsabilidade;
+        $this->verifyPath($path);
+        return Storage::download($path);
     }
 
     public function downloadFormula($planejamento_id)
     {
         $planejamento = Planejamento::find($planejamento_id);
-        return Storage::download('formulas/' . $planejamento->anexo_formula);
+        $path = 'formulas/' . $planejamento->anexo_formula;
+        $this->verifyPath($path);
+        return Storage::download($path);
     }
 
-    public
-    function downloadTermo($modelo_animal_id)
+    public function downloadTermo($modelo_animal_id)
     {
         $modelo_animal = ModeloAnimal::find($modelo_animal_id);
-        return Storage::download('termos/' . $modelo_animal->termo_consentimento);
+        $path = 'termos/' . $modelo_animal->termo_consentimento;
+        $this->verifyPath($path);
+        return Storage::download($path);
     }
 
 // public function downloadTreinamento($responsavel_id)
@@ -509,15 +528,15 @@ class SolicitacaoController extends Controller
 //     return Storage::download('treinamentos/' . $responsavel->treinamento);
 // }
 
-    public
-    function downloadExperiencia($responsavel_id)
+    public function downloadExperiencia($responsavel_id)
     {
         $responsavel = Responsavel::find($responsavel_id);
-        return Storage::download('experiencias/' . $responsavel->experiencia_previa);
+        $path = 'experiencias/' . $responsavel->experiencia_previa;
+        $this->verifyPath($path);
+        return Storage::download($path);
     }
 
-    public
-    function index_planejamento($modelo_animal_id)
+    public function index_planejamento($modelo_animal_id)
     {
         $modelo_animal = ModeloAnimal::find($modelo_animal_id);
         $planejamento = Planejamento::where('modelo_animal_id', $modelo_animal_id)->first();
@@ -559,8 +578,7 @@ class SolicitacaoController extends Controller
             compact('modelo_animal', 'planejamento', 'solicitacao', 'condicoes_animal', 'procedimento', 'operacao', 'eutanasia', 'resultado'));
     }
 
-    public
-    function avaliarPlanejamento($modelo_animal_id)
+    public function avaliarPlanejamento($modelo_animal_id)
     {
         $modelo_animal = ModeloAnimal::find($modelo_animal_id);
         $planejamento = Planejamento::where('modelo_animal_id', $modelo_animal_id)->first();
