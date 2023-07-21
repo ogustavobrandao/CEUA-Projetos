@@ -53,6 +53,8 @@ Route::group(['middleware' => ['auth', 'verified', 'checkAdministrador']], funct
     Route::get('/solicitacao/index_admin', [App\Http\Controllers\SolicitacaoController::class, 'index_admin'])->name('solicitacao.admin.index');
     Route::post('/solicitacao/atribuir_avaliador', [App\Http\Controllers\AvaliadorController::class, 'atribuir'])->name('avaliador.atribuir');
     Route::post('/solicitacao/remover_avaliador', [App\Http\Controllers\AvaliadorController::class, 'remover'])->name('avaliador.remover');
+    Route::get('/solicitacao/{solicitacao_id}/visualizar', [App\Http\Controllers\SolicitacaoController::class, 'visualizar'])->name('solicitacao.admin.visualizar');
+
 });
 
 Route::group(['middleware' => ['auth', 'verified', 'checkProprietarioAvaliador']], function () {
@@ -79,6 +81,8 @@ Route::group(['middleware' => ['auth', 'verified', 'checkProprietario']], functi
     Route::get('/formularioE/edit/{solicitacao_id}', [App\Http\Controllers\SolicitacaoController::class, 'editForm'])->name('solicitacao.edit.form');
     Route::post('/solicitacao/criar_responsavel', [App\Http\Controllers\SolicitacaoController::class, 'criar_responsavel'])->name('solicitacao.responsavel.criar');
     Route::post('/solicitacao/criar_colaborador', [App\Http\Controllers\SolicitacaoController::class, 'criar_colaborador'])->name('solicitacao.colaborador.criar');
+    Route::post('/solicitacao/editar_colaborador', [App\Http\Controllers\SolicitacaoController::class, 'editar_colaborador'])->name('solicitacao.colaborador.editar');
+    Route::get('/solicitacao/colaborador/{id}', [App\Http\Controllers\SolicitacaoController::class, 'deletar_colaborador'])->name('solicitacao.colaborador.deletar');
     Route::post('/solicitacao/criar_eutanasia', [App\Http\Controllers\SolicitacaoController::class, 'criar_eutanasia'])->name('solicitacao.eutanasia.criar');
     Route::post('/solicitacao/criar_modelo_animal', [App\Http\Controllers\SolicitacaoController::class, 'criar_modelo_animal'])->name('solicitacao.modelo_animal.criar');
     Route::post('/solicitacao/atualizar_modelo_animal', [App\Http\Controllers\SolicitacaoController::class, 'atualizar_modelo_animal'])->name('solicitacao.modelo_animal.update');

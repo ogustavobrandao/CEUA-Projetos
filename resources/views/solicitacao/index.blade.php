@@ -74,9 +74,14 @@
                 </div>
                 <div class="mb-4">
                     @if(Auth::user()->tipo_usuario_id == 2)
-                        @livewire('form-colaborador', ['solicitacao' => $solicitacao, 'avaliacao' => $avaliacao, 'tipo' => 2, 'id' => -1])
+                        @include('solicitacao.colaborador.form', ['avaliacao_id' => $avaliacao->id, 'solicitacao' => $solicitacao, 'avaliacao' => $avaliacao, 'tipo'
+                                => 2, 'id' => -1])
+                    @elseif(Auth::user()->tipo_usuario_id == 3 && $solicitacao->status == 'avaliado'
+                                && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia')
+                        @include('solicitacao.colaborador.form', ['solicitacao' => $solicitacao, 'status' => $solicitacao->avaliacao->first()->avaliacao_individual->where('tipo',2)->first()->status,
+                                 'tipo'=>2, 'id' => -1])
                     @else
-                        @livewire('form-colaborador', ['solicitacao' => $solicitacao])
+                        @include('solicitacao.colaborador.form', ['solicitacao' => $solicitacao])
                     @endif
 
                 </div>
@@ -141,7 +146,6 @@
                     </div>
                 </div>
             </div>
-
 
             <div id="dados_solicitacao">
                 <div class="mb-4">
@@ -254,9 +258,11 @@
                         <div class="row mt-4 row">
                             <div class="col-3">
                                 @if(Auth::user()->tipo_usuario_id == 2)
-                                    <a type="button" class="btn btn-secondary w-100" href="{{ route('solicitacao.avaliador.index') }}">Voltar</a>
+                                    <a type="button" class="btn btn-secondary w-100"
+                                       href="{{ route('solicitacao.avaliador.index') }}">Voltar</a>
                                 @elseif(Auth::user()->tipo_usuario_id == 3)
-                                    <a type="button" class="btn btn-secondary w-100" href="{{ route('solicitacao.solicitante.index') }}">Voltar</a>
+                                    <a type="button" class="btn btn-secondary w-100"
+                                       href="{{ route('solicitacao.solicitante.index') }}">Voltar</a>
                                 @endif
                             </div>
                             <div class="col-4">
@@ -282,13 +288,13 @@
                                     ($solicitacao->status == 'avaliado' && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia'))
                                     && (isset($solicitacao) && isset($solicitacao->responsavel) && count($solicitacao->modelosAnimais) > 0) )
 
-                                        <a id="concluir-btn" class="btn w-100"
-                                           href="#ModalConcluir"
-                                           data-toggle="modal"
-                                           style="border-color: #1d68a7; color: #1d68a7; background-color: #c0ddf6"
-                                           title="Concluir Solicitação">Concluir Solicitação</a>
+                                    <a id="concluir-btn" class="btn w-100"
+                                       href="#ModalConcluir"
+                                       data-toggle="modal"
+                                       style="border-color: #1d68a7; color: #1d68a7; background-color: #c0ddf6"
+                                       title="Concluir Solicitação">Concluir Solicitação</a>
 
-                                    @else
+                                @else
                                     @if(Auth::user()->tipo_usuario_id != 2 && Auth::user()->tipo_usuario_id != 1)
                                         <button class="btn btn-secondary w-75" disabled>Concluir Solicitação</button>
                                     @endif
@@ -408,7 +414,8 @@
         </div>
     </div>
     <!-- Modal de confirmação-->
-    <div class="modal fade" id="ModalConcluir" tabindex="-1" role="dialog" aria-labelledby="Modal_confir" aria-hidden="true">
+    <div class="modal fade" id="ModalConcluir" tabindex="-1" role="dialog" aria-labelledby="Modal_confir"
+         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content ">
                 <div class="modal-header">
@@ -418,11 +425,13 @@
                     </button>
                 </div>
                 <div class="modal-body alert-danger">
-                    <p>Após confirmação, não será possivel editar a solicitação até que seja avaliada, você tem certeza que deseja concluir ?</p>
+                    <p>Após confirmação, não será possivel editar a solicitação até que seja avaliada, você tem certeza
+                        que deseja concluir ?</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <a href="{{ route('solicitacao.concluir', ['solicitacao_id' => $solicitacao->id]) }}" class="btn btn-success">Confirmar</a>
+                    <a href="{{ route('solicitacao.concluir', ['solicitacao_id' => $solicitacao->id]) }}"
+                       class="btn btn-success">Confirmar</a>
                 </div>
             </div>
         </div>

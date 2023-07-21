@@ -34,7 +34,7 @@
                     </div>
                     <div id="modelo_animal">
                         <div class="card shadow-lg p-3 bg-white" style="border-radius: 0px 0px 10px 10px">
-                            <form method="POST" action="{{route('solicitacao.modelo_animal.update')}}"
+                            <form id="form_modelo_animal_update" method="POST" action="{{route('solicitacao.modelo_animal.update')}}"
                                   enctype="multipart/form-data">
                                 @csrf
                                 <input type="hidden" name="modelo_animal_id" value="{{$modelo_animal->id}}">
@@ -242,6 +242,8 @@
                             <a type="button" class="btn btn-secondary w-100" href="{{ route('avaliador.solicitacao.avaliar', ['solicitacao_id' => $solicitacao->id]) }}">Voltar</a>
                         @elseif(Auth::user()->tipo_usuario_id == 3)
                             <a type="button" class="btn btn-secondary w-100" href="{{ route('solicitacao.index', ['solicitacao_id' => $solicitacao->id]) }}">Voltar</a>
+                        @elseif(Auth::user()->tipo_usuario_id == 1)
+                            <a type="button" class="btn btn-secondary w-100" href="{{ route('solicitacao.admin.visualizar', ['solicitacao_id' => $solicitacao->id]) }}">Voltar</a>
                         @endif
                     </div>
                 </div>

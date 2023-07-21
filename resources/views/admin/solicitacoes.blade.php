@@ -39,7 +39,7 @@
                                 <td>{{$solicitacao->titulo_pt}}</td>
                                 <td>{{$solicitacao->user->name}}</td>
                                 <td class="text-center">
-                                    <a class="btn btn-group" href="#"><i
+                                    <a class="btn btn-group" href="{{ route('solicitacao.admin.visualizar', ['solicitacao_id' => $solicitacao->id]) }}"><i
                                             class="fa-solid fa-up-right-from-square"></i></a>
                                     @if($solicitacao->status == "avaliando")
                                         <button class="btn btn-group" type="button" data-toggle="modal"
