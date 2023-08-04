@@ -54,6 +54,8 @@ Route::group(['middleware' => ['auth', 'verified', 'checkAdministrador']], funct
     Route::post('/solicitacao/atribuir_avaliador', [App\Http\Controllers\AvaliadorController::class, 'atribuir'])->name('avaliador.atribuir');
     Route::post('/solicitacao/remover_avaliador', [App\Http\Controllers\AvaliadorController::class, 'remover'])->name('avaliador.remover');
     Route::get('/solicitacao/{solicitacao_id}/visualizar', [App\Http\Controllers\SolicitacaoController::class, 'visualizar'])->name('solicitacao.admin.visualizar');
+    Route::get('/solicitacao/{solicitacao_id}/apreciacao', [App\Http\Controllers\SolicitacaoController::class, 'aprovar_avaliacao'])->name('solicitacao.admin.apreciacao');
+    Route::get('/historico_modal/{solicitacao_id}', [App\Http\Controllers\SolicitacaoController::class, 'HistoricoModal'])->name('historico.modal');
 
 });
 
@@ -83,10 +85,12 @@ Route::group(['middleware' => ['auth', 'verified', 'checkProprietario']], functi
     Route::post('/solicitacao/criar_colaborador', [App\Http\Controllers\SolicitacaoController::class, 'criar_colaborador'])->name('solicitacao.colaborador.criar');
     Route::post('/solicitacao/editar_colaborador', [App\Http\Controllers\SolicitacaoController::class, 'editar_colaborador'])->name('solicitacao.colaborador.editar');
     Route::get('/solicitacao/colaborador/{id}', [App\Http\Controllers\SolicitacaoController::class, 'deletar_colaborador'])->name('solicitacao.colaborador.deletar');
+    Route::get('/solicitacao/colaborador_tabela/{id}', [App\Http\Controllers\SolicitacaoController::class, 'atualizar_colaborador_tabela'])->name('solicitacao.colaborador_tabela');
     Route::post('/solicitacao/criar_eutanasia', [App\Http\Controllers\SolicitacaoController::class, 'criar_eutanasia'])->name('solicitacao.eutanasia.criar');
     Route::post('/solicitacao/criar_modelo_animal', [App\Http\Controllers\SolicitacaoController::class, 'criar_modelo_animal'])->name('solicitacao.modelo_animal.criar');
     Route::post('/solicitacao/atualizar_modelo_animal', [App\Http\Controllers\SolicitacaoController::class, 'atualizar_modelo_animal'])->name('solicitacao.modelo_animal.update');
     Route::get('/solicitacao/remover_modelo_animal/{id}', [App\Http\Controllers\SolicitacaoController::class, 'deletar_modelo_animal'])->name('solicitacao.modelo_animal.delete');
+    Route::get('/solicitacao/modelo_animal_tabela/{id}', [App\Http\Controllers\SolicitacaoController::class, 'atualizar_modelo_animal_tabela'])->name('solicitacao.modelo_animal_tabela');
     Route::post('/solicitacao/criar_perfil', [App\Http\Controllers\SolicitacaoController::class, 'criar_perfil'])->name('solicitacao.perfil.criar');
     Route::post('/solicitacao/criar_condicoes_animal', [App\Http\Controllers\SolicitacaoController::class, 'criar_condicoes_animal'])->name('solicitacao.condicoes_animal.criar');
     Route::post('/solicitacao/criar_planejamento', [App\Http\Controllers\SolicitacaoController::class, 'criar_planejamento'])->name('solicitacao.planejamento.criar');
