@@ -61,6 +61,13 @@ html {
     background-color: #972E3F !important;
 }
 
+.nav_color {
+    background-color: #6c757d  !important;
+}
+.nav_color .active {
+    background-color: #972E3F !important;
+}
+
 .navbar_color1 {
     background-color: #071D41;
 }
@@ -4560,12 +4567,16 @@ input[type=button].btn-block {
 
 .nav-pills .nav-link {
     border-radius: 0.25rem;
+    color: #972E3F ;
+    font-size: large;
+    background-color: #dbdbdb;
+    transition: all;
 }
 
 .nav-pills .nav-link.active,
 .nav-pills .show > .nav-link {
     color: #fff;
-    background-color: #3490dc;
+    background-color: #972E3F;
 }
 
 .nav-fill > .nav-link,
@@ -8434,6 +8445,10 @@ button.bg-dark:focus {
 
 .shadow-lg {
     box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
+}
+
+.shadow-topoff {
+    box-shadow: 0 15px 1rem 0rem rgba(0, 0, 0, 0.175) !important;
 }
 
 .shadow-none {
