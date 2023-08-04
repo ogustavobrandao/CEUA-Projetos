@@ -3,6 +3,8 @@
 namespace App\Http\Requests\Solicitacao;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class CriarColaboradorRequest extends FormRequest
 {
@@ -14,9 +16,10 @@ class CriarColaboradorRequest extends FormRequest
             'nome' => 'required|string',
             'cpf' => 'required|string',
             'grau_escolaridade' => 'required|string',
-            'experiencia_previa' => 'required|file',
-            'termo_responsabilidade' => 'required|file',
-            'treinamento' => 'required|string',
+            'opcao_experiencia_previa' => 'in:on,off',
+            'experiencia_previa' => 'required_if:opcao_experiencia_previa,on|mimes:pdf',
+            'termo_responsabilidade' => 'mimes:pdf',
+            'treinamento' =>'required',
             'email' => 'required|email',
             'telefone' => 'required|string',
 
@@ -30,7 +33,7 @@ class CriarColaboradorRequest extends FormRequest
             'cpf.required' => 'O CPF é obrigatório.',
             'grau_escolaridade.required' => 'O grau de escolaridade é obrigatório.',
             'experiencia_previa.required' => 'A experiência prévia é obrigatória.',
-            'termo_responsabilidade.required' => 'O termo de responsabilidade é obrigatório.',
+            'mimes:pdf' => 'O :attribute deve ser um PDF',
             'treinamento.required' => 'O treinamento é obrigatório.',
             'email.required' => 'O email é obrigatório.',
             'email.email' => 'O email deve ser um endereço de email válido.',
@@ -38,24 +41,13 @@ class CriarColaboradorRequest extends FormRequest
 
         ];
     }
-
-    protected function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
+    protected function failedValidation(Validator $validator)
     {
-        if ($this->expectsJson()) {
-            throw new \Illuminate\Http\Exceptions\HttpResponseException(
-                response()->json(['errors' => $validator->errors()], \Illuminate\Http\JsonResponse::HTTP_UNPROCESSABLE_ENTITY)
-            );
-        }
-
-        $errors = $validator->errors();
-        $this->session()->flash('errors', $errors);
-        $this->session()->flash('old', $this->all());
-        $this->session()->flash('status', 'danger');
-        $this->throwResponse();
-    }
-
-    public function withValidator($validator)
-    {
-        $validator->validateWithBag('colaborador');
+        throw new HttpResponseException(
+            response()->json([
+                'message' => 'Falha na validação',
+                'errors' => $validator->errors(),
+            ], 422)
+        );
     }
 }

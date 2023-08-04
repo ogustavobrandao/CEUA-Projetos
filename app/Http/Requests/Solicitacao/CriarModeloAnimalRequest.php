@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\Solicitacao;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Support\MessageBag;
 
 class CriarModeloAnimalRequest extends FormRequest
@@ -19,7 +21,7 @@ class CriarModeloAnimalRequest extends FormRequest
             'nome_cientifico' => 'required|string',
             'nome_vulgar' => 'required|string',
             'procedencia' => 'required',
-            'termo_consentimento' => 'required',
+            'termo_consentimento' => 'required|file',
             'quantidade' => [
                 'required',
                 'integer',
@@ -47,17 +49,13 @@ class CriarModeloAnimalRequest extends FormRequest
         ];
     }
 
-    protected function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
+    protected function failedValidation(Validator $validator)
     {
-        $errors = (new MessageBag)->withErrors($validator)->toArray();
-        $this->session()->flash('errors', $errors);
-        $this->session()->flash('old', $this->all());
-        $this->session()->flash('status', 'danger');
-        $this->throwResponse();
-    }
-
-    public function withValidator($validator)
-    {
-        $validator->validateWithBag('modelo');
+        throw new HttpResponseException(
+            response()->json([
+                'message' => 'Falha na validação',
+                'errors' => $validator->errors(),
+            ], 422)
+        );
     }
 }

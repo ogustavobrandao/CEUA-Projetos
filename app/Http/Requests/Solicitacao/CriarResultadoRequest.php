@@ -2,8 +2,9 @@
 
 namespace App\Http\Requests\Solicitacao;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
-
+use Illuminate\Http\Exceptions\HttpResponseException;
 class CriarResultadoRequest extends FormRequest
 {
     /**
@@ -30,5 +31,14 @@ class CriarResultadoRequest extends FormRequest
             '*.required'  => 'O :attribute é obrigatório',
             '*.required_if'  => 'O :attribute é obrigatório',
         ];
+    }
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(
+            response()->json([
+                'message' => 'Falha na validação',
+                'errors' => $validator->errors(),
+            ], 422)
+        );
     }
 }

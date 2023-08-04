@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\Solicitacao;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class CriarPlanejamentoRequest extends FormRequest
 {
@@ -33,6 +35,15 @@ class CriarPlanejamentoRequest extends FormRequest
             '*.numeric'  => 'O :attribute deve ser um número',
             'num_animais_grupo.min' => 'O número deve ser acima ou igual a 0'
         ];
+    }
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(
+            response()->json([
+                'message' => 'Falha na validação',
+                'errors' => $validator->errors(),
+            ], 422)
+        );
     }
 }
 

@@ -3,6 +3,8 @@
 namespace App\Http\Requests\Solicitacao;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Validation\Rule;
 
 class CriarResponsavelRequest extends FormRequest
@@ -31,6 +33,8 @@ class CriarResponsavelRequest extends FormRequest
             'departamento_id' => 'required|integer',
             'vinculo_instituicao' => 'required',
             'grau_escolaridade' => 'required',
+            'experiencia_previa' => 'mimes:pdf',
+            'termo_responsabilidade' => 'mimes:pdf',
         ];
     }
 
@@ -48,6 +52,16 @@ class CriarResponsavelRequest extends FormRequest
             'cpf.regex' => 'O CPF deve ter o formato válido.',
             'vinculo_instituicao.required' => 'O vínculo com a instituição é obrigatório.',
             'grau_escolaridade.required' => 'O grau de escolaridade é obrigatório.',
+            'mimes:pdf' => 'O :attribute deve ser um PDF',
         ];
+    }
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(
+            response()->json([
+                'message' => 'Falha na validação',
+                'errors' => $validator->errors(),
+            ], 422)
+        );
     }
 }
