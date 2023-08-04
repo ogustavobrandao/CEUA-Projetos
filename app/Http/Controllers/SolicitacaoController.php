@@ -16,6 +16,7 @@ use App\Http\Requests\Solicitacao\CriarSolicitacaoFimRequest;
 use App\Http\Requests\Solicitacao\CriarSolicitacaoRequest;
 use App\Http\Requests\Solicitacao\EditarColaboradorRequest;
 use App\Models\AvaliacaoIndividual;
+use App\Models\HistoricoSolicitacao;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use App\Mail\SendSolicitacaoReprovada;
@@ -139,7 +140,10 @@ class SolicitacaoController extends Controller
         $solicitacao->sub_area_id = $request->subArea;
         $solicitacao->update();
 
-        return json_encode(['message' => 'success']);
+        return response()->json([
+            'message' => 'success',
+            'campo' => 'Dados iniciais'
+        ]);
     }
 
     public function criar_responsavel(CriarResponsavelRequest $request)
@@ -215,8 +219,11 @@ class SolicitacaoController extends Controller
         } else {
             $contato->save();
         }
-        return redirect(route('solicitacao.index', ['solicitacao_id' => $request->solicitacao_id]));
-
+        return response()->json([
+            'message' => 'success',
+            'campo' => 'Responsavel',
+            'exist' => 'true'
+        ]);
     }
 
     public function criar_colaborador(CriarColaboradorRequest $request)
@@ -238,9 +245,10 @@ class SolicitacaoController extends Controller
             $contato->colaborador_id = $colaborador->id;
             $contato->save();
 
-            return redirect(route('solicitacao.index', ['solicitacao_id' => $request->solicitacao_id]))->with('success', 'Colaborador Cadastrado com Sucesso!');
+            return response()->json([
+                'message' => 'success']);
         }
-        return redirect()->back()->with('fail', 'Necessario cadastrar o responsavel primeiro!');
+        return redirect(['message' => 'Necessário cadastrar o responsável primeiro!'], 400);
     }
 
     private function salvarArquivosColaborador($request, $nomes = null)
@@ -283,7 +291,10 @@ class SolicitacaoController extends Controller
 
         $colaborador->contato->update($data);
 
-        return redirect(route('solicitacao.index', ['solicitacao_id' => $request->solicitacao_id]))->with('success', 'Colaborador Alterado com Sucesso!');;
+        return response()->json([
+            'message' => 'success',
+            'campo' => 'Colaborador'
+        ]);
 
     }
 
@@ -319,7 +330,21 @@ class SolicitacaoController extends Controller
 
         $colaborador->delete();
 
-        return redirect()->route('solicitacao.index', ['solicitacao_id' => $solicitacao_id]);
+        return response()->json([
+            'message' => 'success'
+        ]);
+    }
+
+    public function atualizar_colaborador_tabela($id){
+
+        $solicitacao= Solicitacao::find($id);
+        $colaboradores = $solicitacao->responsavel->colaboradores;
+        $instituicaos = Instituicao::all();
+
+        $conteudoTabela = view('solicitacao.colaborador.colaborador_tabela', ['colaboradores' => $colaboradores, 'solicitacao'=>$solicitacao, 'instituicaos'=> $instituicaos, "tipo" => 2])->render();
+
+        return response()->json(['html' => $conteudoTabela]);
+
     }
 
     public function criar_solicitacao_fim(CriarSolicitacaoFimRequest $request)
@@ -335,7 +360,10 @@ class SolicitacaoController extends Controller
 
         $solicitacao->status = null;
         $solicitacao->update();
-        return redirect(route('solicitacao.index', ['solicitacao_id' => $solicitacao->id]));
+        return response()->json([
+            'message' => 'success',
+            'campo' => 'Dados complementares'
+        ]);
     }
 
     public function criar_modelo_animal(CriarModeloAnimalRequest $request)
@@ -372,7 +400,11 @@ class SolicitacaoController extends Controller
         $perfil->total = $request->quantidade;
         $perfil->modelo_animal_id = $modelo_animal->id;
         $perfil->save();
-        return redirect(route('solicitacao.index', ['solicitacao_id' => $request->solicitacao_id]))->with('success', 'Modelo Animal Criado com Sucesso!');
+
+        return response()->json([
+            'message' => 'success',
+            'campo' => 'Modelo animal'
+        ]);
     }
 
     public function atualizar_modelo_animal(AtualizarModeloAnimalRequest $request)
@@ -416,14 +448,28 @@ class SolicitacaoController extends Controller
         $perfil->modelo_animal_id = $modelo_animal->id;
         $perfil->update();
 
-        return redirect(route('solicitacao.planejamento.index', ['modelo_animal_id' => $request->modelo_animal_id]))->with('success', 'Modelo Animal Atualizado com Sucesso!');
-    }
+        return response()->json([
+            'message' => 'success',
+            'campo' => 'Modelo animal'
+        ]);
+        }
 
     public function deletar_modelo_animal($id)
     {
 
         ModeloAnimal::find($id)->delete();
-        return redirect()->back()->with('success', 'Modelo Animal removido com sucesso!');
+        return json_encode(['message' => 'success']);
+
+    }
+
+    public function atualizar_modelo_animal_tabela($solicitacao_id)
+    {
+        $solicitacao = Solicitacao::find($solicitacao_id);
+        $modelosAnimais = ModeloAnimal::where('solicitacao_id', $solicitacao_id)->get();
+
+        $tabela_modelo_animal = view('solicitacao.modelo_animal_tabela', ['solicitacao'=>$solicitacao, 'modelosAnimais'=> $modelosAnimais])->render();
+
+        return response()->json(['html' => $tabela_modelo_animal]);
 
     }
 
@@ -679,7 +725,10 @@ class SolicitacaoController extends Controller
         } else {
             $planejamento->save();
         }
-        return redirect(route('solicitacao.planejamento.index', ['modelo_animal_id' => $planejamento->modelo_animal->id]));
+        return response()->json([
+            'message' => 'success',
+            'campo' => 'Planejamento'
+        ]);
     }
 
     public function criar_condicoes_animal(CriarCondicoesAnimalRequest $request)
@@ -687,30 +736,36 @@ class SolicitacaoController extends Controller
         $request->validated();
         $planejamento = Planejamento::find($request->planejamento_id);
 
-        if (isset($planejamento->condicoesAnimal)) {
-            $condicoes_animal = $planejamento->condicoesAnimal;
-        } else {
-            $condicoes_animal = new CondicoesAnimal();
-            $condicoes_animal->planejamento_id = $planejamento->id;
+        if(isset($planejamento)){
+            if (isset($planejamento->condicoesAnimal)) {
+                $condicoes_animal = $planejamento->condicoesAnimal;
+            } else {
+                $condicoes_animal = new CondicoesAnimal();
+                $condicoes_animal->planejamento_id = $planejamento->id;
+            }
+
+            $condicoes_animal->condicoes_particulares = $request->condicoes_particulares;
+            $condicoes_animal->local = $request->local;
+            $condicoes_animal->ambiente_alojamento = $request->ambiente_alojamento;
+            $condicoes_animal->tipo_cama = $request->tipo_cama;
+            $condicoes_animal->num_animais_ambiente = $request->num_animais_ambiente;
+            $condicoes_animal->dimensoes_ambiente = $request->dimensoes_ambiente;
+            $condicoes_animal->periodo = $request->periodo;
+            $condicoes_animal->profissional_responsavel = $request->profissional_responsavel;
+            $condicoes_animal->email_responsavel = $request->email_responsavel;
+
+            if (isset($planejamento->condicoesAnimal)) {
+                $condicoes_animal->update();
+            } else {
+                $condicoes_animal->save();
+            }
+
+            return response()->json([
+                'message' => 'success',
+                'campo' => 'Condição animal'
+            ]);
         }
-
-        $condicoes_animal->condicoes_particulares = $request->condicoes_particulares;
-        $condicoes_animal->local = $request->local;
-        $condicoes_animal->ambiente_alojamento = $request->ambiente_alojamento;
-        $condicoes_animal->tipo_cama = $request->tipo_cama;
-        $condicoes_animal->num_animais_ambiente = $request->num_animais_ambiente;
-        $condicoes_animal->dimensoes_ambiente = $request->dimensoes_ambiente;
-        $condicoes_animal->periodo = $request->periodo;
-        $condicoes_animal->profissional_responsavel = $request->profissional_responsavel;
-        $condicoes_animal->email_responsavel = $request->email_responsavel;
-
-        if (isset($planejamento->condicoesAnimal)) {
-            $condicoes_animal->update();
-        } else {
-            $condicoes_animal->save();
-        }
-
-        return redirect(route('solicitacao.planejamento.index', ['modelo_animal_id' => $planejamento->modelo_animal->id]));
+        return redirect(['massege'=>'Necessario a Criação de um Planejamento']);
     }
 
     public function criar_procedimento(CriarProcedimentoRequest $request)
@@ -727,7 +782,10 @@ class SolicitacaoController extends Controller
             $procedimento->create($request->all());
         }
 
-        return redirect(route('solicitacao.planejamento.index', ['modelo_animal_id' => $planejamento->modelo_animal->id]));
+        return response()->json([
+            'message' => 'success',
+            'campo' => 'Procedimento'
+        ]);
     }
 
     public
@@ -773,7 +831,10 @@ class SolicitacaoController extends Controller
         }
 
 
-        return redirect(route('solicitacao.planejamento.index', ['modelo_animal_id' => $planejamento->modelo_animal->id]));
+        return response()->json([
+            'message' => 'success',
+            'campo' => 'Cirurgia'
+        ]);
     }
 
     public
@@ -808,7 +869,10 @@ class SolicitacaoController extends Controller
             $eutanasia->save();
         }
 
-        return redirect(route('solicitacao.planejamento.index', ['modelo_animal_id' => $planejamento->modelo_animal->id]));
+        return response()->json([
+            'message' => 'success',
+            'campo' => 'Expecificação Eutanázia'
+        ]);
     }
 
     public
@@ -833,15 +897,20 @@ class SolicitacaoController extends Controller
         }
         */
 
-        return redirect(route('solicitacao.planejamento.index', ['modelo_animal_id' => $planejamento->modelo_animal->id]));
+        return response()->json([
+            'message' => 'success',
+            'campo' => 'Especificação Abate'
+        ]);
     }
 
-    public
-    function index_admin()
+    public function index_admin()
     {
-        $solicitacoes = Solicitacao::where('status', '!=', 'avaliado')->get();
+        $avaliacoes = Avaliacao::all();
+        $horario = Carbon::now('UTC')->toDateTime();
+        $solicitacoes = Solicitacao::all();
         $avaliadores = User::where('tipo_usuario_id', '2')->get();
-        return view('admin.solicitacoes', compact('solicitacoes', 'avaliadores'));
+
+        return view('admin.solicitacoes', compact('solicitacoes', 'avaliadores','avaliacoes','horario'));
     }
 
     public
@@ -863,8 +932,17 @@ class SolicitacaoController extends Controller
         if ($solicitacao == null) {
             return redirect()->back()->with('fail', 'Solicitação não encontrada');
         }
+
         $solicitacao->status = 'nao_avaliado';
         $solicitacao->update();
+
+        $historico = new HistoricoSolicitacao();
+        $historico->solicitacao_id = $solicitacao_id;
+        $historico->status_solicitacao = $solicitacao->status;
+        $historico->nome_usuario_modificador = Auth::user()->name;
+
+        $historico->save();
+
         return redirect(route('solicitacao.solicitante.index'))->with(['success' => 'Solicitação concluída com sucesso!']);
     }
 
@@ -879,5 +957,51 @@ class SolicitacaoController extends Controller
 
 
         return view('solicitacao.visualizar', compact('solicitacao', 'grandeAreas', 'areas', 'subAreas', 'instituicaos'));
+    }
+
+    public function apreciacao_index()
+    {
+        $avaliacoes = Avaliacao::all();
+
+        $horario = Carbon::now('UTC')->toDateTime();
+
+        return view('admin.apreciacao_index', compact('avaliacoes', 'horario'));
+
+    }
+    public function aprovar_avaliacao($solicitacao_id)
+    {
+
+        $solicitacao = Solicitacao::find($solicitacao_id);
+        $instituicaos = Instituicao::all();
+        $grandeAreas = GrandeArea::all();
+        $areas = Area::all();
+        $subAreas = SubArea::all();
+
+        $disabled = true;
+        $responsavel = $solicitacao->responsavel;
+        $colaboradores = $solicitacao->responsavel->colaboradores;
+        $modelo_animais = $solicitacao->modeloAnimal;
+        $avaliacao = Avaliacao::where('solicitacao_id', $solicitacao_id)->where('user_id', $solicitacao->avaliador_atual_id)->first();
+
+        $avaliacaoDadosComp = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)->where('dados_complementares_id', $solicitacao->dadosComplementares->id)->first();
+        $avaliacaoDadosini = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)->where('solicitacao_id', $solicitacao->id)->first();
+        $avaliacaoResponsavel = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)->where('responsavel_id', $responsavel->id)->first();
+        $avaliacaoColaborador = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)->where('tipo', 2)->first();
+
+        return view('solicitacao.index', compact('disabled', 'solicitacao', 'grandeAreas', 'areas', 'subAreas',
+            'instituicaos', 'responsavel', 'colaboradores', 'modelo_animais', 'avaliacao',
+            'avaliacaoDadosComp', 'avaliacaoDadosini', 'avaliacaoResponsavel', 'avaliacaoColaborador'));
+
+    }
+
+    public function HistoricoModal($solicitacao_id)
+    {
+
+        $historicoModificacoes = HistoricoSolicitacao::where('solicitacao_id', $solicitacao_id)->get();
+        $solicitacao = Solicitacao::find($solicitacao_id);
+
+        $html = view('admin.modal_historico_solicitacao', compact('historicoModificacoes', 'solicitacao'))->render();
+
+        return response()->json(['html' => $html]);
     }
 }
