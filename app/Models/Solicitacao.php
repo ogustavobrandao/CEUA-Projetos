@@ -54,4 +54,8 @@ class Solicitacao extends Model
         return $this->hasOne('App\Models\AvaliacaoIndividual');
     }
 
+    public function historico_solicitacao(){
+        return $this->hasMany(HistoricoSolicitacao::class);
+    }
+
 }
