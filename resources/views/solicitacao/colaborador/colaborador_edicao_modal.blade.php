@@ -1,4 +1,4 @@
-<!-- Modal -->
+<!-- Modal Edicao-->
 <div class="modal fade" id="modalEditarColaborador{{$colaborador->id}}" tabindex="-1" role="dialog" aria-labelledby="modalEditarColaboradorLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -10,7 +10,7 @@
             </div>
             <!-- Conteúdo do formulário para adicionar colaboradores -->
 
-            <form id="form2" method="POST" action="{{route('solicitacao.colaborador.editar')}}" enctype="multipart/form-data">
+            <form id="form2-1" method="POST" action="javascript:void(0)" enctype="multipart/form-data">
                 @csrf
                 <input type="hidden" name="solicitacao_id" value="{{$solicitacao->id}}">
                 <input type="hidden" name="colaborador_id" value="{{$colaborador->id}}">
@@ -24,23 +24,43 @@
                                     <input type="text" name="nome" class="form-control" id="nome" placeholder="Digite o nome do colaborador" value="{{$colaborador->nome}}" @if(Auth::user()->tipo_usuario_id == 1 || Auth::user()->tipo_usuario_id == 2)) disabled @endif>
                                 </div>
                             </div>
+                            <div class="div_error nome_error" style="display: none">
+                                    <span class="invalid-input">
+                                        <strong class="nome_error_message"></strong>
+                                    </span>
+                            </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="email">E-mail:</label>
                                     <input type="email" name="email" class="form-control" id="email" placeholder="Digite o e-mail do colaborador" value="{{$colaborador->contato->email ?? 'Não informado'}}" @if(Auth::user()->tipo_usuario_id == 1 || Auth::user()->tipo_usuario_id == 2)) disabled @endif>
                                 </div>
                             </div>
+                            <div class="div_error email_error" style="display: none">
+                                    <span class="invalid-input">
+                                        <strong class="email_error_message"></strong>
+                                    </span>
+                            </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="cpf">CPF:</label>
-                                    <input type="text" name="cpf" class="form-control" id="cpf" placeholder="Digite o CPF do colaborador" value="{{$colaborador->cpf}}" @if(Auth::user()->tipo_usuario_id == 1 || Auth::user()->tipo_usuario_id == 2)) disabled @endif>
+                                    <input type="text" name="cpf" class="form-control cpf" id="cpf" placeholder="Digite o CPF do colaborador" value="{{$colaborador->cpf}}" @if(Auth::user()->tipo_usuario_id == 1 || Auth::user()->tipo_usuario_id == 2)) disabled @endif>
                                 </div>
+                            </div>
+                            <div class="div_error cpf_error" style="display: none">
+                                        <span class="invalid-input">
+                                            <strong class="cpf_error_message"></strong>
+                                        </span>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="telefone">Telefone:</label>
-                                    <input type="text" name="telefone" class="form-control" id="telefone" placeholder="Digite o telefone do colaborador" value="{{$colaborador->contato->telefone ?? 'Não Informado'}}" @if(Auth::user()->tipo_usuario_id == 1 || Auth::user()->tipo_usuario_id == 2)) disabled @endif>
+                                    <input type="text" name="telefone" class="form-control telefone" id="telefone" placeholder="Digite o telefone do colaborador" value="{{$colaborador->contato->telefone ?? 'Não Informado'}}" @if(Auth::user()->tipo_usuario_id == 1 || Auth::user()->tipo_usuario_id == 2)) disabled @endif>
                                 </div>
+                            </div>
+                            <div class="div_error telefone_error" style="display: none">
+                                    <span class="invalid-input">
+                                        <strong class="telefone_error_message"></strong>
+                                    </span>
                             </div>
                         </div>
                         <h5>Informações Institucionais</h5>
@@ -55,6 +75,11 @@
                                         <option value="{{$instituicao->id}}" @if($colaborador->instituicao_id == $instituicao->id) selected @endif>{{$instituicao->nome}}</option>
                                     @endforeach
                                 </select>
+                                <div class="div_error instituicao_error" style="display: none">
+                                    <span class="invalid-input">
+                                        <strong class="instituicao_error_message"></strong>
+                                    </span>
+                                </div>
                             </div>
                             <div class="col-md-6">
                                 <label for="grau_escolaridade">Grau de Escolaridade:<strong
@@ -92,36 +117,58 @@
                                         Doutorado Completo
                                     </option>
                                 </select>
+                                <div class="div_error grau_escolaridade_error" style="display: none">
+                                    <span class="invalid-input">
+                                        <strong class="grau_escolaridade_error_message"></strong>
+                                    </span>
+                                </div>
                             </div>
                         </div>
                         <br>
                         <h5>Informações Complementares</h5>
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <label>Experiência Prévia:<strong style="color: red">*</strong></label>
-                                @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2 || \Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 1)
-                                    @if($colaborador->experiencia_previa == null)
-                                        <br>
-                                        <a class="btn btn-secondary" href="#">Não Enviado</a>
-                                    @else
-                                        <br>
-                                        <a class="btn btn-primary m-3"
-                                           href="{{route('experiencias_previasColaborador.download', ['colaborador_id' => $colaborador->id])}}">Baixar
-                                            Experiência Prévia</a>
-                                    @endif
-                                @else
-                                    <input name="experiencia_previa" class="form-control"
-                                           id="experiencia_previa" type="file" style="width: 135px">
-                                    @if($colaborador->experiencia_previa != null)
-                                        <span
-                                            style="border: 1px gray solid; border-radius: 10px; text-align: center; width: 180px; position: absolute; bottom: 0px; left: 155px; height: 38px; padding-top: 5px; background-color: #dcfadf">Um Arquivo Já Foi Enviado</span>
-                                    @endif
-                                @endif
+
+                        <div>
+                            <label>Experiência Prévia:</label>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="opcao_experiencia_previa-{{$colaborador->id}}" id="opcaoSim" value="on" required @if($colaborador->experiencia_previa != '') checked @endif
+                                @if(Auth::user()->tipo_usuario_id == 1 || Auth::user()->tipo_usuario_id == 2)) disabled @endif>
+                                <label class="form-check-label" for="opcaoSim">Sim</label>
                             </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="opcao_experiencia_previa-{{$colaborador->id}}" id="opcaoNao" value="off" required @if($colaborador->experiencia_previa == '') checked @endif
+                                @if(Auth::user()->tipo_usuario_id == 1 || Auth::user()->tipo_usuario_id == 2)) disabled @endif>
+                                <label class="form-check-label" for="opcaoNao">Não</label>
+                            </div>
+                        </div>
+                        <div class="row col-sm-12">
+                            <div class="col-sm-6 align-items-end " id="divexperiencia-{{$colaborador->id}}" @if($colaborador->experiencia_previa == '') style="display: none;" @endif>
+                                        <label>Experiência Prévia:<strong style="color: red">*</strong></label>
+                                        @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2 || \Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 1)
+                                            @if($colaborador->experiencia_previa == null)
+                                                <br>
+                                                <a class="btn btn-secondary" href="#">Não Enviado</a>
+                                            @else
+                                                <br>
+                                                <a class="btn btn-primary m-3"
+                                                   href="{{route('experiencias_previasColaborador.download', ['colaborador_id' => $colaborador->id])}}">Baixar
+                                                    Experiência Prévia</a>
+                                            @endif
+                                        @else
+                                            <input name="experiencia_previa" class="form-control"
+                                                   id="experiencia_previa" type="file" accept="application/pdf" style="width: 135px">
+                                            @if($colaborador->experiencia_previa != null)
+                                                <span
+                                                    style="border: 1px gray solid; border-radius: 10px; text-align: center; width: 180px; position: absolute; bottom: 0px; left: 155px; height: 38px; padding-top: 5px; background-color: #dcfadf">Um Arquivo Já Foi Enviado</span>
+                                            @endif
+                                        @endif
+                                    </div>
+                                    <div class="div_error experiencia_previa_error" style="display: none">
+                                        <span class="invalid-input">
+                                            <strong class="experiencia_previa_error_message"></strong>
+                                        </span>
+                                    </div>
                             <div class="col-sm-6">
-                                    <label>Termo de Responsabilidade:<strong
-                                            style="color: red">*</strong>
-                                    </label>
+                                    <label>Termo de Responsabilidade:</label>
                                 @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2 || \Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 1)
                                     @if($colaborador->termo_responsabilidade == null)
                                         <br>
@@ -132,7 +179,7 @@
                                             Termo de Responsabilidade</a>
                                     @endif
                                 @else
-                                    <input class="form-control" id="termo_responsabilidade" type="file"
+                                    <input class="form-control" id="termo_responsabilidade" type="file" accept="application/pdf"
                                            name="termo_responsabilidade" style="width: 135px" @if(Auth::user()->tipo_usuario_id == 1 || Auth::user()->tipo_usuario_id == 2)) disabled @endif>
 
                                     @if($colaborador->termo_responsabilidade != null)
@@ -140,38 +187,137 @@
                                     @endif
                                 @endif
                             </div>
+                            <div class="div_error termo_responsabilidade_error" style="display: none">
+                                    <span class="invalid-input">
+                                        <strong class="termo_responsabilidade_error_message"></strong>
+                                    </span>
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col-sm-12 mt-2">
-                                <label for="treinamento">Treinamento:<strong style="color: red">*</strong></label>
-                                <input class="form-control"
-                                type="text" name="treinamento"
-                                value="{{$colaborador->treinamento}}"
-                                required autocomplete="treinamento" autofocus @if(Auth::user()->tipo_usuario_id == 1 || Auth::user()->tipo_usuario_id == 2)) disabled @endif>
+                                <label>Treinamento:</label>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="opcao_treinamento-{{$colaborador->id}}" id="opcaoSim" value="on" required @if($colaborador->treinamento != 'Não') checked @endif
+                                    @if(Auth::user()->tipo_usuario_id == 1 || Auth::user()->tipo_usuario_id == 2)) disabled @endif>
+                                    <label class="form-check-label" for="opcaoSim">Sim</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="opcao_treinamento-{{$colaborador->id}}" id="opcaoNao" value="off" required @if($colaborador->treinamento == 'Não') checked @endif
+                                    @if(Auth::user()->tipo_usuario_id == 1 || Auth::user()->tipo_usuario_id == 2)) disabled @endif>
+                                    <label class="form-check-label" for="opcaoNao">Não</label>
+                                </div>
                             </div>
+                            <div class="row" id="divTreinamento-{{$colaborador->id}}"  @if($colaborador->treinamento == 'Não') style="display: none;" @endif>
+                                <div class="col-sm-12 mt-2">
+                                    <label for="treinamento">Descrever o treinamento:<strong style="color: red">*</strong></label>
+                                    <input class="form-control" id="treinamento"
+                                    type="text" name="treinamento"
+                                    value="{{$colaborador->treinamento}}"
+                                    required autocomplete="treinamento" autofocus @if(Auth::user()->tipo_usuario_id == 1 || Auth::user()->tipo_usuario_id == 2)) disabled @endif>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="div_error treinamento_error" style="display: none">
+                                    <span class="invalid-input">
+                                        <strong class="treinamento_error_message"></strong>
+                                    </span>
                         </div>
                     </div>
 
                 </div>
                 @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 3)
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Atualizar</button>
+                        <button type="submit" class="btn btn-primary btn-atualizar-colaborador">Atualizar</button>
                     </div>
                 @else
                     <div class="modal-footer">
                     <button class="btn btn-secondary w-auto" data-dismiss="modal">Voltar</button>
                     </div>
                 @endif
-                @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2)
-                    <div class="px-3 pb-4">
-                        @include('component.botoes_new_form', ['id' => -1])
-                    </div>
-                    <div></div>
-                @else
-                    <div class="modal-footer"></div>
-                @endif
             </form>
         </div>
     </div>
 </div>
-<script src="{{ asset('js/masks.js') }}"></script>
+
+<script>
+    $('input[name="opcao_experiencia_previa-{{$colaborador->id}}"]').change(function() {
+        var selectedOption = $(this).val();
+        var divexperiencia = $('#divexperiencia-{{$colaborador->id}}');
+
+        if (selectedOption === 'on') {
+
+            divexperiencia.show();
+        } else {
+            $(divexperiencia).hide().find('input').prop('value', '');
+            divexperiencia.hide();
+
+        }
+    });
+    $('input[name="opcao_treinamento-{{$colaborador->id}}"]').change(function() {
+        var selectedOption = $(this).val();
+        var divTreinamento = $('#divTreinamento-{{$colaborador->id}}');
+
+        if (selectedOption === 'on') {
+            $(divTreinamento).hide().find('input').prop('value', '');
+            divTreinamento.show();
+        } else {
+            $(divTreinamento).hide().find('input').prop('value', 'Não');
+            divTreinamento.hide();
+
+        }
+    });
+
+    $(document).on('click', '.btn-atualizar-colaborador', function (event) {
+        event.preventDefault();
+
+        var form = $('#form2-1')[0];
+        var formData = new FormData(form);
+
+        $.ajax({
+            type: 'POST',
+            url: '{{ route('solicitacao.colaborador.editar') }}',
+            data: formData,
+            contentType: false,
+            processData: false,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            dataType: 'json',
+            success: function (response) {
+                var message = response.message;
+
+                if (message == 'success') {
+                    atualizarTabela();
+                    $('.modal').hide();
+                    $('body').removeClass('modal-open');
+                    $('body').css('padding-right', '');
+                    $('.modal-backdrop').remove();
+                }
+            },
+            error: function (xhr, status, error) {
+                if (xhr.responseJSON && xhr.responseJSON.message) {
+                    $('.div_error').css('display', 'none');
+                    var errors = xhr.responseJSON.errors;
+                    var statusCode = xhr.status;
+                    if (statusCode == 422 && status == 'error') {
+                        for (var field in errors) {
+                            var fieldErrors = errors[field];
+                            var errorMessage = '';
+                            for (var i = 0; i < fieldErrors.length; i++) {
+                                errorMessage += fieldErrors[i] + '\n';
+                            }
+                            var errorDiv = '.' + field + '_error';
+                            var errorMessageTag = '.' + field + '_error_message';
+                            $(errorMessageTag).html(errorMessage);
+                            $(errorDiv).css('display', 'block');
+                        }
+                    }
+                } else {
+                    alert("Erro na requisição Ajax: " + error);
+                }
+            }
+        });
+
+        return false;
+    });
+</script>

@@ -12,11 +12,11 @@
                        value="@if(!empty($planejamento) && $planejamento->num_animais_grupo != null){{$planejamento->num_animais_grupo}}@else{{ old('num_animais_grupo')}} @endif"
                        required
                        autocomplete="num_animais_grupo" autofocus>
-                @error('num_animais_grupo')
-                <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-                @enderror
+                <div class="div_error" id="num_animais_grupo_error" style="display: none">
+                    <span class="invalid-input">
+                        <strong id="num_animais_grupo_error_message"></strong>
+                    </span>
+                </div>
             </div>
 
             <div class="col-sm-5">
@@ -28,11 +28,11 @@
                     @else
                         {{ old('especificar_grupo')}}
                     @endif</textarea>
-                @error('especificar_grupo')
-                <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-                @enderror
+                <div class="div_error" id="especificar_grupo_error" style="display: none">
+                    <span class="invalid-input">
+                        <strong id="especificar_grupo_error_message"></strong>
+                    </span>
+                </div>
             </div>
 
             <div class="col-sm-5">
@@ -44,11 +44,11 @@
                     @else
                         {{ old('criterios')}}
                     @endif</textarea>
-                @error('criterios')
-                <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-                @enderror
+                <div class="div_error" id="criterios_error" style="display: none">
+                    <span class="invalid-input">
+                        <strong id="criterios_error_message"></strong>
+                    </span>
+                </div>
             </div>
 
             {{-- <div class="col-sm-12 mt-2">
@@ -115,27 +115,27 @@
                 @else
                     @if(!empty($planejamento))
                         <input class="form-control @error('anexo_formula') is-invalid @enderror" id="anexo_formula"
-                               type="file" name="anexo_formula"
+                               type="file" accept="application/pdf" name="anexo_formula"
                                value="" autocomplete="anexo_formula" autofocus
                                @if($planejamento->anexo_formula != null) style="width: 135px" @endif>
-                        @error('anexo_formula')
-                        <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-                        @enderror
+                        <div class="div_error" id="anexo_formula_error" style="display: none">
+                            <span class="invalid-input">
+                                <strong id="anexo_formula_error_message"></strong>
+                            </span>
+                        </div>
                         @if($planejamento->anexo_formula != null)
                             <span
                                 style="border: 1px gray solid; border-radius: 10px; text-align: center; width: 250px; position: absolute; bottom: 0px; left: 155px; height: 38px; padding-top: 5px; background-color: #dcfadf">Um Arquivo Já Foi Enviado</span>
                         @endif
                     @else
                         <input class="form-control @error('anexo_formula') is-invalid @enderror" id="anexo_formula"
-                               type="file" name="anexo_formula"
+                               type="file" accept="application/pdf" name="anexo_formula"
                                value="{{old('anexo_formula')}}" autocomplete="anexo_formula" autofocus>
-                        @error('anexo_formula')
-                        <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-                        @enderror
+                        <div class="div_error" id="anexo_formula_error" style="display: none">
+                            <span class="invalid-input">
+                                <strong id="anexo_formula_error_message"></strong>
+                            </span>
+                        </div>
                     @endif
                 @endif
             </div>
@@ -148,11 +148,11 @@
                           id="desc_materiais_metodos" name="desc_materiais_metodos" required
                           autocomplete="desc_materiais_metodos" maxlength="1000"
                           autofocus>@if(!empty($planejamento) && $planejamento->desc_materiais_metodos != null){{$planejamento->desc_materiais_metodos}}@else{{old('desc_materiais_metodos')}}@endif</textarea>
-                @error('desc_materiais_metodos')
-                <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-                @enderror
+                <div class="div_error" id="des_materiais_metodos_error" style="display: none">
+                    <span class="invalid-input">
+                        <strong id="des_materiais_metodos_error_message"></strong>
+                    </span>
+                </div>
             </div>
 
             <div class="col-sm-6">
@@ -164,11 +164,11 @@
                     @else
                         {{old('analise_estatistica')}}
                     @endif</textarea>
-                @error('analise_estatistica')
-                <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-                @enderror
+                <div class="div_error" id="analise_estatistica_error" style="display: none">
+                    <span class="invalid-input">
+                        <strong id="analise_estatistica_error_message"></strong>
+                    </span>
+                </div>
             </div>
         </div>
 
@@ -180,11 +180,11 @@
                           autofocus>@if(!empty($planejamento) && $planejamento->outras_infos != null){{$planejamento->outras_infos}}
                     @else{{old('outras_infos')}}
                     @endif</textarea>
-                @error('outras_infos')
-                <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-                @enderror
+                <div class="div_error" id="outras_infos_error" style="display: none">
+                    <span class="invalid-input">
+                        <strong id="outras_infos_error_message"></strong>
+                    </span>
+                </div>
             </div>
         </div>
 
@@ -235,4 +235,57 @@
     </form>
 
 </div>
+<script>
+    $('#form6').submit(function (event) {
+        event.preventDefault();
 
+        var formData = new FormData(this);
+
+        $.ajax({
+            type: 'POST',
+            url: '{{ route('solicitacao.planejamento.criar') }}',
+            data: formData,
+            contentType: false,
+            processData: false,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            dataType: 'json',
+            success: function (response) {
+                var message = response.message;
+                if (message == 'success') {
+                    var campo = response.campo;
+                    $('#successModal').modal('show');
+                    $('#successModal').find('.msg-success').text('O ' + campo + ' foi salvo com sucesso!');
+
+                    $('.div_error').css('display', 'none');
+                    setTimeout(function () {
+                        $('#successModal').modal('hide');
+                    }, 2000);
+                }
+            },
+            error: function (xhr, status, error) {
+                if (xhr.responseJSON && xhr.responseJSON.message) {
+                    $('.div_error').css('display', 'none');
+                    var errors = xhr.responseJSON.errors;
+                    var statusCode = xhr.status;
+                    if (statusCode == 422 && status == 'error') {
+                        for (var field in errors) {
+                            var fieldErrors = errors[field];
+                            var errorMessage = ''
+                            for (var i = 0; i < fieldErrors.length; i++) {
+                                errorMessage += fieldErrors[i] + '\n';
+                            }
+                            var errorDiv = '#' + field + '_error'
+                            var errorMessageTag = '#' + field + '_error_message';
+                            $(errorMessageTag).html(errorMessage);
+                            $(errorDiv).css('display', 'block')
+                        }
+                    }
+                } else {
+                    alert("Erro na requisição Ajax: " + error);
+                }
+            }
+        });
+    });
+</script>

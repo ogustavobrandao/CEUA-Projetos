@@ -34,9 +34,9 @@
                                     <strong style="color:red;">Reprovado <small>(Tempo expirado)</small></strong>
                                 @elseif($solicitacao->status == 'nao_avaliado')
                                     Não Avaliado
-                                @elseif($solicitacao->status == 'avaliando')
+                                @elseif($solicitacao->status == 'avaliando' || $solicitacao->avaliacao->first()->status == "aprovado" && !isset($solicitacao->avaliacao->first()->licenca))
                                     Em avaliação
-                                @elseif($solicitacao->avaliacao->first()->status == "aprovado")
+                                @elseif($solicitacao->avaliacao->first()->status == "aprovado" && isset($solicitacao->avaliacao->first()->licenca))
                                     Aprovado
                                 @elseif($solicitacao->avaliacao->first()->status == "reprovado")
                                     Reprovado
@@ -77,20 +77,27 @@
                                     {{-- <a class="btn" href="{{route('solicitacao.index', ['solicitacao_id' => $solicitacao->id])}}" style="border-color: #1B1C42; background-color: #c0ddf6"
                                        title="Visualizar Solicitação."><i class="fa-solid fa-up-right-from-square"></i></a> --}}
                                     @if($solicitacao->avaliacao->first()->status == "aprovado")
-                                        <a class="btn" style="border-color: #1B1C42; background-color: #c0ddf6"
-                                           data-toggle="modal" data-target="#licencaModal{{$solicitacao->id}}"
-                                           title="Licença."><i
-                                                class="fa-regular fa-id-card"></i></a>
-                                        <a class="btn"
-                                           href="{{route('pdf.gerarPDFAprovado', ['solicitacao_id' => $solicitacao->id])}}"
-                                           style="border-color: #1B1C42; background-color: #c0ddf6"
-                                           title="Gerar PDF."><i class="fa-solid fa-circle-down"></i></a>
+                                        @if(isset($solicitacao->avaliacao->first()->licenca))
+                                            <a class="btn" style="border-color: #1B1C42; background-color: #c0ddf6"
+                                               data-toggle="modal" data-target="#licencaModal{{$solicitacao->id}}"
+                                               title="Licença."><i
+                                                    class="fa-regular fa-id-card"></i></a>
+                                            <a class="btn"
+                                               href="{{route('pdf.gerarPDFAprovado', ['solicitacao_id' => $solicitacao->id])}}"
+                                               style="border-color: #1B1C42; background-color: #c0ddf6"
+                                               title="Gerar PDF."><i class="fa-solid fa-circle-down"></i></a>
+                                        @else
+                                            <a class="btn"
+                                               href="{{route('pdf.gerarPDFSolicitacao', ['solicitacao_id' => $solicitacao->id])}}"
+                                               style="border-color: #1B1C42; background-color: #c0ddf6"
+                                               title="Gerar PDF."><i class="fa-solid fa-circle-down"></i></a>
+                                       @endif
                                     @endif
                                 @endif
                             </td>
                         </tr>
 
-                        @if($solicitacao->status == "avaliado" && $solicitacao->avaliacao->first()->status == "aprovado")
+                        @if($solicitacao->status == "avaliado" && $solicitacao->avaliacao->first()->status == "aprovado" && isset($solicitacao->avaliacao->first()->licenca)))
                             <!-- Modal Licença -->
                             <div class="modal fade" id="licencaModal{{$solicitacao->id}}" tabindex="-1" role="dialog"
                                  aria-labelledby="licencaModalLabel" aria-hidden="true">

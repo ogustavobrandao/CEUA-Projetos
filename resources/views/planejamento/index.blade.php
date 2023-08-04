@@ -242,6 +242,8 @@
                             <a type="button" class="btn btn-secondary w-100" href="{{ route('avaliador.solicitacao.avaliar', ['solicitacao_id' => $solicitacao->id]) }}">Voltar</a>
                         @elseif(Auth::user()->tipo_usuario_id == 3)
                             <a type="button" class="btn btn-secondary w-100" href="{{ route('solicitacao.index', ['solicitacao_id' => $solicitacao->id]) }}">Voltar</a>
+                        @elseif(Auth::user()->tipo_usuario_id == 1 && $solicitacao->status = 'avaliado')
+                            <a type="button" class="btn btn-secondary w-100" href="{{ route('solicitacao.admin.apreciacao', ['solicitacao_id' => $solicitacao->id]) }}">Voltar</a>
                         @elseif(Auth::user()->tipo_usuario_id == 1)
                             <a type="button" class="btn btn-secondary w-100" href="{{ route('solicitacao.admin.visualizar', ['solicitacao_id' => $solicitacao->id]) }}">Voltar</a>
                         @endif
@@ -282,6 +284,7 @@
                 </div>
             </div>
         </div>
+        @include('component.modal_success')
 
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js"></script>
@@ -501,6 +504,60 @@
                 $("#" + tipo + "_btn_up").css({"color": "white"});
                 $("#" + tipo + "_btn_down").css({"color": "white"});
             }
+        </script>
+        <script>
+            $('#form_modelo_animal_update').submit(function (event) {
+                event.preventDefault();
+
+                var formData = new FormData(this);
+
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ route('solicitacao.modelo_animal.update') }}',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    dataType: 'json',
+                    success: function (response) {
+                        var message = response.message;
+                        if (message == 'success') {
+                            var campo = response.campo;
+                            $('#successModal').modal('show');
+                            $('#successModal').find('.msg-success').text('O ' + campo + ' foi salvo com sucesso!');
+
+                            $('.div_error').css('display', 'none');
+                            setTimeout(function () {
+                                $('#successModal').modal('hide');
+                            }, 2000);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        if (xhr.responseJSON && xhr.responseJSON.message) {
+                            $('.div_error').css('display', 'none');
+                            var errors = xhr.responseJSON.errors;
+                            var statusCode = xhr.status;
+                            if (statusCode == 422 && status == 'error') {
+                                for (var field in errors) {
+                                    var fieldErrors = errors[field];
+                                    var errorMessage = ''
+                                    for (var i = 0; i < fieldErrors.length; i++) {
+                                        errorMessage += fieldErrors[i] + '\n';
+                                    }
+                                    var errorDiv = '#' + field + '_error'
+                                    var errorMessageTag = '#' + field + '_error_message';
+                                    $(errorMessageTag).html(errorMessage);
+                                    $(errorDiv).css('display', 'block')
+                                }
+                            }
+                        } else {
+                            alert("Erro na requisição Ajax: " + error);
+                        }
+                    }
+                });
+            });
         </script>
 
 @endsection
