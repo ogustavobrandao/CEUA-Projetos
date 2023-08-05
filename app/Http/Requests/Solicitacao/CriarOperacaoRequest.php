@@ -20,14 +20,12 @@ class CriarOperacaoRequest extends FormRequest
         if($this->input("flag_cirurgia") === 'false')
         {
             return [
-                'planejamento_id' => 'required',
                 'flag_cirurgia' => 'required',
             ];
         }
         else {
 
             return [
-                'planejamento_id' => 'required',
                 'flag_cirurgia' => 'required',
                 'detalhes_cirurgia' => 'required_if:flag_cirurgia,true_unica,true_multipla',
                 'observacao_recuperacao' => 'required_if:flag_cirurgia,true_unica,true_multipla',
@@ -44,7 +42,6 @@ class CriarOperacaoRequest extends FormRequest
     public function messages()
     {
         return [
-            'planejamento_id.required' => 'Necessária a criação de um planejamento',
             '*.required_if' => 'O campo :attribute é obrigatório',
         ];
     }
@@ -56,15 +53,5 @@ class CriarOperacaoRequest extends FormRequest
                 'errors' => $validator->errors(),
             ], 422)
         );
-    }
-    public function withValidator($validator)
-    {
-        $validator->after(function ($validator) {
-            $modelo_animal = ModeloAnimal::find($this->input('modelo_animal_id'));
-
-            if (!$modelo_animal->planejamento) {
-                $validator->errors()->add('planejamentoFail', 'Falha no planejamento');
-            }
-        });
     }
 }

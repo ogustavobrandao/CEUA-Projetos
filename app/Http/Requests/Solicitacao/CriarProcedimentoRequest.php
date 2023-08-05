@@ -17,7 +17,6 @@ class CriarProcedimentoRequest extends FormRequest
     public function rules()
     {
         return [
-            'planejamento_id' => 'required',
             'estresse' => 'required_if:estresse_radio,==,on',
             'anestesico' => 'required_if:anestesico_radio,==,on',
             'relaxante' => 'required_if:relaxante_radio,==,on',
@@ -35,7 +34,6 @@ class CriarProcedimentoRequest extends FormRequest
     {
 
         return [
-            'planejamento_id.required' => 'Necessária a criação de um planejamento',
             '*.required_if' => 'O de texto :attribute é obrigatório',
         ];
     }
@@ -47,16 +45,6 @@ class CriarProcedimentoRequest extends FormRequest
                 'errors' => $validator->errors(),
             ], 422)
         );
-    }
-    public function withValidator($validator)
-    {
-        $validator->after(function ($validator) {
-            $modelo_animal = ModeloAnimal::find($this->input('modelo_animal_id'));
-
-            if (!$modelo_animal->planejamento) {
-                $validator->errors()->add('planejamentoFail', 'Falha no planejamento');
-            }
-        });
     }
 }
 

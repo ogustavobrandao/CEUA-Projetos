@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Api\Responses;
 use App\Http\Requests\Solicitacao\AtualizarModeloAnimalRequest;
 use App\Http\Requests\Solicitacao\CriarColaboradorRequest;
 use App\Http\Requests\Solicitacao\CriarCondicoesAnimalRequest;
@@ -17,6 +18,7 @@ use App\Http\Requests\Solicitacao\CriarSolicitacaoRequest;
 use App\Http\Requests\Solicitacao\EditarColaboradorRequest;
 use App\Models\AvaliacaoIndividual;
 use App\Models\HistoricoSolicitacao;
+use Doctrine\DBAL\Driver\PDO\Exception;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use App\Mail\SendSolicitacaoReprovada;
@@ -735,177 +737,204 @@ class SolicitacaoController extends Controller
 
     public function criar_condicoes_animal(CriarCondicoesAnimalRequest $request)
     {
-        $request->validated();
-        $modelo_animal = ModeloAnimal::find($request->modelo_animal_id);
-        $planejamento = $modelo_animal->planejamento;
+        try {
+            $request->validated();
+            $modelo_animal = ModeloAnimal::find($request->modelo_animal_id);
+            $planejamento = $modelo_animal->planejamento;
+            if (!$planejamento) {
+                throw new \Exception('É necessário que o planejamento seja criado', 412);
+            }
 
 
-        if (isset($planejamento->condicoesAnimal)) {
-            $condicoes_animal = $planejamento->condicoesAnimal;
-        } else {
-            $condicoes_animal = new CondicoesAnimal();
-            $condicoes_animal->planejamento_id = $planejamento->id;
+            if (isset($planejamento->condicoesAnimal)) {
+                $condicoes_animal = $planejamento->condicoesAnimal;
+            } else {
+                $condicoes_animal = new CondicoesAnimal();
+                $condicoes_animal->planejamento_id = $planejamento->id;
+            }
+
+            $condicoes_animal->condicoes_particulares = $request->condicoes_particulares;
+            $condicoes_animal->local = $request->local;
+            $condicoes_animal->ambiente_alojamento = $request->ambiente_alojamento;
+            $condicoes_animal->tipo_cama = $request->tipo_cama;
+            $condicoes_animal->num_animais_ambiente = $request->num_animais_ambiente;
+            $condicoes_animal->dimensoes_ambiente = $request->dimensoes_ambiente;
+            $condicoes_animal->periodo = $request->periodo;
+            $condicoes_animal->profissional_responsavel = $request->profissional_responsavel;
+            $condicoes_animal->email_responsavel = $request->email_responsavel;
+
+            if (isset($planejamento->condicoesAnimal)) {
+                $condicoes_animal->update();
+            } else {
+                $condicoes_animal->save();
+            }
+
+            return response()->json([
+                'message' => 'success',
+                'campo' => 'Condição animal'
+            ]);
+        } catch (\Exception $e) {
+            return Responses::errorResponse($e);
         }
-
-        $condicoes_animal->condicoes_particulares = $request->condicoes_particulares;
-        $condicoes_animal->local = $request->local;
-        $condicoes_animal->ambiente_alojamento = $request->ambiente_alojamento;
-        $condicoes_animal->tipo_cama = $request->tipo_cama;
-        $condicoes_animal->num_animais_ambiente = $request->num_animais_ambiente;
-        $condicoes_animal->dimensoes_ambiente = $request->dimensoes_ambiente;
-        $condicoes_animal->periodo = $request->periodo;
-        $condicoes_animal->profissional_responsavel = $request->profissional_responsavel;
-        $condicoes_animal->email_responsavel = $request->email_responsavel;
-
-        if (isset($planejamento->condicoesAnimal)) {
-            $condicoes_animal->update();
-        } else {
-            $condicoes_animal->save();
-        }
-
-        return response()->json([
-            'message' => 'success',
-            'campo' => 'Condição animal'
-        ]);
     }
 
     public function criar_procedimento(CriarProcedimentoRequest $request)
     {
-        $request->validated();
-        $modelo_animal = ModeloAnimal::find($request->modelo_animal_id);
-        $planejamento = $modelo_animal->planejamento;
+        try {
+            $request->validated();
+            $modelo_animal = ModeloAnimal::find($request->modelo_animal_id);
+            $planejamento = $modelo_animal->planejamento;
+            if (!$planejamento) {
+                throw new \Exception('É necessário que o planejamento seja criado', 412);
+            }
 
-        if (isset($planejamento->procedimento)) {
-            $procedimento = $planejamento->procedimento;
-            $procedimento->update($request->all());
-        } else {
-            $procedimento = new Procedimento();
-            $procedimento->planejamento_id = $planejamento->id;
-            $procedimento->create($request->all());
+            if (isset($planejamento->procedimento)) {
+                $procedimento = $planejamento->procedimento;
+                $procedimento->update($request->all());
+            } else {
+                $procedimento = new Procedimento();
+                $procedimento->planejamento_id = $planejamento->id;
+                $procedimento->fill($request->all());
+                $procedimento->save();
+            }
+
+            return response()->json([
+                'message' => 'success',
+                'campo' => 'Procedimento'
+            ]);
+        } catch (\Exception $e) {
+            return Responses::errorResponse($e);
         }
-
-        return response()->json([
-            'message' => 'success',
-            'campo' => 'Procedimento'
-        ]);
     }
 
-    public
-    function criar_operacao(CriarOperacaoRequest $request)
+    public function criar_operacao(CriarOperacaoRequest $request)
     {
+        try {
+            $request->validated();
+            $modelo_animal = ModeloAnimal::find($request->modelo_animal_id);
+            $planejamento = $modelo_animal->planejamento;
+            if (!$planejamento) {
+                throw new \Exception('É necessário que o planejamento seja criado', 412);
+            }
 
-        $request->validated();
-        $modelo_animal = ModeloAnimal::find($request->modelo_animal_id);
-        $planejamento = $modelo_animal->planejamento;
+            if (isset($planejamento->operacao)) {
+                $operacao = $planejamento->operacao;
+            } else {
+                $operacao = new Operacao();
+                $operacao->planejamento_id = $planejamento->id;
+            }
 
-        if (isset($planejamento->operacao)) {
-            $operacao = $planejamento->operacao;
-        } else {
-            $operacao = new Operacao();
-            $operacao->planejamento_id = $planejamento->id;
+            if ($request->flag_cirurgia == "false") {
+                $operacao->detalhes_cirurgia = null;
+                $operacao->detalhes_observacao_recuperacao = null;
+                $operacao->detalhes_outros_cuidados_recuperacao = null;
+                $operacao->detalhes_analgesia_recuperacao = null;
+                $operacao->detalhes_nao_uso_analgesia_recuperacao = null;
+                $operacao->observacao_recuperacao = null;
+                $operacao->outros_cuidados_recuperacao = null;
+                $operacao->analgesia_recuperacao = null;
+                $operacao->flag_cirurgia = null;
+            } else {
+                $operacao->detalhes_cirurgia = $request->detalhes_cirurgia;
+                $operacao->detalhes_observacao_recuperacao = $request->detalhes_observacao_recuperacao;
+                $operacao->detalhes_outros_cuidados_recuperacao = $request->detalhes_outros_cuidados_recuperacao;
+                $operacao->detalhes_analgesia_recuperacao = $request->detalhes_analgesia_recuperacao;
+                $operacao->observacao_recuperacao = $request->observacao_recuperacao;
+                $operacao->detalhes_nao_uso_analgesia_recuperacao = $request->detalhes_nao_uso_analgesia_recuperacao;
+                $operacao->outros_cuidados_recuperacao = $request->outros_cuidados_recuperacao;
+                $operacao->analgesia_recuperacao = $request->analgesia_recuperacao;
+                $operacao->flag_cirurgia = $request->flag_cirurgia;
+            }
+
+            if (isset($planejamento->operacao)) {
+                $operacao->update();
+            } else {
+                $operacao->save();
+            }
+
+
+            return response()->json([
+                'message' => 'success',
+                'campo' => 'Cirurgia'
+            ]);
+        } catch (\Exception $e) {
+            return Responses::errorResponse($e);
         }
-
-        if ($request->flag_cirurgia == "false") {
-            $operacao->detalhes_cirurgia = null;
-            $operacao->detalhes_observacao_recuperacao = null;
-            $operacao->detalhes_outros_cuidados_recuperacao = null;
-            $operacao->detalhes_analgesia_recuperacao = null;
-            $operacao->detalhes_nao_uso_analgesia_recuperacao = null;
-            $operacao->observacao_recuperacao = null;
-            $operacao->outros_cuidados_recuperacao = null;
-            $operacao->analgesia_recuperacao = null;
-            $operacao->flag_cirurgia = null;
-        } else {
-            $operacao->detalhes_cirurgia = $request->detalhes_cirurgia;
-            $operacao->detalhes_observacao_recuperacao = $request->detalhes_observacao_recuperacao;
-            $operacao->detalhes_outros_cuidados_recuperacao = $request->detalhes_outros_cuidados_recuperacao;
-            $operacao->detalhes_analgesia_recuperacao = $request->detalhes_analgesia_recuperacao;
-            $operacao->observacao_recuperacao = $request->observacao_recuperacao;
-            $operacao->detalhes_nao_uso_analgesia_recuperacao = $request->detalhes_nao_uso_analgesia_recuperacao;
-            $operacao->outros_cuidados_recuperacao = $request->outros_cuidados_recuperacao;
-            $operacao->analgesia_recuperacao = $request->analgesia_recuperacao;
-            $operacao->flag_cirurgia = $request->flag_cirurgia;
-        }
-
-        if (isset($planejamento->operacao)) {
-            $operacao->update();
-        } else {
-            $operacao->save();
-        }
-
-
-        return response()->json([
-            'message' => 'success',
-            'campo' => 'Cirurgia'
-        ]);
     }
 
-    public
-    function criar_eutanasia(CriarEutanasiaRequest $request)
+    public function criar_eutanasia(CriarEutanasiaRequest $request)
     {
-        $request->validated();
-        $modelo_animal = ModeloAnimal::find($request->modelo_animal_id);
-        $planejamento = $modelo_animal->planejamento;
+        try {
+            $request->validated();
+            $modelo_animal = ModeloAnimal::find($request->modelo_animal_id);
+            $planejamento = $modelo_animal->planejamento;
+            if (!$planejamento) {
+                throw new \Exception('É necessário que o planejamento seja criado', 412);
+            }
 
-        if (isset($planejamento->eutanasia)) {
-            $eutanasia = $planejamento->eutanasia;
-        } else {
-            $eutanasia = new Eutanasia();
-            $eutanasia->planejamento_id = $planejamento->id;
+            if ($planejamento->eutanasia) {
+                $eutanasia = $planejamento->eutanasia;
+            } else {
+                $eutanasia = new Eutanasia();
+                $eutanasia->planejamento_id = $planejamento->id;
+            }
+
+            if ($request->eutanasia == "true") {
+                $eutanasia->descricao = $request->descricao;
+                $eutanasia->metodo = $request->metodo;
+                $eutanasia->justificativa_metodo = $request->justificativa_metodo;
+            } else {
+                $eutanasia->descricao = null;
+                $eutanasia->metodo = null;
+                $eutanasia->justificativa_metodo = null;
+            }
+
+            $eutanasia->destino = $request->destino;
+            $eutanasia->descarte = $request->descarte;
+
+            if (isset($planejamento->eutanasia)) {
+                $eutanasia->update();
+            } else {
+                $eutanasia->save();
+            }
+
+            return response()->json([
+                'message' => 'success',
+                'campo' => 'Expecificação Eutanásia'
+            ]);
+
+        } catch (\Exception $e) {
+            return Responses::errorResponse($e);
         }
-
-        if ($request->eutanasia == "true") {
-            $eutanasia->descricao = $request->descricao;
-            $eutanasia->metodo = $request->metodo;
-            $eutanasia->justificativa_metodo = $request->justificativa_metodo;
-        } else {
-            $eutanasia->descricao = null;
-            $eutanasia->metodo = null;
-            $eutanasia->justificativa_metodo = null;
-        }
-
-        $eutanasia->destino = $request->destino;
-        $eutanasia->descarte = $request->descarte;
-
-        if (isset($planejamento->eutanasia)) {
-            $eutanasia->update();
-        } else {
-            $eutanasia->save();
-        }
-
-        return response()->json([
-            'message' => 'success',
-            'campo' => 'Expecificação Eutanásia'
-        ]);
     }
 
-    public
-    function criar_resultado(CriarResultadoRequest $request)
+    public function criar_resultado(CriarResultadoRequest $request)
     {
-        $request->validated();
-        $modelo_animal = ModeloAnimal::find($request->modelo_animal_id);
-        $planejamento = $modelo_animal->planejamento;
+        try {
+            $request->validated();
+            $modelo_animal = ModeloAnimal::find($request->modelo_animal_id);
+            $planejamento = $modelo_animal->planejamento;
+            if (!$planejamento) {
+                throw new \Exception('É necessário que o planejamento seja criado', 412);
+            }
 
-        if (isset($planejamento->resultado)) {
-            $resultado = $planejamento->resultado;
-            $resultado->update($request->all());
-        } else {
-            $resultado = new Resultado();
-            $resultado->planejamento_id = $planejamento->id;
-            $resultado->create($request->all());
+            if (isset($planejamento->resultado)) {
+                $resultado = $planejamento->resultado;
+                $resultado->update($request->all());
+            } else {
+                $resultado = new Resultado();
+                $resultado->planejamento_id = $planejamento->id;
+                $resultado->fill($request->all());
+                $resultado->save();
+
+            }
+            return response()->json([
+                'message' => 'success',
+                'campo' => 'Especificação Abate'
+            ]);
+        } catch (\Exception $e) {
+            return Responses::errorResponse($e);
         }
-
-        /* Envio de Email ao administrador
-        $admins = User::where('tipo_usuario_id', 1)->get();
-        foreach ($admins as $admin) {
-            Mail::to($admin->email)->send(new SendNotificacaoSolicitacao($admin));
-        }
-        */
-
-        return response()->json([
-            'message' => 'success',
-            'campo' => 'Especificação Abate'
-        ]);
     }
 
     public function index_admin()
@@ -951,8 +980,7 @@ class SolicitacaoController extends Controller
         return redirect(route('solicitacao.solicitante.index'))->with(['success' => 'Solicitação concluída com sucesso!']);
     }
 
-    public
-    function visualizar($id)
+    public function visualizar($id)
     {
         $solicitacao = Solicitacao::find($id);
         $instituicaos = Instituicao::all();

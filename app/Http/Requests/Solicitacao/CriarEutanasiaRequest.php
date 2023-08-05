@@ -28,7 +28,6 @@ class CriarEutanasiaRequest extends FormRequest
     public function messages()
     {
         return [
-            'planejamento_id.required' => 'Necessária a criação de um planejamento',
             '*.required' => 'O :attribute é obrigatório',
             '*.required_if' => 'O :attribute é obrigatório',
         ];
@@ -41,15 +40,5 @@ class CriarEutanasiaRequest extends FormRequest
                 'errors' => $validator->errors(),
             ], 422)
         );
-    }
-    public function withValidator($validator)
-    {
-        $validator->after(function ($validator) {
-            $modelo_animal = ModeloAnimal::find($this->input('modelo_animal_id'));
-
-            if (!$modelo_animal->planejamento) {
-                $validator->errors()->add('planejamentoFail', 'Falha no planejamento');
-            }
-        });
     }
 }

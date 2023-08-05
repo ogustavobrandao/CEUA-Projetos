@@ -46,14 +46,4 @@ class CriarCondicoesAnimalRequest extends FormRequest
             ], 422)
         );
     }
-    public function withValidator($validator)
-    {
-        $validator->after(function ($validator) {
-            $modelo_animal = ModeloAnimal::find($this->input('modelo_animal_id'));
-
-            if (!$modelo_animal->planejamento) {
-                $validator->errors()->add('planejamentoFail', 'Falha no planejamento');
-            }
-        });
-    }
 }
