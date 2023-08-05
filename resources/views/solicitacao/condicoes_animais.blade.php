@@ -183,24 +183,21 @@
                         for (var field in errors) {
                             var fieldErrors = errors[field];
                             var errorMessage = ''
-
-                            if (field === 'planejamentoFail') {
-                                $('#failModal').modal('show');
-                                $('#failModal').find('.msg-fail').text('Necessario a Criação de um Planejamento');
-                                setTimeout(function (){
-                                    $('#failModal').modal('hide');
-                                },1000)
-
-                            } else{
-                                for (var i = 0; i < fieldErrors.length; i++) {
+                            for (var i = 0; i < fieldErrors.length; i++) {
                                 errorMessage += fieldErrors[i] + '\n';
                             }
-                                var errorDiv = '#' + field + '_error'
-                                var errorMessageTag = '#' + field + '_error_message';
-                                $(errorMessageTag).html(errorMessage);
-                                $(errorDiv).css('display', 'block')
-                            }
+                            var errorDiv = '#' + field + '_error'
+                            var errorMessageTag = '#' + field + '_error_message';
+                            $(errorMessageTag).html(errorMessage);
+                            $(errorDiv).css('display', 'block')
                         }
+                    }
+                    if(statusCode === 412 && status === 'error'){
+                        $('#failModal').modal('show');
+                        $('#failModal').find('.msg-fail').text(xhr.responseJSON.message);
+                        setTimeout(function (){
+                            $('#failModal').modal('hide');
+                        },2000)
                     }
                 } else {
                     alert("Erro na requisição Ajax: " + error);

@@ -25,8 +25,13 @@
             <div id="eutanasia_dados" class="row">
                 <div class="col-sm-12 mt-2">
                     <label for="descricao">Descrição:<strong style="color: red">*</strong></label>
-                    <textarea class="form-control @error('descricao') is-invalid @enderror" name="descricao" id="descricao"
-                              autocomplete="descricao" autofocus required>@if(!empty($eutanasia) && $eutanasia->descricao != null){{$eutanasia->descricao}}@else{{old('descricao')}}@endif</textarea>
+                    <textarea class="form-control @error('descricao') is-invalid @enderror" name="descricao"
+                              id="descricao"
+                              autocomplete="descricao" autofocus required>@if(!empty($eutanasia) && $eutanasia->descricao != null)
+                            {{$eutanasia->descricao}}
+                        @else
+                            {{old('descricao')}}
+                        @endif</textarea>
                     @error('descricao')
                     <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -37,7 +42,11 @@
                 <div class="col-sm-12 mt-2">
                     <label for="metodo">Substância, Dose, Via:<strong style="color: red">*</strong></label>
                     <textarea class="form-control @error('metodo') is-invalid @enderror" name="metodo" id="metodo"
-                              autocomplete="metodo" autofocus required>@if(!empty($eutanasia) && $eutanasia->metodo != null){{$eutanasia->metodo}}@else{{old('metodo')}}@endif</textarea>
+                              autocomplete="metodo" autofocus required>@if(!empty($eutanasia) && $eutanasia->metodo != null)
+                            {{$eutanasia->metodo}}
+                        @else
+                            {{old('metodo')}}
+                        @endif</textarea>
                     <div class="div_error" id="metodo_error" style="display: none">
                         <span class="invalid-input">
                             <strong id="metodo_error_message"></strong>
@@ -46,11 +55,16 @@
                 </div>
 
                 <div class="col-sm-12 mt-2">
-                    <label for="justificativa_metodo">Caso Método Restrito, Justifique:<strong style="color: red">*</strong></label>
+                    <label for="justificativa_metodo">Caso Método Restrito, Justifique:<strong
+                            style="color: red">*</strong></label>
                     <textarea class="form-control @error('justificativa_metodo') is-invalid @enderror"
                               name="justificativa_metodo" id="justificativa_metodo" autocomplete="justificativa_metodo"
                               autofocus
-                              required>@if(!empty($eutanasia) &&  $eutanasia->justificativa_metodo != null){{$eutanasia->justificativa_metodo}}@else{{old('justificativa_metodo')}}@endif</textarea>
+                              required>@if(!empty($eutanasia) &&  $eutanasia->justificativa_metodo != null)
+                            {{$eutanasia->justificativa_metodo}}
+                        @else
+                            {{old('justificativa_metodo')}}
+                        @endif</textarea>
                     <div class="div_error" id="justificativa_metodo_error" style="display: none">
                         <span class="invalid-input">
                             <strong id="justificativa_metodo_error_message"></strong>
@@ -60,9 +74,14 @@
             </div>
 
             <div class="col-sm-12 mt-2">
-                <label for="destino">Destino dos Animais Mortos e / ou Tecidos / Fragmentos:<strong style="color: red">*</strong></label>
+                <label for="destino">Destino dos Animais Mortos e / ou Tecidos / Fragmentos:<strong
+                        style="color: red">*</strong></label>
                 <textarea class="form-control @error('destino') is-invalid @enderror" name="destino" id="destino"
-                          autocomplete="destino" autofocus required>@if(!empty($eutanasia) && $eutanasia->destino != null){{$eutanasia->destino}}@else{{old('destino')}}@endif</textarea>
+                          autocomplete="destino" autofocus required>@if(!empty($eutanasia) && $eutanasia->destino != null)
+                        {{$eutanasia->destino}}
+                    @else
+                        {{old('destino')}}
+                    @endif</textarea>
                 <div class="div_error" id="destino_error" style="display: none">
                         <span class="invalid-input">
                             <strong id="destino_error_message"></strong>
@@ -73,7 +92,11 @@
             <div class="col-sm-12 mt-2">
                 <label for="descarte">Forma de Descarte da Carcaça:<strong style="color: red">*</strong></label>
                 <textarea class="form-control @error('descarte') is-invalid @enderror" name="descarte" id="descarte"
-                          autocomplete="descarte" autofocus required>@if(!empty($eutanasia) && $eutanasia->descarte != null){{$eutanasia->descarte}}@else{{old('descarte')}}@endif</textarea>
+                          autocomplete="descarte" autofocus required>@if(!empty($eutanasia) && $eutanasia->descarte != null)
+                        {{$eutanasia->descarte}}
+                    @else
+                        {{old('descarte')}}
+                    @endif</textarea>
                 <div class="div_error" id="descarte_error" style="display: none">
                         <span class="invalid-input">
                             <strong id="descarte_error_message"></strong>
@@ -90,15 +113,15 @@
     $(document).ready(function () {
 
         @if(isset($eutanasia) && $eutanasia->descricao != null)
-            $("#eutanasia_sim").attr('checked', true);
-            @if(!isset($disabled))
-            $("#eutanasia_dados").show().find('input, textarea').prop('disabled', false);
-            @else
-            $("#eutanasia_dados").show().find('input, textarea');
-            @endif
+        $("#eutanasia_sim").attr('checked', true);
+        @if(!isset($disabled))
+        $("#eutanasia_dados").show().find('input, textarea').prop('disabled', false);
         @else
-            $("#eutanasia_nao").attr('checked', true);
-            $("#eutanasia_dados").hide().find('input, textarea').prop('disabled', true);
+        $("#eutanasia_dados").show().find('input, textarea');
+        @endif
+        @else
+        $("#eutanasia_nao").attr('checked', true);
+        $("#eutanasia_dados").hide().find('input, textarea').prop('disabled', true);
         @endif
 
 
@@ -111,17 +134,17 @@
         });
 
         @if(!empty($resultado) && $resultado->abate != null)
-            $("#abate_sim").attr('checked', true);
-            $("#abate_sim").click();
+        $("#abate_sim").attr('checked', true);
+        $("#abate_sim").click();
         @else
-            $("#abate_nao").attr('checked', true);
+        $("#abate_nao").attr('checked', true);
         @endif
     });
 
-    $( "#abate_sim" ).click(function() {
+    $("#abate_sim").click(function () {
         $("#destino_animal_abatido").show().find('input, textarea').prop('disabled', false);
     });
-    $( "#abate_nao" ).click(function() {
+    $("#abate_nao").click(function () {
         $("#destino_animal_abatido").hide().find('input, textarea').prop('disabled', true);
     });
 
@@ -165,24 +188,21 @@
                         for (var field in errors) {
                             var fieldErrors = errors[field];
                             var errorMessage = ''
-
-                            if (field === 'planejamentoFail') {
-                                $('#failModal').modal('show');
-                                $('#failModal').find('.msg-fail').text('Necessario a Criação de um Planejamento');
-                                setTimeout(function (){
-                                    $('#failModal').modal('hide');
-                                },1000)
-
-                            } else{
-                                for (var i = 0; i < fieldErrors.length; i++) {
-                                    errorMessage += fieldErrors[i] + '\n';
-                                }
-                                var errorDiv = '#' + field + '_error'
-                                var errorMessageTag = '#' + field + '_error_message';
-                                $(errorMessageTag).html(errorMessage);
-                                $(errorDiv).css('display', 'block')
+                            for (var i = 0; i < fieldErrors.length; i++) {
+                                errorMessage += fieldErrors[i] + '\n';
                             }
+                            var errorDiv = '#' + field + '_error'
+                            var errorMessageTag = '#' + field + '_error_message';
+                            $(errorMessageTag).html(errorMessage);
+                            $(errorDiv).css('display', 'block')
                         }
+                    }
+                    if(statusCode === 412 && status === 'error'){
+                        $('#failModal').modal('show');
+                        $('#failModal').find('.msg-fail').text(xhr.responseJSON.message);
+                        setTimeout(function (){
+                            $('#failModal').modal('hide');
+                        },2000)
                     }
                 } else {
                     alert("Erro na requisição Ajax: " + error);
