@@ -335,13 +335,14 @@ class SolicitacaoController extends Controller
         ]);
     }
 
-    public function atualizar_colaborador_tabela($id){
+    public function atualizar_colaborador_tabela($id)
+    {
 
-        $solicitacao= Solicitacao::find($id);
+        $solicitacao = Solicitacao::find($id);
         $colaboradores = $solicitacao->responsavel->colaboradores;
         $instituicaos = Instituicao::all();
 
-        $conteudoTabela = view('solicitacao.colaborador.colaborador_tabela', ['colaboradores' => $colaboradores, 'solicitacao'=>$solicitacao, 'instituicaos'=> $instituicaos, "tipo" => 2])->render();
+        $conteudoTabela = view('solicitacao.colaborador.colaborador_tabela', ['colaboradores' => $colaboradores, 'solicitacao' => $solicitacao, 'instituicaos' => $instituicaos, "tipo" => 2])->render();
 
         return response()->json(['html' => $conteudoTabela]);
 
@@ -452,7 +453,7 @@ class SolicitacaoController extends Controller
             'message' => 'success',
             'campo' => 'Modelo animal'
         ]);
-        }
+    }
 
     public function deletar_modelo_animal($id)
     {
@@ -467,7 +468,7 @@ class SolicitacaoController extends Controller
         $solicitacao = Solicitacao::find($solicitacao_id);
         $modelosAnimais = ModeloAnimal::where('solicitacao_id', $solicitacao_id)->get();
 
-        $tabela_modelo_animal = view('solicitacao.modelo_animal_tabela', ['solicitacao'=>$solicitacao, 'modelosAnimais'=> $modelosAnimais])->render();
+        $tabela_modelo_animal = view('solicitacao.modelo_animal_tabela', ['solicitacao' => $solicitacao, 'modelosAnimais' => $modelosAnimais])->render();
 
         return response()->json(['html' => $tabela_modelo_animal]);
 
@@ -505,6 +506,7 @@ class SolicitacaoController extends Controller
 
         return redirect(route('solicitacao.form', ['solicitacao_id' => $request->solicitacao_id]));
     }
+
     private function verifyPath($path)
     {
         $validPath = Storage::exists($path);
@@ -734,44 +736,44 @@ class SolicitacaoController extends Controller
     public function criar_condicoes_animal(CriarCondicoesAnimalRequest $request)
     {
         $request->validated();
-        $planejamento = Planejamento::find($request->planejamento_id);
+        $modelo_animal = ModeloAnimal::find($request->modelo_animal_id);
+        $planejamento = $modelo_animal->planejamento;
 
-        if(isset($planejamento)){
-            if (isset($planejamento->condicoesAnimal)) {
-                $condicoes_animal = $planejamento->condicoesAnimal;
-            } else {
-                $condicoes_animal = new CondicoesAnimal();
-                $condicoes_animal->planejamento_id = $planejamento->id;
-            }
 
-            $condicoes_animal->condicoes_particulares = $request->condicoes_particulares;
-            $condicoes_animal->local = $request->local;
-            $condicoes_animal->ambiente_alojamento = $request->ambiente_alojamento;
-            $condicoes_animal->tipo_cama = $request->tipo_cama;
-            $condicoes_animal->num_animais_ambiente = $request->num_animais_ambiente;
-            $condicoes_animal->dimensoes_ambiente = $request->dimensoes_ambiente;
-            $condicoes_animal->periodo = $request->periodo;
-            $condicoes_animal->profissional_responsavel = $request->profissional_responsavel;
-            $condicoes_animal->email_responsavel = $request->email_responsavel;
-
-            if (isset($planejamento->condicoesAnimal)) {
-                $condicoes_animal->update();
-            } else {
-                $condicoes_animal->save();
-            }
-
-            return response()->json([
-                'message' => 'success',
-                'campo' => 'Condição animal'
-            ]);
+        if (isset($planejamento->condicoesAnimal)) {
+            $condicoes_animal = $planejamento->condicoesAnimal;
+        } else {
+            $condicoes_animal = new CondicoesAnimal();
+            $condicoes_animal->planejamento_id = $planejamento->id;
         }
-        return redirect(['massege'=>'Necessario a Criação de um Planejamento']);
+
+        $condicoes_animal->condicoes_particulares = $request->condicoes_particulares;
+        $condicoes_animal->local = $request->local;
+        $condicoes_animal->ambiente_alojamento = $request->ambiente_alojamento;
+        $condicoes_animal->tipo_cama = $request->tipo_cama;
+        $condicoes_animal->num_animais_ambiente = $request->num_animais_ambiente;
+        $condicoes_animal->dimensoes_ambiente = $request->dimensoes_ambiente;
+        $condicoes_animal->periodo = $request->periodo;
+        $condicoes_animal->profissional_responsavel = $request->profissional_responsavel;
+        $condicoes_animal->email_responsavel = $request->email_responsavel;
+
+        if (isset($planejamento->condicoesAnimal)) {
+            $condicoes_animal->update();
+        } else {
+            $condicoes_animal->save();
+        }
+
+        return response()->json([
+            'message' => 'success',
+            'campo' => 'Condição animal'
+        ]);
     }
 
     public function criar_procedimento(CriarProcedimentoRequest $request)
     {
         $request->validated();
-        $planejamento = Planejamento::find($request->planejamento_id);
+        $modelo_animal = ModeloAnimal::find($request->modelo_animal_id);
+        $planejamento = $modelo_animal->planejamento;
 
         if (isset($planejamento->procedimento)) {
             $procedimento = $planejamento->procedimento;
@@ -793,7 +795,8 @@ class SolicitacaoController extends Controller
     {
 
         $request->validated();
-        $planejamento = Planejamento::find($request->planejamento_id);
+        $modelo_animal = ModeloAnimal::find($request->modelo_animal_id);
+        $planejamento = $modelo_animal->planejamento;
 
         if (isset($planejamento->operacao)) {
             $operacao = $planejamento->operacao;
@@ -841,7 +844,8 @@ class SolicitacaoController extends Controller
     function criar_eutanasia(CriarEutanasiaRequest $request)
     {
         $request->validated();
-        $planejamento = Planejamento::find($request->planejamento_id);
+        $modelo_animal = ModeloAnimal::find($request->modelo_animal_id);
+        $planejamento = $modelo_animal->planejamento;
 
         if (isset($planejamento->eutanasia)) {
             $eutanasia = $planejamento->eutanasia;
@@ -871,7 +875,7 @@ class SolicitacaoController extends Controller
 
         return response()->json([
             'message' => 'success',
-            'campo' => 'Expecificação Eutanázia'
+            'campo' => 'Expecificação Eutanásia'
         ]);
     }
 
@@ -879,7 +883,8 @@ class SolicitacaoController extends Controller
     function criar_resultado(CriarResultadoRequest $request)
     {
         $request->validated();
-        $planejamento = Planejamento::find($request->planejamento_id);
+        $modelo_animal = ModeloAnimal::find($request->modelo_animal_id);
+        $planejamento = $modelo_animal->planejamento;
 
         if (isset($planejamento->resultado)) {
             $resultado = $planejamento->resultado;
@@ -910,7 +915,7 @@ class SolicitacaoController extends Controller
         $solicitacoes = Solicitacao::all();
         $avaliadores = User::where('tipo_usuario_id', '2')->get();
 
-        return view('admin.solicitacoes', compact('solicitacoes', 'avaliadores','avaliacoes','horario'));
+        return view('admin.solicitacoes', compact('solicitacoes', 'avaliadores', 'avaliacoes', 'horario'));
     }
 
     public
@@ -968,6 +973,7 @@ class SolicitacaoController extends Controller
         return view('admin.apreciacao_index', compact('avaliacoes', 'horario'));
 
     }
+
     public function aprovar_avaliacao($solicitacao_id)
     {
 

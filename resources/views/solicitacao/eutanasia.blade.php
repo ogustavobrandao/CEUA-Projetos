@@ -2,7 +2,7 @@
 
     <form id="form10" method="POST" action="">
         @csrf
-        <input type="hidden" name="planejamento_id" @if(!empty($planejamento)) value="{{$planejamento->id}}" @endif>
+        <input type="hidden" name="modelo_animal_id" value="{{$modelo_animal->id}}">
         <div class="row col-md-12" style=" @if(Auth::user()->tipo_usuario_id == 2) pointer-events: none @endif">
             <h3 class="subtitulo">Especificação<strong style="color: red">*</strong></h3>
 
@@ -165,13 +165,23 @@
                         for (var field in errors) {
                             var fieldErrors = errors[field];
                             var errorMessage = ''
-                            for (var i = 0; i < fieldErrors.length; i++) {
-                                errorMessage += fieldErrors[i] + '\n';
+
+                            if (field === 'planejamentoFail') {
+                                $('#failModal').modal('show');
+                                $('#failModal').find('.msg-fail').text('Necessario a Criação de um Planejamento');
+                                setTimeout(function (){
+                                    $('#failModal').modal('hide');
+                                },1000)
+
+                            } else{
+                                for (var i = 0; i < fieldErrors.length; i++) {
+                                    errorMessage += fieldErrors[i] + '\n';
+                                }
+                                var errorDiv = '#' + field + '_error'
+                                var errorMessageTag = '#' + field + '_error_message';
+                                $(errorMessageTag).html(errorMessage);
+                                $(errorDiv).css('display', 'block')
                             }
-                            var errorDiv = '#' + field + '_error'
-                            var errorMessageTag = '#' + field + '_error_message';
-                            $(errorMessageTag).html(errorMessage);
-                            $(errorDiv).css('display', 'block')
                         }
                     }
                 } else {

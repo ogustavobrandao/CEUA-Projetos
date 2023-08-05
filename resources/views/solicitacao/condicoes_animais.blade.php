@@ -2,7 +2,7 @@
 
     <form id="form7" method="POST" action="">
         @csrf
-        <input type="hidden" name="planejamento_id" @if(!empty($planejamento)) value="{{$planejamento->id}}" @endif>
+        <input type="hidden" name="modelo_animal_id" value="{{$modelo_animal->id}}">
         <div class="row">
             <div class="col-12">
                 <h3 class="subtitulo">Condições de alojamento e alimentação dos animais</h3>
@@ -171,7 +171,7 @@
                     $('.div_error').css('display', 'none');
                     setTimeout(function () {
                         $('#successModal').modal('hide');
-                    }, 12000);
+                    }, 2000);
                 }
             },
             error: function (xhr, status, error) {
@@ -183,13 +183,23 @@
                         for (var field in errors) {
                             var fieldErrors = errors[field];
                             var errorMessage = ''
-                            for (var i = 0; i < fieldErrors.length; i++) {
+
+                            if (field === 'planejamentoFail') {
+                                $('#failModal').modal('show');
+                                $('#failModal').find('.msg-fail').text('Necessario a Criação de um Planejamento');
+                                setTimeout(function (){
+                                    $('#failModal').modal('hide');
+                                },1000)
+
+                            } else{
+                                for (var i = 0; i < fieldErrors.length; i++) {
                                 errorMessage += fieldErrors[i] + '\n';
                             }
-                            var errorDiv = '#' + field + '_error'
-                            var errorMessageTag = '#' + field + '_error_message';
-                            $(errorMessageTag).html(errorMessage);
-                            $(errorDiv).css('display', 'block')
+                                var errorDiv = '#' + field + '_error'
+                                var errorMessageTag = '#' + field + '_error_message';
+                                $(errorMessageTag).html(errorMessage);
+                                $(errorDiv).css('display', 'block')
+                            }
                         }
                     }
                 } else {

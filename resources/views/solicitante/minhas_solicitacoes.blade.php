@@ -33,10 +33,10 @@
                                     <strong style="color:red;">Reprovado <small>(Tempo expirado)</small></strong>
                                 @elseif($solicitacao->status == 'nao_avaliado')
                                     Não Avaliado
-                                @elseif($solicitacao->status == 'avaliando' || $solicitacao->avaliacao->first()->status == "aprovado" && !isset($solicitacao->avaliacao->first()->licenca))
-                                    Em avaliação
-                                @elseif($solicitacao->avaliacao->first()->status == "aprovado" && isset($solicitacao->avaliacao->first()->licenca))
+                                @elseif(($solicitacao->avaliacao->first()->status == "aprovado" || $solicitacao->avaliacao->first()->status == "aprovado_colegiado") && isset($solicitacao->avaliacao->first()->licenca))
                                     Aprovado
+                                @elseif($solicitacao->status == 'avaliando' || $solicitacao->avaliacao->first()->status == "aprovado_avaliador")
+                                    Em avaliação
                                 @elseif($solicitacao->avaliacao->first()->status == "reprovado")
                                     Reprovado
                                 @else
@@ -51,10 +51,10 @@
                                        title="Continuar Preenchendo Solicitação."><i class="fa-solid fa-file"></i></a>
 
                                 @elseif(($solicitacao->status == "nao_avaliado"))
-                                {{--<a class="btn"
-                                    href="{{route('solicitacao.index', ['solicitacao_id' => $solicitacao->id])}}"
-                                style="border-color: #1B1C42; background-color: #e700ff"
-                                title="Editar Solicitação."><i class="fa-solid fa-up-right-from-square"></i></a>--}}
+                                    {{--<a class="btn"
+                                        href="{{route('solicitacao.index', ['solicitacao_id' => $solicitacao->id])}}"
+                                    style="border-color: #1B1C42; background-color: #e700ff"
+                                    title="Editar Solicitação."><i class="fa-solid fa-up-right-from-square"></i></a>--}}
                                     <a class="btn"
                                        href="{{route('pdf.gerarPDFSolicitacao', ['solicitacao_id' => $solicitacao->id])}}"
                                        style="border-color: #1B1C42; background-color: #c0ddf6"
@@ -71,11 +71,11 @@
                                            style="border-color: #1B1C42; background-color: #c0ddf6"
                                            title="Editar Solicitação."><i class="fa-solid fa-up-right-from-square"></i></a>
                                     @endif
-                                @elseif(($solicitacao->avaliacao->first()->status == "reprovada") ||
-                                        ($solicitacao->avaliacao->first()->status == "aprovado"))
+                                @elseif(($solicitacao->avaliacao->first()->status != null) ||
+                                        ($solicitacao->avaliacao->first()->status != "aprovadaPendencia"))
                                     {{-- <a class="btn" href="{{route('solicitacao.index', ['solicitacao_id' => $solicitacao->id])}}" style="border-color: #1B1C42; background-color: #c0ddf6"
                                        title="Visualizar Solicitação."><i class="fa-solid fa-up-right-from-square"></i></a> --}}
-                                    @if($solicitacao->avaliacao->first()->status == "aprovado")
+                                    @if($solicitacao->avaliacao->first()->status == "aprovado" || $solicitacao->avaliacao->first()->status == 'aprovado_colegiado')
                                         @if(isset($solicitacao->avaliacao->first()->licenca))
                                             <a class="btn" style="border-color: #1B1C42; background-color: #c0ddf6"
                                                data-toggle="modal" data-target="#licencaModal{{$solicitacao->id}}"
@@ -90,51 +90,56 @@
                                                href="{{route('pdf.gerarPDFSolicitacao', ['solicitacao_id' => $solicitacao->id])}}"
                                                style="border-color: #1B1C42; background-color: #c0ddf6"
                                                title="Gerar PDF."><i class="fa-solid fa-circle-down"></i></a>
-                                       @endif
+                                        @endif
                                     @endif
                                 @endif
                             </td>
                         </tr>
-
-                        @if($solicitacao->status == "avaliado" && $solicitacao->avaliacao->first()->status == "aprovado" && isset($solicitacao->avaliacao->first()->licenca))
-                            <!-- Modal Licença -->
-                            <div class="modal fade" id="licencaModal{{$solicitacao->id}}" tabindex="-1" role="dialog"
-                                 aria-labelledby="licencaModalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-lg" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="licencaModalLabel">Dados da Licença</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="row">
-                                                <div class="col-sm-12">
-                                                    <label for="codigo">Código:</label>
-                                                    <input class="form-control" disabled
-                                                           value="{{$solicitacao->avaliacao->first()->licenca->codigo}}">
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <label for="inicio">Data de Início:</label>
-                                                    <input class="form-control" type="date" disabled
-                                                           value="{{$solicitacao->avaliacao->first()->licenca->inicio}}">
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <label for="fim">Data de Fim:</label>
-                                                    <input class="form-control" type="date" disabled
-                                                           value="{{$solicitacao->avaliacao->first()->licenca->fim}}">
+                        @if($solicitacao->status == "avaliado" && isset($solicitacao->avaliacao->first()->licenca))
+                            @if($solicitacao->avaliacao->first()->status == "aprovado_colegiado" ||
+                                $solicitacao->avaliacao->first()->status == "aprovado")
+                                <!-- Modal Licença -->
+                                <div class="modal fade" id="licencaModal{{$solicitacao->id}}" tabindex="-1"
+                                     role="dialog"
+                                     aria-labelledby="licencaModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="licencaModalLabel">Dados da Licença</h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <label for="codigo">Código:</label>
+                                                        <input class="form-control" disabled
+                                                               value="{{$solicitacao->avaliacao->first()->licenca->codigo}}">
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <label for="inicio">Data de Início:</label>
+                                                        <input class="form-control" type="date" disabled
+                                                               value="{{$solicitacao->avaliacao->first()->licenca->inicio}}">
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <label for="fim">Data de Fim:</label>
+                                                        <input class="form-control" type="date" disabled
+                                                               value="{{$solicitacao->avaliacao->first()->licenca->fim}}">
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
 
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar
-                                            </button>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                                    Fechar
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            @endif
                         @endif
                     @endforeach
                     </tbody>

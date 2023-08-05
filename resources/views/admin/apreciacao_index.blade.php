@@ -20,7 +20,7 @@
                 </thead>
                 <tbody>
                 @foreach($avaliacoes as $avaliacao)
-                    @if($avaliacao->status != 'aprovado_avaliador' || $avaliacao->status != 'aprovado_colegiado'||$avaliacao->status == 'reprovado')
+                    @if($avaliacao->status == 'aprovado_avaliador' || $avaliacao->status == 'aprovado_colegiado'||$avaliacao->status == 'reprovado')
                         <tr>
                             <td class="text-center">{{$avaliacao->solicitacao->user->name}}</td>
                             <td class="text-center">{{$avaliacao->solicitacao->titulo_pt}}</td>

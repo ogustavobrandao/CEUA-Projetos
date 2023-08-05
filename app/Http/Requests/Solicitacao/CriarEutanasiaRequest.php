@@ -2,7 +2,10 @@
 
 namespace App\Http\Requests\Solicitacao;
 
+use App\Models\ModeloAnimal;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class CriarEutanasiaRequest extends FormRequest
 {
@@ -14,7 +17,6 @@ class CriarEutanasiaRequest extends FormRequest
     public function rules()
     {
         return [
-            'planejamento_id' => 'required',
             'destino' => 'required',
             'descarte' => 'required',
             'metodo' => 'required_if:eutanasia,==,true',
@@ -30,5 +32,24 @@ class CriarEutanasiaRequest extends FormRequest
             '*.required' => 'O :attribute é obrigatório',
             '*.required_if' => 'O :attribute é obrigatório',
         ];
+    }
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(
+            response()->json([
+                'message' => 'Falha na validação',
+                'errors' => $validator->errors(),
+            ], 422)
+        );
+    }
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            $modelo_animal = ModeloAnimal::find($this->input('modelo_animal_id'));
+
+            if (!$modelo_animal->planejamento) {
+                $validator->errors()->add('planejamentoFail', 'Falha no planejamento');
+            }
+        });
     }
 }
