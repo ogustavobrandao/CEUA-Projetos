@@ -25,18 +25,13 @@
             <div id="eutanasia_dados" class="row">
                 <div class="col-sm-12 mt-2">
                     <label for="descricao">Descrição:<strong style="color: red">*</strong></label>
-                    <textarea class="form-control @error('descricao') is-invalid @enderror" name="descricao"
-                              id="descricao"
-                              autocomplete="descricao" autofocus required>@if(!empty($eutanasia) && $eutanasia->descricao != null)
-                            {{$eutanasia->descricao}}
-                        @else
-                            {{old('descricao')}}
-                        @endif</textarea>
-                    @error('descricao')
-                    <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-                    @enderror
+                    <textarea class="form-control @error('descricao') is-invalid @enderror" name="descricao" id="descricao"
+                              autocomplete="descricao" autofocus required>@if(!empty($eutanasia) && $eutanasia->descricao != null){{$eutanasia->descricao}}@else{{old('descricao')}}@endif</textarea>
+                    <div class="div_error" id="descricao_error" style="display: none">
+                        <span class="invalid-input">
+                            <strong id="descricao_error_message"></strong>
+                        </span>
+                    </div>
                 </div>
 
                 <div class="col-sm-12 mt-2">

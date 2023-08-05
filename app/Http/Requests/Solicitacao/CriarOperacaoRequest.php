@@ -27,14 +27,14 @@ class CriarOperacaoRequest extends FormRequest
 
             return [
                 'flag_cirurgia' => 'required',
-                'detalhes_cirurgia' => 'required_if:flag_cirurgia,true_unica,true_multipla',
-                'observacao_recuperacao' => 'required_if:flag_cirurgia,true_unica,true_multipla',
-                'detalhes_observacao_recuperacao' => 'required_if:observacao_recuperacao,true',
-                'analgesia_recuperacao' => 'required_if:flag_cirurgia,true_unica,true_multipla',
-                'detalhes_analgesia_recuperacao' => 'required_if:analgesia_recuperacao,true',
-                'detalhes_nao_uso_analgesia_recuperacao' => 'required_if:analgesia_recuperacao,false',
-                'outros_cuidados_recuperacao' => 'required_if:flag_cirurgia,true_unica,true_multipla',
-                'detalhes_outros_cuidados_recuperacao' => 'required_if:outros_cuidados_recuperacao,true',
+                'detalhes_cirurgia' => 'required_if:flag_cirurgia,true_unica,true_multipla|min:4|max:255',
+                'observacao_recuperacao' => 'required_if:flag_cirurgia,true_unica,true_multipla|min:4|max:255',
+                'detalhes_observacao_recuperacao' => 'required_if:observacao_recuperacao,true|min:4|max:255',
+                'analgesia_recuperacao' => 'required_if:flag_cirurgia,true_unica,true_multipla|min:4|max:255',
+                'detalhes_analgesia_recuperacao' => 'required_if:analgesia_recuperacao,true|min:4|max:255',
+                'detalhes_nao_uso_analgesia_recuperacao' => 'required_if:analgesia_recuperacao,false|min:4|max:255',
+                'outros_cuidados_recuperacao' => 'required_if:flag_cirurgia,true_unica,true_multipla|min:4|max:255',
+                'detalhes_outros_cuidados_recuperacao' => 'required_if:outros_cuidados_recuperacao,true|min:4|max:255',
             ];
         }
     }

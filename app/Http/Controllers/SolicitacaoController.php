@@ -274,7 +274,7 @@ class SolicitacaoController extends Controller
         return $nomeAnexos;
     }
 
-    public function editar_colaborador(EditarColaboradorRequest $request)
+    public function editar_colaborador(CriarColaboradorRequest $request)
     {
         $data = $request->all();
         $colaborador = Colaborador::find($data['colaborador_id']);

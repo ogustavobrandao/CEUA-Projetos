@@ -17,9 +17,9 @@ class CriarModeloAnimalRequest extends FormRequest
     public function rules()
     {
         return [
-            'justificativa' => 'required|string',
-            'nome_cientifico' => 'required|string',
-            'nome_vulgar' => 'required|string',
+            'justificativa' => 'required|string|min:5|max:1000',
+            'nome_cientifico' => 'required|string|min:4|max:255',
+            'nome_vulgar' => 'required|string|min:4|max:255',
             'procedencia' => 'required',
             'termo_consentimento' => 'required|file',
             'quantidade' => [

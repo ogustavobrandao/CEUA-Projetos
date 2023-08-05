@@ -12,8 +12,6 @@
                 <ul class="list-group">
                     @foreach ($historicoModificacoes as $historico)
                         <li class="list-group-item">
-                            <strong>Titulo:</strong> {{$solicitacao->titulo_pt}}
-                            <br>
                             <strong>Status:</strong>
                             @if($historico->status_solicitacao == 'aprovado_colegiado')
                                 Aprovado pelo Colegiado
@@ -27,9 +25,9 @@
                                 Reprovado
                             @endif
                             <br>
-                            <strong>Usuário Modificador:</strong> {{ $historico->nome_usuario_modificador }}
+                            <strong>Usuário que Modificou:</strong> {{ $historico->nome_usuario_modificador }}
                             <br>
-                            <strong>Data da Modificação:</strong> {{ $historico->created_at->format('d/m/Y') }}
+                            <strong>Data da Modificação:</strong> {{ $historico->created_at->format('d/m/Y H:i:s') }}
                         </li>
                     @endforeach
                 </ul>

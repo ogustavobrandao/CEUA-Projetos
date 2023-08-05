@@ -4,8 +4,7 @@
     <div class="row container-fluid min-vh justify-content-center">
         <div class="col-10">
             <div class="shadow-lg p-5">
-                <div class="row mb-4 pt-3 ">
-
+                <div class="row mb-4 pt-3">
                     <div class="col-md-12">
                         <h3 class="text-left titulo">Solicitações</h3>
                         <hr class="bg-secondary w-80 mt-3">
@@ -96,7 +95,6 @@
                                 @endif
                             </td>
                         </tr>
-
                         @if($solicitacao->status == "avaliado" && isset($solicitacao->avaliacao->first()->licenca))
                             @if($solicitacao->avaliacao->first()->status == "aprovado_colegiado" ||
                                 $solicitacao->avaliacao->first()->status == "aprovado")

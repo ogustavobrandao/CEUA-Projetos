@@ -16,10 +16,10 @@ class CriarSolicitacaoRequest extends FormRequest
     public function rules()
     {
         return [
-            'titulo_en' => 'nullable|string|min:5',
-            'titulo_pt' => 'required|string|min:5',
+            'titulo_en' => 'nullable|string|min:5|max:1000',
+            'titulo_pt' => 'required|string|min:5|max:1000',
             'inicio' => 'required|date',
-            'fim' => 'required|date',
+            'fim' => 'required|date|after:inicio',
             'solicitacao_id' => 'required|integer',
             'grandeArea' => 'required|integer',
             'area' => 'required|integer',
