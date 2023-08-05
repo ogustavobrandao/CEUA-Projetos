@@ -58,15 +58,13 @@
                 <label for="outras_infos">Outras Informações Relevantes:<strong style="color: red">*</strong></label>
                 <textarea class="form-control @error('outras_infos') is-invalid @enderror" name="outras_infos"
                           id="outras_infos" autocomplete="outras_infos" autofocus
-                          required>@if(!empty($resultado) && $resultado->outras_infos != null)
+                          required minlength="4">@if(!empty($resultado) && $resultado->outras_infos != null)
                         {{$resultado->outras_infos}}
-                    @else
-                        {{old('outras_infos')}}
                     @endif</textarea>
                 <div class="div_error" id="outras_infos_error" style="display: none">
-                    <span class="invalid-input">
-                        <strong id="outras_infos_error_message"></strong>
-                    </span>
+                        <span class="invalid-input">
+                            <strong id="outras_infos_error_message"></strong>
+                        </span>
                 </div>
             </div>
 
@@ -178,7 +176,7 @@
                             $(errorDiv).css('display', 'block')
                         }
                     }
-                    if(statusCode === 412 && status === 'error'){
+                    if(status == 'error'){
                         $('#failModal').modal('show');
                         $('#failModal').find('.msg-fail').text(xhr.responseJSON.message);
                         setTimeout(function (){

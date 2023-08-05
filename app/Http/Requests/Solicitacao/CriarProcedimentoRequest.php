@@ -17,18 +17,6 @@ class CriarProcedimentoRequest extends FormRequest
     public function rules()
     {
         return [
-<<<<<<< HEAD
-            'estresse' => 'required_if:estresse_radio,==,on',
-            'anestesico' => 'required_if:anestesico_radio,==,on',
-            'relaxante' => 'required_if:relaxante_radio,==,on',
-            'analgesico' => 'required_if:analgesico_radio,==,on',
-            'imobilizacao' => 'required_if:imobilizacao_radio,==,on',
-            'inoculacao_substancia' => 'required_if:inoculacao_substancia_radio,==,on',
-            'extracao' => 'required_if:extracao_radio,==,on',
-            'jejum' => 'required_if:jejum_radio,==,on',
-            'restricao_hidrica' => 'required_if:restricao_hidrica_radio,==,on',
-=======
-            'planejamento_id' => 'required',
             'estresse' => 'required_if:estresse_radio,on|min:4|max:255',
             'anestesico' => 'required_if:anestesico_radio,on|min:4|max:255',
             'relaxante' => 'required_if:relaxante_radio,on|min:4|max:255',
@@ -38,7 +26,6 @@ class CriarProcedimentoRequest extends FormRequest
             'extracao' => 'required_if:extracao_radio,on|min:4|max:255',
             'jejum' => 'required_if:jejum_radio,on|min:4|max:255',
             'restricao_hidrica' => 'required_if:restricao_hidrica_radio,on|min:4|max:255',
->>>>>>> dc966ae64d958efa9003ca99f59a7927fe8047ae
         ];
 
     }
