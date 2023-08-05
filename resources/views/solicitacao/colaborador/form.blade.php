@@ -43,7 +43,7 @@
 </div>
     @include('solicitacao.colaborador.colaborador_cadastro_modal')
 <div id="dados_colaborador">
-    @if(isset($solicitacao->responsavel->colaboradores))
+
         <div class="card p-3 bg-white" style="border-radius: 0px 0px 10px 10px;">
             <table class="table">
                 <thead>
@@ -80,7 +80,6 @@
 
             @endif
             <div class="modalColaborador"></div>
-    @endif
         </div>
 </div>
 <script>

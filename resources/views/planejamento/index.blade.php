@@ -79,6 +79,7 @@
                             </div>
                         </div>
                     </div>
+                    @include('component.modal_fail')
                     <div id="planejamento">
                         @if(Auth::user()->tipo_usuario_id == 2)
                             @include('solicitacao.planejamento',['tipo'=>5,'avaliacao_id'=>$avaliacao->id,'id'=>$planejamento->id])
