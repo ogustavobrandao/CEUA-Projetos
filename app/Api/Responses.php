@@ -1,32 +1,29 @@
 <?php
 
-namespace App\Console;
+namespace App\Api;
 
-use Illuminate\Console\Scheduling\Schedule;
-use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Illuminate\Http\JsonResponse;
 
-class Kernel extends ConsoleKernel
+class Responses
 {
-    /**
-     * Define the application's command schedule.
-     *
-     * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
-     * @return void
-     */
-    protected function schedule(Schedule $schedule)
+
+    public static function successResponse($data, $status_code=200): JsonResponse
     {
-        // $schedule->command('inspire')->hourly();
+        return new JsonResponse($data, $status_code);
     }
 
-    /**
-     * Register the commands for the application.
-     *
-     * @return void
-     */
-    protected function commands()
+    public static function errorResponse($exception): JsonResponse
     {
-        $this->load(__DIR__.'/Commands');
+        return new JsonResponse([
+            'message' => $exception->getMessage()
+        ], is_numeric($exception->getCode()) && $exception->getCode() >= 100 && $exception->getCode() <= 599 ? $exception->getCode() : 500);
+    }
 
-        require base_path('routes/console.php');
+    public static function errorResponseWithData($message, $data, $status_code): JsonResponse
+    {
+        return new JsonResponse([
+            'message' => $message,
+            'data' => $data
+        ], $status_code);
     }
 }
