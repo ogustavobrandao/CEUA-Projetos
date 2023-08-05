@@ -4,8 +4,7 @@
     <div class="row container-fluid min-vh justify-content-center">
         <div class="col-10">
             <div class="shadow-lg p-5">
-                <div class="row mb-4 pt-3 ">
-
+                <div class="row mb-4 pt-3">
                     <div class="col-md-12">
                         <h3 class="text-left titulo">Solicitações</h3>
                         <hr class="bg-secondary w-80 mt-3">
@@ -97,7 +96,7 @@
                             </td>
                         </tr>
 
-                        @if($solicitacao->status == "avaliado" && $solicitacao->avaliacao->first()->status == "aprovado" && isset($solicitacao->avaliacao->first()->licenca)))
+                        @if($solicitacao->status == "avaliado" && $solicitacao->avaliacao->first()->status == "aprovado" && isset($solicitacao->avaliacao->first()->licenca))
                             <!-- Modal Licença -->
                             <div class="modal fade" id="licencaModal{{$solicitacao->id}}" tabindex="-1" role="dialog"
                                  aria-labelledby="licencaModalLabel" aria-hidden="true">
