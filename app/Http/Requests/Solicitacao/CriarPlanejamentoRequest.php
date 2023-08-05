@@ -16,12 +16,12 @@ class CriarPlanejamentoRequest extends FormRequest
     public function rules()
     {
         return [
-            'num_animais_grupo' => 'required | numeric | min:0',
-            'especificar_grupo' => 'required',
-            'criterios' => 'required',
-            'desc_materiais_metodos' => 'required',
-            'analise_estatistica' => 'required',
-            'outras_infos' => 'required',
+            'num_animais_grupo' => 'required|numeric|min:1',
+            'especificar_grupo' => 'required|min:4|max:1000',
+            'criterios' => 'required|min:4|max:1000',
+            'desc_materiais_metodos' => 'required|min:4|max:1000',
+            'analise_estatistica' => 'required|min:4|max:1000',
+            'outras_infos' => 'required|min:4|max:1000',
             'grau_invasividade' => 'required',
 
         ];

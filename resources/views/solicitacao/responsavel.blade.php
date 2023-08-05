@@ -475,9 +475,8 @@
 </script>
 <script>
     function checkResponsavel() {
-
         $('#responsavel-check').remove();
-        $('#check-responsavel').append(`
+        $('#check-responsavel').html(`
                 <h2 class="titulo" id="titulo_2">3. Dados do(s) Colaborador(es)
                     <a class="float-end" id="2_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
                     <a class="float-end" id="2_btn_down" style="display: none"><i class="fa-solid fa-circle-chevron-down"></i></a>

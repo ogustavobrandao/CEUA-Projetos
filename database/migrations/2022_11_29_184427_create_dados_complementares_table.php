@@ -20,8 +20,8 @@ return new class extends Migration
             $table->text('justificativa')->nullable();
             $table->text('objetivos')->nullable();
             $table->text('resumo')->nullable();
-            $table->unsignedBigInteger('solicitacao_id');
 
+            $table->unsignedBigInteger('solicitacao_id');
             $table->foreign('solicitacao_id')->references('id')->on('solicitacaos')->onDelete('cascade');
 
             $table->timestamps();

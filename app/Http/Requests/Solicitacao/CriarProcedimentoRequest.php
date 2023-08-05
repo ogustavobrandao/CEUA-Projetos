@@ -18,15 +18,15 @@ class CriarProcedimentoRequest extends FormRequest
     {
         return [
             'planejamento_id' => 'required',
-            'estresse' => 'required_if:estresse_radio,==,on',
-            'anestesico' => 'required_if:anestesico_radio,==,on',
-            'relaxante' => 'required_if:relaxante_radio,==,on',
-            'analgesico' => 'required_if:analgesico_radio,==,on',
-            'imobilizacao' => 'required_if:imobilizacao_radio,==,on',
-            'inoculacao_substancia' => 'required_if:inoculacao_substancia_radio,==,on',
-            'extracao' => 'required_if:extracao_radio,==,on',
-            'jejum' => 'required_if:jejum_radio,==,on',
-            'restricao_hidrica' => 'required_if:restricao_hidrica_radio,==,on',
+            'estresse' => 'required_if:estresse_radio,on|min:4|max:255',
+            'anestesico' => 'required_if:anestesico_radio,on|min:4|max:255',
+            'relaxante' => 'required_if:relaxante_radio,on|min:4|max:255',
+            'analgesico' => 'required_if:analgesico_radio,on|min:4|max:255',
+            'imobilizacao' => 'required_if:imobilizacao_radio,on|min:4|max:255',
+            'inoculacao_substancia' => 'required_if:inoculacao_substancia_radio,on|min:4|max:255',
+            'extracao' => 'required_if:extracao_radio,on|min:4|max:255',
+            'jejum' => 'required_if:jejum_radio,on|min:4|max:255',
+            'restricao_hidrica' => 'required_if:restricao_hidrica_radio,on|min:4|max:255',
         ];
 
     }
