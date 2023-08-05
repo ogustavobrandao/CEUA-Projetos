@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Solicitacao;
 
+use App\Models\ModeloAnimal;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -46,6 +47,16 @@ class CriarProcedimentoRequest extends FormRequest
                 'errors' => $validator->errors(),
             ], 422)
         );
+    }
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            $modelo_animal = ModeloAnimal::find($this->input('modelo_animal_id'));
+
+            if (!$modelo_animal->planejamento) {
+                $validator->errors()->add('planejamentoFail', 'Falha no planejamento');
+            }
+        });
     }
 }
 
