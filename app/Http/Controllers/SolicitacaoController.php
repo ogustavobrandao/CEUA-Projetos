@@ -359,7 +359,6 @@ class SolicitacaoController extends Controller
             DadosComplementares::create($request->all());
         }
 
-        $solicitacao->status = null;
         $solicitacao->update();
         return response()->json([
             'message' => 'success',
