@@ -1,5 +1,5 @@
 <!-- Modal Edicao-->
-<div class="modal fade" id="modalEditarColaborador{{$colaborador->id}}" tabindex="-1" role="dialog" aria-labelledby="modalEditarColaboradorLabel" aria-hidden="true">
+<div class="modal fade" id="modalEditarColaborador" tabindex="-1" role="dialog" aria-labelledby="modalEditarColaboradorLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -12,7 +12,7 @@
 
             <form id="form2-1" method="POST" action="javascript:void(0)" enctype="multipart/form-data">
                 @csrf
-                <input type="hidden" name="solicitacao_id" value="{{$solicitacao->id}}">
+                <input type="hidden" name="solicitacao_id" value="{{$solicitacao_id}}">
                 <input type="hidden" name="colaborador_id" value="{{$colaborador->id}}">
                 <div class="modal-body">
                     <div class="mt-2">

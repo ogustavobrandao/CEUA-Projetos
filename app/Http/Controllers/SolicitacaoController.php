@@ -347,6 +347,17 @@ class SolicitacaoController extends Controller
         return response()->json(['html' => $conteudoTabela]);
 
     }
+    public function abrir_colaborador_modal($colaborador_id)
+    {
+        $colaborador= Colaborador::find($colaborador_id);
+        $responsavel = Responsavel::find($colaborador->responsavel_id);
+        $instituicaos = Instituicao::all();
+
+        $colaborador_modal = view('solicitacao.colaborador.colaborador_edicao_modal', ['colaborador' => $colaborador, 'solicitacao_id' => $responsavel->solicitacao_id, 'instituicaos' => $instituicaos, "tipo" => 2])->render();
+
+        return response()->json(['colaborador_modal' => $colaborador_modal]);
+
+    }
 
     public function criar_solicitacao_fim(CriarSolicitacaoFimRequest $request)
     {

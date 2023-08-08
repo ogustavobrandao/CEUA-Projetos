@@ -79,7 +79,9 @@
                 @endif
 
             @endif
-            <div class="modalColaborador"></div>
+            <div class="modalColaborador">
+
+            </div>
         </div>
 </div>
 <script>
@@ -99,22 +101,6 @@
     $(document).ready(function() {
         atualizarTabela();
     });
-
-    /*
-    // Função para armazenar a posição atual antes do envio do formulário
-    function storeScrollPosition() {
-        var scrollTop = $(window).scrollTop();
-        localStorage.setItem('scrollPosition', scrollTop);
-    }
-
-    // Função para restaurar a posição após a atualização da página
-    function restoreScrollPosition() {
-        var scrollTop = localStorage.getItem('scrollPosition');
-        if (scrollTop !== null) {
-            $(window).scrollTop(scrollTop);
-            localStorage.removeItem('scrollPosition');
-        }
-    }*/
 
     $(document).on('click', '.btn-deletar-colaborador', function (event) {
         event.preventDefault();
@@ -139,5 +125,25 @@
         });
 
         return false;
+    });
+
+    $(document).on('click', '.btn-abrirModal-colaborador', function (event) {
+        event.preventDefault();
+        var colaborador_id = $(this).data('colaborador-id');
+        $.ajax({
+            url: '/solicitacao/modal_atualizacao_colaborador/' + colaborador_id,
+            method: 'GET',
+            success: function(response) {
+                $('.modalColaborador').html('')
+                $('.modalColaborador').html(response.colaborador_modal);
+                $('#modalEditarColaborador').modal('show');
+            },
+            error: function(response) {
+                console.log('Erro ao atualizar a modal.');
+            }
+        });
+    });
+    $(document).on('click', '[data-dismiss="modal"]', function() {
+        $('#modalEditarColaborador').modal('hide');
     });
 </script>

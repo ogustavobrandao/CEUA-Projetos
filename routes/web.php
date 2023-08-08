@@ -86,6 +86,7 @@ Route::group(['middleware' => ['auth', 'verified', 'checkProprietario']], functi
     Route::post('/solicitacao/editar_colaborador', [App\Http\Controllers\SolicitacaoController::class, 'editar_colaborador'])->name('solicitacao.colaborador.editar');
     Route::get('/solicitacao/colaborador/{id}', [App\Http\Controllers\SolicitacaoController::class, 'deletar_colaborador'])->name('solicitacao.colaborador.deletar');
     Route::get('/solicitacao/colaborador_tabela/{id}', [App\Http\Controllers\SolicitacaoController::class, 'atualizar_colaborador_tabela'])->name('solicitacao.colaborador_tabela');
+    Route::get('/solicitacao/modal_atualizacao_colaborador/{colaborador_id}', [App\Http\Controllers\SolicitacaoController::class, 'abrir_colaborador_modal'])->name('solicitacao.modal_atualizacao_colaborador');
     Route::post('/solicitacao/criar_eutanasia', [App\Http\Controllers\SolicitacaoController::class, 'criar_eutanasia'])->name('solicitacao.eutanasia.criar');
     Route::post('/solicitacao/criar_modelo_animal', [App\Http\Controllers\SolicitacaoController::class, 'criar_modelo_animal'])->name('solicitacao.modelo_animal.criar');
     Route::post('/solicitacao/atualizar_modelo_animal', [App\Http\Controllers\SolicitacaoController::class, 'atualizar_modelo_animal'])->name('solicitacao.modelo_animal.update');
