@@ -126,23 +126,24 @@
                         </div>
                         <br>
                         <h5>Informações Complementares</h5>
-
-                        <div>
-                            <label>Experiência Prévia:</label>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="opcao_experiencia_previa-{{$colaborador->id}}" id="opcaoSim" value="on" required @if($colaborador->experiencia_previa != '') checked @endif
-                                @if(Auth::user()->tipo_usuario_id == 1 || Auth::user()->tipo_usuario_id == 2)) disabled @endif>
-                                <label class="form-check-label" for="opcaoSim">Sim</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="opcao_experiencia_previa-{{$colaborador->id}}" id="opcaoNao" value="off" required @if($colaborador->experiencia_previa == '') checked @endif
-                                @if(Auth::user()->tipo_usuario_id == 1 || Auth::user()->tipo_usuario_id == 2)) disabled @endif>
-                                <label class="form-check-label" for="opcaoNao">Não</label>
-                            </div>
-                        </div>
-                        <div class="row col-sm-12">
-                            <div class="col-sm-6 align-items-end " id="divexperiencia-{{$colaborador->id}}" @if($colaborador->experiencia_previa == '') style="display: none;" @endif>
-                                        <label>Experiência Prévia:<strong style="color: red">*</strong></label>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div>
+                                    <label>Experiência Prévia:</label>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="opcao_experiencia_previa-{{$colaborador->id}}" id="opcaoSim" value="on" required @if($colaborador->experiencia_previa != '') checked @endif
+                                        @if(Auth::user()->tipo_usuario_id == 1 || Auth::user()->tipo_usuario_id == 2)) disabled @endif>
+                                        <label class="form-check-label" for="opcaoSim">Sim</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="opcao_experiencia_previa-{{$colaborador->id}}" id="opcaoNao" value="off" required @if($colaborador->experiencia_previa == '') checked @endif
+                                        @if(Auth::user()->tipo_usuario_id == 1 || Auth::user()->tipo_usuario_id == 2)) disabled @endif>
+                                        <label class="form-check-label" for="opcaoNao">Não</label>
+                                    </div>
+                                </div>
+                                <div class="row col-sm-12">
+                                    <div class="col-sm-12" id="divexperiencia-{{$colaborador->id}}" @if($colaborador->experiencia_previa == '') style="display: none;" @endif>
+                                        <label>Enviar Arquivo de Experiência Prévia:<strong style="color: red">*</strong></label>
                                         @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2 || \Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 1)
                                             @if($colaborador->experiencia_previa == null)
                                                 <br>
@@ -150,15 +151,14 @@
                                             @else
                                                 <br>
                                                 <a class="btn btn-primary m-3"
-                                                   href="{{route('experiencias_previasColaborador.download', ['colaborador_id' => $colaborador->id])}}">Baixar
-                                                    Experiência Prévia</a>
+                                                           href="{{route('experiencias_previasColaborador.download', ['colaborador_id' => $colaborador->id])}}">Baixar
+                                                            Experiência Prévia</a>
                                             @endif
                                         @else
                                             <input name="experiencia_previa" class="form-control"
                                                    id="experiencia_previa" type="file" accept="application/pdf" style="width: 135px">
                                             @if($colaborador->experiencia_previa != null)
-                                                <span
-                                                    style="border: 1px gray solid; border-radius: 10px; text-align: center; width: 180px; position: absolute; bottom: 0px; left: 155px; height: 38px; padding-top: 5px; background-color: #dcfadf">Um Arquivo Já Foi Enviado</span>
+                                                <span style="border: 1px gray solid; border-radius: 10px; text-align: center; width: 180px; position: absolute; bottom: 0px; left: 155px; height: 38px; padding-top: 5px; background-color: #dcfadf">Um Arquivo Já Foi Enviado</span>
                                             @endif
                                         @endif
                                     </div>
@@ -167,31 +167,51 @@
                                             <strong class="experiencia_previa_error_message"></strong>
                                         </span>
                                     </div>
-                            <div class="col-sm-6">
-                                    <label>Termo de Responsabilidade:</label>
-                                @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2 || \Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 1)
-                                    @if($colaborador->termo_responsabilidade == null)
-                                        <br>
-                                        <a class="btn btn-secondary" href="#">Não Enviado</a>
-                                    @else
-                                        <a class="btn btn-primary m-3"
-                                           href="{{route('termo_responsabilidadeColaborador.download', ['colaborador_id' => $colaborador->id])}}">Baixar
-                                            Termo de Responsabilidade</a>
-                                    @endif
-                                @else
-                                    <input class="form-control" id="termo_responsabilidade" type="file" accept="application/pdf"
-                                           name="termo_responsabilidade" style="width: 135px" @if(Auth::user()->tipo_usuario_id == 1 || Auth::user()->tipo_usuario_id == 2)) disabled @endif>
+                                </div>
+                            </div>
 
-                                    @if($colaborador->termo_responsabilidade != null)
-                                        <span style="border: 1px gray solid; border-radius: 10px; text-align: center; width: 180px; position: absolute; bottom: 0px; left: 155px; height: 38px; padding-top: 5px; background-color: #dcfadf">Um Arquivo Já Foi Enviado</span>
-                                    @endif
-                                @endif
-                            </div>
-                            <div class="div_error termo_responsabilidade_error" style="display: none">
-                                    <span class="invalid-input">
-                                        <strong class="termo_responsabilidade_error_message"></strong>
-                                    </span>
-                            </div>
+                                <div class="col-sm-6">
+                                    <div>
+                                        <label class=" mt-2">Termo de Responsabilidade:</label>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="opcao_termo_responsabilidade-{{$colaborador->id}}" id="opcaoSim" value="on" required @if($colaborador->termo_responsabilidade != '') checked @endif
+                                            @if(Auth::user()->tipo_usuario_id == 1 || Auth::user()->tipo_usuario_id == 2)) disabled @endif>
+                                            <label class="form-check-label" for="opcaoSim">Sim</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input default" type="radio" name="opcao_termo_responsabilidade-{{$colaborador->id}}" id="opcaoSim" value="off" required @if($colaborador->termo_responsabilidade == '') checked @endif
+                                            @if(Auth::user()->tipo_usuario_id == 1 || Auth::user()->tipo_usuario_id == 2)) disabled @endif>
+                                            <label class="form-check-label" for="opcaoNao">Não</label>
+                                        </div>
+                                    </div>
+                                    <div class="row col-sm-12">
+                                        <div class="col-sm-12" id="divresponsabilidade-{{$colaborador->id}}" @if($colaborador->termo_responsabilidade == '') style="display: none;" @endif>
+                                            <label>Enviar arquivo de Responsabilidade:</label>
+                                                @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2 || \Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 1)
+                                                    @if($colaborador->termo_responsabilidade == null)
+                                                        <br>
+                                                        <a class="btn btn-secondary" href="#">Não Enviado</a>
+                                                    @else
+                                                        <a class="btn btn-primary m-3"
+                                                           href="{{route('termo_responsabilidadeColaborador.download', ['colaborador_id' => $colaborador->id])}}">Baixar
+                                                            Termo de Responsabilidade</a>
+                                                    @endif
+                                                @else
+                                                <input class="form-control" id="termo_responsabilidade" type="file" accept="application/pdf"
+                                                       name="termo_responsabilidade" style="width: 135px" @if(Auth::user()->tipo_usuario_id == 1 || Auth::user()->tipo_usuario_id == 2)) disabled @endif>
+
+                                                @if($colaborador->termo_responsabilidade != null)
+                                                    <span style="border: 1px gray solid; border-radius: 10px; text-align: center; width: 180px; position: absolute; bottom: 0px; left: 155px; height: 38px; padding-top: 5px; background-color: #dcfadf">Um Arquivo Já Foi Enviado</span>
+                                                @endif
+                                            @endif
+                                        </div>
+                                        <div class="div_error termo_responsabilidade_error" style="display: none">
+                                            <span class="invalid-input">
+                                                <strong class="termo_responsabilidade_error_message"></strong>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
                         </div>
                         <div class="row">
                             <div class="col-sm-12 mt-2">
@@ -240,6 +260,18 @@
 </div>
 
 <script>
+    $('input[name="opcao_termo_responsabilidade-{{$colaborador->id}}"]').change(function() {
+        var selectedOption = $(this).val();
+        var divresponsabilidade = $('#divresponsabilidade-{{$colaborador->id}}');
+
+        if (selectedOption === 'on') {
+            divresponsabilidade.show();
+        } else {
+            $(divresponsabilidade).hide().find('input').prop('value', '');
+            divresponsabilidade.hide();
+
+        }
+    });
     $('input[name="opcao_experiencia_previa-{{$colaborador->id}}"]').change(function() {
         var selectedOption = $(this).val();
         var divexperiencia = $('#divexperiencia-{{$colaborador->id}}');
@@ -292,6 +324,14 @@
                     $('body').removeClass('modal-open');
                     $('body').css('padding-right', '');
                     $('.modal-backdrop').remove();
+
+                    $('#successModal').modal('show');
+                    $('#successModal').find('.msg-success').text('O colaborador foi salvo com sucesso!');
+
+                    $('.div_error').css('display', 'none');
+                    setTimeout(function () {
+                        $('#successModal').modal('hide');
+                    }, 2000);
                 }
             },
             error: function (xhr, status, error) {

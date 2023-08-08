@@ -124,35 +124,49 @@
                             </div>
                         </div>
                         <h5 class="py-3">Informações Complementares</h5>
-                        <div>
-                            <label>Experiência Prévia:</label>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="opcao_experiencia_previa" id="opcaoSim" value="on" required>
-                                <label class="form-check-label" for="opcaoSim">Sim</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input default" type="radio" name="opcao_experiencia_previa" id="opcaoNao" value="off" required checked>
-                                <label class="form-check-label" for="opcaoNao">Não</label>
-                            </div>
-                        </div>
-                        <div class=" row col-sm-12">
-                            <div class="col-sm-6 align-items-end" id="divexperiencia" style="display: none;">
-                                <label>Enviar Arquivo de Experiência Prévia:</label>
-                                <input required name="experiencia_previa" class="form-control" value="" id="experiencia_previa" type="file" accept="application/pdf">
-                                <div class="div_error experiencia_previa_error" style="display: none">
-                                    <span class="invalid-input">
-                                        <strong class="experiencia_previa_error_message"></strong>
-                                    </span>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div>
+                                    <label>Experiência Prévia:</label>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="opcao_experiencia_previa" id="opcaoSim" value="on" required>
+                                        <label class="form-check-label" for="opcaoSim">Sim</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input default" type="radio" name="opcao_experiencia_previa" id="opcaoNao" value="off" required checked>
+                                        <label class="form-check-label" for="opcaoNao">Não</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12" id="divexperiencia" style="display: none;">
+                                    <label>Enviar Arquivo de Experiência Prévia:</label>
+                                    <input required name="experiencia_previa" class="form-control" value="" id="experiencia_previa" type="file" accept="application/pdf">
+                                    <div class="div_error experiencia_previa_error" style="display: none">
+                                        <span class="invalid-input">
+                                            <strong class="experiencia_previa_error_message"></strong>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-sm-6">
-                                    <label>Termo de Responsabilidade:</label>
-                                    <input required class="form-control" id="termo_responsabilidade" type="file"
-                                           accept="application/pdf" name="termo_responsabilidade" value="">
-                                <div class="div_error termo_responsabilidade_error" style="display: none">
-                                    <span class="invalid-input">
-                                        <strong class="termo_responsabilidade_error_message"></strong>
-                                    </span>
+                            <div class="col-md-6">
+                                <div>
+                                    <label class="mt-2">Termo de Responsabilidade:</label>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="opcao_termo_responsabilidade" id="opcaoSim" value="on" required>
+                                        <label class="form-check-label" for="opcaoSim">Sim</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input default" type="radio" name="opcao_termo_responsabilidade" id="opcaoNao" value="off" required checked>
+                                        <label class="form-check-label" for="opcaoNao">Não</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12" id="divresponsabilidade" style="display: none;">
+                                    <label>Enviar arquivo de Responsabilidade:</label>
+                                    <input required class="form-control" id="termo_responsabilidade" type="file" accept="application/pdf" name="termo_responsabilidade" value="">
+                                    <div class="div_error termo_responsabilidade_error" style="display: none">
+                                        <span class="invalid-input">
+                                            <strong class="termo_responsabilidade_error_message"></strong>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -194,6 +208,19 @@
 
 <script src="{{ asset('js/masks.js') }}"></script>
 <script>
+    $('input[name="opcao_termo_responsabilidade"]').change(function() {
+        var selectedOption = $(this).val();
+        var divresponsabilidade = $('#divresponsabilidade');
+
+        if (selectedOption === 'on') {
+
+            divresponsabilidade.show();
+        } else {
+            $(divresponsabilidade).hide().find('input').prop('value', '');
+            divresponsabilidade.hide();
+
+        }
+    });
 
     $('input[name="opcao_experiencia_previa"]').change(function() {
         var selectedOption = $(this).val();
@@ -257,6 +284,15 @@
                     $('body').removeClass('modal-open');
                     $('body').css('padding-right', '');
                     $('.modal-backdrop').remove();
+
+
+                    $('#successModal').modal('show');
+                    $('#successModal').find('.msg-success').text('O colaborador foi salvo com sucesso!');
+
+                    $('.div_error').css('display', 'none');
+                    setTimeout(function () {
+                        $('#successModal').modal('hide');
+                    }, 2000);
                 }
             },
             error: function (xhr, status, error) {
