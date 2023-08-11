@@ -45,9 +45,8 @@
                             </td>
                             <td class="text-center">
                                 @if($solicitacao->status == null)
-                                    <a class="btn"
+                                    <a class="btn btn-info" style="color: white"
                                        href="{{route('solicitacao.index', ['solicitacao_id' => $solicitacao->id])}}"
-                                       style="border-color: #1d68a7; color: #1d68a7; background-color: #c0ddf6"
                                        title="Continuar Preenchendo Solicitação."><i class="fa-solid fa-file"></i></a>
 
                                 @elseif(($solicitacao->status == "nao_avaliado"))
@@ -55,20 +54,17 @@
                                         href="{{route('solicitacao.index', ['solicitacao_id' => $solicitacao->id])}}"
                                     style="border-color: #1B1C42; background-color: #e700ff"
                                     title="Editar Solicitação."><i class="fa-solid fa-up-right-from-square"></i></a>--}}
-                                    <a class="btn"
+                                    <a class="btn btn-info" style="color: white"
                                        href="{{route('pdf.gerarPDFSolicitacao', ['solicitacao_id' => $solicitacao->id])}}"
-                                       style="border-color: #1B1C42; background-color: #c0ddf6"
                                        title="Gerar PDF."><i class="fa-solid fa-circle-down"></i></a>
                                 @elseif($solicitacao->status == "avaliando")
-                                    <a class="btn"
+                                    <a class="btn btn-info" style="color: white"
                                        href="{{route('pdf.gerarPDFSolicitacao', ['solicitacao_id' => $solicitacao->id])}}"
-                                       style="border-color: #1B1C42; background-color: #c0ddf6"
                                        title="Gerar PDF."><i class="fa-solid fa-circle-down"></i></a>
                                 @elseif($solicitacao->status == "avaliado" && $solicitacao->avaliacao->first()->status == "aprovadaPendencia")
                                     @if(\Illuminate\Support\Carbon::parse(($solicitacao->updated_at))->diffInDays(\Illuminate\Support\Carbon::parse($solicitacao->avaliacao->first()->updated_at)) <= 30)
-                                        <a class="btn"
+                                        <a class="btn btn-info" style="color: white"
                                            href="{{route('solicitacao.index', ['solicitacao_id' => $solicitacao->id])}}"
-                                           style="border-color: #1B1C42; background-color: #c0ddf6"
                                            title="Editar Solicitação."><i class="fa-solid fa-up-right-from-square"></i></a>
                                     @endif
                                 @elseif(($solicitacao->avaliacao->first()->status != null) ||
@@ -77,18 +73,16 @@
                                        title="Visualizar Solicitação."><i class="fa-solid fa-up-right-from-square"></i></a> --}}
                                     @if($solicitacao->avaliacao->first()->status == "aprovado" || $solicitacao->avaliacao->first()->status == 'aprovado_colegiado')
                                         @if(isset($solicitacao->avaliacao->first()->licenca))
-                                            <a class="btn" style="border-color: #1B1C42; background-color: #c0ddf6"
+                                            <a class="btn btn-info" style="color: white"
                                                data-toggle="modal" data-target="#licencaModal{{$solicitacao->id}}"
                                                title="Licença."><i
                                                     class="fa-regular fa-id-card"></i></a>
-                                            <a class="btn"
+                                            <a class="btn btn-info" style="color: white"
                                                href="{{route('pdf.gerarPDFAprovado', ['solicitacao_id' => $solicitacao->id])}}"
-                                               style="border-color: #1B1C42; background-color: #c0ddf6"
                                                title="Gerar PDF."><i class="fa-solid fa-circle-down"></i></a>
                                         @else
-                                            <a class="btn"
+                                            <a class="btn btn-info" style="color: white"
                                                href="{{route('pdf.gerarPDFSolicitacao', ['solicitacao_id' => $solicitacao->id])}}"
-                                               style="border-color: #1B1C42; background-color: #c0ddf6"
                                                title="Gerar PDF."><i class="fa-solid fa-circle-down"></i></a>
                                         @endif
                                     @endif
