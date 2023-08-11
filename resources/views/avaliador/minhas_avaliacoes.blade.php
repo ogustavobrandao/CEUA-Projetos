@@ -54,6 +54,9 @@
                                            data-target="#licencaModal_{{$avaliacao->id}}" title="Dados da licença">
                                             <i class="fa-regular fa-id-card"></i>
                                         </a>
+                                        <a class="btn btn-info" style="color: white"
+                                           href="{{route('pdf.gerarPDFAprovado', ['solicitacao_id' => $avaliacao->solicitacao->id])}}"
+                                           title="Gerar PDF."><i class="fa fa-arrow-down" aria-hidden="true"></i></a>
                                     @elseif($avaliacao->status == 'reprovado')
                                         <a style="color: red; font-weight: bold">Reprovada</a>
                                     @endif

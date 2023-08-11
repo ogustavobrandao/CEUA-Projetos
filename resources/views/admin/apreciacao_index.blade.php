@@ -27,9 +27,9 @@
                             <td class="text-center">{{$avaliacao->solicitacao->tipo}}</td>
                             <td class="text-center">@if($avaliacao->status == 'aprovado' || $avaliacao->status == 'aprovado_colegiado' && isset($avaliacao->licenca))
                                     Aprovado pelo Colegiado
-                                    @elseif($avaliacao->status == 'aprovado_avaliador')
+                                @elseif($avaliacao->status == 'aprovado_avaliador')
                                     Aprovado pelo Avaliador
-                                    @else
+                                @else
                                     Reprovado
                                 @endif</td>
                             <td class="text-center">
@@ -41,12 +41,18 @@
                                         <i class="fa-regular fa-id-card"></i>
                                     </a>
                                 @elseif($avaliacao->status == 'reprovado')
-                                    <i class="btn btn-danger fa fa-window-close" aria-hidden="true" title="Reprovado"></i>
+                                    <i class="btn btn-danger fa fa-window-close" aria-hidden="true"
+                                       title="Reprovado"></i>
                                 @endif
                                 @if($avaliacao->status != 'aprovado')
-                                    <a href="#" class="btn btn-primary" onclick="carregarHistoricoModal({{$avaliacao->solicitacao_id}})" title="Histórico da solicitação">
+                                    <a href="#" class="btn btn-primary"
+                                       onclick="carregarHistoricoModal({{$avaliacao->solicitacao_id}})"
+                                       title="Histórico da solicitação">
                                         <i class="fas fa-history"></i>
                                     </a>
+                                    <a class="btn btn-info" style="color: white"
+                                       href="{{route('pdf.gerarPDFAprovado', ['solicitacao_id' => $avaliacao->solicitacao->id])}}"
+                                       title="Gerar PDF."><i class="fa fa-arrow-down" aria-hidden="true"></i></a>
                                 @endif
                             </td>
                         </tr>
@@ -67,11 +73,11 @@
         $.ajax({
             url: '/historico_modal/' + solicitacao_id,
             method: 'GET',
-            success: function(response) {
+            success: function (response) {
                 $('#historicoModalContent').html(response.html);
                 $('#historicoModal').modal('show');
             },
-            error: function() {
+            error: function () {
                 console.log('Erro ao carregar o modal de histórico.');
             }
         });
