@@ -30,8 +30,10 @@
                             <td class="text-center">
                                 @if($avaliacao->status == 'nao_realizado')
                                     Não Avaliado
-                                @elseif($avaliacao->status == 'aprovado')
+                                @elseif($avaliacao->status == 'aprovado' || $avaliacao->status == 'aprovado_colegiado' && isset($avaliacao->licenca))
                                     Aprovado
+                                @elseif($avaliacao->status == 'aprovado_avaliador' && !isset($avaliacao->licenca))
+                                    Encaminhamento ao Colegiado
                                 @elseif($avaliacao->solicitacao->status == "avaliado" && $avaliacao->status == 'aprovadaPendencia')
                                     Aprovada com pendência
                                 @elseif($avaliacao->solicitacao->status == "nao_avaliado" && $avaliacao->status == "aprovadaPendencia")
@@ -47,11 +49,14 @@
                                         <a href="{{route('avaliador.solicitacao.avaliar', ['solicitacao_id' => $avaliacao->solicitacao->id])}}">Avaliar</a>
                                     @elseif(($avaliacao->solicitacao->status == "nao_avaliado" && $avaliacao->status == "aprovadaPendencia"))
                                         <a href="{{route('avaliador.solicitacao.avaliar', ['solicitacao_id' => $avaliacao->solicitacao->id])}}">Re-Avaliar</a>
-                                    @elseif($avaliacao->status == 'aprovado')
+                                    @elseif($avaliacao->status == 'aprovado' || $avaliacao->status == 'aprovado_colegiado' && isset($avaliacao->licenca))
                                         <a class="btn btn-info" style="color: white" data-toggle="modal"
                                            data-target="#licencaModal_{{$avaliacao->id}}" title="Dados da licença">
                                             <i class="fa-regular fa-id-card"></i>
                                         </a>
+                                        <a class="btn btn-info" style="color: white"
+                                           href="{{route('pdf.gerarPDFAprovado', ['solicitacao_id' => $avaliacao->solicitacao->id])}}"
+                                           title="Gerar PDF."><i class="fa fa-arrow-down" aria-hidden="true"></i></a>
                                     @elseif($avaliacao->status == 'reprovado')
                                         <a style="color: red; font-weight: bold">Reprovada</a>
                                     @endif
@@ -60,8 +65,8 @@
                                 @endif
                             </td>
                         </tr>
-                        @if($avaliacao->status == 'aprovado')
-                            @include('avaliador.modal_licenca_temporario', compact('avaliacao'))
+                        @if($avaliacao->status == 'aprovado' || $avaliacao->status == 'aprovado_colegiado' && isset($avaliacao->licenca))
+                            @include('admin.modal_licenca_temporario', compact('avaliacao'))
                         @endif
                     @endforeach
                     </tbody>

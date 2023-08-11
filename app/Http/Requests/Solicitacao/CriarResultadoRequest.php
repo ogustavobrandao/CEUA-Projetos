@@ -2,8 +2,10 @@
 
 namespace App\Http\Requests\Solicitacao;
 
+use App\Models\ModeloAnimal;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
-
+use Illuminate\Http\Exceptions\HttpResponseException;
 class CriarResultadoRequest extends FormRequest
 {
     /**
@@ -13,22 +15,30 @@ class CriarResultadoRequest extends FormRequest
      */
     public function rules()
     {
+
         return [
-            'planejamento_id' => 'required',
-            'abate' => 'required_if:abate_radio,==,true',
-            'destino_animais' => 'required',
-            'justificativa_metodos' => 'required',
-            'resumo_procedimento' => 'required',
-            'outras_infos' => 'required',
+            'abate' => 'required_if:abate_radio,==,true|min:4|max:1000',
+            'destino_animais' => 'required|min:4|max:1000',
+            'justificativa_metodos' => 'required|min:4|max:1000',
+            'resumo_procedimento' => 'required|min:4|max:1000',
+            'outras_infos' => 'required|min:4|max:1000',
         ];
     }
 
     public function messages()
     {
         return [
-            'planejamento_id.required'  => 'Necessária a criação de um planejamento',
             '*.required'  => 'O :attribute é obrigatório',
             '*.required_if'  => 'O :attribute é obrigatório',
         ];
+    }
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(
+            response()->json([
+                'message' => 'Falha na validação',
+                'errors' => $validator->errors(),
+            ], 422)
+        );
     }
 }

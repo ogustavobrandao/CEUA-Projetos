@@ -20,7 +20,9 @@ class CheckAvaliador
         if (!Auth::check()) {
             return redirect(route('home'))->with('error', 'Você precisa estar logado para acessar essa página!');
         }
-        if (Auth::user()->tipo_usuario_id == 2) {
+        $allowedUserTypes = [1, 2];
+
+        if (in_array(Auth::user()->tipo_usuario_id, $allowedUserTypes)) {
             return $next($request);
         } else {
             return redirect(route('home'))->with('error', 'Você não possui privilégios para acessar essa página!');

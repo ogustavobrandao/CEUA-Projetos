@@ -57,7 +57,8 @@
                        name="titulo_pt"
                        value="@if(!empty($solicitacao) && $solicitacao->titulo_pt != null) {{$solicitacao->titulo_pt}} @else {{ old('titulo_pt') }} @endif"
                        required
-                       autocomplete="titulo_pt" autofocus>
+                       autocomplete="titulo_pt"
+                       title="@if(!empty($solicitacao) && $solicitacao->titulo_pt != null) {{$solicitacao->titulo_pt}} @endif" autofocus>
                 <div class="div_error" id="titulo_pt_error" style="display: none">
                 <span class="invalid-input">
                 <strong id="titulo_pt_error_message"></strong>
@@ -70,7 +71,8 @@
                 <input class="form-control @error('titulo_en') is-invalid @enderror" id="titulo_en" type="text"
                        name="titulo_en"
                        value="@if(!empty($solicitacao) && $solicitacao->titulo_en != null) {{$solicitacao->titulo_en}} @else {{ old('titulo_en') }} @endif"
-                       autocomplete="titulo_en" autofocus>
+                       autocomplete="titulo_en"
+                       title="@if(!empty($solicitacao) && $solicitacao->titulo_en != null) {{$solicitacao->titulo_en}} @endif" autofocus>
                 <div class="div_error" id="titulo_en_error" style="display: none">
                 <span class="invalid-input">
                 <strong id="titulo_en_error_message"></strong>
@@ -149,7 +151,7 @@
 
 </div>
 
-@include('component.modal_success', ['message' => 'Dados iniciais salvos com sucesso!'])
+@include('component.modal_success')
 
 <script>
 
@@ -168,7 +170,10 @@
             success: function (response) {
                 var message = response.message;
                 if (message == 'success') {
-                    $('#successModal').modal('show')
+                    var campo = response.campo;
+                    $('#successModal').modal('show');
+                    $('#successModal').find('.msg-success').text('Os ' + campo + ' foram salvos com sucesso!');
+
                     $('.div_error').css('display', 'none');
                     setTimeout(function () {
                         $('#successModal').modal('hide');

@@ -1,13 +1,13 @@
 <div class="card shadow-lg p-3 bg-white" style="border-radius: 0px 0px 10px 10px">
 
-    <form id="form8" method="POST" action="{{route('solicitacao.procedimento.criar')}}" enctype="multipart/form-data">
+    <form id="form8" method="POST" action="" enctype="multipart/form-data">
         @csrf
-        <input type="hidden" name="planejamento_id" @if(!empty($planejamento)) value="{{$planejamento->id}}" @endif>
+        <input type="hidden" name="modelo_animal_id" value="{{$modelo_animal->id}}">
 
         <div class="row col-md-12" style="@if(Auth::user()->tipo_usuario_id == 2) pointer-events: none @endif">
             <h3 class="subtitulo">Informações</h3>
 
-            <div class="col-sm-4 mt-2">
+            <div class="col-sm-6 mt-2">
                 <label for="estresse_radio">Estresse / dor Intencional nos Animais:<strong
                         style="color: red">*</strong></label>
                 <div class="row ml-1">
@@ -25,9 +25,25 @@
                         </label>
                     </div>
                 </div>
+                <div class="col-sm-12" id="estresse" style="display: none;">
+                    <label for="estresse">Descreva o estresse / dor Intencional nos animais e justifique:<strong
+                            style="color: red">*</strong></label>
+                    <textarea class="form-control @error('estresse') is-invalid @enderror" name="estresse" id="estresse"
+                              autocomplete="estresse" autofocus
+                              required disabled>@if(!empty($procedimento) && $procedimento->estresse != null)
+                            {{$procedimento->estresse}}
+                        @else
+                            {{old('estresse')}}
+                        @endif</textarea>
+                    <div class="div_error" id="estresse_error" style="display: none">
+                    <span class="invalid-input">
+                        <strong id="estresse_error_message"></strong>
+                    </span>
+                    </div>
+                </div>
             </div>
 
-            <div class="col-sm-4 mt-2">
+            <div class="col-sm-6 mt-2">
                 <label for="anestesico_radio">Uso de anestésicos com dose (UI ou mg/kg), via de administração:<strong
                         style="color: red">*</strong></label>
                 <div class="row ml-1">
@@ -45,9 +61,25 @@
                         </label>
                     </div>
                 </div>
+                <div class="col-sm-12" id="anestesico" style="display: none;">
+                    <label for="anestesico">Uso de anestésicos com dose (UI ou mg/kg), via de administração:<strong
+                            style="color: red">*</strong></label>
+                    <textarea class="form-control @error('anestesico') is-invalid @enderror" name="anestesico"
+                              id="anestesico" autocomplete="anestesico" autofocus
+                              required disabled>@if(!empty($procedimento) && $procedimento->anestesico != null)
+                            {{$procedimento->anestesico}}
+                        @else
+                            {{old('anestesico')}}
+                        @endif</textarea>
+                    <div class="div_error" id="anestesico_error" style="display: none">
+                    <span class="invalid-input">
+                        <strong id="anestesico_error_message"></strong>
+                    </span>
+                    </div>
+                </div>
             </div>
 
-            <div class="col-sm-4 mt-2">
+            <div class="col-sm-6 mt-2">
                 <label for="relaxante_radio">Uso de Relaxante Muscular:<strong style="color: red">*</strong></label>
                 <div class="row ml-1">
                     <div class="col-sm-2 px-2">
@@ -64,9 +96,24 @@
                         </label>
                     </div>
                 </div>
+                <div class="col-sm-12" id="relaxante" style="display: none;">
+                    <label for="relaxante">Uso de Relaxante Muscular:<strong style="color: red">*</strong></label>
+                    <textarea class="form-control @error('relaxante') is-invalid @enderror" name="relaxante" id="relaxante"
+                              autocomplete="relaxante" autofocus
+                              required disabled>@if(!empty($procedimento) && $procedimento->relaxante != null)
+                            {{$procedimento->relaxante}}
+                        @else
+                            {{old('relaxante')}}
+                        @endif</textarea>
+                    <div class="div_error" id="relaxante_error" style="display: none">
+                    <span class="invalid-input">
+                        <strong id="relaxante_error_message"></strong>
+                    </span>
+                    </div>
+                </div>
             </div>
 
-            <div class="col-sm-4 mt-2">
+            <div class="col-sm-6 mt-2">
                 <label for="analgesico_radio">Uso de analgésicos com dose (UI ou mg/kg), via de administração:<strong
                         style="color: red">*</strong></label>
                 <div class="row ml-1">
@@ -84,28 +131,28 @@
                         </label>
                     </div>
                 </div>
+
+                <div class="col-sm-12" id="analgesico" style="display: none;">
+                    <label for="analgesico">Uso de analgésicos com dose (UI ou mg/kg), via de administração:<strong
+                            style="color: red">*</strong></label>
+                    <textarea class="form-control @error('analgesico') is-invalid @enderror" name="analgesico"
+                              id="analgesico" autocomplete="analgesico" autofocus
+                              required disabled>@if(!empty($procedimento) && $procedimento->analgesico != null)
+                            {{$procedimento->analgesico}}
+                        @else
+                            {{old('analgesico')}}
+                        @endif</textarea>
+                    <div class="div_error" id="analgesico_error" style="display: none">
+                    <span class="invalid-input">
+                        <strong id="analgesico_error_message"></strong>
+                    </span>
+                    </div>
+                </div>
             </div>
 
             {{-- Campos de textos das Informações --}}
 
-            <div class="col-sm-12 mt-2" id="estresse" style="display: none;">
-                <label for="estresse">Descreva o estresse / dor Intencional nos animais e justifique:<strong
-                        style="color: red">*</strong></label>
-                <textarea class="form-control @error('estresse') is-invalid @enderror" name="estresse" id="estresse"
-                          autocomplete="estresse" autofocus
-                          required disabled>@if(!empty($procedimento) && $procedimento->estresse != null)
-                        {{$procedimento->estresse}}
-                    @else
-                        {{old('estresse')}}
-                    @endif</textarea>
-                @error('estresse')
-                <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-                @enderror
-            </div>
-
-            <div class="col-sm-12 mt-2" id="anestesico" style="display: none;">
+            <div class="col-sm-12" id="anestesico" style="display: none;">
                 <label for="anestesico">Uso de anestésicos com dose (UI ou mg/kg), via de administração:<strong
                         style="color: red">*</strong></label>
                 <textarea class="form-control @error('anestesico') is-invalid @enderror" name="anestesico"
@@ -115,44 +162,11 @@
                     @else
                         {{old('anestesico')}}
                     @endif</textarea>
-                @error('anestesico')
-                <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-                @enderror
-            </div>
-
-            <div class="col-sm-12 mt-2" id="relaxante" style="display: none;">
-                <label for="relaxante">Uso de Relaxante Muscular:<strong style="color: red">*</strong></label>
-                <textarea class="form-control @error('relaxante') is-invalid @enderror" name="relaxante" id="relaxante"
-                          autocomplete="relaxante" autofocus
-                          required disabled>@if(!empty($procedimento) && $procedimento->relaxante != null)
-                        {{$procedimento->relaxante}}
-                    @else
-                        {{old('relaxante')}}
-                    @endif</textarea>
-                @error('relaxante')
-                <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-                @enderror
-            </div>
-
-            <div class="col-sm-12 mt-3" id="analgesico" style="display: none;">
-                <label for="analgesico">Uso de analgésicos com dose (UI ou mg/kg), via de administração:<strong
-                        style="color: red">*</strong></label>
-                <textarea class="form-control @error('analgesico') is-invalid @enderror" name="analgesico"
-                          id="analgesico" autocomplete="analgesico" autofocus
-                          required disabled>@if(!empty($procedimento) && $procedimento->analgesico != null)
-                        {{$procedimento->analgesico}}
-                    @else
-                        {{old('analgesico')}}
-                    @endif</textarea>
-                @error('analgesico')
-                <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-                @enderror
+                <div class="div_error" id="anestesico_error" style="display: none">
+                    <span class="invalid-input">
+                        <strong id="anestesico_error_message"></strong>
+                    </span>
+                </div>
             </div>
 
             <h3 class="subtitulo">Imobilização / Contenção do Animal:</h3>
@@ -185,11 +199,11 @@
                     @else
                         {{old('imobilizacao')}}
                     @endif</textarea>
-                @error('imobilizacao')
-                <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-                @enderror
+                <div class="div_error" id="imobilizacao_error" style="display: none">
+                    <span class="invalid-input">
+                        <strong id="imobilizacao_error_message"></strong>
+                    </span>
+                </div>
             </div>
 
             <h3 class="subtitulo">Exposição / Inoculação / Administração:</h3>
@@ -222,11 +236,11 @@
                           required disabled>@if(!empty($procedimento) && $procedimento->inoculacao_substancia != null){{$procedimento->inoculacao_substancia}}
                     @else{{old('inoculacao_substancia')}}
                     @endif</textarea>
-                @error('inoculacao_substancia')
-                <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-                @enderror
+                <div class="div_error" id="inoculacao_substancia_error" style="display: none">
+                    <span class="invalid-input">
+                        <strong id="inoculacao_substancia_error_message"></strong>
+                    </span>
+                </div>
             </div>
 
             <h3 class="subtitulo">Extração de Materiais Biológicos:</h3>
@@ -258,11 +272,11 @@
                     @else
                         {{old('extracao')}}
                     @endif</textarea>
-                @error('extracao')
-                <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-                @enderror
+                <div class="div_error" id="extracao_error" style="display: none">
+                    <span class="invalid-input">
+                        <strong id="extracao_error_message"></strong>
+                    </span>
+                </div>
             </div>
 
             <h3 class="subtitulo">Condições Alimentares</h3>
@@ -330,11 +344,11 @@
                            required disabled placeholder="Informar tempo de restrição hídrica em horas"
                            @if(!empty($procedimento) && $procedimento->restricao_hidrica != null) value="{{$procedimento->restricao_hidrica}}"
                            @else value="{{old('restricao_hidrica')}}" @endif>
-                    @error('restricao_hidrica')
-                    <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-                    @enderror
+                    <div class="div_error" id="restricao_hidrica_error" style="display: none">
+                    <span class="invalid-input">
+                        <strong id="restricao_hidrica_error_message"></strong>
+                    </span>
+                    </div>
                 </div>
         </div>
 
@@ -452,5 +466,66 @@
         $("#estresse").hide().find('input, textarea').prop('disabled', true);
     });
 
+</script>
+<script>
+    $('#form8').submit(function (event) {
+        event.preventDefault();
+
+        var formData = new FormData(this);
+
+        $.ajax({
+            type: 'POST',
+            url: '{{ route('solicitacao.procedimento.criar') }}',
+            data: formData,
+            contentType: false,
+            processData: false,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            dataType: 'json',
+            success: function (response) {
+                var message = response.message;
+                if (message == 'success') {
+                    var campo = response.campo;
+                    $('#successModal').modal('show');
+                    $('#successModal').find('.msg-success').text('O ' + campo + ' foi salvo com sucesso!');
+
+                    $('.div_error').css('display', 'none');
+                    setTimeout(function () {
+                        $('#successModal').modal('hide');
+                    }, 2000);
+                }
+            },
+            error: function (xhr, status, error) {
+                if (xhr.responseJSON && xhr.responseJSON.message) {
+                    $('.div_error').css('display', 'none');
+                    var errors = xhr.responseJSON.errors;
+                    var statusCode = xhr.status;
+                    if (statusCode == 422 && status == 'error') {
+                        for (var field in errors) {
+                            var fieldErrors = errors[field];
+                            var errorMessage = ''
+                            for (var i = 0; i < fieldErrors.length; i++) {
+                                errorMessage += fieldErrors[i] + '\n';
+                            }
+                            var errorDiv = '#' + field + '_error'
+                            var errorMessageTag = '#' + field + '_error_message';
+                            $(errorMessageTag).html(errorMessage);
+                            $(errorDiv).css('display', 'block')
+                        }
+                    }
+                    if(statusCode === 412 && status === 'error'){
+                        $('#failModal').modal('show');
+                        $('#failModal').find('.msg-fail').text(xhr.responseJSON.message);
+                        setTimeout(function (){
+                            $('#failModal').modal('hide');
+                        },2000)
+                    }
+                } else {
+                    alert("Erro na requisição Ajax: " + error);
+                }
+            }
+        });
+    });
 </script>
 

@@ -3,6 +3,8 @@
 namespace App\Http\Requests\Solicitacao;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Validation\Rule;
 
 class CriarResponsavelRequest extends FormRequest
@@ -12,12 +14,13 @@ class CriarResponsavelRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
+
     public function rules()
     {
         return [
             'solicitacao_id' => 'required|integer',
-            'nome' => 'required|string',
-            'email' => 'required|email',
+            'nome' => 'required|string|min:4|max:255',
+            'email' => 'required|email|max:255',
             'telefone' => [
                 'required',
                 'regex:/^\(\d{2}\) \d{5}\-\d{4}$/',
@@ -31,6 +34,9 @@ class CriarResponsavelRequest extends FormRequest
             'departamento_id' => 'required|integer',
             'vinculo_instituicao' => 'required',
             'grau_escolaridade' => 'required',
+            'experiencia_previa' => 'mimes:pdf',
+            'termo_responsabilidade' => 'mimes:pdf',
+            'treinamento' => 'required_if:treinamento_radio,on|min:4|max:1000',
         ];
     }
 
@@ -48,6 +54,17 @@ class CriarResponsavelRequest extends FormRequest
             'cpf.regex' => 'O CPF deve ter o formato válido.',
             'vinculo_instituicao.required' => 'O vínculo com a instituição é obrigatório.',
             'grau_escolaridade.required' => 'O grau de escolaridade é obrigatório.',
+            'mimes:pdf' => 'O :attribute deve ser um PDF',
+            'treinamento.required' => 'O :attribute é obrigatório quando a opção sim estiver marcada',
         ];
+    }
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(
+            response()->json([
+                'message' => 'Falha na validação',
+                'errors' => $validator->errors(),
+            ], 422)
+        );
     }
 }

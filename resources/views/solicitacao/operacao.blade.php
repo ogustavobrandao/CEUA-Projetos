@@ -1,7 +1,7 @@
 <div class="card shadow-lg p-3 bg-white" style="border-radius: 0px 0px 10px 10px">
-    <form id="form9" method="POST" action="{{route('solicitacao.operacao.criar')}}">
+    <form id="form9" method="POST" action="">
         @csrf
-        <input type="hidden" name="planejamento_id" @if(!empty($planejamento)) value="{{$planejamento->id}}" @endif>
+        <input type="hidden" name="modelo_animal_id" value="{{$modelo_animal->id}}">
         <div style="@if(Auth::user()->tipo_usuario_id == 2) pointer-events: none @endif">
             <div class="row">
                 <h3 class="subtitulo">Informações</h3>
@@ -31,11 +31,11 @@
                     <label for="anexo_cirurgia">Descrição:<strong style="color: red">*</strong></label>
                     <textarea class="form-control @error('detalhes_cirurgia') is-invalid @enderror" name="detalhes_cirurgia" id="detalhes_cirurgia" autocomplete="detalhes_cirurgia" autofocus
                               required> @if(!empty($operacao) && $operacao->detalhes_cirurgia != null){{$operacao->detalhes_cirurgia}}@else{{old('detalhes_cirurgia')}}@endif </textarea>
-                    @error('detalhes_cirurgia')
-                    <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-                    @enderror
+                    <div class="div_error" id="detalhes_cirurgia_error" style="display: none">
+                        <span class="invalid-input">
+                            <strong id="detalhes_cirurgia_error_message"></strong>
+                        </span>
+                    </div>
                 </div>
             </div>
 
@@ -64,11 +64,11 @@
                         <label for="anexo_observacao_recuperacao">Período de observação (em horas):<strong style="color: red">*</strong></label>
                         <textarea class="form-control @error('detalhes_observacao_recuperacao') is-invalid @enderror" name="detalhes_observacao_recuperacao" id="detalhes_observacao_recuperacao" autocomplete="detalhes_cirurgia" autofocus
                                   required> @if(!empty($operacao) && $operacao->detalhes_observacao_recuperacao != null){{$operacao->detalhes_observacao_recuperacao}}@else{{old('detalhes_observacao_recuperacao')}}@endif </textarea>
-                        @error('detalhes_observacao_recuperacao')
-                        <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                        @enderror
+                        <div class="div_error" id="detalhes_observacao_recuperacao_error" style="display: none">
+                        <span class="invalid-input">
+                            <strong id="detalhes_observacao_recuperacao_error_message"></strong>
+                        </span>
+                        </div>
                     </div>
             </div>
 
@@ -96,22 +96,22 @@
                         <label for="anexo_analgesia_recuperacao">Descreva o Fármaco, Dose (UI ou mg/kg), Via de Adminstração, Frequência e Duração:<strong style="color: red">*</strong></label>
                         <textarea class="form-control @error('detalhes_analgesia_recuperacao') is-invalid @enderror" name="detalhes_analgesia_recuperacao" id="detalhes_analgesia_recuperacao" autocomplete="detalhes_analgesia_recuperacao" autofocus
                                   required> @if(!empty($operacao) && $operacao->detalhes_analgesia_recuperacao != null){{$operacao->detalhes_analgesia_recuperacao}}@else{{old('detalhes_analgesia_recuperacao')}}@endif </textarea>
-                        @error('detalhes_analgesia_recuperacao')
-                        <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                        @enderror
+                        <div class="div_error" id="detalhes_analgesia_recuperacao_error" style="display: none">
+                        <span class="invalid-input">
+                            <strong id="detalhes_analgesia_recuperacao_error_message"></strong>
+                        </span>
+                        </div>
                     </div>
 
                     <div class="col-sm-8 mt-2" id="anexo_nao_uso_analgesia_recuperacao" style="display: none;">
                         <label for="anexo_nao_uso_analgesia_recuperacao">Justifique o NÃO-uso de analgesia pós-operatório:<strong style="color: red">*</strong></label>
                         <textarea class="form-control @error('detalhes_nao_uso_analgesia_recuperacao') is-invalid @enderror" name="detalhes_nao_uso_analgesia_recuperacao" id="detalhes_nao_uso_analgesia_recuperacao" autocomplete="detalhes_nao_uso_analgesia_recuperacao" autofocus
                                   required> @if(!empty($operacao) && $operacao->detalhes_nao_uso_analgesia_recuperacao != null){{$operacao->detalhes_nao_uso_analgesia_recuperacao}}@else{{old('detalhes_nao_uso_analgesia_recuperacao')}}@endif </textarea>
-                        @error('detalhes_nao_uso_analgesia_recuperacao')
-                        <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                        @enderror
+                        <div class="div_error" id="detalhes_nao_uso_analgesia_recuperacao_error" style="display: none">
+                        <span class="invalid-input">
+                            <strong id="detalhes_nao_uso_analgesia_recuperacao_error_message"></strong>
+                        </span>
+                        </div>
                     </div>
             </div>
 
@@ -140,11 +140,11 @@
                         <label for="anexo_outros_cuidados_recuperacao">Descrição:<strong style="color: red">*</strong></label>
                         <textarea class="form-control @error('detalhes_outros_cuidados_recuperacao') is-invalid @enderror" name="detalhes_outros_cuidados_recuperacao" id="detalhes_outros_cuidados_recuperacao" autocomplete="detalhes_outros_cuidados_recuperacao" autofocus
                                   required> @if(!empty($operacao) && $operacao->detalhes_outros_cuidados_recuperacao != null){{$operacao->detalhes_outros_cuidados_recuperacao}}@else{{old('detalhes_outros_cuidados_recuperacao')}}@endif </textarea>
-                        @error('cirurgia')
-                        <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                        @enderror
+                        <div class="div_error" id="detalhes_outros_cuidados_recuperacao_error" style="display: none">
+                        <span class="invalid-input">
+                            <strong id="detalhes_outros_cuidados_recuperacao_error_message"></strong>
+                        </span>
+                        </div>
                     </div>
             </div>
         </div>
@@ -253,6 +253,67 @@
         @endif
 
 
+    });
+</script>
+<script>
+    $('#form9').submit(function (event) {
+        event.preventDefault();
+
+        var formData = new FormData(this);
+
+        $.ajax({
+            type: 'POST',
+            url: '{{ route('solicitacao.operacao.criar') }}',
+            data: formData,
+            contentType: false,
+            processData: false,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            dataType: 'json',
+            success: function (response) {
+                var message = response.message;
+                if (message == 'success') {
+                    var campo = response.campo;
+                    $('#successModal').modal('show');
+                    $('#successModal').find('.msg-success').text('A ' + campo + ' foi salva com sucesso!');
+
+                    $('.div_error').css('display', 'none');
+                    setTimeout(function () {
+                        $('#successModal').modal('hide');
+                    }, 2000);
+                }
+            },
+            error: function (xhr, status, error) {
+                if (xhr.responseJSON && xhr.responseJSON.message) {
+                    $('.div_error').css('display', 'none');
+                    var errors = xhr.responseJSON.errors;
+                    var statusCode = xhr.status;
+                    if (statusCode == 422 && status == 'error') {
+                        for (var field in errors) {
+                            var fieldErrors = errors[field];
+                            var errorMessage = ''
+                            for (var i = 0; i < fieldErrors.length; i++) {
+                                errorMessage += fieldErrors[i] + '\n';
+                            }
+                            var errorDiv = '#' + field + '_error'
+                            var errorMessageTag = '#' + field + '_error_message';
+                            $(errorMessageTag).html(errorMessage);
+                            $(errorDiv).css('display', 'block')
+                        }
+                    }
+                    if(statusCode === 412 && status === 'error'){
+                        $('#failModal').modal('show');
+                        $('#failModal').find('.msg-fail').text(xhr.responseJSON.message);
+                        setTimeout(function (){
+                            $('#failModal').modal('hide');
+                        },2000)
+                    }
+                } else {
+                    alert("Erro na requisição Ajax: " + error);
+                }
+            }
+        });
     });
 </script>
 

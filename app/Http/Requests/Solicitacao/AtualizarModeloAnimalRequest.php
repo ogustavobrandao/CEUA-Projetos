@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\Solicitacao;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Support\MessageBag;
 
 class AtualizarModeloAnimalRequest extends FormRequest
@@ -15,9 +17,10 @@ class AtualizarModeloAnimalRequest extends FormRequest
     public function rules()
     {
         return [
-            'justificativa' => 'required|string',
-            'nome_cientifico' => 'required|string',
-            'nome_vulgar' => 'required|string',
+            'justificativa' => 'required|string|min:5|max:1000',
+            'nome_cientifico' => 'required|string|min:4|max:255',
+            'nome_vulgar' => 'required|string|min:4|max:255',
+            'termo_consentimento' => 'nullable|file',
             'procedencia' => 'required',
             'quantidade' => [
                 'required',
@@ -46,17 +49,13 @@ class AtualizarModeloAnimalRequest extends FormRequest
         ];
     }
 
-    protected function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
+    protected function failedValidation(Validator $validator)
     {
-        $errors = (new MessageBag)->withErrors($validator)->toArray();
-        $this->session()->flash('errors', $errors);
-        $this->session()->flash('old', $this->all());
-        $this->session()->flash('status', 'danger');
-        $this->throwResponse();
-    }
-
-    public function withValidator($validator)
-    {
-        $validator->validateWithBag('modelo');
+        throw new HttpResponseException(
+            response()->json([
+                'message' => 'Falha na validação',
+                'errors' => $validator->errors(),
+            ], 422)
+        );
     }
 }

@@ -9,44 +9,44 @@
                 <label for="resumo">Resumo do Projeto de Pesquisa / de Extensão / de Aula Prática / de Treinamento:<strong style="color: red">*</strong></label>
                 <textarea class="form-control @error('resumo') is-invalid @enderror" name="resumo" id="resumo" autocomplete="resumo" autofocus
                           required>@if(!empty($solicitacao->dadosComplementares) && $solicitacao->dadosComplementares->resumo != null){{$solicitacao->dadosComplementares->resumo}}@else{{old('resumo')}}@endif</textarea>
-                @error('resumo')
-                <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-                @enderror
+                <div class="div_error" id="resumo_error" style="display: none">
+                    <span class="invalid-input">
+                        <strong id="resumo_error_message"></strong>
+                    </span>
+                </div>
             </div>
 
             <div class="col-sm-12 mt-2">
                 <label for="objetivos">Objetivos (na íntegra):<strong style="color: red">*</strong></label>
                 <textarea class="form-control @error('objetivos') is-invalid @enderror" name="objetivos" id="objetivos" autocomplete="objetivos" autofocus
                           required>@if(!empty($solicitacao->dadosComplementares) && $solicitacao->dadosComplementares->objetivos != null){{$solicitacao->dadosComplementares->objetivos}}@else{{old('objetivos')}}@endif</textarea>
-                @error('objetivos')
-                <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-                @enderror
+                <div class="div_error" id="objetivos_error" style="display: none">
+                    <span class="invalid-input">
+                        <strong id="objetivos_error_message"></strong>
+                    </span>
+                </div>
             </div>
 
             <div class="col-sm-12 mt-2">
                 <label for="justificativa">Justificativa:<strong style="color: red">*</strong></label>
                 <textarea class="form-control @error('justificativa') is-invalid @enderror" name="justificativa" id="justificativa" autocomplete="justificativa"
                           autofocus required>@if(!empty($solicitacao->dadosComplementares) && $solicitacao->dadosComplementares->justificativa != null){{$solicitacao->dadosComplementares->justificativa}}@else{{old('justificativa')}}@endif</textarea>
-                @error('justificativa')
-                <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-                @enderror
+                <div class="div_error" id="justificativa_error" style="display: none">
+                    <span class="invalid-input">
+                        <strong id="justificativa_error_message"></strong>
+                    </span>
+                </div>
             </div>
 
             <div class="col-sm-12 mt-2">
                 <label for="relevancia">Relevância:<strong style="color: red">*</strong></label>
                 <textarea class="form-control @error('relevancia') is-invalid @enderror" name="relevancia" id="relevancia" autocomplete="relevancia" autofocus
                           required>@if(!empty($solicitacao->dadosComplementares) && $solicitacao->dadosComplementares->relevancia != null){{$solicitacao->dadosComplementares-> relevancia}}@else{{old('relevancia')}}@endif</textarea>
-                @error('relevancia')
-                <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-                @enderror
+                <div class="div_error" id="relevancia_error" style="display: none">
+                    <span class="invalid-input">
+                        <strong id="relevancia_error_message"></strong>
+                    </span>
+                </div>
             </div>
 
 
@@ -54,4 +54,55 @@
         @include('component.botoes_new_form')
     </form>
 </div>
+<script>
+    $('#form3').submit(function (event) {
+        event.preventDefault()
+        var formData = $(this).serialize();
+        $.ajax({
+            type: 'POST',
+            url: '{{ route('solicitacao.solicitacao_fim.criar') }}',
+            data: formData,
+            headers:
+                {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+            dataType: 'json',
+            success: function (response) {
+                var message = response.message;
+                if (message == 'success') {
+                    var campo = response.campo;
+                    $('#successModal').modal('show');
+                    $('#successModal').find('.msg-success').text('Os ' + campo + ' foram salvos com sucesso!');
+
+                    $('.div_error').css('display', 'none');
+                    setTimeout(function () {
+                        $('#successModal').modal('hide');
+                    }, 2000);
+                }
+            },
+            error: function (xhr, status, error) {
+                if (xhr.responseJSON && xhr.responseJSON.message) {
+                    $('.div_error').css('display', 'none');
+                    var errors = xhr.responseJSON.errors;
+                    var statusCode = xhr.status;
+                    if (statusCode == 422 && status == 'error') {
+                        for (var field in errors) {
+                            var fieldErrors = errors[field];
+                            var errorMessage = ''
+                            for (var i = 0; i < fieldErrors.length; i++) {
+                                errorMessage += fieldErrors[i] + '\n';
+                            }
+                            var errorDiv = '#' + field + '_error'
+                            var errorMessageTag = '#' + field + '_error_message';
+                            $(errorMessageTag).html(errorMessage);
+                            $(errorDiv).css('display', 'block')
+                        }
+                    }
+                } else {
+                    alert("Erro na requisição Ajax: " + error);
+                }
+            }
+        })
+    })
+</script>
 

@@ -9,11 +9,11 @@
                 <input class="form-control @error('nome') is-invalid @enderror" id="nome" type="text" name="nome"
                        value="@if(!empty($solicitacao->responsavel) && $solicitacao->responsavel->nome != null){{$solicitacao->responsavel->nome}}@else{{old('nome')}}@endif"
                        required autocomplete="nome" autofocus>
-                @error('nome')
-                <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-                @enderror
+                <div class="div_error" id="nome_error" style="display: none">
+                    <span class="invalid-input">
+                        <strong id="nome_error_message"></strong>
+                    </span>
+                </div>
             </div>
 
             <div class="col-sm-4">
@@ -21,11 +21,11 @@
                 <input class="form-control @error('email') is-invalid @enderror" id="email" type="email" name="email"
                        value="@if(!empty($solicitacao->responsavel) && $solicitacao->responsavel->contato->email != null){{$solicitacao->responsavel->contato->email}} @else {{old('email')}} @endif"
                        required autocomplete="email" autofocus>
-                @error('email')
-                <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-                @enderror
+                <div class="div_error" id="email_error" style="display: none">
+                    <span class="invalid-input">
+                        <strong id="email_error_message"></strong>
+                    </span>
+                </div>
             </div>
 
             <div class="col-sm-4">
@@ -34,11 +34,11 @@
                        name="telefone"
                        value="@if(!empty($solicitacao->responsavel) && $solicitacao->responsavel->contato->telefone != null){{$solicitacao->responsavel->contato->telefone}} @else{{old('telefone') }} @endif"
                        required autocomplete="telefone" autofocus>
-                @error('telefone')
-                <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-                @enderror
+                <div class="div_error" id="telefone_error" style="display: none">
+                    <span class="invalid-input">
+                        <strong id="telefone_error_message"></strong>
+                    </span>
+                </div>
             </div>
 
             <div class="col-sm-4 mt-2">
@@ -47,11 +47,11 @@
                        name="cpf"
                        value="@if(!empty($solicitacao->responsavel) && $solicitacao->responsavel->cpf != null){{$solicitacao->responsavel->cpf}} @else{{old('cpf') }} @endif"
                        required autocomplete="cpf" autofocus>
-                @error('cpf')
-                <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-                @enderror
+                <div class="div_error" id="cpf_error" style="display: none">
+                    <span class="invalid-input">
+                        <strong id="cpf_error_message"></strong>
+                    </span>
+                </div>
             </div>
 
         </div>
@@ -205,14 +205,14 @@
                     <label>Anexar Comprovante de Experiência Prévia:</label>
                     <input class="form-control @error('experiencia_previa') is-invalid @enderror"
                            id="experiencia_previa"
-                           type="file" name="experiencia_previa"
+                           type="file" accept="application/pdf" name="experiencia_previa"
                            value="" autocomplete="experiencia_previa"
                            @if(isset($solicitacao->responsavel) && $solicitacao->responsavel->experiencia_previa != null) style="width: 135px" @endif >
-                    @error('experiencia_previa')
-                    <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-                    @enderror
+                    <div class="div_error" id="experiencia_previa_error" style="display: none">
+                        <span class="invalid-input">
+                            <strong id="experiencia_previa_error_message"></strong>
+                        </span>
+                    </div>
                     @if(isset($solicitacao->responsavel) && $solicitacao->responsavel->experiencia_previa != null)
                         <span
                             style="border: 1px gray solid; border-radius: 10px; text-align: center; width: 180px; position: absolute; bottom: 0px; left: 155px; height: 38px; padding-top: 5px; background-color: #dcfadf">Um Arquivo Já Foi Enviado</span>
@@ -261,14 +261,14 @@
                             {{-- <li><a href="" target="blank">Modelo Termo de Responsabilidade</a></li> --}}
                             <input class="form-control @error('termo_responsabilidade') is-invalid @enderror"
                                    id="termo_responsabilidade"
-                                   type="file" name="termo_responsabilidade"
+                                   type="file" accept="application/pdf" name="termo_responsabilidade"
                                    value="" autocomplete="termo_responsabilidade"
                                    @if(isset($solicitacao->responsavel) && $solicitacao->responsavel->termo_responsabilidade != null) style="width: 135px" @endif>
-                            @error('termo_responsabilidade')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
+                            <div class="div_error" id="termo_responsabilidade_error" style="display: none">
+                                <span class="invalid-input">
+                                    <strong id="termo_responsabilidade_error_message"></strong>
+                                </span>
+                            </div>
                             @if(isset($solicitacao->responsavel) && $solicitacao->responsavel->termo_responsabilidade != null)
                                 <span
                                     style="border: 1px gray solid; border-radius: 10px; text-align: center; width: 180px; position: absolute; bottom: 0px; left: 155px; height: 38px; padding-top: 5px; background-color: #dcfadf">Um Arquivo Já Foi Enviado</span>
@@ -302,11 +302,11 @@
                                                         @else
                                                             {{old('treinamento')}}
                                                         @endif</textarea>
-                                                    @error('treinamento')
-                                                    <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                                                    @enderror
+                                                    <div class="div_error" id="treinamento_error" style="display: none">
+                                                        <span class="invalid-input">
+                                                            <strong id="treinamento_error_message"></strong>
+                                                        </span>
+                                                    </div>
                                                 </div>
                                             </div>
                                         @endif
@@ -340,11 +340,11 @@
                                             @else
                                                 {{old('treinamento')}}
                                             @endif </textarea>
-                                        @error('treinamento')
-                                        <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                                        @enderror
+                                        <div class="div_error" id="treinamento_error" style="display: none">
+                                            <span class="invalid-input">
+                                                <strong id="treinamento_error_message"></strong>
+                                            </span>
+                                        </div>
                                     </div>
                             </div>
                         @endif
@@ -363,6 +363,59 @@
 
 <script src="{{ asset('js/masks.js') }}"></script>
 <script>
+    $('#form1').submit(function (event) {
+        event.preventDefault()
+        var formData = $(this).serialize();
+        $.ajax({
+            type: 'POST',
+            url: '{{ route('solicitacao.responsavel.criar') }}',
+            data: formData,
+            headers:
+                {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+            dataType: 'json',
+            success: function (response) {
+                var message = response.message;
+                var responsavel = response.exist;
+                if (message == 'success') {
+                    var campo = response.campo;
+                    $('#successModal').modal('show');
+                    $('#successModal').find('.msg-success').text('A ' + campo + ' foi salva com sucesso!');
+
+                    $('.div_error').css('display', 'none');
+                    setTimeout(function () {
+                        $('#successModal').modal('hide');
+                    }, 2000);
+                }
+                if (responsavel == 'true'){
+                    checkResponsavel();
+                }
+            },
+            error: function (xhr, status, error) {
+                if (xhr.responseJSON && xhr.responseJSON.message) {
+                    $('.div_error').css('display', 'none');
+                    var errors = xhr.responseJSON.errors;
+                    var statusCode = xhr.status;
+                    if (statusCode == 422 && status == 'error') {
+                        for (var field in errors) {
+                            var fieldErrors = errors[field];
+                            var errorMessage = ''
+                            for (var i = 0; i < fieldErrors.length; i++) {
+                                errorMessage += fieldErrors[i] + '\n';
+                            }
+                            var errorDiv = '#' + field + '_error'
+                            var errorMessageTag = '#' + field + '_error_message';
+                            $(errorMessageTag).html(errorMessage);
+                            $(errorDiv).css('display', 'block')
+                        }
+                    }
+                } else {
+                    alert("Erro na requisição Ajax: " + error);
+                }
+            }
+        })
+    })
 
     $(document).ready(function () {
         @if(!empty($solicitacao->responsavel) && $solicitacao->responsavel->treinamento != null)
@@ -419,4 +472,19 @@
         $("#termo_responsabilidade").prop('required', false);
     });
 
+</script>
+<script>
+    function checkResponsavel() {
+        $('#responsavel-check').remove();
+        $('#check-responsavel').html(`
+                <h2 class="titulo" id="titulo_2">3. Dados do(s) Colaborador(es)
+                    <a class="float-end" id="2_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
+                    <a class="float-end" id="2_btn_down" style="display: none"><i class="fa-solid fa-circle-chevron-down"></i></a>
+                    <a class="float-end mr-2" href="#" data-toggle="modal" data-target="#modalAdicionarColaborador"
+                       style="color: green" title="Adicionar Colaborador">
+                        <i class="fa-solid fa-circle-plus fa-2xl"></i>
+                    </a>
+                </h2>
+            `);
+    }
 </script>

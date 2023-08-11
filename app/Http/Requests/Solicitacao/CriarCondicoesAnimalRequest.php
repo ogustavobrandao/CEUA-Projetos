@@ -2,7 +2,10 @@
 
 namespace App\Http\Requests\Solicitacao;
 
+use App\Models\ModeloAnimal;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class CriarCondicoesAnimalRequest extends FormRequest
 {
@@ -14,26 +17,33 @@ class CriarCondicoesAnimalRequest extends FormRequest
     public function rules()
     {
         return [
-            'planejamento_id' => 'required',
-            'condicoes_particulares' => 'required',
-            'local' => 'required',
+            'condicoes_particulares' => 'required|min:4|max:1000',
+            'local' => 'required|min:4|max:1000',
             'ambiente_alojamento' => 'required',
             'tipo_cama' => 'required',
-            'num_animais_ambiente' => 'required | numeric | min:0',
+            'num_animais_ambiente' => 'required|numeric|min:0',
             'dimensoes_ambiente' => 'required',
             'periodo' => 'required',
-            'profissional_responsavel' => 'required',
-            'email_responsavel' => 'required | email',
+            'profissional_responsavel' => 'required|min:4|max:255',
+            'email_responsavel' => 'required|email|max:255',
         ];
     }
 
     public function messages()
     {
         return [
-            'planejamento_id.required'  => 'Necessária a criação de um planejamento',
             '*.required'  => 'O :attribute é obrigatório',
             '*.numeric'  => 'O :attribute deve ser um número',
             'num_animais_ambiente.min' => 'O número deve ser acima ou igual a 0'
         ];
+    }
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(
+            response()->json([
+                'message' => 'Falha na validação',
+                'errors' => $validator->errors(),
+            ], 422)
+        );
     }
 }

@@ -12,7 +12,7 @@ $(document).ready(function ($) {
     };
 
     $('.celular').mask(SPMaskBehavior, spOptions);
-
+    $('.telefone').mask(SPMaskBehavior, spOptions);
     $(".name").mask("#", {
         maxlength: true,
         translation: {

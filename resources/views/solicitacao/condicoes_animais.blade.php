@@ -1,8 +1,8 @@
 <div class="card shadow-lg p-3 bg-white" style="border-radius: 0px 0px 10px 10px">
 
-    <form id="form7" method="POST" action="{{route('solicitacao.condicoes_animal.criar')}}">
+    <form id="form7" method="POST" action="">
         @csrf
-        <input type="hidden" name="planejamento_id" @if(!empty($planejamento)) value="{{$planejamento->id}}" @endif>
+        <input type="hidden" name="modelo_animal_id" value="{{$modelo_animal->id}}">
         <div class="row">
             <div class="col-12">
                 <h3 class="subtitulo">Condições de alojamento e alimentação dos animais</h3>
@@ -17,22 +17,22 @@
                 <textarea class="form-control @error('condicoes_particulares') is-invalid @enderror" id="condicoes_particulares" name="condicoes_particulares" required
                           autocomplete="condicoes_particulares"
                           autofocus>@if(!empty($condicoes_animal) && $condicoes_animal->condicoes_particulares != null){{$condicoes_animal->condicoes_particulares}}@else{{old('condicoes_particulares')}}@endif</textarea>
-                @error('condicoes_particulares')
-                <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-                @enderror
+                <div class="div_error" id="condicoes_particulares_error" style="display: none">
+                    <span class="invalid-input">
+                        <strong id="condicoes_particulares_error_message"></strong>
+                    </span>
+                </div>
             </div>
 
             <div class="col-sm-12 mt-2">
                 <label for="local">Endereço e local onde será mantido o animal durante o procedimento experimental (biotério, fazenda, aviário, laboratório, outro):<strong style="color: red">*</strong></label>
                 <textarea class="form-control @error('local') is-invalid @enderror" id="local" name="local" required autocomplete="local"
                           autofocus>@if(!empty($condicoes_animal) && $condicoes_animal->local != null){{$condicoes_animal->local}}@else{{old('local')}}@endif</textarea>
-                @error('local')
-                <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-                @enderror
+                <div class="div_error" id="local_error" style="display: none">
+                    <span class="invalid-input">
+                        <strong id="local_error_message"></strong>
+                    </span>
+                </div>
             </div>
 
         </div>
@@ -50,11 +50,11 @@
                     <option @if(!empty($condicoes_animal) && $condicoes_animal->ambiente_alojamento == "nao_se_aplica") selected @endif value="nao_se_aplica">Não se Aplica</option>
                     <option @if(!empty($condicoes_animal) && $condicoes_animal->ambiente_alojamento == "outro") selected @endif value="outro">Outro</option>
                 </select>
-                @error('ambiente_alojamento')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-                @enderror
+                <div class="div_error" id="ambiente_alojamento_error" style="display: none">
+                    <span class="invalid-input">
+                        <strong id="ambiente_alojamento_error_message"></strong>
+                    </span>
+                </div>
             </div>
 
             <div class="col-sm-6">
@@ -66,11 +66,11 @@
                     <option @if(!empty($condicoes_animal) && $condicoes_animal->tipo_cama == "nao_se_aplica") selected @endif value="nao_se_aplica">Não se Aplica</option>
                     <option @if(!empty($condicoes_animal) && $condicoes_animal->tipo_cama == "outra") selected @endif value="outra">Outra</option>
                 </select>
-                @error('tipo_cama')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-                @enderror
+                <div class="div_error" id="tipo_cama_error" style="display: none">
+                    <span class="invalid-input">
+                        <strong id="tipo_cama_error_message"></strong>
+                    </span>
+                </div>
             </div>
         </div>
 
@@ -80,11 +80,11 @@
                 <input class="form-control @error('num_animais_ambiente') is-invalid @enderror" id="num_animais_ambiente" type="number" name="num_animais_ambiente"
                        @if(!empty($condicoes_animal) && $condicoes_animal->num_animais_ambiente != null) value="{{$condicoes_animal->num_animais_ambiente}}" @else value="{{old('num_animais_ambiente')}}" @endif required
                        autocomplete="num_animais_ambiente" autofocus>
-                @error('num_animais_ambiente')
-                <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-                @enderror
+                <div class="div_error" id="num_animais_ambiente_error" style="display: none">
+                    <span class="invalid-input">
+                        <strong id="num_animais_ambiente_error_message"></strong>
+                    </span>
+                </div>
             </div>
             <div class="col-sm-4">
                 <label for="dimensoes_ambiente">Dimensões do Ambiente de Contenção dos Animais:<strong style="color: red">*</strong></label>
@@ -92,11 +92,11 @@
                        @if(!empty($condicoes_animal) && $condicoes_animal->dimensoes_ambiente != null) value="{{$condicoes_animal->dimensoes_ambiente}}" @else value="{{old('dimensoes_ambiente')}}" @endif
                        required
                        autocomplete="dimensoes_ambiente" placeholder="Altura x Largura x Comprimento" autofocus>
-                @error('dimensoes_ambiente')
-                <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-                @enderror
+                <div class="div_error" id="dimensoes_ambiente_error" style="display: none">
+                    <span class="invalid-input">
+                        <strong id="dimensoes_ambiente_error_message"></strong>
+                    </span>
+                </div>
             </div>
             <div class="col-sm-4">
                 <label for="periodo">Período Total de Manutenção dos Animais no Experimento:<strong style="color: red">*</strong></label>
@@ -104,11 +104,11 @@
                        @if(!empty($condicoes_animal) && $condicoes_animal->periodo != null) value="{{$condicoes_animal->periodo}}" @else value="{{old('periodo')}}" @endif
                        required
                        autocomplete="periodo" placeholder="Exemplo1: 30 dias / Exemplo2: 4 anos / etc" autofocus>
-                @error('periodo')
-                <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-                @enderror
+                <div class="div_error" id="periodo_error" style="display: none">
+                    <span class="invalid-input">
+                        <strong id="periodo_error_message"></strong>
+                    </span>
+                </div>
             </div>
         </div>
 
@@ -118,11 +118,11 @@
                 <input class="form-control @error('profissional_responsavel') is-invalid @enderror" id="profissional_responsavel" type="text" name="profissional_responsavel"
                        @if(!empty($condicoes_animal) && $condicoes_animal->profissional_responsavel != null) value="{{$condicoes_animal->profissional_responsavel}}" @else value="{{old('profissional_responsavel')}}" @endif required
                        autocomplete="profissional_responsavel" autofocus>
-                @error('profissional_responsavel')
-                <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-                @enderror
+                <div class="div_error" id="profissional_responsavel_error" style="display: none">
+                    <span class="invalid-input">
+                        <strong id="profissional_responsavel_error_message"></strong>
+                    </span>
+                </div>
             </div>
 
             <div class="col-6">
@@ -131,11 +131,11 @@
                        @if(!empty($condicoes_animal) && $condicoes_animal->email_responsavel != null) value="{{$condicoes_animal->email_responsavel}}" @else value="{{old('email_responsavel')}}" @endif
                        required
                        autocomplete="email_responsavel" autofocus>
-                @error('email_responsavel')
-                <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-                @enderror
+                <div class="div_error" id="email_responsavel_error" style="display: none">
+                    <span class="invalid-input">
+                        <strong id="email_responsavel_error_message"></strong>
+                    </span>
+                </div>
             </div>
 
         </div>
@@ -145,4 +145,64 @@
     </form>
 
 </div>
+<script>
+    $('#form7').submit(function (event) {
+        event.preventDefault();
 
+        var formData = new FormData(this);
+
+        $.ajax({
+            type: 'POST',
+            url: '{{ route('solicitacao.condicoes_animal.criar') }}',
+            data: formData,
+            contentType: false,
+            processData: false,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            dataType: 'json',
+            success: function (response) {
+                var message = response.message;
+                if (message == 'success') {
+                    var campo = response.campo;
+                    $('#successModal').modal('show');
+                    $('#successModal').find('.msg-success').text('A ' + campo + ' foi salva com sucesso!');
+
+                    $('.div_error').css('display', 'none');
+                    setTimeout(function () {
+                        $('#successModal').modal('hide');
+                    }, 2000);
+                }
+            },
+            error: function (xhr, status, error) {
+                if (xhr.responseJSON && xhr.responseJSON.message) {
+                    $('.div_error').css('display', 'none');
+                    var errors = xhr.responseJSON.errors;
+                    var statusCode = xhr.status;
+                    if (statusCode == 422 && status == 'error') {
+                        for (var field in errors) {
+                            var fieldErrors = errors[field];
+                            var errorMessage = ''
+                            for (var i = 0; i < fieldErrors.length; i++) {
+                                errorMessage += fieldErrors[i] + '\n';
+                            }
+                            var errorDiv = '#' + field + '_error'
+                            var errorMessageTag = '#' + field + '_error_message';
+                            $(errorMessageTag).html(errorMessage);
+                            $(errorDiv).css('display', 'block')
+                        }
+                    }
+                    if(statusCode === 412 && status === 'error'){
+                        $('#failModal').modal('show');
+                        $('#failModal').find('.msg-fail').text(xhr.responseJSON.message);
+                        setTimeout(function (){
+                            $('#failModal').modal('hide');
+                        },2000)
+                    }
+                } else {
+                    alert("Erro na requisição Ajax: " + error);
+                }
+            }
+        });
+    });
+</script>
