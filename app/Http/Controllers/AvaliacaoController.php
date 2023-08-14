@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\SendNotificacaoColegiado;
 use App\Mail\SendSolicitacaoStatus;
 use App\Models\AvaliacaoIndividual;
 use App\Models\Avaliacao;
@@ -137,7 +138,9 @@ class AvaliacaoController extends Controller
         if(Auth::user()->id == 1){
             return redirect(route('solicitacao.admin.index'));
         }
-            return redirect(route('solicitacao.avaliador.index'));
+        $admin = User::find(1);
+        Mail::to($admin->email)->send(new SendNotificacaoColegiado($avaliacao->status, $admin));
+        return redirect(route('solicitacao.avaliador.index'));
     }
 
     public function aprovarPendenciaSolicitacao(Request $request)

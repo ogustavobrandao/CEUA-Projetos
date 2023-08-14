@@ -16,8 +16,10 @@ use App\Http\Requests\Solicitacao\CriarResultadoRequest;
 use App\Http\Requests\Solicitacao\CriarSolicitacaoFimRequest;
 use App\Http\Requests\Solicitacao\CriarSolicitacaoRequest;
 use App\Http\Requests\Solicitacao\EditarColaboradorRequest;
+use App\Mail\SendNotificacaoSolicitacao;
 use App\Models\AvaliacaoIndividual;
 use App\Models\HistoricoSolicitacao;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use App\Mail\SendSolicitacaoReprovada;
 use App\Models\Avaliacao;
@@ -984,6 +986,9 @@ class SolicitacaoController extends Controller
         $historico->nome_usuario_modificador = Auth::user()->name;
 
         $historico->save();
+
+        $admin = User::find(1);
+        Mail::to($admin->email)->send(new SendNotificacaoSolicitacao($admin));
 
         return redirect(route('solicitacao.solicitante.index'))->with(['success' => 'Solicitação concluída com sucesso!']);
     }
