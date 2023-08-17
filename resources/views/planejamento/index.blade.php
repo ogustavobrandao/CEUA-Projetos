@@ -7,6 +7,7 @@
         <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     @enderror
+    @include('component.modal_fail')
     <div class="row justify-content-center">
         <div class="col-11">
             <h2 class="titulo_h2 border-bottom" id="expand_dados_solicitacao"><span class="font-weight-bold">Modelo Animal</span></h2>
@@ -79,7 +80,6 @@
                             </div>
                         </div>
                     </div>
-                    @include('component.modal_fail')
                     <div id="planejamento">
                         @if(Auth::user()->tipo_usuario_id == 2)
                             @include('solicitacao.planejamento',['tipo'=>5,'avaliacao_id'=>$avaliacao->id,'id'=>$planejamento->id])
@@ -552,6 +552,13 @@
                                     $(errorMessageTag).html(errorMessage);
                                     $(errorDiv).css('display', 'block')
                                 }
+                            }
+                            if(status == 'error'){
+                                $('#failModal').modal('show');
+                                $('#failModal').find('.msg-fail').text(xhr.responseJSON.message);
+                                setTimeout(function (){
+                                    $('#failModal').modal('hide');
+                                },2000)
                             }
                         } else {
                             alert("Erro na requisição Ajax: " + error);

@@ -28,6 +28,7 @@
                             </div>
                         </div>
                     </div>
+                    @include('component.modal_fail')
                     <div id="dados_iniciais">
                         @if(Auth::user()->tipo_usuario_id == 2)
                             @include('solicitacao.solicitacao',['tipo'=>0,'avaliacao_id'=>$avaliacao->id,'id'=>$solicitacao->id])

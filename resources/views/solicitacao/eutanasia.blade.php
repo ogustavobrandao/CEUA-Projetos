@@ -176,7 +176,7 @@
                             $(errorDiv).css('display', 'block')
                         }
                     }
-                    if(statusCode === 412 && status === 'error'){
+                    if(status == 'error'){
                         $('#failModal').modal('show');
                         $('#failModal').find('.msg-fail').text(xhr.responseJSON.message);
                         setTimeout(function (){

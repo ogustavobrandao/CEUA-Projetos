@@ -29,8 +29,8 @@
                 </div>
                 <div class="col-sm-12 mt-2" id="anexo_cirurgia" style="display: none;">
                     <label for="anexo_cirurgia">Descrição:<strong style="color: red">*</strong></label>
-                    <textarea class="form-control @error('detalhes_cirurgia') is-invalid @enderror" name="detalhes_cirurgia" id="detalhes_cirurgia" autocomplete="detalhes_cirurgia" autofocus
-                              required>@if(!empty($operacao) && $operacao->detalhes_cirurgia != null){{$operacao->detalhes_cirurgia}}@else{{old('detalhes_cirurgia')}}@endif</textarea>
+                    <textarea class="form-control" name="detalhes_cirurgia" id="detalhes_cirurgia" autocomplete="detalhes_cirurgia"
+                              required> @if(!empty($operacao) && $operacao->detalhes_cirurgia != null){{$operacao->detalhes_cirurgia}}@else{{old('detalhes_cirurgia')}}@endif</textarea>
                     <div class="div_error" id="detalhes_cirurgia_error" style="display: none">
                         <span class="invalid-input">
                             <strong id="detalhes_cirurgia_error_message"></strong>
@@ -62,7 +62,7 @@
                 </div>
                     <div class="col-sm-8 mt-2" id="anexo_observacao_recuperacao" style="display: none;">
                         <label for="anexo_observacao_recuperacao">Período de observação (em horas):<strong style="color: red">*</strong></label>
-                        <textarea class="form-control @error('detalhes_observacao_recuperacao') is-invalid @enderror" name="detalhes_observacao_recuperacao" id="detalhes_observacao_recuperacao" autocomplete="detalhes_cirurgia" autofocus
+                        <textarea class="form-control @error('detalhes_observacao_recuperacao') is-invalid @enderror" name="detalhes_observacao_recuperacao" id="detalhes_observacao_recuperacao" autocomplete="detalhes_observacao_recuperacao" autofocus
                                   required>@if(!empty($operacao) && $operacao->detalhes_observacao_recuperacao != null){{$operacao->detalhes_observacao_recuperacao}}@else{{old('detalhes_observacao_recuperacao')}}@endif </textarea>
                         <div class="div_error" id="detalhes_observacao_recuperacao_error" style="display: none">
                         <span class="invalid-input">
@@ -302,7 +302,8 @@
                             $(errorDiv).css('display', 'block')
                         }
                     }
-                    if(statusCode === 412 && status === 'error'){
+                    if(status == 'error'){
+
                         $('#failModal').modal('show');
                         $('#failModal').find('.msg-fail').text(xhr.responseJSON.message);
                         setTimeout(function (){
