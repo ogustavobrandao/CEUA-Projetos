@@ -15,7 +15,7 @@ class CriarColaboradorRequest extends FormRequest
             'nome' => 'required|string',
             'telefone' => [
                 'required',
-                'regex:/^\(\d{2}\) \d{5}\-\d{4}$/',
+                'regex:/^\(\d{2}\) \d{4,5}\-\d{4}$/',
             ],
             'cpf' => [
                 'required',

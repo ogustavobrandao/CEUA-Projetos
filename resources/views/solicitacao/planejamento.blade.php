@@ -24,10 +24,7 @@
                     e número de animais por grupo:<strong style="color: red">*</strong></label>
                 <textarea class="form-control @error('especificar_grupo') is-invalid @enderror" id="especificar_grupo"
                           name="especificar_grupo" required autocomplete="especificar_grupo"
-                          autofocus>@if(!empty($planejamento) && $planejamento->especificar_grupo != null){{$planejamento->especificar_grupo}}
-                    @else
-                        {{ old('especificar_grupo')}}
-                    @endif</textarea>
+                          autofocus>@if(!empty($planejamento) && $planejamento->especificar_grupo != null){{$planejamento->especificar_grupo}}@else{{ old('especificar_grupo')}}@endif</textarea>
                 <div class="div_error" id="especificar_grupo_error" style="display: none">
                     <span class="invalid-input">
                         <strong id="especificar_grupo_error_message"></strong>
@@ -40,10 +37,7 @@
                     tamanho da amostra:<strong style="color: red">*</strong> </label>
                 <textarea class="form-control @error('criterios') is-invalid @enderror" id="criterios" name="criterios"
                           required autocomplete="criterios"
-                          autofocus>@if(!empty($planejamento) && $planejamento->criterios != null){{$planejamento->criterios}}
-                    @else
-                        {{ old('criterios')}}
-                    @endif</textarea>
+                          autofocus>@if(!empty($planejamento) && $planejamento->criterios != null){{$planejamento->criterios}}@else{{ old('criterios')}}@endif</textarea>
                 <div class="div_error" id="criterios_error" style="display: none">
                     <span class="invalid-input">
                         <strong id="criterios_error_message"></strong>
@@ -160,10 +154,7 @@
                 <textarea class="form-control @error('analise_estatistica') is-invalid @enderror"
                           id="analise_estatistica" name="analise_estatistica" required
                           autocomplete="analise_estatistica"
-                          autofocus>@if(!empty($planejamento) && $planejamento->analise_estatistica != null){{$planejamento->analise_estatistica}}
-                    @else
-                        {{old('analise_estatistica')}}
-                    @endif</textarea>
+                          autofocus>@if(!empty($planejamento) && $planejamento->analise_estatistica != null){{$planejamento->analise_estatistica}}@else{{old('analise_estatistica')}}@endif</textarea>
                 <div class="div_error" id="analise_estatistica_error" style="display: none">
                     <span class="invalid-input">
                         <strong id="analise_estatistica_error_message"></strong>
@@ -177,9 +168,7 @@
                 <label for="outras_infos">Outras Informações Relevantes:<strong style="color: red">*</strong></label>
                 <textarea class="form-control @error('outras_infos') is-invalid @enderror" id="outras_infos"
                           name="outras_infos" required autocomplete="outras_infos"
-                          autofocus>@if(!empty($planejamento) && $planejamento->outras_infos != null){{$planejamento->outras_infos}}
-                    @else{{old('outras_infos')}}
-                    @endif</textarea>
+                          autofocus>@if(!empty($planejamento) && $planejamento->outras_infos != null){{$planejamento->outras_infos}}@else{{old('outras_infos')}}@endif</textarea>
                 <div class="div_error" id="outras_infos_error" style="display: none">
                     <span class="invalid-input">
                         <strong id="outras_infos_error_message"></strong>

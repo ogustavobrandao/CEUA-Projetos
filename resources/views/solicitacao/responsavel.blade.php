@@ -297,11 +297,7 @@
                                                         class="form-control @error('treinamento') is-invalid @enderror"
                                                         name="treinamento" id="treinamento" autocomplete="treinamento"
                                                         autofocus
-                                                        required>@if(!empty($solicitacao->responsavel) && $solicitacao->responsavel->treinamento != null)
-                                                            {{$solicitacao->responsavel->treinamento}}
-                                                        @else
-                                                            {{old('treinamento')}}
-                                                        @endif</textarea>
+                                                        required>@if(!empty($solicitacao->responsavel) && $solicitacao->responsavel->treinamento != null){{$solicitacao->responsavel->treinamento}}@else{{old('treinamento')}}@endif</textarea>
                                                     <div class="div_error" id="treinamento_error" style="display: none">
                                                         <span class="invalid-input">
                                                             <strong id="treinamento_error_message"></strong>
@@ -335,11 +331,7 @@
                                         <textarea class="form-control @error('treinamento') is-invalid @enderror"
                                                   name="treinamento" id="treinamento" autocomplete="treinamento"
                                                   autofocus
-                                                  required> @if(!empty($solicitacao->responsavel) && $solicitacao->responsavel->treinamento != null)
-                                                {{$solicitacao->responsavel->treinamento}}
-                                            @else
-                                                {{old('treinamento')}}
-                                            @endif </textarea>
+                                                  required>@if(!empty($solicitacao->responsavel) && $solicitacao->responsavel->treinamento != null){{$solicitacao->responsavel->treinamento}}@else{{old('treinamento')}}@endif </textarea>
                                         <div class="div_error" id="treinamento_error" style="display: none">
                                             <span class="invalid-input">
                                                 <strong id="treinamento_error_message"></strong>
