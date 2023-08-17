@@ -37,11 +37,7 @@
                 <div class="col-sm-12 mt-2">
                     <label for="metodo">Substância, Dose, Via:<strong style="color: red">*</strong></label>
                     <textarea class="form-control @error('metodo') is-invalid @enderror" name="metodo" id="metodo"
-                              autocomplete="metodo" autofocus required>@if(!empty($eutanasia) && $eutanasia->metodo != null)
-                            {{$eutanasia->metodo}}
-                        @else
-                            {{old('metodo')}}
-                        @endif</textarea>
+                              autocomplete="metodo" autofocus required>@if(!empty($eutanasia) && $eutanasia->metodo != null){{$eutanasia->metodo}}@else{{old('metodo')}}@endif</textarea>
                     <div class="div_error" id="metodo_error" style="display: none">
                         <span class="invalid-input">
                             <strong id="metodo_error_message"></strong>
@@ -55,11 +51,7 @@
                     <textarea class="form-control @error('justificativa_metodo') is-invalid @enderror"
                               name="justificativa_metodo" id="justificativa_metodo" autocomplete="justificativa_metodo"
                               autofocus
-                              required>@if(!empty($eutanasia) &&  $eutanasia->justificativa_metodo != null)
-                            {{$eutanasia->justificativa_metodo}}
-                        @else
-                            {{old('justificativa_metodo')}}
-                        @endif</textarea>
+                              required>@if(!empty($eutanasia) &&  $eutanasia->justificativa_metodo != null){{$eutanasia->justificativa_metodo}}@else{{old('justificativa_metodo')}}@endif</textarea>
                     <div class="div_error" id="justificativa_metodo_error" style="display: none">
                         <span class="invalid-input">
                             <strong id="justificativa_metodo_error_message"></strong>
@@ -72,11 +64,7 @@
                 <label for="destino">Destino dos Animais Mortos e / ou Tecidos / Fragmentos:<strong
                         style="color: red">*</strong></label>
                 <textarea class="form-control @error('destino') is-invalid @enderror" name="destino" id="destino"
-                          autocomplete="destino" autofocus required>@if(!empty($eutanasia) && $eutanasia->destino != null)
-                        {{$eutanasia->destino}}
-                    @else
-                        {{old('destino')}}
-                    @endif</textarea>
+                          autocomplete="destino" autofocus required>@if(!empty($eutanasia) && $eutanasia->destino != null){{$eutanasia->destino}}@else{{old('destino')}}@endif</textarea>
                 <div class="div_error" id="destino_error" style="display: none">
                         <span class="invalid-input">
                             <strong id="destino_error_message"></strong>
@@ -87,11 +75,7 @@
             <div class="col-sm-12 mt-2">
                 <label for="descarte">Forma de Descarte da Carcaça:<strong style="color: red">*</strong></label>
                 <textarea class="form-control @error('descarte') is-invalid @enderror" name="descarte" id="descarte"
-                          autocomplete="descarte" autofocus required>@if(!empty($eutanasia) && $eutanasia->descarte != null)
-                        {{$eutanasia->descarte}}
-                    @else
-                        {{old('descarte')}}
-                    @endif</textarea>
+                          autocomplete="descarte" autofocus required>@if(!empty($eutanasia) && $eutanasia->descarte != null){{$eutanasia->descarte}}@else{{old('descarte')}}@endif</textarea>
                 <div class="div_error" id="descarte_error" style="display: none">
                         <span class="invalid-input">
                             <strong id="descarte_error_message"></strong>
