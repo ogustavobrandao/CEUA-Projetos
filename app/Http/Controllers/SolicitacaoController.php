@@ -97,9 +97,15 @@ class SolicitacaoController extends Controller
         $avaliacaoResponsavel = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)->where('responsavel_id', $responsavel->id)->first();
         $avaliacaoColaborador = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)->where('tipo', 2)->first();
 
+        if ($avaliacao->status == 'nao_realizado' ||
+            ($avaliacao->solicitacao->status == "nao_avaliado" && $avaliacao->status == "aprovadaPendencia")) {
+            $avaliado = 'false';
+        } else {
+            $avaliado = 'true';
+        }
         return view('solicitacao.index', compact('disabled', 'solicitacao', 'grandeAreas', 'areas', 'subAreas',
             'instituicaos', 'responsavel', 'colaboradores', 'modelo_animais', 'avaliacao',
-            'avaliacaoDadosComp', 'avaliacaoDadosini', 'avaliacaoResponsavel', 'avaliacaoColaborador'));
+            'avaliacaoDadosComp', 'avaliacaoDadosini', 'avaliacaoResponsavel', 'avaliacaoColaborador', 'avaliado'));
 
     }
 
@@ -661,11 +667,16 @@ class SolicitacaoController extends Controller
         $avaliacaoResultado = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)->where('resultado_id', $resultado->id)->first();
         $avaliacaoModeloAnimal = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)->where('modelo_animal_id', $modelo_animal->id)->first();
 
-
+        if ($avaliacao->status == 'nao_realizado' ||
+            ($avaliacao->solicitacao->status == "nao_avaliado" && $avaliacao->status == "aprovadaPendencia")) {
+            $avaliado = 'false';
+        } else {
+            $avaliado = 'true';
+        }
         return view('planejamento.index',
             compact('modelo_animal', 'planejamento', 'solicitacao', 'condicoes_animal', 'procedimento', 'operacao', 'eutanasia', 'resultado', 'avaliacao',
                 'avaliacaoPlanejamento', 'avaliacaoCondicoesAnimal', 'avaliacaoProcedimento', 'avaliacaoOperacao',
-                'avaliacaoEutanasia', 'avaliacaoResultado', 'avaliacaoModeloAnimal'));
+                'avaliacaoEutanasia', 'avaliacaoResultado', 'avaliacaoModeloAnimal', 'avaliado'));
     }
 
     public function criar_planejamento(CriarPlanejamentoRequest $request)

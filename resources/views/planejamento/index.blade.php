@@ -289,6 +289,17 @@
 
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js"></script>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                var avaliado = {{ isset($avaliado) ? $avaliado : 'false' }};
+                if (avaliado) {
+                    var divsPai = document.querySelectorAll(".DivAporvado");
+                    divsPai.forEach(function(divPai) {
+                        divPai.innerHTML = "";
+                    });
+                }
+            });
+        </script>
         <script type="text/javascript">
 
             $(document).ready(function () {

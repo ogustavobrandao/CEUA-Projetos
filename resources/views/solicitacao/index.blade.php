@@ -222,7 +222,7 @@
                                        href="{{ route('solicitacao.admin.index') }}">Voltar</a>
                                 @endif
                             </div>
-                            <div class="col-4">
+                            <div class="col-4 DivAporvado">
                                 @if(Auth::user()->tipo_usuario_id == 1)
                                         {{-- Aprovar Solicitação --}}
                                         <a type="button" class="btn w-100 btn-success"
@@ -268,7 +268,7 @@
                                     @endif
                                 @endif
                             </div>
-                            <div class="col-3">
+                            <div class="col-3 DivAporvado">
                                 @if(Auth::user()->tipo_usuario_id == 1)
                                     {{-- Reprovar Solicitação--}}
                                     <form method="POST" action="{{route('avaliador.solicitacao.reprovar')}}">
@@ -419,6 +419,19 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js"></script>
     <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var avaliado = {{ isset($avaliado) ? $avaliado : 'false' }};
+
+            if (avaliado) {
+                var divsPai = document.querySelectorAll(".DivAporvado");
+                divsPai.forEach(function(divPai) {
+                    divPai.innerHTML = "";
+                });
+            }
+        });
+    </script>
+    <script>
+
 
         function atualizarTabela_modeloAnimal() {
             $.ajax({
