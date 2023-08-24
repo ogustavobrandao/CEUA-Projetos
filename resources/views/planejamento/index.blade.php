@@ -243,7 +243,7 @@
                             <a type="button" class="btn btn-secondary w-100" href="{{ route('avaliador.solicitacao.avaliar', ['solicitacao_id' => $solicitacao->id]) }}">Voltar</a>
                         @elseif(Auth::user()->tipo_usuario_id == 3)
                             <a type="button" class="btn btn-secondary w-100" href="{{ route('solicitacao.index', ['solicitacao_id' => $solicitacao->id]) }}">Voltar</a>
-                        @elseif(Auth::user()->tipo_usuario_id == 1 && $solicitacao->status = 'avaliado')
+                        @elseif(Auth::user()->tipo_usuario_id == 1 && $solicitacao->status == 'avaliado')
                             <a type="button" class="btn btn-secondary w-100" href="{{ route('solicitacao.admin.apreciacao', ['solicitacao_id' => $solicitacao->id]) }}">Voltar</a>
                         @elseif(Auth::user()->tipo_usuario_id == 1)
                             <a type="button" class="btn btn-secondary w-100" href="{{ route('solicitacao.admin.visualizar', ['solicitacao_id' => $solicitacao->id]) }}">Voltar</a>

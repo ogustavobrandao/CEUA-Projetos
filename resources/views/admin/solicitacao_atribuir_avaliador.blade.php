@@ -31,7 +31,8 @@
                     </thead>
                     <tbody>
                     @foreach($solicitacoes as $solicitacao)
-                        @if(($solicitacao->avaliacao->first() != null && $solicitacao->avaliacao->first()->status == "aprovadaPendencia" || $solicitacao->status != "avaliado" && $solicitacao->status != null ))
+                        @if($solicitacao->status != "avaliado" && $solicitacao->status != null)
+
                             <tr>
                                 <td>{{$solicitacao->titulo_pt}}</td>
                                 <td>{{$solicitacao->user->name}}</td>
