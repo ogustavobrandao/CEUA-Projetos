@@ -102,8 +102,8 @@
                         <a class="btn btn-secondary"
                         href="#">Não Enviado</a>
                     @else
-                        <a class="btn btn-primary"
-                        href="{{route('planejamento.formula.download', ['planejamento_id' => $planejamento->id])}}">Baixar
+                        <a class="btn btn-primary download-button"
+                           data-path="{{route('planejamento.formula.download', ['planejamento_id' => $planejamento->id])}}">Baixar
                             Fórmula</a>
                     @endif
                 @else

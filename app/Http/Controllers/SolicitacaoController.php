@@ -528,8 +528,9 @@ class SolicitacaoController extends Controller
     private function verifyPath($path)
     {
         $validPath = Storage::exists($path);
-        if (!$validPath)
-            return redirect()->back()->with('fail', 'Arquivo não encontrado, é necessário solicitar o reenvio!');
+        if (!$validPath){
+            return 'erro';
+        }
     }
 
     public function downloadExperienciaPreviaColaborador($colaborador_id)
