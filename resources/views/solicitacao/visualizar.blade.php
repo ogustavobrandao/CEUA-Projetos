@@ -18,6 +18,7 @@
                             </div>
                         </div>
                     </div>
+                    @include('component.modal_fail')
                     <div id="dados_iniciais">
                         @include('solicitacao.solicitacao')
                     </div>

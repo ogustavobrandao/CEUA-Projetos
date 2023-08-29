@@ -98,6 +98,13 @@
                             $(errorDiv).css('display', 'block')
                         }
                     }
+                    if(status == 'error'){
+                        $('#failModal').modal('show');
+                        $('#failModal').find('.msg-fail').text(xhr.responseJSON.message);
+                        setTimeout(function (){
+                            $('#failModal').modal('hide');
+                        },2000)
+                    }
                 } else {
                     alert("Erro na requisição Ajax: " + error);
                 }

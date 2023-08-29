@@ -14,7 +14,7 @@
             <button type="submit" class="btn btn-success w-100">Salvar</button>
         </div>
     @elseif(Auth::user()->tipo_usuario_id == 2)
-        <div class="col-10">
+        <div class="col-10 DivAporvado">
             <div class="row justify-content-start">
                 <div class="col-3">
                     <a type="button" class="btn btn-success w-100" onclick="realizarAvaliacaoInd({{$tipo}},{{$avaliacao_id}},{{$id}},'aprovado')">Aprovar</a>

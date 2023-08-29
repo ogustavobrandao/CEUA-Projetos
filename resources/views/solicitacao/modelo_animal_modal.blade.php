@@ -34,11 +34,7 @@
         <label for="justificativa">Justificar o uso dos Procedimentos e da Espécie Animal:<strong style="color: red">*</strong></label>
         <textarea class="form-control @if($errors->modelo->has('justificativa')) is-invalid @endif" id="justificativa"
                   name="justificativa" required autocomplete="justificativa"
-                  autofocus>@if(isset($modelo_animal))
-                {{$modelo_animal->justificativa}}
-            @else
-                {{old('justificativa')}}
-            @endif</textarea>
+                  autofocus>@if(isset($modelo_animal)){{$modelo_animal->justificativa}}@else{{old('justificativa')}}@endif</textarea>
         <div class="div_error" id="justificativa_error" style="display: none">
             <span class="invalid-input">
                 <strong id="justificativa_error_message"></strong>

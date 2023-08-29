@@ -150,9 +150,10 @@
                                                 <a class="btn btn-secondary" href="#">Não Enviado</a>
                                             @else
                                                 <br>
-                                                <a class="btn btn-primary m-3"
-                                                           href="{{route('experiencias_previasColaborador.download', ['colaborador_id' => $colaborador->id])}}">Baixar
-                                                            Experiência Prévia</a>
+                                                <a class="btn btn-primary m-3 download-button"
+                                                            data-path="{{route('experiencias_previasColaborador.download', ['colaborador_id' => $colaborador->id])}}">Baixar
+                                                            Experiência Prévia
+                                                    </a>
                                             @endif
                                         @else
                                             <input name="experiencia_previa" class="form-control"
@@ -192,8 +193,9 @@
                                                         <br>
                                                         <a class="btn btn-secondary" href="#">Não Enviado</a>
                                                     @else
-                                                        <a class="btn btn-primary m-3"
-                                                           href="{{route('termo_responsabilidadeColaborador.download', ['colaborador_id' => $colaborador->id])}}">Baixar
+                                                        <a class="btn btn-primary m-3 download-button"
+                                                           href="{{route('termo_responsabilidadeColaborador.download', ['colaborador_id' => $colaborador->id])}}"
+                                                           data-path="{{route('termo_responsabilidadeColaborador.download', ['colaborador_id' => $colaborador->id])}}">Baixar
                                                             Termo de Responsabilidade</a>
                                                     @endif
                                                 @else
@@ -359,5 +361,38 @@
         });
 
         return false;
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        $('.download-button').click(function(e) {
+            e.preventDefault();
+            var downloadLink = $(this).attr('href');
+            var verifyLink = $(this).data('path');
+
+            $.ajax({
+                url: verifyLink,
+                method: 'GET',
+                error: function (xhr, status) {
+
+                    if (status == 'error') {
+                        $('.modal').hide();
+                        $('body').removeClass('modal-open');
+                        $('body').css('padding-right', '');
+                        $('body').css('overflow', '');
+                        $('.modal-backdrop').remove();
+
+
+                        $('#failModal').modal('show');
+                        $('#failModal').find('.msg-fail').text('Arquivo não encontrado, é necessário solicitar o reenvio!');
+                        setTimeout(function (){
+                            $('#failModal').modal('hide');
+
+                        },2000)
+                        }
+                }
+            });
+        });
     });
 </script>

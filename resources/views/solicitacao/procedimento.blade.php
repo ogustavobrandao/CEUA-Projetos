@@ -30,11 +30,7 @@
                             style="color: red">*</strong></label>
                     <textarea class="form-control @error('estresse') is-invalid @enderror" name="estresse" id="estresse"
                               autocomplete="estresse" autofocus
-                              required disabled>@if(!empty($procedimento) && $procedimento->estresse != null)
-                            {{$procedimento->estresse}}
-                        @else
-                            {{old('estresse')}}
-                        @endif</textarea>
+                              required disabled>@if(!empty($procedimento) && $procedimento->estresse != null){{$procedimento->estresse}}@else{{old('estresse')}}@endif</textarea>
                     <div class="div_error" id="estresse_error" style="display: none">
                     <span class="invalid-input">
                         <strong id="estresse_error_message"></strong>
@@ -66,11 +62,7 @@
                             style="color: red">*</strong></label>
                     <textarea class="form-control @error('anestesico') is-invalid @enderror" name="anestesico"
                               id="anestesico" autocomplete="anestesico" autofocus
-                              required disabled>@if(!empty($procedimento) && $procedimento->anestesico != null)
-                            {{$procedimento->anestesico}}
-                        @else
-                            {{old('anestesico')}}
-                        @endif</textarea>
+                              required disabled>@if(!empty($procedimento) && $procedimento->anestesico != null){{$procedimento->anestesico}}@else{{old('anestesico')}}@endif</textarea>
                     <div class="div_error" id="anestesico_error" style="display: none">
                     <span class="invalid-input">
                         <strong id="anestesico_error_message"></strong>
@@ -100,11 +92,7 @@
                     <label for="relaxante">Uso de Relaxante Muscular:<strong style="color: red">*</strong></label>
                     <textarea class="form-control @error('relaxante') is-invalid @enderror" name="relaxante" id="relaxante"
                               autocomplete="relaxante" autofocus
-                              required disabled>@if(!empty($procedimento) && $procedimento->relaxante != null)
-                            {{$procedimento->relaxante}}
-                        @else
-                            {{old('relaxante')}}
-                        @endif</textarea>
+                              required disabled>@if(!empty($procedimento) && $procedimento->relaxante != null){{$procedimento->relaxante}}@else{{old('relaxante')}}@endif</textarea>
                     <div class="div_error" id="relaxante_error" style="display: none">
                     <span class="invalid-input">
                         <strong id="relaxante_error_message"></strong>
@@ -137,11 +125,7 @@
                             style="color: red">*</strong></label>
                     <textarea class="form-control @error('analgesico') is-invalid @enderror" name="analgesico"
                               id="analgesico" autocomplete="analgesico" autofocus
-                              required disabled>@if(!empty($procedimento) && $procedimento->analgesico != null)
-                            {{$procedimento->analgesico}}
-                        @else
-                            {{old('analgesico')}}
-                        @endif</textarea>
+                              required disabled>@if(!empty($procedimento) && $procedimento->analgesico != null){{$procedimento->analgesico}}@else{{old('analgesico')}}@endif</textarea>
                     <div class="div_error" id="analgesico_error" style="display: none">
                     <span class="invalid-input">
                         <strong id="analgesico_error_message"></strong>
@@ -157,11 +141,7 @@
                         style="color: red">*</strong></label>
                 <textarea class="form-control @error('anestesico') is-invalid @enderror" name="anestesico"
                           id="anestesico" autocomplete="anestesico" autofocus
-                          required disabled>@if(!empty($procedimento) && $procedimento->anestesico != null)
-                        {{$procedimento->anestesico}}
-                    @else
-                        {{old('anestesico')}}
-                    @endif</textarea>
+                          required disabled>@if(!empty($procedimento) && $procedimento->anestesico != null){{$procedimento->anestesico}}@else{{old('anestesico')}}@endif</textarea>
                 <div class="div_error" id="anestesico_error" style="display: none">
                     <span class="invalid-input">
                         <strong id="anestesico_error_message"></strong>
@@ -194,11 +174,7 @@
                         style="color: red">*</strong></label>
                 <textarea class="form-control @error('imobilizacao') is-invalid @enderror" name="imobilizacao"
                           id="imobilizacao" autocomplete="imobilizacao" autofocus
-                          required disabled>@if(!empty($procedimento) && $procedimento->imobilizacao != null)
-                        {{$procedimento->imobilizacao}}
-                    @else
-                        {{old('imobilizacao')}}
-                    @endif</textarea>
+                          required disabled>@if(!empty($procedimento) && $procedimento->imobilizacao != null){{$procedimento->imobilizacao}}@else{{old('imobilizacao')}}@endif</textarea>
                 <div class="div_error" id="imobilizacao_error" style="display: none">
                     <span class="invalid-input">
                         <strong id="imobilizacao_error_message"></strong>
@@ -233,9 +209,7 @@
                 <textarea class="form-control @error('inoculacao_substancia') is-invalid @enderror"
                           name="inoculacao_substancia" id="inoculacao_substancia" autocomplete="inoculacao_substancia"
                           autofocus
-                          required disabled>@if(!empty($procedimento) && $procedimento->inoculacao_substancia != null){{$procedimento->inoculacao_substancia}}
-                    @else{{old('inoculacao_substancia')}}
-                    @endif</textarea>
+                          required disabled>@if(!empty($procedimento) && $procedimento->inoculacao_substancia != null){{$procedimento->inoculacao_substancia}}@else{{old('inoculacao_substancia')}}@endif</textarea>
                 <div class="div_error" id="inoculacao_substancia_error" style="display: none">
                     <span class="invalid-input">
                         <strong id="inoculacao_substancia_error_message"></strong>
@@ -267,11 +241,7 @@
                 <label for="extracao">Extração de Materiais Biológicos:<strong style="color: red">*</strong></label>
                 <textarea class="form-control @error('extracao') is-invalid @enderror" name="extracao" id="extracao"
                           autocomplete="extracao" autofocus
-                          required disabled>@if(!empty($procedimento) && $procedimento->extracao != null)
-                        {{$procedimento->extracao}}
-                    @else
-                        {{old('extracao')}}
-                    @endif</textarea>
+                          required disabled>@if(!empty($procedimento) && $procedimento->extracao != null){{$procedimento->extracao}}@else{{old('extracao')}}@endif</textarea>
                 <div class="div_error" id="extracao_error" style="display: none">
                     <span class="invalid-input">
                         <strong id="extracao_error_message"></strong>
@@ -514,7 +484,7 @@
                             $(errorDiv).css('display', 'block')
                         }
                     }
-                    if(statusCode === 412 && status === 'error'){
+                    if(status == 'error'){
                         $('#failModal').modal('show');
                         $('#failModal').find('.msg-fail').text(xhr.responseJSON.message);
                         setTimeout(function (){

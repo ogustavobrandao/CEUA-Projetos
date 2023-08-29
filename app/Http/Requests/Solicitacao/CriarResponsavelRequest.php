@@ -23,7 +23,7 @@ class CriarResponsavelRequest extends FormRequest
             'email' => 'required|email|max:255',
             'telefone' => [
                 'required',
-                'regex:/^\(\d{2}\) \d{5}\-\d{4}$/',
+                'regex:/^\(\d{2}\) \d{4,5}\-\d{4}$/',
             ],
             'cpf' => [
                 'required',

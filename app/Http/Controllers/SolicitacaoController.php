@@ -16,8 +16,10 @@ use App\Http\Requests\Solicitacao\CriarResultadoRequest;
 use App\Http\Requests\Solicitacao\CriarSolicitacaoFimRequest;
 use App\Http\Requests\Solicitacao\CriarSolicitacaoRequest;
 use App\Http\Requests\Solicitacao\EditarColaboradorRequest;
+use App\Mail\SendNotificacaoSolicitacao;
 use App\Models\AvaliacaoIndividual;
 use App\Models\HistoricoSolicitacao;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use App\Mail\SendSolicitacaoReprovada;
 use App\Models\Avaliacao;
@@ -95,9 +97,15 @@ class SolicitacaoController extends Controller
         $avaliacaoResponsavel = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)->where('responsavel_id', $responsavel->id)->first();
         $avaliacaoColaborador = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)->where('tipo', 2)->first();
 
+        if ($avaliacao->status == 'nao_realizado' ||
+            ($avaliacao->solicitacao->status == "nao_avaliado" && $avaliacao->status == "aprovadaPendencia")) {
+            $avaliado = 'false';
+        } else {
+            $avaliado = 'true';
+        }
         return view('solicitacao.index', compact('disabled', 'solicitacao', 'grandeAreas', 'areas', 'subAreas',
             'instituicaos', 'responsavel', 'colaboradores', 'modelo_animais', 'avaliacao',
-            'avaliacaoDadosComp', 'avaliacaoDadosini', 'avaliacaoResponsavel', 'avaliacaoColaborador'));
+            'avaliacaoDadosComp', 'avaliacaoDadosini', 'avaliacaoResponsavel', 'avaliacaoColaborador', 'avaliado'));
 
     }
 
@@ -520,8 +528,9 @@ class SolicitacaoController extends Controller
     private function verifyPath($path)
     {
         $validPath = Storage::exists($path);
-        if (!$validPath)
-            return redirect()->back()->with('fail', 'Arquivo não encontrado, é necessário solicitar o reenvio!');
+        if (!$validPath){
+            return 'erro';
+        }
     }
 
     public function downloadExperienciaPreviaColaborador($colaborador_id)
@@ -659,11 +668,16 @@ class SolicitacaoController extends Controller
         $avaliacaoResultado = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)->where('resultado_id', $resultado->id)->first();
         $avaliacaoModeloAnimal = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)->where('modelo_animal_id', $modelo_animal->id)->first();
 
-
+        if ($avaliacao->status == 'nao_realizado' ||
+            ($avaliacao->solicitacao->status == "nao_avaliado" && $avaliacao->status == "aprovadaPendencia")) {
+            $avaliado = 'false';
+        } else {
+            $avaliado = 'true';
+        }
         return view('planejamento.index',
             compact('modelo_animal', 'planejamento', 'solicitacao', 'condicoes_animal', 'procedimento', 'operacao', 'eutanasia', 'resultado', 'avaliacao',
                 'avaliacaoPlanejamento', 'avaliacaoCondicoesAnimal', 'avaliacaoProcedimento', 'avaliacaoOperacao',
-                'avaliacaoEutanasia', 'avaliacaoResultado', 'avaliacaoModeloAnimal'));
+                'avaliacaoEutanasia', 'avaliacaoResultado', 'avaliacaoModeloAnimal', 'avaliado'));
     }
 
     public function criar_planejamento(CriarPlanejamentoRequest $request)
@@ -984,6 +998,9 @@ class SolicitacaoController extends Controller
         $historico->nome_usuario_modificador = Auth::user()->name;
 
         $historico->save();
+
+        $admin = User::find(1);
+        Mail::to($admin->email)->send(new SendNotificacaoSolicitacao($admin));
 
         return redirect(route('solicitacao.solicitante.index'))->with(['success' => 'Solicitação concluída com sucesso!']);
     }

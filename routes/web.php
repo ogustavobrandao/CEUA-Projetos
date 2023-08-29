@@ -28,6 +28,15 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('editar/senha', [\App\Http\Controllers\UsuarioController::class, 'editar_senha'])->name('user.senha.editar');
     Route::post('alterar/senha', [\App\Http\Controllers\UsuarioController::class, 'alterar_senha'])->name('user.senha.alterar');
     Route::post('alterar/perfil', [\App\Http\Controllers\UsuarioController::class, 'alterar_perfil'])->name('user.perfil.alterar');
+
+    Route::get('/formula/{planejamento_id}/download', [App\Http\Controllers\SolicitacaoController::class, 'downloadFormula'])->name('planejamento.formula.download');
+    Route::get('/anexo_amostra_planejamento/{planejamento_id}/download', [App\Http\Controllers\SolicitacaoController::class, 'downloadAnexoAmostraPlanejamento'])->name('anexo_amostra_planejamento.download');
+    Route::get('/licencas_previas/{modelo_animal_id}/download', [App\Http\Controllers\SolicitacaoController::class, 'downloadLicencasPrevias'])->name('licencas_previas.download');
+    Route::get('/termos_responsabilidades/{responsavel_id}/download', [App\Http\Controllers\SolicitacaoController::class, 'downloadTermoResponsabilidade'])->name('termo_responsabilidade.downloadTermoResponsabilidade');
+    Route::get('/experiencia/{responsavel_id}/download', [App\Http\Controllers\SolicitacaoController::class, 'downloadExperiencia'])->name('experiencia.download');
+    Route::get('/experiencias_previasColaborador/{colaborador_id}/download', [App\Http\Controllers\SolicitacaoController::class, 'downloadExperienciaPreviaColaborador'])->name('experiencias_previasColaborador.download');
+    Route::get('/termos_responsabilidadesColaborador/{colaborador_id}/download', [App\Http\Controllers\SolicitacaoController::class, 'downloadTermoResponsabilidadeColaborador'])->name('termo_responsabilidadeColaborador.download');
+    Route::get('/termo/{modelo_animal_id}/download', [App\Http\Controllers\SolicitacaoController::class, 'downloadTermo'])->name('termo.download');
 });
 
 Route::group(['middleware' => ['auth', 'verified', 'checkAdministrador']], function () {
@@ -57,22 +66,6 @@ Route::group(['middleware' => ['auth', 'verified', 'checkAdministrador']], funct
     Route::get('/solicitacao/{solicitacao_id}/apreciacao', [App\Http\Controllers\SolicitacaoController::class, 'aprovar_avaliacao'])->name('solicitacao.admin.apreciacao');
     Route::get('/historico_modal/{solicitacao_id}', [App\Http\Controllers\SolicitacaoController::class, 'HistoricoModal'])->name('historico.modal');
 
-});
-
-Route::group(['middleware' => ['auth', 'verified', 'checkProprietarioAvaliador']], function () {
-    Route::get('/formulario/{solicitacao_id}', [App\Http\Controllers\SolicitacaoController::class, 'form'])->name('solicitacao.form');
-    Route::get('/formulario/{solicitacao_id}/{num_pagina}', [App\Http\Controllers\SolicitacaoController::class, 'alterarPagina'])->name('solicitacao.alterar.pagina');
-
-    Route::get('/formula/{planejamento_id}/download', [App\Http\Controllers\SolicitacaoController::class, 'downloadFormula'])->name('planejamento.formula.download');
-    Route::get('/treinamento/{responsavel_id}/download', [App\Http\Controllers\SolicitacaoController::class, 'downloadTreinamento'])->name('treinamento.download');
-    Route::get('/anexo_amostra_planejamento/{planejamento_id}/download', [App\Http\Controllers\SolicitacaoController::class, 'downloadAnexoAmostraPlanejamento'])->name('anexo_amostra_planejamento.download');
-    Route::get('/licencas_previas/{modelo_animal_id}/download', [App\Http\Controllers\SolicitacaoController::class, 'downloadLicencasPrevias'])->name('licencas_previas.download');
-    Route::get('/termos_responsabilidades/{responsavel_id}/download', [App\Http\Controllers\SolicitacaoController::class, 'downloadTermoResponsabilidade'])->name('termo_responsabilidade.downloadTermoResponsabilidade');
-    Route::get('/experiencia/{responsavel_id}/download', [App\Http\Controllers\SolicitacaoController::class, 'downloadExperiencia'])->name('experiencia.download');
-    Route::get('/experiencias_previasColaborador/{colaborador_id}/download', [App\Http\Controllers\SolicitacaoController::class, 'downloadExperienciaPreviaColaborador'])->name('experiencias_previasColaborador.download');
-    Route::get('/termos_responsabilidadesColaborador/{colaborador_id}/download', [App\Http\Controllers\SolicitacaoController::class, 'downloadTermoResponsabilidadeColaborador'])->name('termo_responsabilidadeColaborador.download');
-    Route::get('/termo/{modelo_animal_id}/download', [App\Http\Controllers\SolicitacaoController::class, 'downloadTermo'])->name('termo.download');
-    Route::get('/formulario_voltar/{solicitacao_id}', [App\Http\Controllers\SolicitacaoController::class, 'voltarPagina'])->name('solicitacao.voltar.pagina');
 });
 
 

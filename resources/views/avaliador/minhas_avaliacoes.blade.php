@@ -45,11 +45,7 @@
                                 @if(($avaliacao->solicitacao->updated_at->diffInHours($horario) >= 2 && $avaliacao->solicitacao->updated_at < $horario)
                                     || $avaliacao->solicitacao->avaliador_atual_id == Auth::user()->id
                                     || $avaliacao->solicitacao->avaliador_atual_id == null)
-                                    @if($avaliacao->status == 'nao_realizado')
-                                        <a href="{{route('avaliador.solicitacao.avaliar', ['solicitacao_id' => $avaliacao->solicitacao->id])}}">Avaliar</a>
-                                    @elseif(($avaliacao->solicitacao->status == "nao_avaliado" && $avaliacao->status == "aprovadaPendencia"))
-                                        <a href="{{route('avaliador.solicitacao.avaliar', ['solicitacao_id' => $avaliacao->solicitacao->id])}}">Re-Avaliar</a>
-                                    @elseif($avaliacao->status == 'aprovado' || $avaliacao->status == 'aprovado_colegiado' && isset($avaliacao->licenca))
+                                    @if($avaliacao->status == 'aprovado' || $avaliacao->status == 'aprovado_colegiado' && isset($avaliacao->licenca))
                                         <a class="btn btn-info" style="color: white" data-toggle="modal"
                                            data-target="#licencaModal_{{$avaliacao->id}}" title="Dados da licença">
                                             <i class="fa-regular fa-id-card"></i>
@@ -57,9 +53,14 @@
                                         <a class="btn btn-info" style="color: white"
                                            href="{{route('pdf.gerarPDFAprovado', ['solicitacao_id' => $avaliacao->solicitacao->id])}}"
                                            title="Gerar PDF."><i class="fa fa-arrow-down" aria-hidden="true"></i></a>
-                                    @elseif($avaliacao->status == 'reprovado')
-                                        <a style="color: red; font-weight: bold">Reprovada</a>
                                     @endif
+
+                                <a class="btn @if($avaliacao->status == 'nao_realizado' || ($avaliacao->solicitacao->status == "nao_avaliado" && $avaliacao->status == "aprovadaPendencia"))btn-success
+                                              @elseif($avaliacao->status == 'reprovado') btn-danger
+                                              @else btn-info @endif"
+                                   style="color: white"
+                                   href="{{route('avaliador.solicitacao.avaliar', ['solicitacao_id' => $avaliacao->solicitacao->id])}}"
+                                   title="Abrir Solicitação"> <i class="fa fa-external-link" aria-hidden="true"></i></a>
                                 @else
                                     <a style="color: red; font-weight: bold">Em avaliação</a>
                                 @endif

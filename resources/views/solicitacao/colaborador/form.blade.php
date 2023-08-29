@@ -20,7 +20,7 @@
                     @endif
                 </h2>
             @else
-                <h2 class="titulo" id="titulo_2 responsavel-check">3. Dados do(s) Colaborador(es)
+                <h2 class="titulo" id="titulo_2 responsavel-check" style="color: white">3. Dados do(s) Colaborador(es)
                     @if(!isset($solicitacao->responsavel))
                         <small style="color: red; font-weight: bold">Necessária a criação de um
                             responsável</small>

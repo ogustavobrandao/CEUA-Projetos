@@ -176,8 +176,8 @@
                                 <a class="btn btn-secondary"
                                    href="#">Não Enviado</a>
                             @else
-                                <a class="btn btn-primary m-3"
-                                   href="{{route('experiencia.download', ['responsavel_id' => $solicitacao->responsavel->id])}}">Baixar
+                                <a class="btn btn-primary m-3 download-button"
+                                   data-path="{{route('experiencia.download', ['responsavel_id' => $solicitacao->responsavel->id])}}">Baixar
                                     Experiência Prévia</a>
                             @endif
                         </div>
@@ -232,8 +232,8 @@
                                 <a class="btn btn-secondary"
                                    href="">Não Enviado</a>
                             @else
-                                <a class="btn btn-primary m-3"
-                                   href="{{route('termo_responsabilidade.downloadTermoResponsabilidade', ['responsavel_id' => $solicitacao->responsavel->id])}}">Baixar
+                                <a class="btn btn-primary m-3 download-button"
+                                   data-path="{{route('termo_responsabilidade.downloadTermoResponsabilidade', ['responsavel_id' => $solicitacao->responsavel->id])}}">Baixar
                                     Termo de Responsabilidade</a>
                             @endif
                             @else
@@ -297,11 +297,7 @@
                                                         class="form-control @error('treinamento') is-invalid @enderror"
                                                         name="treinamento" id="treinamento" autocomplete="treinamento"
                                                         autofocus
-                                                        required>@if(!empty($solicitacao->responsavel) && $solicitacao->responsavel->treinamento != null)
-                                                            {{$solicitacao->responsavel->treinamento}}
-                                                        @else
-                                                            {{old('treinamento')}}
-                                                        @endif</textarea>
+                                                        required>@if(!empty($solicitacao->responsavel) && $solicitacao->responsavel->treinamento != null){{$solicitacao->responsavel->treinamento}}@else{{old('treinamento')}}@endif</textarea>
                                                     <div class="div_error" id="treinamento_error" style="display: none">
                                                         <span class="invalid-input">
                                                             <strong id="treinamento_error_message"></strong>
@@ -335,11 +331,7 @@
                                         <textarea class="form-control @error('treinamento') is-invalid @enderror"
                                                   name="treinamento" id="treinamento" autocomplete="treinamento"
                                                   autofocus
-                                                  required> @if(!empty($solicitacao->responsavel) && $solicitacao->responsavel->treinamento != null)
-                                                {{$solicitacao->responsavel->treinamento}}
-                                            @else
-                                                {{old('treinamento')}}
-                                            @endif </textarea>
+                                                  required>@if(!empty($solicitacao->responsavel) && $solicitacao->responsavel->treinamento != null){{$solicitacao->responsavel->treinamento}}@else{{old('treinamento')}}@endif </textarea>
                                         <div class="div_error" id="treinamento_error" style="display: none">
                                             <span class="invalid-input">
                                                 <strong id="treinamento_error_message"></strong>
@@ -409,6 +401,13 @@
                             $(errorMessageTag).html(errorMessage);
                             $(errorDiv).css('display', 'block')
                         }
+                    }
+                    if(status == 'error'){
+                        $('#failModal').modal('show');
+                        $('#failModal').find('.msg-fail').text(xhr.responseJSON.message);
+                        setTimeout(function (){
+                            $('#failModal').modal('hide');
+                        },2000)
                     }
                 } else {
                     alert("Erro na requisição Ajax: " + error);
@@ -487,4 +486,36 @@
                 </h2>
             `);
     }
+</script>
+<script>
+    $(document).ready(function() {
+        $('.download-button').click(function(e) {
+            e.preventDefault();
+            var downloadLink = $(this).attr('href');
+            var verifyLink = $(this).data('path');
+
+            $.ajax({
+                url: verifyLink,
+                method: 'GET',
+                error: function (xhr, status) {
+
+                    if (status == 'error') {
+                        $('.modal').hide();
+                        $('body').removeClass('modal-open');
+                        $('body').css('padding-right', '');
+                        $('body').css('overflow', '');
+                        $('.modal-backdrop').remove();
+
+
+                        $('#failModal').modal('show');
+                        $('#failModal').find('.msg-fail').text('Arquivo não encontrado, é necessário solicitar o reenvio!');
+                        setTimeout(function (){
+                            $('#failModal').modal('hide');
+
+                        },2000)
+                    }
+                }
+            });
+        });
+    });
 </script>

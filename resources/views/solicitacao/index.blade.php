@@ -28,6 +28,7 @@
                             </div>
                         </div>
                     </div>
+                    @include('component.modal_fail')
                     <div id="dados_iniciais">
                         @if(Auth::user()->tipo_usuario_id == 2)
                             @include('solicitacao.solicitacao',['tipo'=>0,'avaliacao_id'=>$avaliacao->id,'id'=>$solicitacao->id])
@@ -221,7 +222,7 @@
                                        href="{{ route('solicitacao.admin.index') }}">Voltar</a>
                                 @endif
                             </div>
-                            <div class="col-4">
+                            <div class="col-4 DivAporvado">
                                 @if(Auth::user()->tipo_usuario_id == 1)
                                         {{-- Aprovar Solicitação --}}
                                         <a type="button" class="btn w-100 btn-success"
@@ -267,7 +268,7 @@
                                     @endif
                                 @endif
                             </div>
-                            <div class="col-3">
+                            <div class="col-3 DivAporvado">
                                 @if(Auth::user()->tipo_usuario_id == 1)
                                     {{-- Reprovar Solicitação--}}
                                     <form method="POST" action="{{route('avaliador.solicitacao.reprovar')}}">
@@ -418,6 +419,19 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js"></script>
     <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var avaliado = {{ isset($avaliado) ? $avaliado : 'false' }};
+
+            if (avaliado) {
+                var divsPai = document.querySelectorAll(".DivAporvado");
+                divsPai.forEach(function(divPai) {
+                    divPai.innerHTML = "";
+                });
+            }
+        });
+    </script>
+    <script>
+
 
         function atualizarTabela_modeloAnimal() {
             $.ajax({
@@ -777,5 +791,37 @@
             return false;
         });
 
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('.download-button').click(function(e) {
+                e.preventDefault();
+                var downloadLink = $(this).attr('href');
+                var verifyLink = $(this).data('path');
+
+                $.ajax({
+                    url: verifyLink,
+                    method: 'GET',
+                    error: function (xhr, status) {
+
+                        if (status == 'error') {
+                            $('.modal').hide();
+                            $('body').removeClass('modal-open');
+                            $('body').css('padding-right', '');
+                            $('body').css('overflow', '');
+                            $('.modal-backdrop').remove();
+
+
+                            $('#failModal').modal('show');
+                            $('#failModal').find('.msg-fail').text('Arquivo não encontrado, é necessário solicitar o reenvio!');
+                            setTimeout(function (){
+                                $('#failModal').modal('hide');
+
+                            },2000)
+                        }
+                    }
+                });
+            });
+        });
     </script>
 @endsection

@@ -20,7 +20,7 @@
                 </thead>
                 <tbody>
                 @foreach($avaliacoes as $avaliacao)
-                    @if($avaliacao->status == 'aprovado_avaliador' || $avaliacao->status == 'aprovado_colegiado'||$avaliacao->status == 'reprovado')
+                    @if($avaliacao->status == 'aprovado_avaliador' || $avaliacao->status == 'aprovado_colegiado'||$avaliacao->status == 'reprovado' || $avaliacao->status == 'aprovado')
                         <tr>
                             <td class="text-center">{{$avaliacao->solicitacao->user->name}}</td>
                             <td class="text-center">{{$avaliacao->solicitacao->titulo_pt}}</td>
@@ -44,12 +44,12 @@
                                     <i class="btn btn-danger fa fa-window-close" aria-hidden="true"
                                        title="Reprovado"></i>
                                 @endif
-                                @if($avaliacao->status != 'aprovado')
-                                    <a href="#" class="btn btn-primary"
-                                       onclick="carregarHistoricoModal({{$avaliacao->solicitacao_id}})"
-                                       title="Histórico da solicitação">
-                                        <i class="fas fa-history"></i>
-                                    </a>
+                                <a href="#" class="btn btn-primary"
+                                         onclick="carregarHistoricoModal({{$avaliacao->solicitacao_id}})"
+                                         title="Histórico da solicitação">
+                                    <i class="fas fa-history"></i>
+                                </a>
+                                @if($avaliacao->status != 'reprovado')
                                     <a class="btn btn-info" style="color: white"
                                        href="{{route('pdf.gerarPDFAprovado', ['solicitacao_id' => $avaliacao->solicitacao->id])}}"
                                        title="Gerar PDF."><i class="fa fa-arrow-down" aria-hidden="true"></i></a>

@@ -7,6 +7,7 @@
         <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     @enderror
+    @include('component.modal_fail')
     <div class="row justify-content-center">
         <div class="col-11">
             <h2 class="titulo_h2 border-bottom" id="expand_dados_solicitacao"><span class="font-weight-bold">Modelo Animal</span></h2>
@@ -79,7 +80,6 @@
                             </div>
                         </div>
                     </div>
-                    @include('component.modal_fail')
                     <div id="planejamento">
                         @if(Auth::user()->tipo_usuario_id == 2)
                             @include('solicitacao.planejamento',['tipo'=>5,'avaliacao_id'=>$avaliacao->id,'id'=>$planejamento->id])
@@ -243,7 +243,7 @@
                             <a type="button" class="btn btn-secondary w-100" href="{{ route('avaliador.solicitacao.avaliar', ['solicitacao_id' => $solicitacao->id]) }}">Voltar</a>
                         @elseif(Auth::user()->tipo_usuario_id == 3)
                             <a type="button" class="btn btn-secondary w-100" href="{{ route('solicitacao.index', ['solicitacao_id' => $solicitacao->id]) }}">Voltar</a>
-                        @elseif(Auth::user()->tipo_usuario_id == 1 && $solicitacao->status = 'avaliado')
+                        @elseif(Auth::user()->tipo_usuario_id == 1 && $solicitacao->status == 'avaliado')
                             <a type="button" class="btn btn-secondary w-100" href="{{ route('solicitacao.admin.apreciacao', ['solicitacao_id' => $solicitacao->id]) }}">Voltar</a>
                         @elseif(Auth::user()->tipo_usuario_id == 1)
                             <a type="button" class="btn btn-secondary w-100" href="{{ route('solicitacao.admin.visualizar', ['solicitacao_id' => $solicitacao->id]) }}">Voltar</a>
@@ -289,6 +289,17 @@
 
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js"></script>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                var avaliado = {{ isset($avaliado) ? $avaliado : 'false' }};
+                if (avaliado) {
+                    var divsPai = document.querySelectorAll(".DivAporvado");
+                    divsPai.forEach(function(divPai) {
+                        divPai.innerHTML = "";
+                    });
+                }
+            });
+        </script>
         <script type="text/javascript">
 
             $(document).ready(function () {
@@ -553,10 +564,49 @@
                                     $(errorDiv).css('display', 'block')
                                 }
                             }
+                            if(status == 'error'){
+                                $('#failModal').modal('show');
+                                $('#failModal').find('.msg-fail').text(xhr.responseJSON.message);
+                                setTimeout(function (){
+                                    $('#failModal').modal('hide');
+                                },2000)
+                            }
                         } else {
                             alert("Erro na requisição Ajax: " + error);
                         }
                     }
+                });
+            });
+        </script>
+        <script>
+            $(document).ready(function() {
+                $('.download-button').click(function(e) {
+                    e.preventDefault();
+                    var downloadLink = $(this).attr('href');
+                    var verifyLink = $(this).data('path');
+
+                    $.ajax({
+                        url: verifyLink,
+                        method: 'GET',
+                        error: function (xhr, status) {
+
+                            if (status == 'error') {
+                                $('.modal').hide();
+                                $('body').removeClass('modal-open');
+                                $('body').css('padding-right', '');
+                                $('body').css('overflow', '');
+                                $('.modal-backdrop').remove();
+
+
+                                $('#failModal').modal('show');
+                                $('#failModal').find('.msg-fail').text('Arquivo não encontrado, é necessário solicitar o reenvio!');
+                                setTimeout(function (){
+                                    $('#failModal').modal('hide');
+
+                                },2000)
+                            }
+                        }
+                    });
                 });
             });
         </script>

@@ -23,9 +23,9 @@
             </td>
         @elseif(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2 || \Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 1)
             <td class="text-center">
-                <a class="btn btn-primary"
+                <a class="btn btn-primary btn-abrirModal-colaborador"
                    data-toggle="modal"
-                   data-target="#modalEditarColaborador{{$colaborador->id}}">Abrir</a>
+                   data-colaborador-id="{{$colaborador->id}}">Abrir</a>
             </td>
         @endif
     </tr>
