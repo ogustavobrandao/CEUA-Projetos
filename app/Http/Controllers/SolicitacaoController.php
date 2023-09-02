@@ -603,6 +603,24 @@ class SolicitacaoController extends Controller
         return Storage::download($path);
     }
 
+    public function DeclaracaoIsencao_download()
+    {
+        $file = public_path('assets/DECLARAÇÃO-DE-NÃO-NECESSIDADE-DE-LICENÇAS.pdf');
+        return response()->download($file, 'DECLARAÇÃO DE NÃO NECESSIDADE DE LICENÇAS.pdf');
+    }
+
+    public function ModeloTermoResponsabilidade_download()
+    {
+        $file = public_path('assets/TERMO-DE-RESPONSABILIDADE.pdf');
+        return response()->download($file, 'Modelo de Termo de Responsabilidade.pdf');
+    }
+
+    public function DeclaracaoConsentimento_download()
+    {
+        $file = public_path('assets/TERMO-CONSENTIMENTO-LIVRE-ESCLARECIDO(TCLE).pdf');
+        return response()->download($file, 'TERMO CONSENTIMENTO LIVRE ESCLARECIDO(TCLE).pdf');
+    }
+
     public function index_planejamento($modelo_animal_id)
     {
         $modelo_animal = ModeloAnimal::find($modelo_animal_id);

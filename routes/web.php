@@ -138,3 +138,9 @@ Route::get('/leis_decretos', [App\Http\Controllers\ContatoController::class, 'le
 Route::get('/membros', [App\Http\Controllers\ContatoController::class, 'membros'])->name('membros');
 Route::get('/ceua', [App\Http\Controllers\ContatoController::class, 'ceua'])->name('ceua');
 Route::get('/calendarioReunioes', [App\Http\Controllers\ContatoController::class, 'calendarioReunioes'])->name('calendarioReunioes');
+
+//Downloads documentos
+Route::get('/modelo/termo/responsabilidade/download', [App\Http\Controllers\SolicitacaoController::class,'ModeloTermoResponsabilidade_download'])->name('modelo.termo.responsabilidade.download');
+Route::get('/declaracao/consentimento/download', [App\Http\Controllers\SolicitacaoController::class,'DeclaracaoConsentimento_download'])->name('declaracao.consentimento.download');
+Route::get('/declaracao/isencao/download', [App\Http\Controllers\SolicitacaoController::class,'DeclaracaoIsencao_download'])->name('declaracao.isencao.download');
+

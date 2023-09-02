@@ -140,15 +140,15 @@
         </li></h5>
         <h5><li>
             <a href="https://drive.google.com/file/d/1mXn2JApYMlPDO4J5ScT5eNVonEs6tp_w/view" class="legislation-link">RESOLUÇÃO NORMATIVA Nº 22, DE 25 DE JUNHO DE 2015</a>
-            - Baixa o Capítulo "Estudos conduzidos com animais domésticos mantidos fora de instalações de instituições de ensino ou pesquisa científica" do Guia Brasileiro de Produção, Manutenção ou Utilização de Animais em Atividades de Ensino ou Pesquisa Científica do Conselho Nacional de Controle e Experimentação Animal - CONCEA. 
+            - Baixa o Capítulo "Estudos conduzidos com animais domésticos mantidos fora de instalações de instituições de ensino ou pesquisa científica" do Guia Brasileiro de Produção, Manutenção ou Utilização de Animais em Atividades de Ensino ou Pesquisa Científica do Conselho Nacional de Controle e Experimentação Animal - CONCEA.
         </li></h5>
         <h5><li>
             <a href="https://drive.google.com/file/d/1E4ibgsKlo9zEq_WWAIeibRtoX7_UymZX/view" class="legislation-link">RESOLUÇÃO NORMATIVA Nº 25, DE 29 DE SETEMBRO DE 2015</a>
-            - Baixa o Capítulo "Introdução Geral" do Guia Brasileiro de Produção, Manutenção ou Utilização de Animais para Atividades de Ensino ou Pesquisa Científica do Conselho Nacional de Controle e Experimentação Animal – CONCEA. 
+            - Baixa o Capítulo "Introdução Geral" do Guia Brasileiro de Produção, Manutenção ou Utilização de Animais para Atividades de Ensino ou Pesquisa Científica do Conselho Nacional de Controle e Experimentação Animal – CONCEA.
         </li></h5>
         <h5><li>
             <a href="https://drive.google.com/file/d/15NrTZxJLQ2XijGLvs8LS1pEXUcHxAojt/view" class="legislation-link">RESOLUÇÃO NORMATIVA Nº 30, DE 02 DE FEVEREIRO DE 2016</a>
-            - Baixa a Diretriz Brasileira para o Cuidado e a Utilização de Animais em Atividades de Ensino ou de Pesquisa Científica - DBCA. 
+            - Baixa a Diretriz Brasileira para o Cuidado e a Utilização de Animais em Atividades de Ensino ou de Pesquisa Científica - DBCA.
         </li></h5>
         <h5><li>
             <a href="https://drive.google.com/file/d/1j56_CtYD3t_i2eO5y-1ZTTdaBXq1RYLL/view" class="legislation-link">RESOLUÇÃO NORMATIVA Nº 31, DE 18 DE AGOSTO DE 2016</a>
@@ -329,10 +329,20 @@
     <div class="row" style="border-bottom: #131833 2px solid">
     </div>
     <br>
+    <h4>Dúvidas</h4>
+    <ul>
+        <h5><li><a href="https://drive.google.com/file/d/1VHnoCWRjv8IRQ5VtVE2wAArQQ6Ovr3Gm/view?usp=drive_web" target="_blank" class="legislation-link">Dúvidas</a>
+                - Se você tiver alguma dúvida ou precisar de mais informações, não hesite em entrar em contato conosco. Estamos aqui para ajudar!
+            </li></h5>
+    </ul>
+
+    <div class="row" style="border-bottom: #131833 2px solid">
+    </div>
+    <br>
     <h4>E-books</h4>
     <ul>
         <h5><li>
-            <a href="https://www.gov.br/mcti/pt-br" class="legislation-link">E-book - Normativas do CONCEA - 2º Edição</a>
+            <a href="https://www.gov.br/mcti/pt-br"  class="legislation-link">E-book - Normativas do CONCEA - 2º Edição</a>
             - Para Produção, Manutenção ou Utilização de Animais em atividades de Ensino ou Pesquisa Científica.
         </li></h5>
         <h5><li>
