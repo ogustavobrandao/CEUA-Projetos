@@ -501,8 +501,8 @@
             <label for="termo_consentimento">Termo de Consentimento Livre e Esclarecido (TCLE):<strong style="color: red">*</strong></label>
             @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2 || \Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 1)
                 @if (!empty($modelo_animal->termo_consentimento))
-                <a class="btn btn-primary"
-                href="{{route('termo.download', ['modelo_animal_id' => $modelo_animal->id])}}">Baixar
+                <a class="btn btn-primary download-button"
+                   data-path="{{route('termo.download', ['modelo_animal_id' => $modelo_animal->id])}}">Baixar
                     Termo de Consentimento</a>
                 @else
                     <br>
@@ -550,8 +550,8 @@
             <small>Caso seja mais de um documento, anexar em um único PDF.</small>
             @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2 || \Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 1)
                 @if (!empty($modelo_animal->licencas_previas))
-                    <a class="btn btn-primary"
-                    href="{{route('licencas_previas.download', ['modelo_animal_id' => $modelo_animal])}}">Baixar
+                    <a class="btn btn-primary download-button"
+                       data-path="{{route('licencas_previas.download', ['modelo_animal_id' => $modelo_animal])}}">Baixar
                     Licenças</a>
                 @else
                     <br>

@@ -51,14 +51,12 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-4">
+            <div class="col-sm-5">
                 <label for="titulo_pt">Título em Português:<strong style="color: red">*</strong></label>
-                <input class="form-control @error('titulo_pt') is-invalid @enderror" id="titulo_pt" type="text"
-                       name="titulo_pt"
-                       value="@if(!empty($solicitacao) && $solicitacao->titulo_pt != null) {{$solicitacao->titulo_pt}} @else {{ old('titulo_pt') }} @endif"
-                       required
-                       autocomplete="titulo_pt"
-                       title="@if(!empty($solicitacao) && $solicitacao->titulo_pt != null) {{$solicitacao->titulo_pt}} @endif" autofocus>
+                <textarea class="form-control @error('titulo_pt') is-invalid @enderror" id="titulo_pt"
+                       name="titulo_pt" required autocomplete="titulo_pt" autofocus>
+                @if(!empty($solicitacao) && $solicitacao->titulo_pt != null) {{$solicitacao->titulo_pt}} @endif
+                </textarea>
                 <div class="div_error" id="titulo_pt_error" style="display: none">
                 <span class="invalid-input">
                 <strong id="titulo_pt_error_message"></strong>
@@ -66,13 +64,12 @@
                 </div>
             </div>
 
-            <div class="col-sm-4">
+            <div class="col-sm-5">
                 <label for="titulo_en">Titulo em Inglês (apenas para projeto):</label>
-                <input class="form-control @error('titulo_en') is-invalid @enderror" id="titulo_en" type="text"
-                       name="titulo_en"
-                       value="@if(!empty($solicitacao) && $solicitacao->titulo_en != null) {{$solicitacao->titulo_en}} @else {{ old('titulo_en') }} @endif"
-                       autocomplete="titulo_en"
-                       title="@if(!empty($solicitacao) && $solicitacao->titulo_en != null) {{$solicitacao->titulo_en}} @endif" autofocus>
+                <textarea class="form-control @error('titulo_en') is-invalid @enderror" id="titulo_en"
+                       name="titulo_en" autofocus>
+                    @if(!empty($solicitacao) && $solicitacao->titulo_en != null) {{$solicitacao->titulo_en}} @else {{ old('titulo_en') }} @endif
+                </textarea>
                 <div class="div_error" id="titulo_en_error" style="display: none">
                 <span class="invalid-input">
                 <strong id="titulo_en_error_message"></strong>
