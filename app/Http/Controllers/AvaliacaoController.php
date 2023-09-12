@@ -21,8 +21,7 @@ class AvaliacaoController extends Controller
     {
         $solicitacao = Solicitacao::find($request->solicitacao_id);
         $avaliacao = Avaliacao::find($request->avaliacao_id);
-        if (Auth::user()->id == 2) {
-
+        if (Auth::user()->tipo_usuario_id == 2) {
             $avaliador = User::find(Auth::user()->id);
 
             if (!$solicitacao->avaliacao_individual || !$solicitacao->avaliacao_individual->status) {
