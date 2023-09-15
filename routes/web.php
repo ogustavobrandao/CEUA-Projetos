@@ -137,6 +137,7 @@ Route::get('/fluxograma', [App\Http\Controllers\ContatoController::class, 'fluxo
 Route::get('/leis_decretos', [App\Http\Controllers\ContatoController::class, 'leis_decretos'])->name('leis_decretos');
 Route::get('/membros', [App\Http\Controllers\ContatoController::class, 'membros'])->name('membros');
 Route::get('/ceua', [App\Http\Controllers\ContatoController::class, 'ceua'])->name('ceua');
+Route::get('/videos', [App\Http\Controllers\ContatoController::class, 'videos'])->name('videos');
 Route::get('/calendarioReunioes', [App\Http\Controllers\ContatoController::class, 'calendarioReunioes'])->name('calendarioReunioes');
 
 //Downloads documentos
