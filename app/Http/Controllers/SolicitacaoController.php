@@ -46,7 +46,6 @@ use Illuminate\Support\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-
 class SolicitacaoController extends Controller
 {
 
@@ -620,6 +619,8 @@ class SolicitacaoController extends Controller
         $file = public_path('assets/TERMO-CONSENTIMENTO-LIVRE-ESCLARECIDO(TCLE).pdf');
         return response()->download($file, 'TERMO CONSENTIMENTO LIVRE ESCLARECIDO(TCLE).pdf');
     }
+    
+   
 
     public function index_planejamento($modelo_animal_id)
     {

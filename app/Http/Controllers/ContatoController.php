@@ -2,9 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
-
 class ContatoController extends Controller{
 
     public function calendarioReunioes(){
@@ -35,11 +32,9 @@ class ContatoController extends Controller{
         return view('contato.sobre');
     }
 
-
-
-
-
-
-
-
+    public function videos()
+    {
+        
+        return view('contato.videos');
+    }
 }

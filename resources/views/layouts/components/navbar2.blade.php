@@ -45,6 +45,9 @@
                         <a class="nav-link text-white" href="{{ route('fluxograma_documentos') }}">{{ __('Fluxograma de submissão e documentos') }}</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link text-white" href="{{ route('videos') }}">{{ __('Vídeos') }}</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link text-white" href="{{ route('leis_decretos') }}">{{ __('Duvidas e legislação') }}</a>
                     </li>
                     <li class="nav-item">
