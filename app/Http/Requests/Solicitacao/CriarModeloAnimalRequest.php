@@ -38,6 +38,10 @@ class CriarModeloAnimalRequest extends FormRequest
             'peso' => 'required|string|min:1',
             'idade' => 'required|numeric|min:1',
             'periodo' => 'required',
+            'grupo_animal' => 'required',
+            'linhagem' => 'required',
+            'machos' => 'required',
+            'femeas' => 'required',
         ];
     }
     public function messages()

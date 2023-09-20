@@ -21,9 +21,9 @@
                @else value="{{old('nome_vulgar')}}" @endif required
                autocomplete="nome_vulgar"
                autofocus>
-        <div class="div_error" id="nome_vulgor_error" style="display: none">
+        <div class="div_error" id="nome_vulgar_error" style="display: none">
             <span class="invalid-input">
-                <strong id="nome_vulgor_error_message"></strong>
+                <strong id="nome_vulgar_error_message"></strong>
             </span>
         </div>
     </div>

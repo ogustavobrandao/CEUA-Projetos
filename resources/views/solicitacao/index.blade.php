@@ -769,27 +769,30 @@
             var url = $(this).attr('href');
             var csrfToken = '{{ csrf_token() }}';
 
-            $.ajax({
-                type: 'POST',
-                url: url,
-                data: {
-                    _token: csrfToken,
-                    _method: 'GET',
-                },
-                dataType: 'json',
-                success: function (response) {
-                    var message = response.message;
-                    if (message == 'success') {
-                        atualizarTabela_modeloAnimal();
-                    }
-                },
-                error: function (xhr, status, error) {
-                    alert("Erro na requisição Ajax: " + error);
-                }
-            });
+            var confirmacao = confirm('Você tem certeza que deseja apagar?');
 
-            return false;
+            if (confirmacao) {
+                $.ajax({
+                    type: 'POST',
+                    url: url,
+                    data: {
+                        _token: csrfToken,
+                        _method: 'GET',
+                    },
+                    dataType: 'json',
+                    success: function (response) {
+                        var message = response.message;
+                        if (message == 'success') {
+                            atualizarTabela_modeloAnimal();
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        alert("Erro na requisição Ajax: " + error);
+                    }
+                });
+            }
         });
+
 
     </script>
     <script>

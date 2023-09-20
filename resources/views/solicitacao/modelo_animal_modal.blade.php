@@ -23,9 +23,9 @@
                @else value="{{old('nome_vulgar')}}" @endif required
                autocomplete="nome_vulgar"
                autofocus>
-        <div class="div_error" id="nome_vulgor_error" style="display: none">
+        <div class="div_error" id="nome_vulgar_error" style="display: none">
             <span class="invalid-input">
-                <strong id="nome_vulgor_error_message"></strong>
+                <strong id="nome_vulgar_error_message"></strong>
             </span>
         </div>
     </div>
@@ -33,8 +33,9 @@
     <div class="col-sm-12 mt-2">
         <label for="justificativa">Justificar o uso dos Procedimentos e da Espécie Animal:<strong style="color: red">*</strong></label>
         <textarea class="form-control @if($errors->modelo->has('justificativa')) is-invalid @endif" id="justificativa"
-                  name="justificativa" required autocomplete="justificativa"
-                  autofocus>@if(isset($modelo_animal)){{$modelo_animal->justificativa}}@else{{old('justificativa')}}@endif</textarea>
+                  name="justificativa" @if(isset($modelo_animal))value="{{$modelo_animal->justificativa}}" @else value="{{old('justificativa')}}" @endif required 
+                  autocomplete="justificativa"
+                  autofocus></textarea>
         <div class="div_error" id="justificativa_error" style="display: none">
             <span class="invalid-input">
                 <strong id="justificativa_error_message"></strong>
@@ -257,126 +258,127 @@
         <h3 class="subtitulo">Tipo Animal</h3>
         <div class="col-sm-6">
             <label for="grupo_animal">Grupo Animal:<strong style="color: red">*</strong></label>
-            <select class="form-control @error('grupo_animal') is-invalid @enderror" id="grupo_animal"
-                    name="grupo_animal">
-                    <option class="default" disabled selected>Selecione o Grupo Animal</option>
-                    <option value="anfibio"
-                            @if(isset($modelo_animal->perfil) && $modelo_animal->perfil->grupo_animal == "anfibio") selected @endif>
-                        Anfíbio
-                    </option>
-                    <option value="ave"
-                            @if(isset($modelo_animal->perfil) && $modelo_animal->perfil->grupo_animal == "ave") selected @endif>
-                        Ave
-                    </option>
-                    <option value="bovino"
-                            @if(isset($modelo_animal->perfil) && $modelo_animal->perfil->grupo_animal == "bovino") selected @endif>
-                        Bovino
-                    </option>
-                    <option value="bubalino"
-                            @if(isset($modelo_animal->perfil) && $modelo_animal->perfil->grupo_animal == "bubalino") selected @endif>
-                        Bubalino
-                    </option>
-                    <option value="canino"
-                            @if(isset($modelo_animal->perfil) && $modelo_animal->perfil->grupo_animal == "canino") selected @endif>
-                        Canino
-                    </option>
-                    <option value="camudongo_heterogenico"
-                        @if(isset($modelo_animal->perfil) && $modelo_animal->perfil->grupo_animal == "camudongo_heterogenico") selected @endif>
-                    Camundongo heterogênico
-                    </option>
-                    <option value="camudongo_isogenico"
-                        @if(isset($modelo_animal->perfil) && $modelo_animal->perfil->grupo_animal == "camudongo_isogenico") selected @endif>
-                    Camundongo Isogênico
-                    </option>
-                    <option value="camudongo_knockout"
-                        @if(isset($modelo_animal->perfil) && $modelo_animal->perfil->grupo_animal == "camudongo_knockout") selected @endif>
-                    Camundongo Knockout
-                    </option>
-                    <option value="camudongo_transgenico"
-                        @if(isset($modelo_animal->perfil) && $modelo_animal->perfil->grupo_animal == "camudongo_transgenico") selected @endif>
-                    Camundongo Transgênico
-                    </option>
-                    <option value="caprino"
-                            @if(isset($modelo_animal->perfil) && $modelo_animal->perfil->grupo_animal == "caprino") selected @endif>
-                    Caprino
-                    </option>
-                    <option value="chinchila"
-                        @if(isset($modelo_animal->perfil) && $modelo_animal->perfil->grupo_animal == "chinchila") selected @endif>
-                    Chinchila
-                    </option>
-                    <option value="cobaia"
-                            @if(isset($modelo_animal->perfil) && $modelo_animal->perfil->grupo_animal == "cobaia") selected @endif>
-                    Cobaia
-                    </option>
-                    <option value="coelhos"
-                    @if(isset($modelo_animal->perfil) && $modelo_animal->perfil->grupo_animal == "coelhos") selected @endif>
-                    Coelhos
-                    </option>
-                    <option value="equideo"
-                    @if(isset($modelo_animal->perfil) && $modelo_animal->perfil->grupo_animal == "equideo") selected @endif>
-                    Equídeo
-                    </option>
-                    <option value="especie_silvestre_brasileira"
-                    @if(isset($modelo_animal->perfil) && $modelo_animal->perfil->grupo_animal == "especie_silvestre_brasileira") selected @endif>
-                    Espécie Silvestre Brasileira
-                    </option>
-                    <option value="especie_silvestre_nao_rasileira"
-                    @if(isset($modelo_animal->perfil) && $modelo_animal->perfil->grupo_animal == "especie_silvestre_nao_rasileira") selected @endif>
-                    Espécie Silvestre Não-Brasileira
-                    </option>
-                    <option value="gato"
-                            @if(isset($modelo_animal->perfil) && $modelo_animal->perfil->grupo_animal == "gato") selected @endif>
-                        Gato
-                    </option>
-                    <option value="gerbil"
-                            @if(isset($modelo_animal->perfil) && $modelo_animal->perfil->grupo_animal == "gerbil") selected @endif>
-                        Gerbil
-                    </option>
-                    <option value="hamster"
-                    @if(isset($modelo_animal->perfil) && $modelo_animal->perfil->grupo_animal == "hamster") selected @endif>
-                    Hamster
-                    </option>
-                    <option value="ovino"
-                            @if(isset($modelo_animal->perfil) && $modelo_animal->perfil->grupo_animal == "ovino") selected @endif>
-                        Ovino
-                    </option>
-                    <option value="peixe"
-                            @if(isset($modelo_animal->perfil) && $modelo_animal->perfil->grupo_animal == "peixe") selected @endif>
-                        Peixe
-                    </option>
-                    <option value="primata_nao_humano"
-                    @if(isset($modelo_animal->perfil) && $modelo_animal->perfil->grupo_animal == "primata_nao_humano") selected @endif>
-                        Primata Não-Humano
-                    </option>
-                    <option value="rato_heterogenico"
-                    @if(isset($modelo_animal->perfil) && $modelo_animal->perfil->grupo_animal == "rato_heterogenico") selected @endif>
-                        Rato Heterogênico
-                    </option>
-                    <option value="rato_isogenico"
-                    @if(isset($modelo_animal->perfil) && $modelo_animal->perfil->grupo_animal == "rato_isogenico") selected @endif>
-                        Rato Isogênico
-                    </option>
-                    <option value="rato_knockout"
-                    @if(isset($modelo_animal->perfil) && $modelo_animal->perfil->grupo_animal == "rato_knockout") selected @endif>
-                        Rato Knockout
-                    </option>
-                    <option value="rato_transgenico"
-                    @if(isset($modelo_animal->perfil) && $modelo_animal->perfil->grupo_animal == "rato_transgenico") selected @endif>
-                        Rato Transgênico
-                    </option>
-                    <option value="reptil"
-                            @if(isset($modelo_animal->perfil) && $modelo_animal->perfil->grupo_animal == "reptil") selected @endif>
-                        Réptil
-                    </option>
-                    <option value="suino"
-                            @if(isset($modelo_animal->perfil) && $modelo_animal->perfil->grupo_animal == "suino") selected @endif>
-                        Suíno
-                    </option>
-                    <option value="outro"
-                            @if(isset($modelo_animal->perfil) && $modelo_animal->perfil->grupo_animal == "outro") selected @endif>
-                        Outro a especificar
-                    </option>
-                </select>
+
+            <select class="form-control @if($errors->modelo->has('grupo_animal')) is-invalid @endif" id="grupo_animal" name="grupo_animal" required>
+                <option class="default" disabled selected>Selecione o Grupo Animal</option>
+                <option value="anfibio"
+                        @if(isset($modelo_animal->perfil) && $modelo_animal->perfil->grupo_animal == "anfibio") selected @endif>
+                    Anfíbio
+                </option>
+                <option value="ave"
+                        @if(isset($modelo_animal->perfil) && $modelo_animal->perfil->grupo_animal == "ave") selected @endif>
+                    Ave
+                </option>
+                <option value="bovino"
+                        @if(isset($modelo_animal->perfil) && $modelo_animal->perfil->grupo_animal == "bovino") selected @endif>
+                    Bovino
+                </option>
+                <option value="bubalino"
+                        @if(isset($modelo_animal->perfil) && $modelo_animal->perfil->grupo_animal == "bubalino") selected @endif>
+                    Bubalino
+                </option>
+                <option value="canino"
+                        @if(isset($modelo_animal->perfil) && $modelo_animal->perfil->grupo_animal == "canino") selected @endif>
+                    Canino
+                </option>
+                <option value="camudongo_heterogenico"
+                    @if(isset($modelo_animal->perfil) && $modelo_animal->perfil->grupo_animal == "camudongo_heterogenico") selected @endif>
+                Camundongo heterogênico
+                </option>
+                <option value="camudongo_isogenico"
+                    @if(isset($modelo_animal->perfil) && $modelo_animal->perfil->grupo_animal == "camudongo_isogenico") selected @endif>
+                Camundongo Isogênico
+                </option>
+                <option value="camudongo_knockout"
+                    @if(isset($modelo_animal->perfil) && $modelo_animal->perfil->grupo_animal == "camudongo_knockout") selected @endif>
+                Camundongo Knockout
+                </option>
+                <option value="camudongo_transgenico"
+                    @if(isset($modelo_animal->perfil) && $modelo_animal->perfil->grupo_animal == "camudongo_transgenico") selected @endif>
+                Camundongo Transgênico
+                </option>
+                <option value="caprino"
+                        @if(isset($modelo_animal->perfil) && $modelo_animal->perfil->grupo_animal == "caprino") selected @endif>
+                Caprino
+                </option>
+                <option value="chinchila"
+                    @if(isset($modelo_animal->perfil) && $modelo_animal->perfil->grupo_animal == "chinchila") selected @endif>
+                Chinchila
+                </option>
+                <option value="cobaia"
+                        @if(isset($modelo_animal->perfil) && $modelo_animal->perfil->grupo_animal == "cobaia") selected @endif>
+                Cobaia
+                </option>
+                <option value="coelhos"
+                @if(isset($modelo_animal->perfil) && $modelo_animal->perfil->grupo_animal == "coelhos") selected @endif>
+                Coelhos
+                </option>
+                <option value="equideo"
+                @if(isset($modelo_animal->perfil) && $modelo_animal->perfil->grupo_animal == "equideo") selected @endif>
+                Equídeo
+                </option>
+                <option value="especie_silvestre_brasileira"
+                @if(isset($modelo_animal->perfil) && $modelo_animal->perfil->grupo_animal == "especie_silvestre_brasileira") selected @endif>
+                Espécie Silvestre Brasileira
+                </option>
+                <option value="especie_silvestre_nao_rasileira"
+                @if(isset($modelo_animal->perfil) && $modelo_animal->perfil->grupo_animal == "especie_silvestre_nao_rasileira") selected @endif>
+                Espécie Silvestre Não-Brasileira
+                </option>
+                <option value="gato"
+                        @if(isset($modelo_animal->perfil) && $modelo_animal->perfil->grupo_animal == "gato") selected @endif>
+                    Gato
+                </option>
+                <option value="gerbil"
+                        @if(isset($modelo_animal->perfil) && $modelo_animal->perfil->grupo_animal == "gerbil") selected @endif>
+                    Gerbil
+                </option>
+                <option value="hamster"
+                @if(isset($modelo_animal->perfil) && $modelo_animal->perfil->grupo_animal == "hamster") selected @endif>
+                Hamster
+                </option>
+                <option value="ovino"
+                        @if(isset($modelo_animal->perfil) && $modelo_animal->perfil->grupo_animal == "ovino") selected @endif>
+                    Ovino
+                </option>
+                <option value="peixe"
+                        @if(isset($modelo_animal->perfil) && $modelo_animal->perfil->grupo_animal == "peixe") selected @endif>
+                    Peixe
+                </option>
+                <option value="primata_nao_humano"
+                @if(isset($modelo_animal->perfil) && $modelo_animal->perfil->grupo_animal == "primata_nao_humano") selected @endif>
+                    Primata Não-Humano
+                </option>
+                <option value="rato_heterogenico"
+                @if(isset($modelo_animal->perfil) && $modelo_animal->perfil->grupo_animal == "rato_heterogenico") selected @endif>
+                    Rato Heterogênico
+                </option>
+                <option value="rato_isogenico"
+                @if(isset($modelo_animal->perfil) && $modelo_animal->perfil->grupo_animal == "rato_isogenico") selected @endif>
+                    Rato Isogênico
+                </option>
+                <option value="rato_knockout"
+                @if(isset($modelo_animal->perfil) && $modelo_animal->perfil->grupo_animal == "rato_knockout") selected @endif>
+                    Rato Knockout
+                </option>
+                <option value="rato_transgenico"
+                @if(isset($modelo_animal->perfil) && $modelo_animal->perfil->grupo_animal == "rato_transgenico") selected @endif>
+                    Rato Transgênico
+                </option>
+                <option value="reptil"
+                        @if(isset($modelo_animal->perfil) && $modelo_animal->perfil->grupo_animal == "reptil") selected @endif>
+                    Réptil
+                </option>
+                <option value="suino"
+                        @if(isset($modelo_animal->perfil) && $modelo_animal->perfil->grupo_animal == "suino") selected @endif>
+                    Suíno
+                </option>
+                <option value="outro"
+                        @if(isset($modelo_animal->perfil) && $modelo_animal->perfil->grupo_animal == "outro") selected @endif>
+                    Outro a especificar
+                </option>
+            </select>
+        
 
             <div class="div_error" id="grupo_animal_error" style="display: none">
                 <span class="invalid-input">
@@ -392,7 +394,7 @@
         </div>
 
         <div class="col-sm-6">
-            <label for="linhagem">Linhagem / Raça:</label>
+            <label for="linhagem">Linhagem / Raça:<strong style="color: red">*</strong></label>
             <input class="form-control @if($errors->modelo->has('linhagem')) is-invalid @endif" id="linhagem" type="text"
                    name="linhagem" @if(isset($modelo_animal->perfil)) value="{{$modelo_animal->perfil->linhagem}}" @else
                        value="{{old('linhagem')}}" @endif required autocomplete="linhagem"

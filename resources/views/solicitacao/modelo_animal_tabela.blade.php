@@ -39,8 +39,7 @@
                        href="{{route('solicitacao.planejamento.index', ['modelo_animal_id' => $modelo_animal->id])}}">Abrir</a>
                     @if(Auth::user()->tipo_usuario_id == 3 && $solicitacao->status != 'avaliado')
                         <a class="btn btn-danger btn-deletar-modelo-animal"
-                           href="{{route('solicitacao.modelo_animal.delete', ['id' => $modelo_animal->id])}}"
-                           onclick="return confirm('Você tem certeza que deseja apagar?')">Deletar</a>
+                           href="{{route('solicitacao.modelo_animal.delete', ['id' => $modelo_animal->id])}}">Deletar</a>
                     @endif
                 @endif
             </td>

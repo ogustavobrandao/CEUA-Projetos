@@ -141,7 +141,8 @@
                                             @if(Auth::user()->tipo_usuario_id != 2)
                                                 <a class="btn btn-primary" href="{{route('solicitacao.planejamento.index', ['modelo_animal_id' => $modelo_animal->id])}}">Abrir</a>
                                                 @if(Auth::user()->tipo_usuario_id == 3 && $solicitacao->status != 'avaliado')
-                                                    <a class="btn btn-danger" href="{{route('solicitacao.modelo_animal.delete', ['id' => $modelo_animal->id])}}" onclick="return confirm('Você tem certeza que deseja apagar?')">Deletar</a>
+                                                    <a class="btn btn-danger" href="{{route('solicitacao.modelo_animal.delete', ['id' => $modelo_animal->id])}}"
+                                                         onclick="return confirm('Você tem certeza que deseja apagar?')">Deletar</a>
                                                 @endif
                                             @endif
                                         </td>
