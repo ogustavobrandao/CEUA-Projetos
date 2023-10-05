@@ -435,7 +435,7 @@ class SolicitacaoController extends Controller
             $extensao = $request->termo_consentimento->extension();
             $nomeAnexo = "tcle_" . $request->solicitacao_id . date('Ymd') . date('His') . '.' . $extensao;
             $request->termo_consentimento->storeAs('termos/', $modelo_animal->termo_consentimento ?? $nomeAnexo);
-            $data->termo_consentimento = $nomeAnexo;
+            $data['termo_consentimento'] = $nomeAnexo;
         }
 
         if (($request->hasFile('licencas_previas') && $request->file('licencas_previas')->isValid())) {
