@@ -356,12 +356,15 @@
 <script src="{{ asset('js/masks.js') }}"></script>
 <script>
     $('#form1').submit(function (event) {
-        event.preventDefault()
-        var formData = $(this).serialize();
+        event.preventDefault();
+        var form = $('#form1')[0];
+        var formData = new FormData(form);
         $.ajax({
             type: 'POST',
             url: '{{ route('solicitacao.responsavel.criar') }}',
             data: formData,
+            contentType: false,
+            processData: false,
             headers:
                 {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
