@@ -272,8 +272,7 @@
                 if (message == 'success') {
                     atualizarTabela();
                     $('.div_error').css('display', 'none');
-                    $('#modalAdicionarColaborador').find
-                    ('input:not([name="solicitacao_id"]):not([name="_token"]):not([name="opcao_treinamento"]):not([name="opcao_experiencia_previa"]), textarea').val('');
+                    $('#modalAdicionarColaborador').find('input:not([name="solicitacao_id"]):not([name="_token"]):not([name="opcao_treinamento"]):not([name="opcao_experiencia_previa"]):not([name="opcao_termo_responsabilidade"]), textarea').val('');
 
                     $('#modalAdicionarColaborador').find('.default').prop('selected', true);
                     $('#modalAdicionarColaborador').find('.default').prop('checked', true);
