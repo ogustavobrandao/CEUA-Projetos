@@ -528,7 +528,7 @@ class SolicitacaoController extends Controller
     {
         $validPath = Storage::exists($path);
         if (!$validPath){
-            return 'erro';
+            return abort(404);
         }
     }
 
@@ -619,8 +619,8 @@ class SolicitacaoController extends Controller
         $file = public_path('assets/TERMO-CONSENTIMENTO-LIVRE-ESCLARECIDO(TCLE).pdf');
         return response()->download($file, 'TERMO CONSENTIMENTO LIVRE ESCLARECIDO(TCLE).pdf');
     }
-    
-   
+
+
 
     public function index_planejamento($modelo_animal_id)
     {
