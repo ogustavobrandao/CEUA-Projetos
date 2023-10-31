@@ -588,6 +588,19 @@
                     $.ajax({
                         url: verifyLink,
                         method: 'GET',
+                        xhrFields: {
+                            responseType: 'blob'
+                        },
+                        success: function (data) {
+                            var a = document.createElement('a');
+                            var url = window.URL.createObjectURL(data);
+                            a.href = url;
+                            a.download = 'arquivo.pdf';
+                            document.body.append(a);
+                            a.click();
+                            a.remove();
+                            window.URL.revokeObjectURL(url);
+                        },
                         error: function (xhr, status) {
 
                             if (status == 'error') {

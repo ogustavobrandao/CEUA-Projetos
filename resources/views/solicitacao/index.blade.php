@@ -795,36 +795,4 @@
 
 
     </script>
-    <script>
-        $(document).ready(function() {
-            $('.download-button').click(function(e) {
-                e.preventDefault();
-                var downloadLink = $(this).attr('href');
-                var verifyLink = $(this).data('path');
-
-                $.ajax({
-                    url: verifyLink,
-                    method: 'GET',
-                    error: function (xhr, status) {
-
-                        if (status == 'error') {
-                            $('.modal').hide();
-                            $('body').removeClass('modal-open');
-                            $('body').css('padding-right', '');
-                            $('body').css('overflow', '');
-                            $('.modal-backdrop').remove();
-
-
-                            $('#failModal').modal('show');
-                            $('#failModal').find('.msg-fail').text('Arquivo não encontrado, é necessário solicitar o reenvio!');
-                            setTimeout(function (){
-                                $('#failModal').modal('hide');
-
-                            },2000)
-                        }
-                    }
-                });
-            });
-        });
-    </script>
 @endsection

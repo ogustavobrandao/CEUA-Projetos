@@ -222,6 +222,10 @@
 				<div class="col-sm-12">
 					<label for="relevancia">Relevância: {{$solicitacao->dadosComplementares->relevancia}}</label>
 				</div>
+
+                <div class="col-sm-12">
+					<label for="relevancia">Referências: {{$solicitacao->dadosComplementares->referencias}}</label>
+				</div>
 			</div>
 		</div>
 	</div>
