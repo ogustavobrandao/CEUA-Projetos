@@ -13,14 +13,15 @@ class MigracaoRoleUser extends Command
      *
      * @var string
      */
-    protected $signature = 'user:modificacao';
+    protected $signature = 'update:roles';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description =
+        'Atualiza o tipo do usuário, deixando de utilizar o atributo tipo_usuario_id para utilizar o relacionamento de roles';
 
     /**
      * Execute the console command.
@@ -29,31 +30,12 @@ class MigracaoRoleUser extends Command
      */
     public function handle()
     {
-        $todos = User::all();
-        $processedCpfs = [];
+        $todos = User::orderBy('id')->get()->unique('cpf');
 
         foreach ($todos as $user) {
-            if (in_array($user->cpf, $processedCpfs)) {
-                // CPF já processado, pule este usuário
-                continue;
-            }
-
-            $contasComMesmoCpf = User::where('cpf', $user->cpf)->get();
-
-            if ($contasComMesmoCpf->count() > 1) {
-                foreach ($contasComMesmoCpf as $userextra) {
-                    $user->roles()->attach($userextra->tipo_usuario_id);
-
-                    // Adicione o CPF à lista de CPFs processados
-                    $processedCpfs[] = $userextra->cpf;
-                }
-            } else {
-                $user->roles()->attach($user->tipo_usuario_id);
-
-                // Adicione o CPF à lista de CPFs processados
-                $processedCpfs[] = $user->cpf;
-            }
+            $perfis = User::where('cpf', $user->cpf)->pluck('tipo_usuario_id');
+            $user->roles()->attach($perfis);
         }
-
+        return Command::SUCCESS;
     }
 }
