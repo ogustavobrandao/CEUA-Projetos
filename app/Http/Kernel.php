@@ -6,6 +6,7 @@ use App\Http\Middleware\CheckAdministrador;
 use App\Http\Middleware\CheckAvaliador;
 use App\Http\Middleware\CheckProprietario;
 use App\Http\Middleware\CheckProprietarioAvaliador;
+use App\Http\Middleware\CheckRole;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -71,5 +72,6 @@ class Kernel extends HttpKernel
         'checkAdministrador' => CheckAdministrador::class,
         'checkAvaliador' => CheckAvaliador::class,
         'checkProprietario' => CheckProprietario::class,
+        'checkRole' => CheckRole::class,
     ];
 }

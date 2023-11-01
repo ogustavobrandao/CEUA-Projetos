@@ -21,7 +21,7 @@ class UserFactory extends Factory
             'name' => fake()->name(),
             'email' => fake()->safeEmail(),
             'email_verified_at' => now(),
-            'cpf' => '106010103121',
+            'cpf' => '00000000000',
             'rg' => '311773953',
             'celular' => '00000000000',
             'tipo_usuario_id' => 1,

@@ -39,7 +39,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('/termo/{modelo_animal_id}/download', [App\Http\Controllers\SolicitacaoController::class, 'downloadTermo'])->name('termo.download');
 });
 
-Route::group(['middleware' => ['auth', 'verified', 'checkAdministrador']], function () {
+Route::group(['middleware' => ['auth', 'verified', 'checkRole:Administrador']], function () {
     Route::post('/instituicao/store', [App\Http\Controllers\InstituicaoController::class, 'store'])->name('instituicao.store');
     Route::post('/instituicao/update', [App\Http\Controllers\InstituicaoController::class, 'update'])->name('instituicao.update');
     Route::get('/instituicao/index', [App\Http\Controllers\InstituicaoController::class, 'index'])->name('instituicao.index');
@@ -69,7 +69,7 @@ Route::group(['middleware' => ['auth', 'verified', 'checkAdministrador']], funct
 });
 
 
-Route::group(['middleware' => ['auth', 'verified', 'checkProprietario']], function () {
+Route::group(['middleware' => ['auth', 'verified', 'checkRole:Solicitante']], function () {
     Route::get('/solicitacao/index_solicitante', [App\Http\Controllers\SolicitacaoController::class, 'index_solicitante'])->name('solicitacao.solicitante.index');
     Route::post('/solicitacao/inicio', [App\Http\Controllers\SolicitacaoController::class, 'inicio'])->name('solicitacao.inicio');
     Route::post('/solicitacao/criar', [App\Http\Controllers\SolicitacaoController::class, 'criar'])->name('solicitacao.criar');
@@ -100,7 +100,7 @@ Route::group(['middleware' => ['auth', 'verified', 'checkProprietario']], functi
 
 });
 
-Route::group(['middleware' => ['auth', 'verified', 'checkAvaliador']], function () {
+Route::group(['middleware' => ['auth', 'verified', 'checkRole:Avaliador']], function () {
     Route::get('/solicitacao/index_avaliador', [App\Http\Controllers\SolicitacaoController::class, 'index_avaliador'])->name('solicitacao.avaliador.index');
     Route::post('/avaliador/aprovar', [App\Http\Controllers\AvaliacaoController::class, 'aprovarSolicitacao'])->name('avaliador.solicitacao.aprovar');
     Route::post('/avaliador/aprovarPendencia', [App\Http\Controllers\AvaliacaoController::class, 'aprovarPendenciaSolicitacao'])->name('avaliador.solicitacao.aprovarPendencia');

@@ -30,18 +30,30 @@ class MigracaoRoleUser extends Command
     public function handle()
     {
         $todos = User::all();
-        foreach($todos as $user){
+        $processedCpfs = [];
+
+        foreach ($todos as $user) {
+            if (in_array($user->cpf, $processedCpfs)) {
+                // CPF já processado, pule este usuário
+                continue;
+            }
+
             $contasComMesmoCpf = User::where('cpf', $user->cpf)->get();
-            if($contasComMesmoCpf->count() > 1){ 
-                foreach($contasComMesmoCpf as $userextra){
+
+            if ($contasComMesmoCpf->count() > 1) {
+                foreach ($contasComMesmoCpf as $userextra) {
                     $user->roles()->attach($userextra->tipo_usuario_id);
-                    $todos = $todos->forget($userextra->id);
-                    
+
+                    // Adicione o CPF à lista de CPFs processados
+                    $processedCpfs[] = $userextra->cpf;
                 }
-                
-            }else{
+            } else {
                 $user->roles()->attach($user->tipo_usuario_id);
+
+                // Adicione o CPF à lista de CPFs processados
+                $processedCpfs[] = $user->cpf;
             }
         }
+
     }
 }
