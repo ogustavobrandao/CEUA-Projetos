@@ -21,7 +21,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="nome">Nome:</label>
-                                    <input type="text" name="nome" class="form-control" id="nome" placeholder="Digite o nome do colaborador" value="{{$colaborador->nome}}" @if(Auth::user()->tipo_usuario_id == 1 || Auth::user()->tipo_usuario_id == 2)) disabled @endif>
+                                    <input type="text" name="nome" class="form-control" id="nome" placeholder="Digite o nome do colaborador" value="{{$colaborador->nome}}" @if(Auth::user()->hasRole('Administrador') || Auth::user()->hasRole('Avaliador')) disabled @endif>
                                 </div>
                             </div>
                             <div class="div_error nome_error" style="display: none">
@@ -32,7 +32,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="email">E-mail:</label>
-                                    <input type="email" name="email" class="form-control" id="email" placeholder="Digite o e-mail do colaborador" value="{{$colaborador->contato->email ?? 'Não informado'}}" @if(Auth::user()->tipo_usuario_id == 1 || Auth::user()->tipo_usuario_id == 2)) disabled @endif>
+                                    <input type="email" name="email" class="form-control" id="email" placeholder="Digite o e-mail do colaborador" value="{{$colaborador->contato->email ?? 'Não informado'}}" @if(Auth::user()->hasRole('Administrador') || Auth::user()->hasRole('Avaliador')) disabled @endif>
                                 </div>
                             </div>
                             <div class="div_error email_error" style="display: none">
@@ -43,7 +43,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="cpf">CPF:</label>
-                                    <input type="text" name="cpf" class="form-control cpf" id="cpf" placeholder="Digite o CPF do colaborador" value="{{$colaborador->cpf}}" @if(Auth::user()->tipo_usuario_id == 1 || Auth::user()->tipo_usuario_id == 2)) disabled @endif>
+                                    <input type="text" name="cpf" class="form-control cpf" id="cpf" placeholder="Digite o CPF do colaborador" value="{{$colaborador->cpf}}" @if(Auth::user()->hasRole('Administrador') || Auth::user()->hasRole('Avaliador')) disabled @endif>
                                 </div>
                             </div>
                             <div class="div_error cpf_error" style="display: none">
@@ -54,7 +54,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="telefone">Telefone:</label>
-                                    <input type="text" name="telefone" class="form-control telefone" id="telefone" placeholder="Digite o telefone do colaborador" value="{{$colaborador->contato->telefone ?? 'Não Informado'}}" @if(Auth::user()->tipo_usuario_id == 1 || Auth::user()->tipo_usuario_id == 2)) disabled @endif>
+                                    <input type="text" name="telefone" class="form-control telefone" id="telefone" placeholder="Digite o telefone do colaborador" value="{{$colaborador->contato->telefone ?? 'Não Informado'}}" @if(Auth::user()->hasRole('Administrador') || Auth::user()->hasRole('Avaliador')) disabled @endif>
                                 </div>
                             </div>
                             <div class="div_error telefone_error" style="display: none">
@@ -69,7 +69,7 @@
                                 <label for="instituicao">Instituicão:<strong
                                         style="color: red">*</strong></label>
                                 <select class="form-control" name='instituicao_id'
-                                        onchange="unidades()" @if(Auth::user()->tipo_usuario_id == 1 || Auth::user()->tipo_usuario_id == 2)) disabled @endif>
+                                        onchange="unidades()" @if(Auth::user()->hasRole('Administrador') || Auth::user()->hasRole('Avaliador')) disabled @endif>
                                     <option disabled selected>Selecione uma Instituição</option>
                                     @foreach($instituicaos as $instituicao)
                                         <option value="{{$instituicao->id}}" @if($colaborador->instituicao_id == $instituicao->id) selected @endif>{{$instituicao->nome}}</option>
@@ -84,7 +84,7 @@
                             <div class="col-md-6">
                                 <label for="grau_escolaridade">Grau de Escolaridade:<strong
                                         style="color: red">*</strong></label>
-                                <select class="form-control" id="grau_escolaridade" name="grau_escolaridade" @if(Auth::user()->tipo_usuario_id == 1 || Auth::user()->tipo_usuario_id == 2)) disabled @endif>
+                                <select class="form-control" id="grau_escolaridade" name="grau_escolaridade" @if(Auth::user()->hasRole('Administrador') || Auth::user()->hasRole('Avaliador')) disabled @endif>
                                     <option disabled selected>Selecione um Grau de Escolaridade</option>
                                     <option
                                          value="graduacao_completa" @if($colaborador->grau_escolaridade == 'graduacao_completa') selected @endif>
@@ -132,19 +132,19 @@
                                     <label>Experiência Prévia:</label>
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="opcao_experiencia_previa-{{$colaborador->id}}" id="opcaoSim" value="on" required @if($colaborador->experiencia_previa != '') checked @endif
-                                        @if(Auth::user()->tipo_usuario_id == 1 || Auth::user()->tipo_usuario_id == 2)) disabled @endif>
+                                        @if(Auth::user()->hasRole('Administrador') || Auth::user()->hasRole('Avaliador')) disabled @endif>
                                         <label class="form-check-label" for="opcaoSim">Sim</label>
                                     </div>
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="opcao_experiencia_previa-{{$colaborador->id}}" id="opcaoNao" value="off" required @if($colaborador->experiencia_previa == '') checked @endif
-                                        @if(Auth::user()->tipo_usuario_id == 1 || Auth::user()->tipo_usuario_id == 2)) disabled @endif>
+                                        @if(Auth::user()->hasRole('Administrador') || Auth::user()->hasRole('Avaliador')) disabled @endif>
                                         <label class="form-check-label" for="opcaoNao">Não</label>
                                     </div>
                                 </div>
                                 <div class="row col-sm-12">
                                     <div class="col-sm-12" id="divexperiencia-{{$colaborador->id}}" @if($colaborador->experiencia_previa == '') style="display: none;" @endif>
                                         <label>Enviar Arquivo de Experiência Prévia:<strong style="color: red">*</strong></label>
-                                        @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2 || \Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 1)
+                                        @if(Auth::user()->hasRole('Avaliador') || Auth::user()->hasRole('Administrador'))
                                             @if($colaborador->experiencia_previa == null)
                                                 <br>
                                                 <a class="btn btn-secondary" href="#">Não Enviado</a>
@@ -176,19 +176,19 @@
                                         <label class=" mt-2">Termo de Responsabilidade:</label>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="radio" name="opcao_termo_responsabilidade-{{$colaborador->id}}" id="opcaoSim" value="on" required @if($colaborador->termo_responsabilidade != '') checked @endif
-                                            @if(Auth::user()->tipo_usuario_id == 1 || Auth::user()->tipo_usuario_id == 2)) disabled @endif>
+                                            @if(Auth::user()->hasRole('Administrador') || Auth::user()->hasRole('Avaliador')) disabled @endif>
                                             <label class="form-check-label" for="opcaoSim">Sim</label>
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input default" type="radio" name="opcao_termo_responsabilidade-{{$colaborador->id}}" id="opcaoSim" value="off" required @if($colaborador->termo_responsabilidade == '') checked @endif
-                                            @if(Auth::user()->tipo_usuario_id == 1 || Auth::user()->tipo_usuario_id == 2)) disabled @endif>
+                                            @if(Auth::user()->hasRole('Administrador') || Auth::user()->hasRole('Avaliador')) disabled @endif>
                                             <label class="form-check-label" for="opcaoNao">Não</label>
                                         </div>
                                     </div>
                                     <div class="row col-sm-12">
                                         <div class="col-sm-12" id="divresponsabilidade-{{$colaborador->id}}" @if($colaborador->termo_responsabilidade == '') style="display: none;" @endif>
                                             <label>Enviar arquivo de Responsabilidade:</label>
-                                                @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2 || \Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 1)
+                                                @if(Auth::user()->hasRole('Avaliador') || Auth::user()->hasRole('Administrador'))
                                                     @if($colaborador->termo_responsabilidade == null)
                                                         <br>
                                                         <a class="btn btn-secondary" href="#">Não Enviado</a>
@@ -200,7 +200,7 @@
                                                     @endif
                                                 @else
                                                 <input class="form-control" id="termo_responsabilidade" type="file" accept="application/pdf"
-                                                       name="termo_responsabilidade" style="width: 135px" @if(Auth::user()->tipo_usuario_id == 1 || Auth::user()->tipo_usuario_id == 2)) disabled @endif>
+                                                       name="termo_responsabilidade" style="width: 135px" @if(Auth::user()->hasRole('Administrador') || Auth::user()->hasRole('Avaliador')) disabled @endif>
 
                                                 @if($colaborador->termo_responsabilidade != null)
                                                     <span style="border: 1px gray solid; border-radius: 10px; text-align: center; width: 180px; position: absolute; bottom: 0px; left: 155px; height: 38px; padding-top: 5px; background-color: #dcfadf">Um Arquivo Já Foi Enviado</span>
@@ -220,12 +220,12 @@
                                 <label>Treinamento:</label>
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="opcao_treinamento-{{$colaborador->id}}" id="opcaoSim" value="on" required @if($colaborador->treinamento != 'Não') checked @endif
-                                    @if(Auth::user()->tipo_usuario_id == 1 || Auth::user()->tipo_usuario_id == 2)) disabled @endif>
+                                    @if(Auth::user()->tipo_usuario_id == 1 || Auth::user()->hasRole('Avaliador')) disabled @endif>
                                     <label class="form-check-label" for="opcaoSim">Sim</label>
                                 </div>
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="opcao_treinamento-{{$colaborador->id}}" id="opcaoNao" value="off" required @if($colaborador->treinamento == 'Não') checked @endif
-                                    @if(Auth::user()->tipo_usuario_id == 1 || Auth::user()->tipo_usuario_id == 2)) disabled @endif>
+                                    @if(Auth::user()->tipo_usuario_id == 1 || Auth::user()->hasRole('Avaliador')) disabled @endif>
                                     <label class="form-check-label" for="opcaoNao">Não</label>
                                 </div>
                             </div>
@@ -235,7 +235,7 @@
                                     <input class="form-control" id="treinamento"
                                     type="text" name="treinamento"
                                     value="{{$colaborador->treinamento}}"
-                                    required autocomplete="treinamento" autofocus @if(Auth::user()->tipo_usuario_id == 1 || Auth::user()->tipo_usuario_id == 2)) disabled @endif>
+                                    required autocomplete="treinamento" autofocus @if(Auth::user()->tipo_usuario_id == 1 || Auth::user()->hasRole('Avaliador')) disabled @endif>
                                 </div>
                             </div>
                         </div>

@@ -13,7 +13,7 @@
         <td>
             {{$colaborador->contato->telefone}}
         </td>
-        @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 3)
+        @if(\Illuminate\Support\Facades\Auth::user()->hasRole('Solicitante'))
             <td class="text-center">
                 <a class="btn btn-primary btn-abrirModal-colaborador"
                    data-toggle="modal"
@@ -21,7 +21,7 @@
                 <a class="btn btn-danger btn-deletar-colaborador" href="#"
                    data-colaborador-id="{{$colaborador->id}}">Deletar</a>
             </td>
-        @elseif(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2 || \Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 1)
+        @elseif(Auth::user()->hasRole('Avaliador') || Auth::user()->hasRole('Administrador'))
             <td class="text-center">
                 <a class="btn btn-primary btn-abrirModal-colaborador"
                    data-toggle="modal"

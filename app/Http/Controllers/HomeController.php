@@ -9,7 +9,7 @@ class HomeController extends Controller
 {
     public function home()
     {
-        if(Auth::user()->tipo_usuario_id == 1){
+        if(Auth::user()->hasRole('Administrador')){
             return redirect()->route('solicitacao.admin.index');
         }
         return view('home');
