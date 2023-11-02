@@ -263,7 +263,7 @@
                                        title="Concluir Solicitação">Concluir Solicitação</a>
 
                                 @else
-                                    @if(Auth::user()->hasRole('Administrador'))
+                                    @if(Auth::user()->hasRole('Solicitante'))
                                         <button class="btn btn-secondary w-75" disabled>Concluir Solicitação</button>
                                     @endif
                                 @endif

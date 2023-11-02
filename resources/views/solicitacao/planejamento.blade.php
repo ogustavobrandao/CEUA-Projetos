@@ -96,7 +96,7 @@
                     Quando não for o caso, justifique.</label>
             </div>
             <div class="col-sm-6">
-                @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2 || \Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 1)
+                @if(Auth::user()->hasRole('Avaliador') || Auth::user()->hasRole('Administrador'))
                     @if($planejamento->anexo_formula == null)
                         <br>
                         <a class="btn btn-secondary"

@@ -220,12 +220,12 @@
                                 <label>Treinamento:</label>
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="opcao_treinamento-{{$colaborador->id}}" id="opcaoSim" value="on" required @if($colaborador->treinamento != 'Não') checked @endif
-                                    @if(Auth::user()->tipo_usuario_id == 1 || Auth::user()->hasRole('Avaliador')) disabled @endif>
+                                    @if(Auth::user()->hasRole('Administrador') || Auth::user()->hasRole('Avaliador')) disabled @endif>
                                     <label class="form-check-label" for="opcaoSim">Sim</label>
                                 </div>
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="opcao_treinamento-{{$colaborador->id}}" id="opcaoNao" value="off" required @if($colaborador->treinamento == 'Não') checked @endif
-                                    @if(Auth::user()->tipo_usuario_id == 1 || Auth::user()->hasRole('Avaliador')) disabled @endif>
+                                    @if(Auth::user()->hasRole('Administrador') || Auth::user()->hasRole('Avaliador')) disabled @endif>
                                     <label class="form-check-label" for="opcaoNao">Não</label>
                                 </div>
                             </div>
@@ -235,7 +235,7 @@
                                     <input class="form-control" id="treinamento"
                                     type="text" name="treinamento"
                                     value="{{$colaborador->treinamento}}"
-                                    required autocomplete="treinamento" autofocus @if(Auth::user()->tipo_usuario_id == 1 || Auth::user()->hasRole('Avaliador')) disabled @endif>
+                                    required autocomplete="treinamento" autofocus @if(Auth::user()->hasRole('Administrador') || Auth::user()->hasRole('Avaliador')) disabled @endif>
                                 </div>
                             </div>
                         </div>
@@ -247,7 +247,7 @@
                     </div>
 
                 </div>
-                @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 3)
+                @if(Auth::user()->hasRole('Solicitante'))
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary btn-atualizar-colaborador">Atualizar</button>
                     </div>

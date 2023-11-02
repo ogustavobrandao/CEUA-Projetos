@@ -87,7 +87,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <h3 class="titulo" id="titulo_4">5. Dados dos Modelos Animais
-                                    @if(Auth::user()->tipo_usuario_id == 3 && $solicitacao->status != 'avaliado')
+                                    @if(Auth::user()->hasRole('Solicitante') && $solicitacao->status != 'avaliado')
                                         <a class="float-end " data-toggle="modal" data-target="#modeloAnimalModal" style="color: green" title="Adicionar Modelo Animal"><i class="fa-solid fa-circle-plus fa-2xl"></i></a>
                                     @endif
                                 </h3>
@@ -138,9 +138,9 @@
                                             {{$modelo_animal->perfil->idade ?? 'Não preenchido'}}
                                         </td>
                                         <td class="text-center">
-                                            @if(Auth::user()->tipo_usuario_id != 2)
+                                            @if(!Auth::user()->hasRole('Avaliador'))
                                                 <a class="btn btn-primary" href="{{route('solicitacao.planejamento.index', ['modelo_animal_id' => $modelo_animal->id])}}">Abrir</a>
-                                                @if(Auth::user()->tipo_usuario_id == 3 && $solicitacao->status != 'avaliado')
+                                                @if(Auth::user()->hasRole('Solicitante') && $solicitacao->status != 'avaliado')
                                                     <a class="btn btn-danger" href="{{route('solicitacao.modelo_animal.delete', ['id' => $modelo_animal->id])}}"
                                                          onclick="return confirm('Você tem certeza que deseja apagar?')">Deletar</a>
                                                 @endif

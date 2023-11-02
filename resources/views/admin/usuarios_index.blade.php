@@ -35,7 +35,7 @@
                             <td class="text-center">{{$usuario->name}}</td>
                             <td class="text-center">{{$usuario->email}}</td>
                             <td class="text-center">{{$usuario->cpf}}</td>
-                            <td class="text-center">{{$usuario->tipoUsuario->nome}}</td>
+                            <td class="text-center">{{$usuario->tipoUsuario}}</td>
                             <td class="text-center">
                                 <button class="btn btn-group" type="button" data-toggle="modal"
                                         data-target="#editModal_{{$usuario->id}}"><i
@@ -285,14 +285,14 @@
 
                                 <div class="col-sm-5">
                                     <label for="tipo">Tipo do Usuário:<strong style="color: red">*</strong></label>
-                                    <select class="form-control" name="tipo_usuario">
-                                        <option value="1" @if($usuario->tipoUsuario->id == 1) selected @endif>
+                                    <select class="form-control" name="tipo_usuario_id">
+                                        <option value="1" @if($usuario->tipoUsuario == 1) selected @endif>
                                             Administrador
                                         </option>
-                                        <option value="2" @if($usuario->tipoUsuario->id == 2) selected @endif>
+                                        <option value="2" @if($usuario->tipoUsuario == 2) selected @endif>
                                             Avaliador
                                         </option>
-                                        <option value="3" @if($usuario->tipoUsuario->id == 3) selected @endif>
+                                        <option value="3" @if($usuario->tipoUsuario == 3) selected @endif>
                                             Solicitante
                                         </option>
                                     </select>
