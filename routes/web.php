@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -66,6 +67,7 @@ Route::group(['middleware' => ['auth', 'verified', 'checkRole:Administrador']], 
     Route::get('/solicitacao/{solicitacao_id}/apreciacao', [App\Http\Controllers\SolicitacaoController::class, 'aprovar_avaliacao'])->name('solicitacao.admin.apreciacao');
     Route::get('/historico_modal/{solicitacao_id}', [App\Http\Controllers\SolicitacaoController::class, 'HistoricoModal'])->name('historico.modal');
 
+    route::get('/home/adm', [HomeController::class, 'perfilAdmin'])->name('perfil_adm');
 });
 
 
@@ -98,6 +100,8 @@ Route::group(['middleware' => ['auth', 'verified', 'checkRole:Solicitante']], fu
 
     Route::get('/solicitacao/{solicitacao_id}/concluir', [App\Http\Controllers\SolicitacaoController::class, 'concluir'])->name('solicitacao.concluir');
 
+    route::get('/home/solicitante', [HomeController::class, 'perfilSolicitante'])->name('perfil_solicitante');
+
 });
 
 Route::group(['middleware' => ['auth', 'verified', 'checkRole:Avaliador']], function () {
@@ -107,6 +111,8 @@ Route::group(['middleware' => ['auth', 'verified', 'checkRole:Avaliador']], func
     Route::post('/avaliador/reprovar', [App\Http\Controllers\AvaliacaoController::class, 'reprovarSolicitacao'])->name('avaliador.solicitacao.reprovar');
     Route::get('/avaliar/{solicitacao_id}', [App\Http\Controllers\SolicitacaoController::class, 'avaliarSolicitacao'])->name('avaliador.solicitacao.avaliar');
     Route::get('/avaliar/planejamento/{modelo_animal_id}', [App\Http\Controllers\SolicitacaoController::class, 'avaliarPlanejamento'])->name('avaliador.solicitacao.planejamento.avaliar');
+
+    route::get('/home/avaliador', [HomeController::class, 'perfilAvaliador'])->name('perfil_avaliador');
 
 //Avaliação Individual
     Route::post('/avaliacao_individual/reprovar', [App\Http\Controllers\AvaliacaoIndividualController::class, 'realizarAvaliacao'])->name('avaliador.avaliacao_ind.realizarAvaliacao');
