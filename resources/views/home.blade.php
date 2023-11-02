@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-    @if(Auth::user()->hasRole('Solicitante') && $id == 3)
+    @if(Auth::user()->hasRole('Solicitante'))
         @include('solicitante.home')
-    @elseif(Auth::user()->hasRole('Avaliador') &&  $id == 2)
+    @elseif(Auth::user()->hasRole('Avaliador'))
         @include('avaliador.home')
     @endif
 
