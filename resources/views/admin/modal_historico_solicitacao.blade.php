@@ -32,7 +32,8 @@
                     @endforeach
                 </ul>
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer flex justify-content-between">
+                <a href="{{ route('solicitacao.historicos.download', $solicitacao) }}" class="btn btn-primary" title="Baixar histórico da solicitação">Baixar</a>
                 <button type="button" id="close" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
             </div>
         </div>

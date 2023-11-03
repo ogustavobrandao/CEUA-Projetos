@@ -1082,4 +1082,11 @@ class SolicitacaoController extends Controller
 
         return response()->json(['html' => $html]);
     }
+
+    public function historicoDownload(Solicitacao $solicitacao)
+    {
+        $historicos = $solicitacao->historico_solicitacao;
+        $pdf = \PDF::loadView('PDF/historico', compact('solicitacao', 'historicos'));
+        return $pdf->download('historico.pdf');
+    }
 }
