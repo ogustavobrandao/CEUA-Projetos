@@ -1,7 +1,7 @@
 <div class="card p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_2">
     <div class="row">
         <div class="col-md-12" id="check-responsavel">
-            @if(Auth::user()->tipo_usuario_id == 2 || Auth::user()->tipo_usuario_id == 1)
+            @if(Auth::user()->hasRole('Avaliador') || Auth::user()->hasRole('Administrador'))
                 <h2 class="titulo" id="titulo_2">3. Dados do(s) Colaborador(es) <strong style="color: red">*</strong>
                     @csrf
                     @if(!isset($solicitacao->responsavel))
@@ -12,7 +12,7 @@
                             class="fa-solid fa-circle-chevron-up"></i></a>
                     <a class="float-end" id="2_btn_down" style="display: none"><i
                             class="fa-solid fa-circle-chevron-down"></i></a>
-                    @if(!isset($disabled) && isset($solicitacao->responsavel) && auth()->user()->tipo_usuario_id == 3)
+                    @if(!isset($disabled) && isset($solicitacao->responsavel) && auth()->user()->hasRole('Solicitante'))
                         <a class="float-end mr-2" href="#" data-toggle="modal" data-target="#modalAdicionarColaborador"
                            style="color: green"
                            title="Adicionar Colaborador">
@@ -59,7 +59,7 @@
 
                 </tbody>
             </table>
-            @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2)
+            @if(\Illuminate\Support\Facades\Auth::user()->hasRole('Avaliador'))
                 <div class="px-3 pb-4">
                     @include('component.botoes_new_form', ['id' => -1])
                 </div>

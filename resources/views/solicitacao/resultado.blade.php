@@ -3,7 +3,7 @@
     <form id="form11" method="POST" action="">
         @csrf
         <input type="hidden" name="modelo_animal_id" value="{{$modelo_animal->id}}">
-        <div class="row col-md-12" style=" @if(Auth::user()->tipo_usuario_id == 2) pointer-events: none @endif">
+        <div class="row col-md-12" style=" @if(Auth::user()->hasRole('Avaliador')) pointer-events: none @endif">
             <div class="col-sm-6 mt-2">
                 <label for="abate">Abate:<strong style="color: red">*</strong></label>
                 <div class="row ml-1">

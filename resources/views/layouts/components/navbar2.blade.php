@@ -12,7 +12,7 @@
         <!-- Left Side Of Navbar -->
         <ul class="navbar-nav me-auto">
             @auth()
-                @if(Auth::user()->tipo_usuario_id == 1)
+                @if(Auth::user()->hasRole('Administrador'))
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('instituicao.index') }}" style="color: white;">{{ __('Instituições') }}</a>
                     </li>

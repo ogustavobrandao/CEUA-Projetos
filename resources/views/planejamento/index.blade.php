@@ -16,7 +16,7 @@
                     <div class="card shadow-lg p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_4">
                         <div class="row">
                             <div class="col-md-12">
-                                @if(Auth::user()->tipo_usuario_id == 2)
+                                @if(Auth::user()->hasRole('Avaliador'))
                                     <h2 class="titulo" id="titulo_4">Dados Base do Modelo Animal <strong
                                             style="color: red">*</strong>
                                         <a class="float-end" id="4_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
@@ -41,9 +41,9 @@
                                 <input type="hidden" name="modelo_animal_id" value="{{$modelo_animal->id}}">
                                 <div class="modal-body">
                                     @include('solicitacao.modelo_animal')
-                                    @if(Auth::user()->tipo_usuario_id == 2)
+                                    @if(Auth::user()->hasRole('Avaliador'))
                                         @include('component.botoes_new_form',['tipo'=>4,'avaliacao_id'=>$avaliacao->id,'id'=>$modelo_animal->id])
-                                    @elseif(Auth::user()->tipo_usuario_id == 3 && $solicitacao->status == 'avaliado'
+                                    @elseif(Auth::user()->hasRole('Solicitante') && $solicitacao->status == 'avaliado'
                                             && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia')
                                         @include('component.botoes_new_form',['tipo'=>4,'id'=>$modelo_animal->id,'status'=>$avaliacaoModeloAnimal->status])
                                     @else
@@ -63,7 +63,7 @@
                     <div class="card shadow-lg p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_5">
                         <div class="row">
                             <div class="col-md-12">
-                                @if(Auth::user()->tipo_usuario_id == 2)
+                                @if(Auth::user()->hasRole('Avaliador'))
                                     <h2 class="titulo" id="titulo_5">Dados Base do Planejamento <strong
                                             style="color: red">*</strong>
                                         <a class="float-end" id="5_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
@@ -81,9 +81,9 @@
                         </div>
                     </div>
                     <div id="planejamento">
-                        @if(Auth::user()->tipo_usuario_id == 2)
+                        @if(Auth::user()->hasRole('Avaliador'))
                             @include('solicitacao.planejamento',['tipo'=>5,'avaliacao_id'=>$avaliacao->id,'id'=>$planejamento->id])
-                        @elseif(Auth::user()->tipo_usuario_id == 3 && $solicitacao->status == 'avaliado'
+                        @elseif(Auth::user()->hasRole('Solicitante') && $solicitacao->status == 'avaliado'
                                 && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia')
                             @include('solicitacao.planejamento',['tipo'=>5,'id'=>$planejamento->id,'status'=>$avaliacaoPlanejamento->status])
                         @else
@@ -102,7 +102,7 @@
                     <div class="card shadow-lg p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_6">
                         <div class="row">
                             <div class="col-md-12">
-                                @if(Auth::user()->tipo_usuario_id == 2)
+                                @if(Auth::user()->hasRole('Avaliador'))
                                     <h2 class="titulo" id="titulo_6">Condição Animal <strong
                                             style="color: red">*</strong>
                                         <a class="float-end" id="6_btn_up"><i
@@ -122,9 +122,9 @@
                         </div>
                     </div>
                     <div id="condicao_animal" style="display: none;">
-                        @if(Auth::user()->tipo_usuario_id == 2)
+                        @if(Auth::user()->hasRole('Avaliador'))
                             @include('solicitacao.condicoes_animais',['tipo'=>6,'avaliacao_id'=>$avaliacao->id,'id'=>$condicoes_animal->id])
-                        @elseif(Auth::user()->tipo_usuario_id == 3 && $solicitacao->status == 'avaliado'
+                        @elseif(Auth::user()->hasRole('Solicitante') && $solicitacao->status == 'avaliado'
                                 && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia')
                             @include('solicitacao.condicoes_animais',['tipo'=>6,'id'=>$condicoes_animal->id,'status'=>$avaliacaoCondicoesAnimal->status])
                         @else
@@ -136,7 +136,7 @@
                     <div class="card shadow-lg p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_7">
                         <div class="row">
                             <div class="col-md-12">
-                                @if(Auth::user()->tipo_usuario_id == 2)
+                                @if(Auth::user()->hasRole('Avaliador'))
                                     <h2 class="titulo" id="titulo_7">Procedimento <strong style="color: red">*</strong>
                                         <a class="float-end" id="7_btn_up"><i
                                                 class="fa-solid fa-circle-chevron-down"></i></a>
@@ -155,9 +155,9 @@
                         </div>
                     </div>
                     <div id="procedimento" style="display: none; ">
-                        @if(Auth::user()->tipo_usuario_id == 2)
+                        @if(Auth::user()->hasRole('Avaliador'))
                             @include('solicitacao.procedimento',['tipo'=>7,'avaliacao_id'=>$avaliacao->id,'id'=>$procedimento->id])
-                        @elseif(Auth::user()->tipo_usuario_id == 3 && $solicitacao->status == 'avaliado'
+                        @elseif(Auth::user()->hasRole('Solicitante') && $solicitacao->status == 'avaliado'
                                 && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia')
                             @include('solicitacao.procedimento',['tipo'=>7,'id'=>$procedimento->id,'status'=>$avaliacaoProcedimento->status])
                         @else
@@ -169,7 +169,7 @@
                     <div class="card shadow-lg p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_8">
                         <div class="row">
                             <div class="col-md-12">
-                                @if(Auth::user()->tipo_usuario_id == 2)
+                                @if(Auth::user()->hasRole('Avaliador'))
                                     <h2 class="titulo" id="titulo_8">Cirurgia <strong style="color: red">*</strong>
                                         <a class="float-end" id="8_btn_up"><i
                                                 class="fa-solid fa-circle-chevron-down"></i></a>
@@ -188,9 +188,9 @@
                         </div>
                     </div>
                     <div id="operacao" style="display: none; ">
-                        @if(Auth::user()->tipo_usuario_id == 2)
+                        @if(Auth::user()->hasRole('Avaliador'))
                             @include('solicitacao.operacao',['tipo'=>8,'avaliacao_id'=>$avaliacao->id,'id'=>$operacao->id])
-                        @elseif(Auth::user()->tipo_usuario_id == 3 && $solicitacao->status == 'avaliado'
+                        @elseif(Auth::user()->hasRole('Solicitante') && $solicitacao->status == 'avaliado'
                                 && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia')
                             @include('solicitacao.operacao',['tipo'=>8,'id'=>$operacao->id,'status'=>$avaliacaoOperacao->status])
                         @else
@@ -203,7 +203,7 @@
                     <div class="card shadow-lg p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_9">
                         <div class="row">
                             <div class="col-md-12">
-                                @if(Auth::user()->tipo_usuario_id == 2)
+                                @if(Auth::user()->hasRole('Avaliador'))
                                     <h2 class="titulo" id="titulo_9">Finalização <strong style="color: red">*</strong>
                                         <a class="float-end" id="9_btn_up"><i
                                                 class="fa-solid fa-circle-chevron-down"></i></a>
@@ -222,10 +222,10 @@
                         </div>
                     </div>
                     <div id="eutanasia" style="display: none;">
-                        @if(Auth::user()->tipo_usuario_id == 2)
+                        @if(Auth::user()->hasRole('Avaliador'))
                             @include('solicitacao.eutanasia',['tipo'=>9,'avaliacao_id'=>$avaliacao->id,'id'=>$eutanasia->id])
                             @include('solicitacao.resultado',['tipo'=>10,'avaliacao_id'=>$avaliacao->id,'id'=>$resultado->id])
-                        @elseif(Auth::user()->tipo_usuario_id == 3 && $solicitacao->status == 'avaliado'
+                        @elseif(Auth::user()->hasRole('Solicitante') && $solicitacao->status == 'avaliado'
                                 && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia')
                             @include('solicitacao.eutanasia',['tipo'=>9,'id'=>$eutanasia->id,'status'=>$avaliacaoEutanasia->status])
                             @include('solicitacao.resultado',['tipo'=>10,'id'=>$resultado->id,'status'=>$avaliacaoResultado->status])
@@ -239,13 +239,13 @@
 
                 <div class="row col-md-10 m-0">
                     <div class="col-4 pl-0">
-                        @if(Auth::user()->tipo_usuario_id == 2)
+                        @if(Auth::user()->hasRole('Avaliador'))
                             <a type="button" class="btn btn-secondary w-100" href="{{ route('avaliador.solicitacao.avaliar', ['solicitacao_id' => $solicitacao->id]) }}">Voltar</a>
-                        @elseif(Auth::user()->tipo_usuario_id == 3)
+                        @elseif(Auth::user()->hasRole('Solicitante'))
                             <a type="button" class="btn btn-secondary w-100" href="{{ route('solicitacao.index', ['solicitacao_id' => $solicitacao->id]) }}">Voltar</a>
-                        @elseif(Auth::user()->tipo_usuario_id == 1 && $solicitacao->status == 'avaliado')
+                        @elseif(Auth::user()->hasRole('Administrador') && $solicitacao->status == 'avaliado')
                             <a type="button" class="btn btn-secondary w-100" href="{{ route('solicitacao.admin.apreciacao', ['solicitacao_id' => $solicitacao->id]) }}">Voltar</a>
-                        @elseif(Auth::user()->tipo_usuario_id == 1)
+                        @elseif(Auth::user()->hasRole('Administrador'))
                             <a type="button" class="btn btn-secondary w-100" href="{{ route('solicitacao.admin.visualizar', ['solicitacao_id' => $solicitacao->id]) }}">Voltar</a>
                         @endif
                     </div>
@@ -274,7 +274,7 @@
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal"
                                             onclick="closeModal()">Fechar
                                     </button>
-                                    @if(Auth::user()->tipo_usuario_id == 2)
+                                    @if(Auth::user()->hasRole('Avaliador'))
                                         <button type="button" class="btn btn-success" id="confirmPendencia">Confirmar
                                         </button>
                                     @endif
@@ -303,7 +303,7 @@
         <script type="text/javascript">
 
             $(document).ready(function () {
-                @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2)
+                @if(\Illuminate\Support\Facades\Auth::user()->hasRole('Avaliador'))
                 $('#dados_modelo').find('input, textarea, select, button').attr('disabled', 'disabled');
                 @endif
 
@@ -463,7 +463,7 @@
                         $("#trocaConteudo").append(ret);
                         $("#titulo_pendencia").append("Pendência(s) - " + data[1]);
 
-                        @if(Auth::user()->tipo_usuario_id == 2)
+                        @if(Auth::user()->hasRole('Avaliador'))
                         document.getElementById("confirmPendencia").setAttribute("onClick", "realizarAvaliacaoInd(" + tipo + "," + avaliacao_id + "," + id + ", '" + status + "')");
                         @endif
 

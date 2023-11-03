@@ -42,6 +42,7 @@ use App\Models\GrandeArea;
 use App\Models\Area;
 use App\Models\SubArea;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -57,7 +58,7 @@ class SolicitacaoController extends Controller
         $areas = Area::all();
         $subAreas = SubArea::all();
 
-        if (Auth::user()->tipo_usuario_id == 3 && $solicitacao->status == 'avaliado' && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia') {
+        if (Auth::user()->hasRole('Solicitante') && $solicitacao->status == 'avaliado' && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia') {
             $avaliacao = Avaliacao::where('solicitacao_id', $solicitacao_id)->where('user_id', $solicitacao->avaliacao->first()->user_id)->first();
 
 
@@ -643,7 +644,7 @@ class SolicitacaoController extends Controller
             $resultado = null;
         }
 
-        if (Auth::user()->tipo_usuario_id == 3 && $solicitacao->status == 'avaliado' && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia') {
+        if (Auth::user()->hasRole('Solicitante') && $solicitacao->status == 'avaliado' && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia') {
             $avaliacao = Avaliacao::where('solicitacao_id', $solicitacao->id)->where('user_id', $solicitacao->avaliacao->first()->user_id)->first();
             // Avaliações Individuais
             $avaliacaoPlanejamento = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)->where('planejamento_id', $planejamento->id)->first();
@@ -983,8 +984,10 @@ class SolicitacaoController extends Controller
         $avaliacoes = Avaliacao::all();
         $horario = Carbon::now('UTC')->toDateTime();
         $solicitacoes = Solicitacao::all();
-        $avaliadores = User::where('tipo_usuario_id', '2')->get();
-
+        $avaliadores = User::whereHas('roles', function (Builder $query) {
+            $query->where('nome', 'Avaliador');
+        })->get();
+        
         return view('admin.solicitacoes', compact('solicitacoes', 'avaliadores', 'avaliacoes', 'horario'));
     }
 

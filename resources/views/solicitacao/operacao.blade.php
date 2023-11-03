@@ -2,7 +2,7 @@
     <form id="form9" method="POST" action="">
         @csrf
         <input type="hidden" name="modelo_animal_id" value="{{$modelo_animal->id}}">
-        <div style="@if(Auth::user()->tipo_usuario_id == 2) pointer-events: none @endif">
+        <div style="@if(Auth::user()->hasRole('Avaliador')) pointer-events: none @endif">
             <div class="row">
                 <h3 class="subtitulo">Informações</h3>
                 <div class="col-sm-4 mt-2">
