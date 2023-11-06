@@ -25,7 +25,7 @@ class HomeController extends Controller
     }
 
     public function perfilAdmin(){
-        return redirect()->route('solicitacao.admin.index');
+        return view('admin.home');
     }
     public function perfilAvaliador(){
         return view('avaliador.home');
