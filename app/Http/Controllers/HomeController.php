@@ -10,24 +10,23 @@ class HomeController extends Controller
 {
     public function home()
     {
-        if(count(DB::table('role_user')->where('user_id', Auth::user()->id)->get()) > 1){
+        if (Auth::user()->roles()->count() > 1) {
             return view('home');
-
-        }else{
-            if(Auth::user()->hasRole('Administrador')){
-                return redirect()->route('solicitacao.admin.index');
-            }
-            if(Auth::user()->hasRole('Avaliador')){
-                return view('avaliador.home');
-            }
-            if(Auth::user()->hasRole('Solicitante')){
-                return view('solicitante.home');
-            }
         }
-    }  
+        if(Auth::user()->hasRole('Administrador')){
+            return redirect()->route('solicitacao.admin.index');
+        }
+        if(Auth::user()->hasRole('Avaliador')){
+            return view('avaliador.home');
+        }
+        if(Auth::user()->hasRole('Solicitante')){
+            return view('solicitante.home');
+        }
+    }
+
     public function perfilAdmin(){
-        return redirect()->route('solicitacao.admin.index');
-    }  
+        return view('admin.home');
+    }
     public function perfilAvaliador(){
         return view('avaliador.home');
     }
