@@ -14,6 +14,7 @@ class DadosComplementares extends Model
         'justificativa',
         'objetivos',
         'resumo',
+        'referencias',
         'solicitacao_id',
     ];
 

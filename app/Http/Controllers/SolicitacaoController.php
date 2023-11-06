@@ -529,7 +529,7 @@ class SolicitacaoController extends Controller
     {
         $validPath = Storage::exists($path);
         if (!$validPath){
-            return 'erro';
+            return abort(404);
         }
     }
 
@@ -620,8 +620,8 @@ class SolicitacaoController extends Controller
         $file = public_path('assets/TERMO-CONSENTIMENTO-LIVRE-ESCLARECIDO(TCLE).pdf');
         return response()->download($file, 'TERMO CONSENTIMENTO LIVRE ESCLARECIDO(TCLE).pdf');
     }
-    
-   
+
+
 
     public function index_planejamento($modelo_animal_id)
     {
@@ -1084,5 +1084,12 @@ class SolicitacaoController extends Controller
         $html = view('admin.modal_historico_solicitacao', compact('historicoModificacoes', 'solicitacao'))->render();
 
         return response()->json(['html' => $html]);
+    }
+
+    public function historicoDownload(Solicitacao $solicitacao)
+    {
+        $historicos = $solicitacao->historico_solicitacao;
+        $pdf = \PDF::loadView('PDF/historico', compact('solicitacao', 'historicos'));
+        return $pdf->download('historico.pdf');
     }
 }

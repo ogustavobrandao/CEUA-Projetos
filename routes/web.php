@@ -66,6 +66,7 @@ Route::group(['middleware' => ['auth', 'verified', 'checkRole:Administrador']], 
     Route::get('/solicitacao/{solicitacao_id}/visualizar', [App\Http\Controllers\SolicitacaoController::class, 'visualizar'])->name('solicitacao.admin.visualizar');
     Route::get('/solicitacao/{solicitacao_id}/apreciacao', [App\Http\Controllers\SolicitacaoController::class, 'aprovar_avaliacao'])->name('solicitacao.admin.apreciacao');
     Route::get('/historico_modal/{solicitacao_id}', [App\Http\Controllers\SolicitacaoController::class, 'HistoricoModal'])->name('historico.modal');
+    Route::get('/solicitacao/{solicitacao}/historicos/download', [App\Http\Controllers\SolicitacaoController::class, 'historicoDownload'])->name('solicitacao.historicos.download');
 
     route::get('/home/adm', [HomeController::class, 'perfilAdmin'])->name('perfil_adm');
 });

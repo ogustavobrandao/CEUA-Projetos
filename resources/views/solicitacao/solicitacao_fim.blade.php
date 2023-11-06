@@ -49,6 +49,17 @@
                 </div>
             </div>
 
+            <div class="col-sm-12 mt-2">
+                <label for="referencias">Referências:</label>
+                <textarea class="form-control @error('referencias') is-invalid @enderror" name="referencias" id="referencias" autocomplete="referencias" autofocus
+                          >@if(!empty($solicitacao->dadosComplementares) && $solicitacao->dadosComplementares->referencias != null){{$solicitacao->dadosComplementares-> referencias}}@else{{old('referencias')}}@endif</textarea>
+                <div class="div_error" id="referencias_error" style="display: none">
+                    <span class="invalid-input">
+                        <strong id="referencias_error_message"></strong>
+                    </span>
+                </div>
+            </div>
+
 
         </div>
         @include('component.botoes_new_form')

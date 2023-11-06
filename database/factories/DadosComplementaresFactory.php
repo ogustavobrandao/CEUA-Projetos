@@ -21,6 +21,7 @@ class DadosComplementaresFactory extends Factory
             'justificativa' => 'Justificativa',
             'objetivos' => 'Objetivos',
             'resumo' => 'Resumo',
+            'referencias' => 'Referencias',
             'solicitacao_id' => 1
         ];
     }

@@ -225,6 +225,10 @@
             <div class="col-sm-12">
                 <label for="relevancia">Relevância: {{$solicitacao->dadosComplementares->relevancia ?? null}}</label>
             </div>
+
+            <div class="col-sm-12">
+                <label for="relevancia">Referências: {{$solicitacao->dadosComplementares->referencias ?? null}}</label>
+            </div>
         </div>
     </div>
 </div>
