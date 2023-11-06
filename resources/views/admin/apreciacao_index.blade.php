@@ -51,13 +51,17 @@
                                 </a>
                                 @if($avaliacao->status != 'reprovado')
                                     <a class="btn btn-info" style="color: white"
+                                       @if ($avaliacao->licenca)
                                        href="{{route('pdf.gerarPDFAprovado', ['solicitacao_id' => $avaliacao->solicitacao->id])}}"
+                                       @else
+                                       href="{{route('pdf.gerarPDFSolicitacao', ['solicitacao_id' => $avaliacao->solicitacao->id])}}"
+                                       @endif
                                        title="Gerar PDF."><i class="fa fa-arrow-down" aria-hidden="true"></i></a>
                                 @endif
                             </td>
                         </tr>
 
-                        @if($avaliacao->status == 'aprovado' || $avaliacao->status == 'aprovado_colegiado' && isset($avaliacao->licenca))
+                        @if($avaliacao->status == 'aprovado' && isset($avaliacao->licenca) || $avaliacao->status == 'aprovado_colegiado' && isset($avaliacao->licenca))
                             @include('admin.modal_licenca_temporario', compact('avaliacao'))
                         @endif
                     @endif
