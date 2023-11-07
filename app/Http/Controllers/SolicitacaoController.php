@@ -132,7 +132,7 @@ class SolicitacaoController extends Controller
 
         $solicitacao->save();
 
-        return redirect(route('solicitacao.index', ['solicitacao_id' => $solicitacao->id]));
+        return redirect(route('solicitacao.index', ['solicitacao_id' => $solicitacao->id, 'solicitacao_user_id' => $solicitacao->user_id]));
     }
 
 
@@ -991,8 +991,7 @@ class SolicitacaoController extends Controller
         return view('admin.solicitacoes', compact('solicitacoes', 'avaliadores', 'avaliacoes', 'horario'));
     }
 
-    public
-    function concluir($solicitacao_id)
+    public function concluir($solicitacao_id)
     {
         $concluir = true;
         $solicitacao = Solicitacao::where('id', $solicitacao_id)->where('user_id', Auth::user()->id)->first();
