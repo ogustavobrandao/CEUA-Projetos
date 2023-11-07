@@ -14,19 +14,29 @@ use Illuminate\Support\Facades\Validator;
 
 class UsuarioController extends Controller
 {
-    private $usuarioService;
-
-    public function __construct(IUsuarioService $usuarioService) {
-        $this->usuarioService = $usuarioService;
-    }
 
     public function index() {
-        $dadosUsuario = $this->usuarioService->index();
-        return view('admin.usuarios_index', ["usuarios" => $dadosUsuario[0], "instituicaos" => $dadosUsuario[1]]);
+
+        $usuarios = User::all();
+        $instituicaos = Instituicao::all();
+        
+        return view('admin.usuarios_index', compact('usuarios', 'instituicaos'));
     }
 
-    public function store(StoreUsuarioRequest $request) {
-        $this->usuarioService->cadastrarUsuario($request->validated());
+    public function store(Request $request) {
+        
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make('password'),
+            'cpf' => preg_replace('/[^0-9]/', '', $request->cpf),
+            'rg' => preg_replace('/[^0-9]/', '', $request->rg),
+            'celular' => preg_replace('/[^0-9]/', '', $request->celular),
+            'unidade_id' => $request->unidade,
+            'tipo_usuario_id'=> 2,
+        ])->roles()->attach($request->role);
+       
+        
         return redirect(route('usuarios.index'))->with('sucesso', 'Usuário cadastrado com sucesso com senha padrão password!');
     }
 
@@ -72,6 +82,11 @@ class UsuarioController extends Controller
     }
 
     public function update(UpdateUsuarioRequest $request) {
+        $dadosUsuario['password'] = Hash::make("password");
+
+        $usuario = User::find($dadosUsuario['usuario_id']);
+        $usuario->fill($dadosUsuario);
+        $usuario->update();
         $this->usuarioService->atualizarUsuario($request->validated());
         return redirect(route('usuarios.index'))->with('sucesso', 'Usuário editado com sucesso!');
     }

@@ -24,8 +24,6 @@
                             </div>
 
                             @csrf
-                            <input type="hidden" name="tipo_usuario_id" value="3">
-
                             <div class="justify-content-center mt-2">
                                 <div class="col-sm-auto">
                                     <label for="name" class="text-black-50">Nome:<strong style="color: red">*</strong></label>
@@ -49,7 +47,7 @@
 
                                 <div class="col-sm-6">
                                     <label for="celular" class="text-black-50">Celular:<strong style="color: red">*</strong></label>
-                                    <input class="form-control @error('celular') is-invalid @enderror" id="celular" type="text" name="celular" value="{{ old('celular') }}" minlength="11" maxlength="11" required autofocus>
+                                    <input class="form-control @error('celular') is-invalid @enderror" id="celular" type="text" name="celular" value="{{ old('celular') }}" minlength="11" maxlength="16" required autofocus>
                                     @error('celular')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -61,7 +59,7 @@
                             <div class="justify-content-center mt-2">
                                 <div class="col-sm-auto">
                                     <label for="name" class="text-black-50">CPF:<strong style="color: red">*</strong></label>
-                                    <input class="form-control @error('cpf') is-invalid @enderror" id="cpf" type="text" name="cpf" value="{{ old('cpf') }}" minlength="11" maxlength="11" required autocomplete="cpf" autofocus>
+                                    <input class="form-control @error('cpf') is-invalid @enderror" id="cpf" type="text" name="cpf" value="{{ old('cpf') }}" minlength="11" maxlength="15" required autocomplete="cpf" autofocus>
                                     @error('cpf')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>

@@ -11,7 +11,8 @@ class HomeController extends Controller
     public function home()
     {
         if (Auth::user()->roles()->count() > 1) {
-            return view('home');
+            $nao_exibir = true; //usada para que a navbar nao seja exibida no layout desta view
+            return view('home', compact('nao_exibir'));
         }
         if(Auth::user()->hasRole('Administrador')){
             return redirect()->route('solicitacao.admin.index');

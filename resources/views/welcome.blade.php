@@ -121,7 +121,7 @@
                                     <div class="col-md-6 text-center pr-0">
                                         <a href="{{ route('register') }}"
                                            class="btn w-75 color_bt-cadastrar font-weight-bold">
-                                            Cadastar-se
+                                            Cadastrar-se
                                         </a>
                                     </div>
                                 @endif

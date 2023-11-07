@@ -59,6 +59,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
+                {{-- Lógica do modal --}}
                 <form method="POST" action="{{ route('usuario.store') }}">
                     @csrf
                     <div class="modal-body">
@@ -130,7 +131,7 @@
                             <div class="col-sm-5">
                                 <label for="tipo">Tipo do Usuário:<strong style="color: red">*</strong></label>
                                 <select class="form-control @error('tipo_usuario_id') is-invalid @enderror"
-                                        id="tipo_usuario" name="tipo_usuario">
+                                        id="tipo_usuario" name="role">
                                     <option value="1">
                                         Administrador
                                     </option>
