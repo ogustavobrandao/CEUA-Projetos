@@ -264,37 +264,64 @@
                     <label for="treinamento">Treinamento:</label>
                 </div>
             @endif
-            
-            
-            <div>
-                <div class="row ml-1 mt-2">
-                    <div class="col-sm-6">
-                        <input class="form-check-input" type="radio" name="treinamento_radio"
-                            id="treinamento_sim" @if (!empty($solicitacao->responsavel) && $solicitacao->responsavel->treinamento != null) checked @endif>
-                        <label class="form-check-label" for="treinamento">Sim</label>
-                    </div>
-                    <div class="col-sm-2">
-                        <input class="form-check-input" type="radio" name="treinamento_radio"
-                            id="treinamento_nao" @if (
-                                (!empty($solicitacao->responsavel) && $solicitacao->responsavel->treinamento == null) ||
-                                    $solicitacao->responsavel == null) checked @endif
-                            value="false">
-                        <label class="form-check-label" for="treinamento">
-                            Não
-                        </label>
-                    </div>
+            @if (Auth::user()->hasRole('Avaliador') || Auth::user()->hasRole('Administrador'))
+                <div class="col-sm-15 mt-1">
+                    @if ($solicitacao->responsavel->treinamento == null)
+                        <label for="treinamento">Treinamento:</label>
+                        <br>
+                        <a class="btn btn-secondary" href="#">Não Enviado</a>
+                    @else
+                        <div class="col-m-12">
+                            <div class="col-m-10 mt-2">
+                                <label for="treinamento">Descrição Treinamento:<strong
+                                        style="color: red">*</strong></label>
+                                <textarea class="form-control @error('treinamento') is-invalid @enderror" name="treinamento" id="treinamento"
+                                    autocomplete="treinamento" autofocus required>
+                                    @if (!empty($solicitacao->responsavel) && $solicitacao->responsavel->treinamento != null)
+                                    {{ $solicitacao->responsavel->treinamento }}@else{{ old('treinamento') }}
+                                    @endif
+                                </textarea>
+                                <div class="div_error" id="treinamento_error" style="display: none">
+                                    <span class="invalid-input">
+                                        <strong id="treinamento_error_message"></strong>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
                 </div>
-                <div class="div_error" id="treinamento_error" style="display: none">
-                    <span class="invalid-input">
-                        <strong id="treinamento_error_message"></strong>
-                    </span>
-                </div>
-            </div>
+            @else
+                    <div>
+                        <div class="row ml-1 mt-2">
+                            <div class="col-sm-6">
+                                <input class="form-check-input" type="radio" name="treinamento_radio"
+                                    id="treinamento_sim" @if (!empty($solicitacao->responsavel) && $solicitacao->responsavel->treinamento != null) checked @endif>
+                                <label class="form-check-label" for="treinamento">Sim</label>
+                            </div>
+                            <div class="col-sm-2">
+                                <input class="form-check-input" type="radio" name="treinamento_radio"
+                                    id="treinamento_nao" @if (
+                                        (!empty($solicitacao->responsavel) && $solicitacao->responsavel->treinamento == null) ||
+                                            $solicitacao->responsavel == null) checked @endif
+                                    value="false">
+                                <label class="form-check-label" for="treinamento">
+                                    Não
+                                </label>
+                            </div>
+                        </div>
+                        <div class="div_error" id="treinamento_error" style="display: none">
+                            <span class="invalid-input">
+                                <strong id="treinamento_error_message"></strong>
+                            </span>
+                        </div>
+                    </div>
                             
-            
-            
-            @include('component.botoes_new_form')
-            
+            @endif
+            @if (Auth::user()->hasRole('Avaliador') || Auth::user()->hasRole('Administrador'))
+                @include('component.botoes_new_form')
+            @else
+                @include('component.botoes_new_form')
+            @endif
         </div>             
 
         <div class="col-sm-10 mt-2" id="treinamento" style="display: none;">
@@ -306,9 +333,11 @@
         </div>
                                 
             
-        
-        @include('component.botoes_new_form')
-        
+        @if (Auth::user()->hasRole('Avaliador') || Auth::user()->hasRole('Administrador'))
+            @include('component.botoes_new_form')
+        @else
+            @include('component.botoes_new_form')
+        @endif
 
         @if (!empty($solicitacao->responsavel) && $solicitacao->responsavel->treinamento != null)
                     {{ $solicitacao->responsavel->treinamento }}
@@ -322,9 +351,11 @@
             </span>
         </div>
                                  
-        
-        @include('component.botoes_new_form')
-         
+        @if (Auth::user()->hasRole('Avaliador') || Auth::user()->hasRole('Administrador'))
+            @include('component.botoes_new_form')
+        @else
+            @include('component.botoes_new_form')
+        @endif     
     </form>
 </div>
 
