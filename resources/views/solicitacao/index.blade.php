@@ -234,64 +234,7 @@
                     </div>
                 </div>
             </div>
-            @if(Auth::user()->hasRole('Administrador'))
-                <!-- Modal Aprovar -->
-                <div class="modal fade" id="aprovarModal" tabindex="-1" role="dialog"
-                     aria-labelledby="aprovarModalLabel"
-                     aria-hidden="true">
-                    <div class="modal-dialog " role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="aprovarModalLabel">Período da licença</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <form method="POST" action="{{route('avaliador.solicitacao.aprovar')}}">
-                                @csrf
-                                <input type="hidden" name="solicitacao_id" value="{{$solicitacao->id}}">
-                                <input type="hidden" name="avaliacao_id" value="{{$avaliacao->id}}">
-                                <div class="modal-body">
-                                    <div class="row">
-                                        <div class="col-sm-5">
-                                            <label for="inicio">Data de Início:<strong
-                                                    style="color: red">*</strong></label>
-                                            <input class="form-control @error('inicio') is-invalid @enderror"
-                                                   id="inicio"
-                                                   type="date" name="inicio"
-                                                   value="{{date('Y-m-d', strtotime($solicitacao->inicio))}}"
-                                                   required autocomplete="inicio" autofocus>
-                                            @error('inicio')
-                                            <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                            @enderror
-                                        </div>
-                                        <div class="col-sm-2"></div>
-                                        <div class="col-sm-5">
-                                            <label for="fim">Data de Fim:<strong style="color: red">*</strong></label>
-                                            <input class="form-control @error('fim') is-invalid @enderror" id="fim"
-                                                   type="date"
-                                                   name="fim"
-                                                   value="{{date('Y-m-d', strtotime($solicitacao->fim))}}"
-                                                   required autocomplete="fim" autofocus>
-                                            @error('fim')
-                                            <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                                    <button type="submit" class="btn btn-success">Confirmar</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            @endif
+            
         </div>
     </div>
     <!-- Modal de confirmação-->

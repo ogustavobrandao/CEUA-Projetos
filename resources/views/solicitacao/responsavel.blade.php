@@ -284,31 +284,12 @@
                         </label>
                     </div>
                 </div>
-                <div class="div_error" id="treinamento_error" style="display: none">
-                    <span class="invalid-input">
-                        <strong id="treinamento_error_message"></strong>
-                    </span>
-                </div>
+               
             </div>
-                            
-            
-            
-            @include('component.botoes_new_form')
-            
         </div>             
 
-        <div class="col-sm-10 mt-2" id="treinamento" style="display: none;">
-            <div class="div_error" id="treinamento_error" style="display: none">
-                <span class="invalid-input">
-                    <strong id="treinamento_error_message"></strong>
-                </span>
-            </div>
-        </div>
-                                
-            
-        
-        @include('component.botoes_new_form')
-        
+                        
+
 
         @if (!empty($solicitacao->responsavel) && $solicitacao->responsavel->treinamento != null)
                     {{ $solicitacao->responsavel->treinamento }}
