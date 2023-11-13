@@ -24,7 +24,7 @@
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="tipo" id="tipo2" value="Extencao">
+                                <input class="form-check-input" type="radio" name="tipo" id="tipo2" value="Extensão">
                                 <label class="form-check-label" for="tipo2">
                                     Extensão
                                 </label>
