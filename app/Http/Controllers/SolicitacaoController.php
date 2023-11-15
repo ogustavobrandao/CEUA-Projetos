@@ -103,7 +103,7 @@ class SolicitacaoController extends Controller
         } else {
             $avaliado = 'true';
         }
-        return view('solicitacao.index', compact('disabled', 'solicitacao', 'grandeAreas', 'areas', 'subAreas',
+        return view('solicitacao.index_avaliador', compact('disabled', 'solicitacao', 'grandeAreas', 'areas', 'subAreas',
             'instituicaos', 'responsavel', 'colaboradores', 'modelo_animais', 'avaliacao',
             'avaliacaoDadosComp', 'avaliacaoDadosini', 'avaliacaoResponsavel', 'avaliacaoColaborador', 'avaliado'));
 
@@ -514,6 +514,26 @@ class SolicitacaoController extends Controller
         return response()->json(['html' => $tabela_modelo_animal]);
 
     }
+    public function atualizar_modelo_animal_tabela_adm($solicitacao_id)
+    {
+        $solicitacao = Solicitacao::find($solicitacao_id);
+        $modelosAnimais = ModeloAnimal::where('solicitacao_id', $solicitacao_id)->get();
+
+        $tabela_modelo_animal = view('solicitacao.modelo_animal_tabela_adm', ['solicitacao' => $solicitacao, 'modelosAnimais' => $modelosAnimais])->render();
+
+        return response()->json(['html' => $tabela_modelo_animal]);
+
+    }
+    public function atualizar_modelo_animal_tabela_avaliador($solicitacao_id)
+    {
+        $solicitacao = Solicitacao::find($solicitacao_id);
+        $modelosAnimais = ModeloAnimal::where('solicitacao_id', $solicitacao_id)->get();
+
+        $tabela_modelo_animal = view('solicitacao.modelo_animal_tabela_avaliador', ['solicitacao' => $solicitacao, 'modelosAnimais' => $modelosAnimais])->render();
+
+        return response()->json(['html' => $tabela_modelo_animal]);
+
+    }
 
     public function criar_perfil(Request $request)
     {
@@ -688,6 +708,31 @@ class SolicitacaoController extends Controller
             compact('modelo_animal', 'planejamento', 'solicitacao', 'condicoes_animal', 'procedimento', 'operacao', 'eutanasia', 'resultado'));
     }
 
+    public function index_planejamento_adm($modelo_animal_id)
+    {
+        $modelo_animal = ModeloAnimal::find($modelo_animal_id);
+        $planejamento = Planejamento::where('modelo_animal_id', $modelo_animal_id)->first();
+        $solicitacao = Solicitacao::find($modelo_animal->solicitacao_id);
+
+        //Componentes que requerem ter Planejamento
+        if ($planejamento != null) {
+            $condicoes_animal = CondicoesAnimal::where('planejamento_id', $planejamento->id)->first();
+            $procedimento = Procedimento::where('planejamento_id', $planejamento->id)->first();
+            $operacao = Operacao::where('planejamento_id', $planejamento->id)->first();
+            $eutanasia = Eutanasia::where('planejamento_id', $planejamento->id)->first();
+            $resultado = Resultado::where('planejamento_id', $planejamento->id)->first();
+        } else {
+            $condicoes_animal = null;
+            $procedimento = null;
+            $operacao = null;
+            $eutanasia = null;
+            $resultado = null;
+        }
+
+        return view('planejamento.index_adm',
+            compact('modelo_animal', 'planejamento', 'solicitacao', 'condicoes_animal', 'procedimento', 'operacao', 'eutanasia', 'resultado'));
+    }
+
     public function avaliarPlanejamento($modelo_animal_id)
     {
         $modelo_animal = ModeloAnimal::find($modelo_animal_id);
@@ -717,7 +762,7 @@ class SolicitacaoController extends Controller
         } else {
             $avaliado = 'true';
         }
-        return view('planejamento.index',
+        return view('planejamento.index_avaliador',
             compact('modelo_animal', 'planejamento', 'solicitacao', 'condicoes_animal', 'procedimento', 'operacao', 'eutanasia', 'resultado', 'avaliacao',
                 'avaliacaoPlanejamento', 'avaliacaoCondicoesAnimal', 'avaliacaoProcedimento', 'avaliacaoOperacao',
                 'avaliacaoEutanasia', 'avaliacaoResultado', 'avaliacaoModeloAnimal', 'avaliado'));
@@ -1091,7 +1136,7 @@ class SolicitacaoController extends Controller
         $avaliacaoResponsavel = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)->where('responsavel_id', $responsavel->id)->first();
         $avaliacaoColaborador = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)->where('tipo', 2)->first();
 
-        return view('solicitacao.index', compact('disabled', 'solicitacao', 'grandeAreas', 'areas', 'subAreas',
+        return view('solicitacao.index_adm', compact('disabled', 'solicitacao', 'grandeAreas', 'areas', 'subAreas',
             'instituicaos', 'responsavel', 'colaboradores', 'modelo_animais', 'avaliacao',
             'avaliacaoDadosComp', 'avaliacaoDadosini', 'avaliacaoResponsavel', 'avaliacaoColaborador'));
 

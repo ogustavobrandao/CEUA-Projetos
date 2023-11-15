@@ -89,7 +89,8 @@ Route::group(['middleware' => ['auth', 'verified', 'checkRole:Administrador']], 
     Route::get('/historico_modal/{solicitacao_id}', [SolicitacaoController::class, 'HistoricoModal'])->name('historico.modal');
     Route::get('/solicitacao/{solicitacao}/historicos/download', [SolicitacaoController::class, 'historicoDownload'])->name('solicitacao.historicos.download');
 
-    
+    Route::get('/solicitacao/planejamento/index/adm/{modelo_animal_id}', [SolicitacaoController::class, 'index_planejamento_adm'])->name('solicitacao.planejamento.index.adm');
+    Route::get('/solicitacao/modelo_animal_tabela/adm/{id}', [SolicitacaoController::class, 'atualizar_modelo_animal_tabela_adm'])->name('solicitacao.modelo_animal_tabela_adm');
 });
 
 
@@ -141,6 +142,7 @@ Route::group(['middleware' => ['auth', 'verified', 'checkRole:Avaliador']], func
 //Avaliação Individual
     Route::post('/avaliacao_individual/reprovar', [AvaliacaoIndividualController::class, 'realizarAvaliacao'])->name('avaliador.avaliacao_ind.realizarAvaliacao');
 
+    Route::get('/solicitacao/modelo_animal_tabela/avaliador/{id}', [SolicitacaoController::class, 'atualizar_modelo_animal_tabela_avaliador'])->name('solicitacao.modelo_animal_tabela_avaliador');
 });
 
 // Area e Subárea de Conhecimento

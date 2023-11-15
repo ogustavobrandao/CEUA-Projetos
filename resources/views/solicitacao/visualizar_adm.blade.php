@@ -135,7 +135,7 @@
                                         </td>
                                         <td class="text-center">
                                             
-                                            <a class="btn btn-primary" href="{{route('solicitacao.planejamento.index', ['modelo_animal_id' => $modelo_animal->id])}}">Abrir</a>
+                                            <a class="btn btn-primary" href="{{route('solicitacao.planejamento.index.adm', ['modelo_animal_id' => $modelo_animal->id])}}">Abrir</a>
                                              
                                            
                                         </td>

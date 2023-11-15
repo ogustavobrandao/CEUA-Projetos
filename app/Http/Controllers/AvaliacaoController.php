@@ -21,7 +21,7 @@ class AvaliacaoController extends Controller
     {
         $solicitacao = Solicitacao::find($request->solicitacao_id);
         $avaliacao = Avaliacao::find($request->avaliacao_id);
-        if ($request->user()->hasRoles('Avaliador')) {
+        if ($request->user()->hasRole('Avaliador')) {
             $avaliador = User::find(Auth::user()->id);
 
             if (!$solicitacao->avaliacao_individual || !$solicitacao->avaliacao_individual->status) {
