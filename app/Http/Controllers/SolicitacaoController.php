@@ -355,6 +355,18 @@ class SolicitacaoController extends Controller
         return response()->json(['html' => $conteudoTabela]);
 
     }
+    public function atualizar_colaborador_tabela_adm($id)
+    {
+
+        $solicitacao = Solicitacao::find($id);
+        $colaboradores = $solicitacao->responsavel->colaboradores;
+        $instituicaos = Instituicao::all();
+
+        $conteudoTabela = view('solicitacao.colaborador.colaborador_tabela_adm', ['colaboradores' => $colaboradores, 'solicitacao' => $solicitacao, 'instituicaos' => $instituicaos, "tipo" => 2])->render();
+
+        return response()->json(['html' => $conteudoTabela]);
+
+    }
     public function abrir_colaborador_modal($colaborador_id)
     {
         $colaborador= Colaborador::find($colaborador_id);
@@ -362,6 +374,17 @@ class SolicitacaoController extends Controller
         $instituicaos = Instituicao::all();
 
         $colaborador_modal = view('solicitacao.colaborador.colaborador_edicao_modal', ['colaborador' => $colaborador, 'solicitacao_id' => $responsavel->solicitacao_id, 'instituicaos' => $instituicaos, "tipo" => 2])->render();
+
+        return response()->json(['colaborador_modal' => $colaborador_modal]);
+
+    }
+    public function abrir_colaborador_modal_adm($colaborador_id)
+    {
+        $colaborador= Colaborador::find($colaborador_id);
+        $responsavel = Responsavel::find($colaborador->responsavel_id);
+        $instituicaos = Instituicao::all();
+
+        $colaborador_modal = view('solicitacao.colaborador.colaborador_edicao_modal_adm', ['colaborador' => $colaborador, 'solicitacao_id' => $responsavel->solicitacao_id, 'instituicaos' => $instituicaos, "tipo" => 2])->render();
 
         return response()->json(['colaborador_modal' => $colaborador_modal]);
 
@@ -1035,7 +1058,7 @@ class SolicitacaoController extends Controller
         $subAreas = SubArea::all();
 
 
-        return view('solicitacao.visualizar', compact('solicitacao', 'grandeAreas', 'areas', 'subAreas', 'instituicaos'));
+        return view('solicitacao.visualizar_adm', compact('solicitacao', 'grandeAreas', 'areas', 'subAreas', 'instituicaos'));
     }
 
     public function apreciacao_index()

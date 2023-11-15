@@ -102,8 +102,10 @@ Route::group(['middleware' => ['auth', 'verified', 'checkRole:Solicitante']], fu
     Route::post('/solicitacao/criar_colaborador', [SolicitacaoController::class, 'criar_colaborador'])->name('solicitacao.colaborador.criar');
     Route::post('/solicitacao/editar_colaborador', [SolicitacaoController::class, 'editar_colaborador'])->name('solicitacao.colaborador.editar');
     Route::get('/solicitacao/colaborador/{id}', [SolicitacaoController::class, 'deletar_colaborador'])->name('solicitacao.colaborador.deletar');
+    Route::get('/solicitacao/colaborador_tabela/adm/{id}', [SolicitacaoController::class, 'atualizar_colaborador_tabela_adm'])->name('solicitacao.colaborador_tabela_adm');
     Route::get('/solicitacao/colaborador_tabela/{id}', [SolicitacaoController::class, 'atualizar_colaborador_tabela'])->name('solicitacao.colaborador_tabela');
     Route::get('/solicitacao/modal_atualizacao_colaborador/{colaborador_id}', [SolicitacaoController::class, 'abrir_colaborador_modal'])->name('solicitacao.modal_atualizacao_colaborador');
+    Route::get('/solicitacao/modal_atualizacao_colaborador/adm/{colaborador_id}', [SolicitacaoController::class, 'abrir_colaborador_modal_adm'])->name('solicitacao.modal_atualizacao_colaborador_adm');
     Route::post('/solicitacao/criar_eutanasia', [SolicitacaoController::class, 'criar_eutanasia'])->name('solicitacao.eutanasia.criar');
     Route::post('/solicitacao/criar_modelo_animal', [SolicitacaoController::class, 'criar_modelo_animal'])->name('solicitacao.modelo_animal.criar');
     Route::post('/solicitacao/atualizar_modelo_animal', [SolicitacaoController::class, 'atualizar_modelo_animal'])->name('solicitacao.modelo_animal.update');
