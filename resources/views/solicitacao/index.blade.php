@@ -107,7 +107,7 @@
                               enctype="multipart/form-data">
                             @csrf
                             <div class="modal-body">
-                                @include('solicitacao.modelo_animal_modal')
+                                @include('solicitacao.modelo_animal_modal_solicitante')
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
@@ -189,9 +189,9 @@
                                        title="Concluir Solicitação">Concluir Solicitação</a>
 
                                 @else
-                                    @if(Auth::user()->hasRole('Solicitante'))
-                                        <button class="btn btn-secondary w-75" disabled>Concluir Solicitação</button>
-                                    @endif
+                                    
+                                    <button class="btn btn-secondary w-75" disabled>Concluir Solicitação</button>
+                                    
                                 @endif
                             </div>
                           
@@ -225,10 +225,6 @@
                                         onclick="closeModal()">
                                     Fechar
                                 </button>
-                                @if(Auth::user()->hasRole('Avaliador'))
-                                    <button type="button" class="btn btn-success" id="confirmPendencia">Confirmar
-                                    </button>
-                                @endif
                             </div>
                         </form>
                     </div>
@@ -422,9 +418,7 @@
                     $("#trocaConteudo").append(ret);
                     $("#titulo_pendencia").append("Pendência(s) - " + data[1]);
 
-                    @if(Auth::user()->hasRole('Avaliador'))
-                    document.getElementById("confirmPendencia").setAttribute("onClick", "realizarAvaliacaoInd(" + tipo + "," + avaliacao_id + "," + id + ", '" + status + "')");
-                    @endif
+                    
 
                     $("#pendenciaModal").modal('show');
                 }
