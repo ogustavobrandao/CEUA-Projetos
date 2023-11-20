@@ -140,6 +140,7 @@ Route::group(['middleware' => ['auth', 'verified', 'checkRole:Avaliador']], func
     Route::get('/avaliar/planejamento/{modelo_animal_id}', [SolicitacaoController::class, 'avaliarPlanejamento'])->name('avaliador.solicitacao.planejamento.avaliar');
 
     route::get('/home/avaliador', [HomeController::class, 'perfilAvaliador'])->name('perfil_avaliador');
+    Route::get('/solicitacao/colaborador_tabela/avaliador/{id}', [SolicitacaoController::class, 'atualizar_colaborador_tabela_avaliador'])->name('solicitacao.colaborador_tabela_avaliador');
 
 //Avaliação Individual
     Route::post('/avaliacao_individual/reprovar', [AvaliacaoIndividualController::class, 'realizarAvaliacao'])->name('avaliador.avaliacao_ind.realizarAvaliacao');

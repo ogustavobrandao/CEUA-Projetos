@@ -10,7 +10,7 @@
     @include('component.modal_fail')
     <div class="row justify-content-center">
         <div class="col-11">
-            <h2 class="titulo_h2 border-bottom" id="expand_dados_solicitacao"><span class="font-weight-bold">Modelssso Animal</span></h2>
+            <h2 class="titulo_h2 border-bottom" id="expand_dados_solicitacao"><span class="font-weight-bold">Modelo Animal</span></h2>
             <div id="dados_modelo" class="my-2">
                 <div class="mb-4">
                     <div class="card shadow-lg p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_4">
@@ -36,7 +36,7 @@
                                 <div class="modal-body">
                                     @include('solicitacao.administrador.modelo_animal')
                                     
-                                    @include('component.botoes_new_form')
+                                
                                     
                                 </div>
                             </form>

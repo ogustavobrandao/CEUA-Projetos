@@ -109,6 +109,7 @@ class RegisterController extends Controller
             'rg' => preg_replace('/[^0-9]/', '', $data['rg']),
             'celular' => preg_replace('/[^0-9]/', '', $data['celular']),
             'unidade_id' => $data['unidade'],
+            'tipo_usuario_id'=> 3,
         ])->roles()->attach(3);
     }
 }

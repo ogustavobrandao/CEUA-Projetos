@@ -59,7 +59,7 @@
 
                 </tbody>
             </table>
-            @if(\Illuminate\Support\Facades\Auth::user()->hasRole('Avaliador'))
+            @if(Auth::user()->hasRole('Avaliador'))
                 <div class="px-3 pb-4">
                     @include('component.botoes_new_form_avaliador', ['id' => -1])
                 </div>
@@ -87,7 +87,7 @@
 <script>
     function atualizarTabela() {
         $.ajax({
-            url: '/solicitacao/colaborador_tabela/' + {{$solicitacao->id}},
+            url: '/solicitacao/colaborador_tabela/avaliador/' + {{$solicitacao->id}},
             method: 'GET',
             success: function(response) {
                 $('#colaboradores-info').html(response.html);

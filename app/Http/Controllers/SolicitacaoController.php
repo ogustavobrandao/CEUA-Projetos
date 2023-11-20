@@ -355,6 +355,18 @@ class SolicitacaoController extends Controller
         return response()->json(['html' => $conteudoTabela]);
 
     }
+    public function atualizar_colaborador_tabela_avaliador($id)
+    {
+
+        $solicitacao = Solicitacao::find($id);
+        $colaboradores = $solicitacao->responsavel->colaboradores;
+        $instituicaos = Instituicao::all();
+
+        $conteudoTabela = view('solicitacao.colaborador.colaborador_tabela_avaliador', ['colaboradores' => $colaboradores, 'solicitacao' => $solicitacao, 'instituicaos' => $instituicaos, "tipo" => 2])->render();
+
+        return response()->json(['html' => $conteudoTabela]);
+
+    }
     public function atualizar_colaborador_tabela_adm($id)
     {
 

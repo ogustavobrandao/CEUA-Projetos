@@ -53,7 +53,7 @@
                 </div>
                 <div class="mb-4">
                     
-                    @include('solicitacao.colaborador.form', ['avaliacao_id' => $avaliacao->id, 'solicitacao' => $solicitacao, 'avaliacao' => $avaliacao, 'tipo'
+                    @include('solicitacao.colaborador.form_avaliador', ['avaliacao_id' => $avaliacao->id, 'solicitacao' => $solicitacao, 'avaliacao' => $avaliacao, 'tipo'
                             => 2, 'id' => -1])
                     
 
@@ -118,14 +118,7 @@
                                     <h3 class="titulo" id="titulo_4">5. Dados dos Modelos Animais <strong
                                             style="color: white">*</strong>
 
-                                        @if(Auth::user()->hasRole('Solicitante') && $solicitacao->status != 'avaliado')
-                                            <a class="float-end "
-                                               data-toggle="modal"
-                                               data-target="#modeloAnimalModal"
-                                               style="color: green"
-                                               title="Adicionar Modelo Animal"><i
-                                                    class="fa-solid fa-circle-plus fa-2xl"></i></a></h3>
-                                        @endif
+                                       
 
                                 @endif
 
