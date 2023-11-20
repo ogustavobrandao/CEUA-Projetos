@@ -11,13 +11,11 @@
                         <div class="row">
                             <div class="col-md-12">
                                 
-                                <h2 class="titulo" id="titulo_0">1. Dados Iniciais <strong
-                                        style="color: red">*</strong>
+                                <h2 class="titulo" id="titulo_0">1. Dados Iniciais
                                     <a class="float-end" id="0_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
                                     <a class="float-end" id="0_btn_down" style="display: none"><i
                                             class="fa-solid fa-circle-chevron-down"></i></a>
                                 </h2>
-                                <div class="linha"></div>
                                 
                             </div>
                         </div>
@@ -25,36 +23,33 @@
                     @include('component.modal_fail')
                     <div id="dados_iniciais">
                         
-                        @include('solicitacao.solicitacao',['tipo'=>0,'avaliacao_id'=>$avaliacao->id,'id'=>$solicitacao->id])
-                       
+                        @include('solicitacao.administrador.solicitacao_adm')
+                        
                     </div>
                 </div>
                 <div class="mb-4">
                     <div class="card p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_1">
                         <div class="row">
                             <div class="col-md-12">
-                                
-                                <h2 class="titulo" id="titulo_1">2. Dados do Responsável <strong style="color: red">*</strong>
+                                <h2 class="titulo" id="titulo_1">2. Dados do Responsável
                                     <a class="float-end" id="1_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
                                     <a class="float-end" id="1_btn_down" style="display: none"><i
                                             class="fa-solid fa-circle-chevron-down"></i></a>
                                 </h2>
-                                
-
+                              
                             </div>
                         </div>
                     </div>
                     <div id="dados_responsavel">
-                        
-                        @include('solicitacao.responsavel',['tipo'=>1,'avaliacao_id'=>$avaliacao->id,'id'=>$responsavel->id])
+                       
+                        @include('solicitacao.administrador.responsavel_adm')
                         
 
                     </div>
                 </div>
                 <div class="mb-4">
                     
-                    @include('solicitacao.colaborador.form', ['avaliacao_id' => $avaliacao->id, 'solicitacao' => $solicitacao, 'avaliacao' => $avaliacao, 'tipo'
-                            => 2, 'id' => -1])
+                    @include('solicitacao.colaborador.form_adm', ['solicitacao' => $solicitacao])
                     
 
                 </div>
@@ -63,7 +58,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 
-                                <h2 class="titulo" id="titulo_3">4. Dados Complementares <strong style="color: red">*</strong>
+                                <h2 class="titulo" id="titulo_3">4. Dados Complementares
                                     <a class="float-end" id="3_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
                                     <a class="float-end" id="3_btn_down" style="display: none"><i
                                             class="fa-solid fa-circle-chevron-down"></i></a>
@@ -74,9 +69,9 @@
                         </div>
                     </div>
                     <div id="dados_complementares">
-                        
-                        @include('solicitacao.solicitacao_fim',['tipo'=>3,'avaliacao_id'=>$avaliacao->id,'id'=>$solicitacao->dadosComplementares->id])
-                        
+                       
+                        @include('solicitacao.administrador.solicitacao_fim_adm')
+                       
 
                     </div>
                 </div>
@@ -98,7 +93,7 @@
                               enctype="multipart/form-data">
                             @csrf
                             <div class="modal-body">
-                                @include('solicitacao.modelo_animal_modal')
+                                @include('solicitacao.administrador.modelo_animal_modal')
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
@@ -114,20 +109,9 @@
                     <div class="card p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_4">
                         <div class="row">
                             <div class="col-md-12">
-                                @if(Auth::user()->hasRole('Avaliador'))
-                                    <h3 class="titulo" id="titulo_4">5. Dados dos Modelos Animais <strong
-                                            style="color: white">*</strong>
-
-                                        @if(Auth::user()->hasRole('Solicitante') && $solicitacao->status != 'avaliado')
-                                            <a class="float-end "
-                                               data-toggle="modal"
-                                               data-target="#modeloAnimalModal"
-                                               style="color: green"
-                                               title="Adicionar Modelo Animal"><i
-                                                    class="fa-solid fa-circle-plus fa-2xl"></i></a></h3>
-                                        @endif
-
-                                @endif
+                                
+                                    <h3 class="titulo" id="titulo_4">5. Dados dos Modelos Animais
+                               
 
                             </div>
                         </div>
@@ -146,6 +130,44 @@
                                 </tr>
                                 </thead>
                                 <tbody id="modelo_animal-info">
+                                    @foreach($solicitacao->modelosAnimais as $modelo_animal)
+                                        <tr id="fundo_modelo_{{$modelo_animal->id}}">
+                                            <td>
+                                                {{$modelo_animal->nome_cientifico}}
+                                            </td>
+                                            <td>
+                                                @if ($modelo_animal->procedencia == 'animal_comprado')
+                                                    Animal Comprado
+                                                @elseif ($modelo_animal->procedencia == 'animal_criacao')
+                                                    Animal Criação
+                                                @elseif ($modelo_animal->procedencia == 'animal_doado')
+                                                    Animal Doado
+                                                @elseif ($modelo_animal->procedencia == 'animal_silvestre')
+                                                    Animal Silvestre
+                                                @elseif ($modelo_animal->procedencia == 'aviario')
+                                                    Aviário
+                                                @elseif ($modelo_animal->procedencia == 'bioterio')
+                                                    Biotério
+                                                @elseif ($modelo_animal->procedencia == 'fazenda')
+                                                    Fazenda
+                                                @elseif ($modelo_animal->procedencia == 'outra_procedencia')
+                                                    {{$modelo_animal->outra_procedencia}}
+                                                @endif
+                                
+                                            </td>
+                                            <td>
+                                                {{$modelo_animal->perfil->linhagem ?? 'Não preenchido'}}
+                                            </td>
+                                            <td>
+                                                {{$modelo_animal->perfil->idade ?? 'Não preenchido'}}
+                                            </td>
+                                            <td class="text-center">
+                                                <a class="btn btn-primary"
+                                                    href="{{route('solicitacao.planejamento.index.adm', ['modelo_animal_id' => $modelo_animal->id])}}">Abrir</a>
+                                                   
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
 
@@ -163,32 +185,17 @@
                             <div class="col-3">
                                 
                                 <a type="button" class="btn btn-secondary w-100"
-                                    href="{{ route('solicitacao.avaliador.index') }}">Voltar</a>
-                                
+                                   href="{{ route('solicitacao.admin.index') }}">Voltar</a>
+                               
                             </div>
                             <div class="col-4 DivAporvado">
                                 
                                 {{-- Aprovar Solicitação --}}
-                                <form method="POST" action="{{route('avaliador.solicitacao.aprovar')}}">
-                                    @csrf
-                                    <input type="hidden" name="avaliacao_id" value="{{$avaliacao->id}}">
-                                    <input type="hidden" name="solicitacao_id" value="{{$solicitacao->id}}">
-                                    <button type="submit"  class="btn w-100 btn-success font-weight-bold"
-                                            title="Aprovar Solicitação Com Pendências."
-                                            id="aprovarAvaliacao">Aprovar
-                                    </button>
-                                </form>
-                                {{-- Reprovar Solicitação--}}
-                                <form method="POST" action="{{route('avaliador.solicitacao.aprovarPendencia')}}">
-                                    @csrf
-                                    <input type="hidden" name="avaliacao_id" value="{{$avaliacao->id}}">
-                                    <input type="hidden" name="solicitacao_id" value="{{$solicitacao->id}}">
-                                    <button type="submit" class="btn w-100 bnt-pendencia font-weight-bold"
-                                            title="Aprovar Solicitação Com Pendências."
-                                            id="pendenciaAvaliacao">Aprovar com pendências
-                                    </button>
-                                </form>
-                              
+                                <a type="button" class="btn w-100 btn-success"
+                                    data-toggle="modal" data-target="#aprovarModal"
+                                    title="Aprovar Solicitação." id="aprovarAvaliacao">Aprovar</a>
+
+                                
 
                                 @if(($solicitacao->status == null  ||
                                     ($solicitacao->status == 'avaliado' && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia'))
@@ -211,10 +218,10 @@
                                     <input type="hidden" name="solicitacao_id" value="{{$solicitacao->id}}">
                                     <button type="submit" class="btn w-75 btn-danger font-weight-bold"
                                             title="Reprovar Solicitação."
-                                            id="reprovarAvaliacao">Reprovar
+                                            id="repovar">Reprovar
                                     </button>
                                 </form>
-                                
+                                  
                             </div>
 
                         </div>
@@ -247,13 +254,69 @@
                                     Fechar
                                 </button>
                                
-                                <button type="button" class="btn btn-success" id="confirmPendencia">Confirmar
-                                
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
+            
+            <!-- Modal Aprovar -->
+            <div class="modal fade" id="aprovarModal" tabindex="-1" role="dialog"
+                    aria-labelledby="aprovarModalLabel"
+                    aria-hidden="true">
+                <div class="modal-dialog " role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="aprovarModalLabel">Período da licença</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form method="POST" action="{{route('adm.solicitacao.aprovar')}}">
+                            @csrf
+                            <input type="hidden" name="solicitacao_id" value="{{$solicitacao->id}}">
+                            <input type="hidden" name="avaliacao_id" value="{{$avaliacao->id}}">
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-sm-5">
+                                        <label for="inicio">Data de Início:<strong
+                                                style="color: red">*</strong></label>
+                                        <input class="form-control @error('inicio') is-invalid @enderror"
+                                                id="inicio"
+                                                type="date" name="inicio"
+                                                value="{{date('Y-m-d', strtotime($solicitacao->inicio))}}"
+                                                required autocomplete="inicio" autofocus>
+                                        @error('inicio')
+                                        <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                        @enderror
+                                    </div>
+                                    <div class="col-sm-2"></div>
+                                    <div class="col-sm-5">
+                                        <label for="fim">Data de Fim:<strong style="color: red">*</strong></label>
+                                        <input class="form-control @error('fim') is-invalid @enderror" id="fim"
+                                                type="date"
+                                                name="fim"
+                                                value="{{date('Y-m-d', strtotime($solicitacao->fim))}}"
+                                                required autocomplete="fim" autofocus>
+                                        @error('fim')
+                                        <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                                <button type="submit" class="btn btn-success">Confirmar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
         </div>
     </div>
     <!-- Modal de confirmação-->
@@ -299,7 +362,7 @@
 
         function atualizarTabela_modeloAnimal() {
             $.ajax({
-                url: '/solicitacao/modelo_animal_tabela/avaliador/' + {{$solicitacao->id}},
+                url: '/solicitacao/modelo_animal_tabela/adm/' + {{$solicitacao->id}},
                 method: 'GET',
                 success: function(response) {
                     $('#modelo_animal-info').html(response.html);
@@ -441,9 +504,6 @@
                     $("#trocaConteudo").append(ret);
                     $("#titulo_pendencia").append("Pendência(s) - " + data[1]);
 
-                    @if(Auth::user()->hasRole('Avaliador'))
-                    document.getElementById("confirmPendencia").setAttribute("onClick", "realizarAvaliacaoInd(" + tipo + "," + avaliacao_id + "," + id + ", '" + status + "')");
-                    @endif
 
                     $("#pendenciaModal").modal('show');
                 }

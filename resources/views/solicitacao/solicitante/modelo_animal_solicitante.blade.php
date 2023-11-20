@@ -729,28 +729,5 @@
             calcularTotal();
         });
     });
-    $(document).ready(function() {
 
-        var tipoUsuario = {{ Auth::user()->tipo_usuario_id }};
-
-        if (tipoUsuario === 1) {
-
-            $('input, select, textarea').prop('disabled', true);
-        }
-    });
-
-    window.onload = function() {
-        var isAdmin = <?php echo (Auth::user()->tipo_usuario_id == 1) ? 'true' : 'false'; ?>;
-
-        if (isAdmin) {
-            var forms = document.getElementsByTagName("form");
-            for (var i = forms.length - 1; i >= 0; i--) {
-                var form = forms[i];
-                while (form.firstChild) {
-                    form.parentNode.insertBefore(form.firstChild, form);
-                }
-                form.parentNode.removeChild(form);
-            }
-        }
-    }
 </script>

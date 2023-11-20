@@ -32,12 +32,8 @@
             </td>
             <td class="text-center">
                 <a class="btn btn-primary"
-                    href="{{route('solicitacao.planejamento.index', ['modelo_animal_id' => $modelo_animal->id])}}">Abrir</a>
-                @if(Auth::user()->hasRole('Solicitante') && $solicitacao->status != 'avaliado')
-                    <a class="btn btn-danger btn-deletar-modelo-animal"
-                        href="{{route('solicitacao.modelo_animal.delete', ['id' => $modelo_animal->id])}}">Deletar</a>
-                @endif
-                
+                    href="{{route('solicitacao.planejamento.index.adm', ['modelo_animal_id' => $modelo_animal->id])}}">Abrir</a>
+                   
             </td>
         </tr>
     @endforeach

@@ -17,27 +17,30 @@
                         <div class="row">
                             <div class="col-md-12">
                                 
-                                <h2 class="titulo" id="titulo_4">Dados Base do Modelo Animal <strong
-                                        style="color: red">*</strong>
+                                <h2 class="titulo" id="titulo_4">Dados Base do Modelo Animal
                                     <a class="float-end" id="4_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
                                     <a class="float-end" id="4_btn_down" style="display: none"><i
                                             class="fa-solid fa-circle-chevron-down"></i></a>
                                 </h2>
-                                
+                               
                             </div>
                         </div>
                     </div>
                     <div id="modelo_animal">
                         <div class="card shadow-lg p-3 bg-white" style="border-radius: 0px 0px 10px 10px">
-                            <form id="form_modelo_animal_update" method="POST" action="{{route('solicitacao.modelo_animal.update')}}"
+                            <form method="POST" action="{{route('solicitacao.modelo_animal.update', ['id' => $modelo_animal->id])}}"
                                   enctype="multipart/form-data">
+                                @method('PUT')
                                 @csrf
                                 <input type="hidden" name="modelo_animal_id" value="{{$modelo_animal->id}}">
                                 <div class="modal-body">
-                                    @include('solicitacao.modelo_animal_avaliador')
-                                   
-                                    @include('component.botoes_new_form_avaliador',['tipo'=>4,'avaliacao_id'=>$avaliacao->id,'id'=>$modelo_animal->id])
-                                    
+                                    @include('solicitacao.solicitante.modelo_animal_solicitante')
+                                    @if(Auth::user()->hasRole('Solicitante') && $solicitacao->status == 'avaliado'
+                                    && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia')
+                                        @include('component.botoes_new_form',['tipo'=>4,'id'=>$modelo_animal->id,'status'=>$avaliacaoModeloAnimal->status])
+                                    @else
+                                        @include('component.botoes_new_form')
+                                    @endif
                                 </div>
                             </form>
                         </div>
@@ -52,21 +55,22 @@
                     <div class="card shadow-lg p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_5">
                         <div class="row">
                             <div class="col-md-12">
-                               
-                                <h2 class="titulo" id="titulo_5">Dados Base do Planejamento <strong
-                                        style="color: red">*</strong>
+                                
+                                <h2 class="titulo" id="titulo_5">Dados Base do Planejamento
                                     <a class="float-end" id="5_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
                                     <a class="float-end" id="5_btn_down" style="display: none"><i
                                             class="fa-solid fa-circle-chevron-down"></i></a>
                                 </h2>
-                               
                             </div>
                         </div>
                     </div>
                     <div id="planejamento">
-                       
-                        @include('solicitacao.planejamento_avaliador',['tipo'=>5,'avaliacao_id'=>$avaliacao->id,'id'=>$planejamento->id])
-                        
+                        @if(Auth::user()->hasRole('Solicitante') && $solicitacao->status == 'avaliado'
+                                && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia')
+                            @include('planejamento.solicitante.planejamento',['tipo'=>5,'id'=>$planejamento->id,'status'=>$avaliacaoPlanejamento->status])
+                        @else
+                            @include('planejamento.solicitante.planejamento')
+                        @endif
                     </div>
                 </div>
 
@@ -80,64 +84,71 @@
                     <div class="card shadow-lg p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_6">
                         <div class="row">
                             <div class="col-md-12">
-                                
-                                <h2 class="titulo" id="titulo_6">Condição Animal <strong
-                                        style="color: red">*</strong>
+                                <h2 class="titulo" id="titulo_6">Condição Animal
                                     <a class="float-end" id="6_btn_up"><i
                                             class="fa-solid fa-circle-chevron-down"></i></a>
                                     <a class="float-end" id="6_btn_down" style="display: none"><i
                                             class="fa-solid fa-circle-chevron-up"></i></a>
                                 </h2>
-                                
+                           
                             </div>
                         </div>
                     </div>
                     <div id="condicao_animal" style="display: none;">
-                       
-                        @include('solicitacao.condicoes_animais_avaliador',['tipo'=>6,'avaliacao_id'=>$avaliacao->id,'id'=>$condicoes_animal->id])
-                      
+                        @if(Auth::user()->hasRole('Solicitante') && $solicitacao->status == 'avaliado'
+                                && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia')
+                            @include('planejamento.solicitante.condicoes_animais',['tipo'=>6,'id'=>$condicoes_animal->id,'status'=>$avaliacaoCondicoesAnimal->status])
+                        @else
+                            @include('planejamento.solicitante.condicoes_animais')
+                        @endif
                     </div>
                 </div>
                 <div class="mb-4">
                     <div class="card shadow-lg p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_7">
                         <div class="row">
                             <div class="col-md-12">
-                                
-                                <h2 class="titulo" id="titulo_7">Procedimento <strong style="color: red">*</strong>
+                               
+                                <h2 class="titulo" id="titulo_7">Procedimento
                                     <a class="float-end" id="7_btn_up"><i
                                             class="fa-solid fa-circle-chevron-down"></i></a>
                                     <a class="float-end" id="7_btn_down" style="display: none"><i
                                             class="fa-solid fa-circle-chevron-up"></i></a>
                                 </h2>
-                               
+                              
                             </div>
                         </div>
                     </div>
                     <div id="procedimento" style="display: none; ">
-                        
-                        @include('solicitacao.procedimento_avaliador',['tipo'=>7,'avaliacao_id'=>$avaliacao->id,'id'=>$procedimento->id])
-                        
+                        @if(Auth::user()->hasRole('Solicitante') && $solicitacao->status == 'avaliado'
+                                && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia')
+                            @include('planejamento.solicitante.procedimento',['tipo'=>7,'id'=>$procedimento->id,'status'=>$avaliacaoProcedimento->status])
+                        @else
+                            @include('planejamento.solicitante.procedimento',['tipo'=>7])
+                        @endif
                     </div>
                 </div>
                 <div class="mb-4">
                     <div class="card shadow-lg p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_8">
                         <div class="row">
                             <div class="col-md-12">
-                                
-                                <h2 class="titulo" id="titulo_8">Cirurgia <strong style="color: red">*</strong>
+                               
+                                <h2 class="titulo" id="titulo_8">Cirurgia
                                     <a class="float-end" id="8_btn_up"><i
                                             class="fa-solid fa-circle-chevron-down"></i></a>
                                     <a class="float-end" id="8_btn_down" style="display: none"><i
                                             class="fa-solid fa-circle-chevron-up"></i></a>
                                 </h2>
-                               
+                             
                             </div>
                         </div>
                     </div>
                     <div id="operacao" style="display: none; ">
-
-                        @include('solicitacao.operacao_avaliador',['tipo'=>8,'avaliacao_id'=>$avaliacao->id,'id'=>$operacao->id])
-                   
+                        @if(Auth::user()->hasRole('Solicitante') && $solicitacao->status == 'avaliado'
+                                && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia')
+                            @include('planejamento.solicitante.operacao',['tipo'=>8,'id'=>$operacao->id,'status'=>$avaliacaoOperacao->status])
+                        @else
+                            @include('planejamento.solicitante.operacao')
+                        @endif
                     </div>
                 </div>
 
@@ -146,30 +157,34 @@
                         <div class="row">
                             <div class="col-md-12">
                                 
-                                <h2 class="titulo" id="titulo_9">Finalização <strong style="color: red">*</strong>
+                                <h2 class="titulo" id="titulo_9">Finalização
                                     <a class="float-end" id="9_btn_up"><i
                                             class="fa-solid fa-circle-chevron-down"></i></a>
                                     <a class="float-end" id="9_btn_down" style="display: none"><i
                                             class="fa-solid fa-circle-chevron-up"></i></a>
                                 </h2>
-                               
+                                
                             </div>
                         </div>
                     </div>
                     <div id="eutanasia" style="display: none;">
-                    
-                        @include('solicitacao.eutanasia_avaliador',['tipo'=>9,'avaliacao_id'=>$avaliacao->id,'id'=>$eutanasia->id])
-                        @include('solicitacao.resultado_avaliador',['tipo'=>10,'avaliacao_id'=>$avaliacao->id,'id'=>$resultado->id])
-                    
+                        @if(Auth::user()->hasRole('Solicitante') && $solicitacao->status == 'avaliado'
+                                && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia')
+                            @include('planejamento.solicitante.eutanasia',['tipo'=>9,'id'=>$eutanasia->id,'status'=>$avaliacaoEutanasia->status])
+                            @include('planejamento.solicitante.resultado',['tipo'=>10,'id'=>$resultado->id,'status'=>$avaliacaoResultado->status])
+                        @else
+                            @include('planejamento.solicitante.eutanasia')
+                            @include('planejamento.solicitante.resultado')
+                        @endif
                     </div>
                 </div>
 
 
                 <div class="row col-md-10 m-0">
                     <div class="col-4 pl-0">
-                        
-                        <a type="button" class="btn btn-secondary w-100" href="{{ route('avaliador.solicitacao.avaliar', ['solicitacao_id' => $solicitacao->id]) }}">Voltar</a>
-                        
+            
+                        <a type="button" class="btn btn-secondary w-100" href="{{ route('solicitacao.index', ['solicitacao_id' => $solicitacao->id]) }}">Voltar</a>
+                   
                     </div>
                 </div>
 
@@ -196,10 +211,10 @@
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal"
                                             onclick="closeModal()">Fechar
                                     </button>
-                                    
-                                    <button type="button" class="btn btn-success" id="confirmPendencia">Confirmar
-                                    </button>
-                                    
+                                    @if(Auth::user()->hasRole('Avaliador'))
+                                        <button type="button" class="btn btn-success" id="confirmPendencia">Confirmar
+                                        </button>
+                                    @endif
                                 </div>
                             </form>
                         </div>
@@ -224,47 +239,6 @@
         </script>
         <script type="text/javascript">
 
-            $(document).ready(function () {
-                @if(\Illuminate\Support\Facades\Auth::user()->hasRole('Avaliador'))
-                $('#dados_modelo').find('input, textarea, select, button').attr('disabled', 'disabled');
-                @endif
-
-                // Modelo Animal
-                @if(isset($avaliacaoModeloAnimal) != null )
-                alterarCorCard(4, '{{$avaliacaoModeloAnimal->status}}');
-                @endif
-
-                // Planejamento
-                @if(isset($avaliacaoPlanejamento) != null )
-                alterarCorCard(5, '{{$avaliacaoPlanejamento->status}}');
-                @endif
-
-                // Condições Animal
-                @if(isset($avaliacaoCondicoesAnimal) != null )
-                alterarCorCard(6, '{{$avaliacaoCondicoesAnimal->status}}');
-                @endif
-
-                // Procedimento
-                @if(isset($avaliacaoProcedimento) != null )
-                alterarCorCard(7, '{{$avaliacaoProcedimento->status}}');
-                @endif
-
-                // Operação
-                @if(isset($avaliacaoOperacao) != null )
-                alterarCorCard(8, '{{$avaliacaoOperacao->status}}');
-                @endif
-
-                // Eutanasia
-                @if(isset($avaliacaoEutanasia) != null )
-                alterarCorCard(9, '{{$avaliacaoEutanasia->status}}');
-                @endif
-
-                // Resultado
-                @if(isset($avaliacaoResultado) != null )
-                alterarCorCard(10, '{{$avaliacaoResultado->status}}');
-                @endif
-
-            });
 
             // Modelo animal
             $('#4_btn_up').on('click', function () {
@@ -398,35 +372,8 @@
                 $("#pendenciaModal").modal('hide');
             }
 
-            function realizarAvaliacaoInd(tipo, avaliacao_id, id, status) {
-
-                if (($("#parecerAval").val() != "" && status == "reprovado") || (status == "aprovado")) {
-                    $.ajaxSetup({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        }
-                    });
-
-                    $.ajax({
-                        url: '{{route('avaliador.avaliacao_ind.realizarAvaliacao')}}',
-                        type: 'POST',
-                        data: {
-                            'tipo': tipo,
-                            'avaliacao_id': avaliacao_id,
-                            'id': id,
-                            'parecer': $("#parecerAval").val(),
-                            'status': status
-                        },
-                        success: function (data) {
-
-                            alterarCorCard(tipo, status);
-                            $("#pendenciaModal").modal('hide');
-                        }
-                    });
-                } else {
-                    console.log("deu não")
-                }
-            }
+     
+            
 
             function alterarCorCard(tipo, status) {
                 if (status == "aprovado") {
@@ -439,67 +386,7 @@
                 $("#" + tipo + "_btn_down").css({"color": "white"});
             }
         </script>
-        <script>
-            $('#form_modelo_animal_update').submit(function (event) {
-                event.preventDefault();
 
-                var formData = new FormData(this);
-
-                $.ajax({
-                    type: 'POST',
-                    url: '{{ route('solicitacao.modelo_animal.update') }}',
-                    data: formData,
-                    contentType: false,
-                    processData: false,
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    dataType: 'json',
-                    success: function (response) {
-                        var message = response.message;
-                        if (message == 'success') {
-                            var campo = response.campo;
-                            $('#successModal').modal('show');
-                            $('#successModal').find('.msg-success').text('O ' + campo + ' foi salvo com sucesso!');
-
-                            $('.div_error').css('display', 'none');
-                            setTimeout(function () {
-                                $('#successModal').modal('hide');
-                            }, 2000);
-                        }
-                    },
-                    error: function (xhr, status, error) {
-                        if (xhr.responseJSON && xhr.responseJSON.message) {
-                            $('.div_error').css('display', 'none');
-                            var errors = xhr.responseJSON.errors;
-                            var statusCode = xhr.status;
-                            if (statusCode == 422 && status == 'error') {
-                                for (var field in errors) {
-                                    var fieldErrors = errors[field];
-                                    var errorMessage = ''
-                                    for (var i = 0; i < fieldErrors.length; i++) {
-                                        errorMessage += fieldErrors[i] + '\n';
-                                    }
-                                    var errorDiv = '#' + field + '_error'
-                                    var errorMessageTag = '#' + field + '_error_message';
-                                    $(errorMessageTag).html(errorMessage);
-                                    $(errorDiv).css('display', 'block')
-                                }
-                            }
-                            if(status == 'error'){
-                                $('#failModal').modal('show');
-                                $('#failModal').find('.msg-fail').text(xhr.responseJSON.message);
-                                setTimeout(function (){
-                                    $('#failModal').modal('hide');
-                                },2000)
-                            }
-                        } else {
-                            alert("Erro na requisição Ajax: " + error);
-                        }
-                    }
-                });
-            });
-        </script>
         <script>
             $(document).ready(function() {
                 $('.download-button').click(function(e) {

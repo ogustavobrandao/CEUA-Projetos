@@ -91,6 +91,8 @@ Route::group(['middleware' => ['auth', 'verified', 'checkRole:Administrador']], 
 
     Route::get('/solicitacao/planejamento/index/adm/{modelo_animal_id}', [SolicitacaoController::class, 'index_planejamento_adm'])->name('solicitacao.planejamento.index.adm');
     Route::get('/solicitacao/modelo_animal_tabela/adm/{id}', [SolicitacaoController::class, 'atualizar_modelo_animal_tabela_adm'])->name('solicitacao.modelo_animal_tabela_adm');
+    Route::post('/adm/aprovar', [AvaliacaoController::class, 'aprovarSolicitacaoAdm'])->name('adm.solicitacao.aprovar');
+
 });
 
 
@@ -109,8 +111,8 @@ Route::group(['middleware' => ['auth', 'verified', 'checkRole:Solicitante']], fu
     Route::get('/solicitacao/modal_atualizacao_colaborador/adm/{colaborador_id}', [SolicitacaoController::class, 'abrir_colaborador_modal_adm'])->name('solicitacao.modal_atualizacao_colaborador_adm');
     Route::post('/solicitacao/criar_eutanasia', [SolicitacaoController::class, 'criar_eutanasia'])->name('solicitacao.eutanasia.criar');
     Route::post('/solicitacao/criar_modelo_animal', [SolicitacaoController::class, 'criar_modelo_animal'])->name('solicitacao.modelo_animal.criar');
-    Route::post('/solicitacao/atualizar_modelo_animal', [SolicitacaoController::class, 'atualizar_modelo_animal'])->name('solicitacao.modelo_animal.update');
-    Route::get('/solicitacao/remover_modelo_animal/{id}', [SolicitacaoController::class, 'deletar_modelo_animal'])->name('solicitacao.modelo_animal.delete');
+    Route::put('/solicitacao/atualizar_modelo_animal/{id}', [SolicitacaoController::class, 'atualizar_modelo_animal'])->name('solicitacao.modelo_animal.update');
+    Route::delete('/solicitacao/remover_modelo_animal/{id}', [SolicitacaoController::class, 'deletar_modelo_animal'])->name('solicitacao.modelo_animal.delete');
     Route::get('/solicitacao/modelo_animal_tabela/{id}', [SolicitacaoController::class, 'atualizar_modelo_animal_tabela'])->name('solicitacao.modelo_animal_tabela');
     Route::post('/solicitacao/criar_perfil', [SolicitacaoController::class, 'criar_perfil'])->name('solicitacao.perfil.criar');
     Route::post('/solicitacao/criar_condicoes_animal', [SolicitacaoController::class, 'criar_condicoes_animal'])->name('solicitacao.condicoes_animal.criar');

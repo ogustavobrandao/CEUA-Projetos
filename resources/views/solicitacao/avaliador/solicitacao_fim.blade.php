@@ -62,7 +62,7 @@
 
 
         </div>
-        @include('component.botoes_new_form')
+        @include('component.botoes_new_form_avaliador')
     </form>
 </div>
 <script>

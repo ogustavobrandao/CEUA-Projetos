@@ -20,7 +20,7 @@
                     </div>
                     @include('component.modal_fail')
                     <div id="dados_iniciais">
-                        @include('solicitacao.solicitacao')
+                        @include('solicitacao.administrador.solicitacao_adm')
                     </div>
                 </div>
                 <div class="mb-4">
@@ -36,11 +36,11 @@
                         </div>
                     </div>
                     <div id="dados_responsavel">
-                        @include('solicitacao.responsavel')
+                        @include('solicitacao.administrador.responsavel_adm')
                     </div>
                 </div>
                 <div class="mb-4">
-                    @include('solicitacao.colaborador.form')
+                    @include('solicitacao.colaborador.form_adm')
                 </div>
                 <div class="mb-4">
                     <div class="card p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_3">
@@ -55,7 +55,7 @@
                         </div>
                     </div>
                     <div id="dados_complementares">
-                        @include('solicitacao.solicitacao_fim')
+                        @include('solicitacao.administrador.solicitacao_fim_adm')
                     </div>
                 </div>
             </div>
@@ -72,7 +72,7 @@
 
                             @csrf
                             <div class="modal-body">
-                                @include('solicitacao.modelo_animal_modal')
+                                @include('solicitacao.administrador.modelo_animal_modal')
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
@@ -86,11 +86,7 @@
                     <div class="card p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_4">
                         <div class="row">
                             <div class="col-md-12">
-                                <h3 class="titulo" id="titulo_4">5. Dados dos Modelos Animais
-                                    @if(Auth::user()->hasRole('Solicitante') && $solicitacao->status != 'avaliado')
-                                        <a class="float-end " data-toggle="modal" data-target="#modeloAnimalModal" style="color: green" title="Adicionar Modelo Animal"><i class="fa-solid fa-circle-plus fa-2xl"></i></a>
-                                    @endif
-                                </h3>
+                                <h3 class="titulo" id="titulo_4">5. Dados dos Modelos Animais</h3>
                             </div>
                         </div>
                     </div>
@@ -138,13 +134,10 @@
                                             {{$modelo_animal->perfil->idade ?? 'Não preenchido'}}
                                         </td>
                                         <td class="text-center">
-                                            @if(!Auth::user()->hasRole('Avaliador'))
-                                                <a class="btn btn-primary" href="{{route('solicitacao.planejamento.index', ['modelo_animal_id' => $modelo_animal->id])}}">Abrir</a>
-                                                @if(Auth::user()->hasRole('Solicitante') && $solicitacao->status != 'avaliado')
-                                                    <a class="btn btn-danger" href="{{route('solicitacao.modelo_animal.delete', ['id' => $modelo_animal->id])}}"
-                                                         onclick="return confirm('Você tem certeza que deseja apagar?')">Deletar</a>
-                                                @endif
-                                            @endif
+                                            
+                                            <a class="btn btn-primary" href="{{route('solicitacao.planejamento.index.adm', ['modelo_animal_id' => $modelo_animal->id])}}">Abrir</a>
+                                             
+                                           
                                         </td>
                                     </tr>
                                 @endforeach

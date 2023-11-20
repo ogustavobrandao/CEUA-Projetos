@@ -10,32 +10,34 @@
     @include('component.modal_fail')
     <div class="row justify-content-center">
         <div class="col-11">
-            <h2 class="titulo_h2 border-bottom" id="expand_dados_solicitacao"><span class="font-weight-bold">Modelssso Animal</span></h2>
+            <h2 class="titulo_h2 border-bottom" id="expand_dados_solicitacao"><span class="font-weight-bold">Modelo Animal</span></h2>
             <div id="dados_modelo" class="my-2">
                 <div class="mb-4">
                     <div class="card shadow-lg p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_4">
                         <div class="row">
                             <div class="col-md-12">
                                 
-                                <h2 class="titulo" id="titulo_4">Dados Base do Modelo Animal
+                                <h2 class="titulo" id="titulo_4">Dados Base do Modelo Animal <strong
+                                        style="color: red">*</strong>
                                     <a class="float-end" id="4_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
                                     <a class="float-end" id="4_btn_down" style="display: none"><i
                                             class="fa-solid fa-circle-chevron-down"></i></a>
                                 </h2>
-                               
+                                
                             </div>
                         </div>
                     </div>
                     <div id="modelo_animal">
                         <div class="card shadow-lg p-3 bg-white" style="border-radius: 0px 0px 10px 10px">
-                            <form id="form_modelo_animal_update" method="POST" action="{{route('solicitacao.modelo_animal.update')}}"
+                            <form id="form_modelo_animal_update" method="POST" action="{{route('solicitacao.modelo_animal.update', ['id', $modelo_animal->id])}}"
                                   enctype="multipart/form-data">
+                                @method('PUT')
                                 @csrf
-                                <input type="hidden" name="modelo_animal_id" value="{{$modelo_animal->id}}">
+                          
                                 <div class="modal-body">
-                                    @include('solicitacao.modelo_animal')
-                                    
-                                    @include('component.botoes_new_form')
+                                    @include('solicitacao.avaliador.modelo_animal_avaliador')
+                                   
+                                    @include('component.botoes_new_form_avaliador',['tipo'=>4,'avaliacao_id'=>$avaliacao->id,'id'=>$modelo_animal->id])
                                     
                                 </div>
                             </form>
@@ -51,20 +53,21 @@
                     <div class="card shadow-lg p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_5">
                         <div class="row">
                             <div class="col-md-12">
-                                
-                                <h2 class="titulo" id="titulo_5">Dados Base do Planejamento
+                               
+                                <h2 class="titulo" id="titulo_5">Dados Base do Planejamento <strong
+                                        style="color: red">*</strong>
                                     <a class="float-end" id="5_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
                                     <a class="float-end" id="5_btn_down" style="display: none"><i
                                             class="fa-solid fa-circle-chevron-down"></i></a>
                                 </h2>
-                                
+                               
                             </div>
                         </div>
                     </div>
                     <div id="planejamento">
+                       
+                        @include('planejamento.avaliador.planejamento_avaliador',['tipo'=>5,'avaliacao_id'=>$avaliacao->id,'id'=>$planejamento->id])
                         
-                        @include('solicitacao.planejamento')
-                    
                     </div>
                 </div>
 
@@ -79,7 +82,8 @@
                         <div class="row">
                             <div class="col-md-12">
                                 
-                                <h2 class="titulo" id="titulo_6">Condição Animal
+                                <h2 class="titulo" id="titulo_6">Condição Animal <strong
+                                        style="color: red">*</strong>
                                     <a class="float-end" id="6_btn_up"><i
                                             class="fa-solid fa-circle-chevron-down"></i></a>
                                     <a class="float-end" id="6_btn_down" style="display: none"><i
@@ -90,9 +94,9 @@
                         </div>
                     </div>
                     <div id="condicao_animal" style="display: none;">
-                        
-                        @include('solicitacao.condicoes_animais')
-                        
+                       
+                        @include('planejamento.avaliador.condicoes_animais_avaliador',['tipo'=>6,'avaliacao_id'=>$avaliacao->id,'id'=>$condicoes_animal->id])
+                      
                     </div>
                 </div>
                 <div class="mb-4">
@@ -100,7 +104,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 
-                                <h2 class="titulo" id="titulo_7">Procedimento
+                                <h2 class="titulo" id="titulo_7">Procedimento <strong style="color: red">*</strong>
                                     <a class="float-end" id="7_btn_up"><i
                                             class="fa-solid fa-circle-chevron-down"></i></a>
                                     <a class="float-end" id="7_btn_down" style="display: none"><i
@@ -112,7 +116,7 @@
                     </div>
                     <div id="procedimento" style="display: none; ">
                         
-                        @include('solicitacao.procedimento',['tipo'=>7])
+                        @include('planejamento.avaliador.procedimento_avaliador',['tipo'=>7,'avaliacao_id'=>$avaliacao->id,'id'=>$procedimento->id])
                         
                     </div>
                 </div>
@@ -121,20 +125,20 @@
                         <div class="row">
                             <div class="col-md-12">
                                 
-                                <h2 class="titulo" id="titulo_8">Cirurgia
+                                <h2 class="titulo" id="titulo_8">Cirurgia <strong style="color: red">*</strong>
                                     <a class="float-end" id="8_btn_up"><i
                                             class="fa-solid fa-circle-chevron-down"></i></a>
                                     <a class="float-end" id="8_btn_down" style="display: none"><i
                                             class="fa-solid fa-circle-chevron-up"></i></a>
                                 </h2>
-                            
+                               
                             </div>
                         </div>
                     </div>
                     <div id="operacao" style="display: none; ">
-                        
-                        @include('solicitacao.operacao')
-                        
+
+                        @include('planejamento.avaliador.operacao_avaliador',['tipo'=>8,'avaliacao_id'=>$avaliacao->id,'id'=>$operacao->id])
+                   
                     </div>
                 </div>
 
@@ -143,32 +147,30 @@
                         <div class="row">
                             <div class="col-md-12">
                                 
-                                <h2 class="titulo" id="titulo_9">Finalização
+                                <h2 class="titulo" id="titulo_9">Finalização <strong style="color: red">*</strong>
                                     <a class="float-end" id="9_btn_up"><i
                                             class="fa-solid fa-circle-chevron-down"></i></a>
                                     <a class="float-end" id="9_btn_down" style="display: none"><i
                                             class="fa-solid fa-circle-chevron-up"></i></a>
                                 </h2>
-                                
+                               
                             </div>
                         </div>
                     </div>
                     <div id="eutanasia" style="display: none;">
-                        
-                        @include('solicitacao.eutanasia_adm')
-                        @include('solicitacao.resultado_adm')
-                        
+                    
+                        @include('planejamento.avaliador.eutanasia_avaliador',['tipo'=>9,'avaliacao_id'=>$avaliacao->id,'id'=>$eutanasia->id])
+                        @include('planejamento.avaliador.resultado_avaliador',['tipo'=>10,'avaliacao_id'=>$avaliacao->id,'id'=>$resultado->id])
+                    
                     </div>
                 </div>
 
 
                 <div class="row col-md-10 m-0">
                     <div class="col-4 pl-0">
-                        @if(Auth::user()->hasRole('Administrador') && $solicitacao->status == 'avaliado')
-                            <a type="button" class="btn btn-secondary w-100" href="{{ route('solicitacao.admin.apreciacao', ['solicitacao_id' => $solicitacao->id]) }}">Voltar</a>
-                        @elseif(Auth::user()->hasRole('Administrador'))
-                            <a type="button" class="btn btn-secondary w-100" href="{{ route('solicitacao.admin.visualizar', ['solicitacao_id' => $solicitacao->id]) }}">Voltar</a>
-                        @endif
+                        
+                        <a type="button" class="btn btn-secondary w-100" href="{{ route('avaliador.solicitacao.avaliar', ['solicitacao_id' => $solicitacao->id]) }}">Voltar</a>
+                        
                     </div>
                 </div>
 
@@ -195,6 +197,10 @@
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal"
                                             onclick="closeModal()">Fechar
                                     </button>
+                                    
+                                    <button type="button" class="btn btn-success" id="confirmPendencia">Confirmar
+                                    </button>
+                                    
                                 </div>
                             </form>
                         </div>
@@ -220,7 +226,9 @@
         <script type="text/javascript">
 
             $(document).ready(function () {
-                
+                @if(\Illuminate\Support\Facades\Auth::user()->hasRole('Avaliador'))
+                $('#dados_modelo').find('input, textarea, select, button').attr('disabled', 'disabled');
+                @endif
 
                 // Modelo Animal
                 @if(isset($avaliacaoModeloAnimal) != null )
@@ -378,7 +386,9 @@
                         $("#trocaConteudo").append(ret);
                         $("#titulo_pendencia").append("Pendência(s) - " + data[1]);
 
-                       
+                        @if(Auth::user()->hasRole('Avaliador'))
+                        document.getElementById("confirmPendencia").setAttribute("onClick", "realizarAvaliacaoInd(" + tipo + "," + avaliacao_id + "," + id + ", '" + status + "')");
+                        @endif
 
                         $("#pendenciaModal").modal('show');
                     }
@@ -430,67 +440,7 @@
                 $("#" + tipo + "_btn_down").css({"color": "white"});
             }
         </script>
-        <script>
-            $('#form_modelo_animal_update').submit(function (event) {
-                event.preventDefault();
 
-                var formData = new FormData(this);
-
-                $.ajax({
-                    type: 'POST',
-                    url: '{{ route('solicitacao.modelo_animal.update') }}',
-                    data: formData,
-                    contentType: false,
-                    processData: false,
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    dataType: 'json',
-                    success: function (response) {
-                        var message = response.message;
-                        if (message == 'success') {
-                            var campo = response.campo;
-                            $('#successModal').modal('show');
-                            $('#successModal').find('.msg-success').text('O ' + campo + ' foi salvo com sucesso!');
-
-                            $('.div_error').css('display', 'none');
-                            setTimeout(function () {
-                                $('#successModal').modal('hide');
-                            }, 2000);
-                        }
-                    },
-                    error: function (xhr, status, error) {
-                        if (xhr.responseJSON && xhr.responseJSON.message) {
-                            $('.div_error').css('display', 'none');
-                            var errors = xhr.responseJSON.errors;
-                            var statusCode = xhr.status;
-                            if (statusCode == 422 && status == 'error') {
-                                for (var field in errors) {
-                                    var fieldErrors = errors[field];
-                                    var errorMessage = ''
-                                    for (var i = 0; i < fieldErrors.length; i++) {
-                                        errorMessage += fieldErrors[i] + '\n';
-                                    }
-                                    var errorDiv = '#' + field + '_error'
-                                    var errorMessageTag = '#' + field + '_error_message';
-                                    $(errorMessageTag).html(errorMessage);
-                                    $(errorDiv).css('display', 'block')
-                                }
-                            }
-                            if(status == 'error'){
-                                $('#failModal').modal('show');
-                                $('#failModal').find('.msg-fail').text(xhr.responseJSON.message);
-                                setTimeout(function (){
-                                    $('#failModal').modal('hide');
-                                },2000)
-                            }
-                        } else {
-                            alert("Erro na requisição Ajax: " + error);
-                        }
-                    }
-                });
-            });
-        </script>
         <script>
             $(document).ready(function() {
                 $('.download-button').click(function(e) {

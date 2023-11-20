@@ -11,23 +11,22 @@
                         <div class="row">
                             <div class="col-md-12">
                                 
-                                    <h2 class="titulo" id="titulo_0">1. Dados Iniciais
-                                        <a class="float-end" id="0_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
-                                        <a class="float-end" id="0_btn_down" style="display: none"><i
-                                                class="fa-solid fa-circle-chevron-down"></i></a>
-                                    </h2>
-                              
+                                <h2 class="titulo" id="titulo_0">1. Dados Iniciais <strong
+                                        style="color: red">*</strong>
+                                    <a class="float-end" id="0_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
+                                    <a class="float-end" id="0_btn_down" style="display: none"><i
+                                            class="fa-solid fa-circle-chevron-down"></i></a>
+                                </h2>
+                                <div class="linha"></div>
+                                
                             </div>
                         </div>
                     </div>
                     @include('component.modal_fail')
                     <div id="dados_iniciais">
-                        @if(Auth::user()->hasRole('Solicitante') && $solicitacao->status == 'avaliado'
-                                && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia')
-                            @include('solicitacao.solicitacao',['tipo'=>0,'id'=>$solicitacao->id, 'status'=>$solicitacao->avaliacao_individual->status])
-                        @else
-                            @include('solicitacao.solicitacao')
-                        @endif
+                        
+                        @include('solicitacao.avaliador.solicitacao',['tipo'=>0,'avaliacao_id'=>$avaliacao->id,'id'=>$solicitacao->id])
+                       
                     </div>
                 </div>
                 <div class="mb-4">
@@ -35,33 +34,28 @@
                         <div class="row">
                             <div class="col-md-12">
                                 
-                                    <h2 class="titulo" id="titulo_1">2. Dados do Responsável
-                                        <a class="float-end" id="1_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
-                                        <a class="float-end" id="1_btn_down" style="display: none"><i
-                                                class="fa-solid fa-circle-chevron-down"></i></a>
-                                    </h2>
+                                <h2 class="titulo" id="titulo_1">2. Dados do Responsável <strong style="color: red">*</strong>
+                                    <a class="float-end" id="1_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
+                                    <a class="float-end" id="1_btn_down" style="display: none"><i
+                                            class="fa-solid fa-circle-chevron-down"></i></a>
+                                </h2>
+                                
 
                             </div>
                         </div>
                     </div>
                     <div id="dados_responsavel">
-                        @if(Auth::user()->hasRole('Solicitante') && $solicitacao->status == 'avaliado'
-                                && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia')
-                            @include('solicitacao.responsavel',['tipo'=>1,'id'=>$solicitacao->responsavel->id, 'status'=>$solicitacao->responsavel->avaliacao_individual->status])
-                        @else
-                            @include('solicitacao.responsavel')
-                        @endif
+                        
+                        @include('solicitacao.avaliador.responsavel',['tipo'=>1,'avaliacao_id'=>$avaliacao->id,'id'=>$responsavel->id])
+                        
 
                     </div>
                 </div>
                 <div class="mb-4">
-                    @if(Auth::user()->hasRole('Solicitante') && $solicitacao->status == 'avaliado'
-                                && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia')
-                        @include('solicitacao.colaborador.form', ['solicitacao' => $solicitacao, 'status' => $solicitacao->avaliacao->first()->avaliacao_individual->where('tipo',2)->first()->status,
-                                 'tipo'=>2, 'id' => -1])
-                    @else
-                        @include('solicitacao.colaborador.form', ['solicitacao' => $solicitacao])
-                    @endif
+                    
+                    @include('solicitacao.colaborador.form', ['avaliacao_id' => $avaliacao->id, 'solicitacao' => $solicitacao, 'avaliacao' => $avaliacao, 'tipo'
+                            => 2, 'id' => -1])
+                    
 
                 </div>
                 <div class="mb-4">
@@ -69,23 +63,20 @@
                         <div class="row">
                             <div class="col-md-12">
                                 
-                                    <h2 class="titulo" id="titulo_3">4. Dados Complementares
-                                        <a class="float-end" id="3_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
-                                        <a class="float-end" id="3_btn_down" style="display: none"><i
-                                                class="fa-solid fa-circle-chevron-down"></i></a>
-                                    </h2>
-                               
+                                <h2 class="titulo" id="titulo_3">4. Dados Complementares <strong style="color: red">*</strong>
+                                    <a class="float-end" id="3_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
+                                    <a class="float-end" id="3_btn_down" style="display: none"><i
+                                            class="fa-solid fa-circle-chevron-down"></i></a>
+                                </h2>
+                                
 
                             </div>
                         </div>
                     </div>
                     <div id="dados_complementares">
-                        @if(Auth::user()->hasRole('Solicitante') && $solicitacao->status == 'avaliado'
-                                && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia')
-                            @include('solicitacao.solicitacao_fim',['tipo'=>3,'id'=>$solicitacao->dadosComplementares->id,'status'=>$solicitacao->dadosComplementares->avaliacao_individual->status])
-                        @else
-                            @include('solicitacao.solicitacao_fim')
-                        @endif
+                        
+                        @include('solicitacao.avaliador.solicitacao_fim',['tipo'=>3,'avaliacao_id'=>$avaliacao->id,'id'=>$solicitacao->dadosComplementares->id])
+                        
 
                     </div>
                 </div>
@@ -107,7 +98,7 @@
                               enctype="multipart/form-data">
                             @csrf
                             <div class="modal-body">
-                                @include('solicitacao.modelo_animal_modal_solicitante')
+                                @include('solicitacao.avaliador.modelo_animal_modal')
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
@@ -123,8 +114,9 @@
                     <div class="card p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_4">
                         <div class="row">
                             <div class="col-md-12">
-                                
-                                    <h3 class="titulo" id="titulo_4">5. Dados dos Modelos Animais
+                                @if(Auth::user()->hasRole('Avaliador'))
+                                    <h3 class="titulo" id="titulo_4">5. Dados dos Modelos Animais <strong
+                                            style="color: white">*</strong>
 
                                         @if(Auth::user()->hasRole('Solicitante') && $solicitacao->status != 'avaliado')
                                             <a class="float-end "
@@ -135,7 +127,7 @@
                                                     class="fa-solid fa-circle-plus fa-2xl"></i></a></h3>
                                         @endif
 
-                                
+                                @endif
 
                             </div>
                         </div>
@@ -154,6 +146,45 @@
                                 </tr>
                                 </thead>
                                 <tbody id="modelo_animal-info">
+                                    @foreach($solicitacao->modelosAnimais as $modelo_animal)
+                                        <tr id="fundo_modelo_{{$modelo_animal->id}}">
+                                            <td>
+                                                {{$modelo_animal->nome_cientifico}}
+                                            </td>
+                                            <td>
+                                                @if ($modelo_animal->procedencia == 'animal_comprado')
+                                                    Animal Comprado
+                                                @elseif ($modelo_animal->procedencia == 'animal_criacao')
+                                                    Animal Criação
+                                                @elseif ($modelo_animal->procedencia == 'animal_doado')
+                                                    Animal Doado
+                                                @elseif ($modelo_animal->procedencia == 'animal_silvestre')
+                                                    Animal Silvestre
+                                                @elseif ($modelo_animal->procedencia == 'aviario')
+                                                    Aviário
+                                                @elseif ($modelo_animal->procedencia == 'bioterio')
+                                                    Biotério
+                                                @elseif ($modelo_animal->procedencia == 'fazenda')
+                                                    Fazenda
+                                                @elseif ($modelo_animal->procedencia == 'outra_procedencia')
+                                                    {{$modelo_animal->outra_procedencia}}
+                                                @endif
+                                
+                                            </td>
+                                            <td>
+                                                {{$modelo_animal->perfil->linhagem ?? 'Não preenchido'}}
+                                            </td>
+                                            <td>
+                                                {{$modelo_animal->perfil->idade ?? 'Não preenchido'}}
+                                            </td>
+                                            <td class="text-center">
+                
+                                                <a class="btn btn-primary"
+                                                    href="{{route('avaliador.solicitacao.planejamento.avaliar', ['modelo_animal_id' => $modelo_animal->id])}}">Abrir</a>
+                                                
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
 
@@ -170,13 +201,33 @@
                         <div class="row mt-4 row">
                             <div class="col-3">
                                 
-                                
-                                    <a type="button" class="btn btn-secondary w-100"
-                                       href="{{ route('solicitacao.solicitante.index') }}">Voltar</a>
+                                <a type="button" class="btn btn-secondary w-100"
+                                    href="{{ route('solicitacao.avaliador.index') }}">Voltar</a>
                                 
                             </div>
                             <div class="col-4 DivAporvado">
-                               
+                                
+                                {{-- Aprovar Solicitação --}}
+                                <form method="POST" action="{{route('avaliador.solicitacao.aprovar')}}">
+                                    @csrf
+                                    <input type="hidden" name="avaliacao_id" value="{{$avaliacao->id}}">
+                                    <input type="hidden" name="solicitacao_id" value="{{$solicitacao->id}}">
+                                    <button type="submit"  class="btn w-100 btn-success font-weight-bold"
+                                            title="Aprovar Solicitação Com Pendências."
+                                            id="aprovarAvaliacao">Aprovar
+                                    </button>
+                                </form>
+                                {{-- Reprovar Solicitação--}}
+                                <form method="POST" action="{{route('avaliador.solicitacao.aprovarPendencia')}}">
+                                    @csrf
+                                    <input type="hidden" name="avaliacao_id" value="{{$avaliacao->id}}">
+                                    <input type="hidden" name="solicitacao_id" value="{{$solicitacao->id}}">
+                                    <button type="submit" class="btn w-100 bnt-pendencia font-weight-bold"
+                                            title="Aprovar Solicitação Com Pendências."
+                                            id="pendenciaAvaliacao">Aprovar com pendências
+                                    </button>
+                                </form>
+                              
 
                                 @if(($solicitacao->status == null  ||
                                     ($solicitacao->status == 'avaliado' && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia'))
@@ -188,13 +239,22 @@
                                        style="border-color: #1d68a7; color: #1d68a7; background-color: #c0ddf6"
                                        title="Concluir Solicitação">Concluir Solicitação</a>
 
-                                @else
-                                    
-                                    <button class="btn btn-secondary w-75" disabled>Concluir Solicitação</button>
-                                    
                                 @endif
                             </div>
-                          
+                            <div class="col-3 DivAporvado">
+                                
+                                {{-- Reprovar Solicitação--}}
+                                <form method="POST" action="{{route('avaliador.solicitacao.reprovar')}}">
+                                    @csrf
+                                    <input type="hidden" name="avaliacao_id" value="{{$avaliacao->id}}">
+                                    <input type="hidden" name="solicitacao_id" value="{{$solicitacao->id}}">
+                                    <button type="submit" class="btn w-75 btn-danger font-weight-bold"
+                                            title="Reprovar Solicitação."
+                                            id="reprovarAvaliacao">Reprovar
+                                    </button>
+                                </form>
+                                
+                            </div>
 
                         </div>
                 </div>
@@ -225,12 +285,14 @@
                                         onclick="closeModal()">
                                     Fechar
                                 </button>
+                               
+                                <button type="button" class="btn btn-success" id="confirmPendencia">Confirmar
+                                
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
-            
         </div>
     </div>
     <!-- Modal de confirmação-->
@@ -276,7 +338,7 @@
 
         function atualizarTabela_modeloAnimal() {
             $.ajax({
-                url: '/solicitacao/modelo_animal_tabela/' + {{$solicitacao->id}},
+                url: '/solicitacao/modelo_animal_tabela/avaliador/' + {{$solicitacao->id}},
                 method: 'GET',
                 success: function(response) {
                     $('#modelo_animal-info').html(response.html);
@@ -418,7 +480,9 @@
                     $("#trocaConteudo").append(ret);
                     $("#titulo_pendencia").append("Pendência(s) - " + data[1]);
 
-                    
+                    @if(Auth::user()->hasRole('Avaliador'))
+                    document.getElementById("confirmPendencia").setAttribute("onClick", "realizarAvaliacaoInd(" + tipo + "," + avaliacao_id + "," + id + ", '" + status + "')");
+                    @endif
 
                     $("#pendenciaModal").modal('show');
                 }

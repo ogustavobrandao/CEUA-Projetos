@@ -20,7 +20,7 @@
                 @elseif ($modelo_animal->procedencia == 'fazenda')
                     Fazenda
                 @elseif ($modelo_animal->procedencia == 'outra_procedencia')
-                    {{$modelo_animal->outra_procedencia}}}
+                    {{$modelo_animal->outra_procedencia}}
                 @endif
 
             </td>
