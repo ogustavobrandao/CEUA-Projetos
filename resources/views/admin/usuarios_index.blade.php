@@ -35,7 +35,11 @@
                             <td class="text-center">{{$usuario->name}}</td>
                             <td class="text-center">{{$usuario->email}}</td>
                             <td class="text-center">{{$usuario->cpf}}</td>
-                            <td class="text-center">{{$usuario->tipoUsuario}}</td>
+                            <td class="text-center">
+                            @foreach($usuario->roles as $role)
+                                <section>{{ $role->nome }}</section>
+                            @endforeach
+                            </td>
                             <td class="text-center">
                                 <button class="btn btn-group" type="button" data-toggle="modal"
                                         data-target="#editModal_{{$usuario->id}}"><i
@@ -130,23 +134,25 @@
 
                             <div class="col-sm-5">
                                 <label for="tipo">Tipo do Usuário:<strong style="color: red">*</strong></label>
-                                <select class="form-control @error('tipo_usuario_id') is-invalid @enderror"
-                                        id="tipo_usuario" name="role">
-                                    <option value="1">
-                                        Administrador
-                                    </option>
-                                    <option value="2">
-                                        Avaliador
-                                    </option>
-                                    <option value="3">
-                                        Solicitante
-                                    </option>
-                                </select>
-                                @error('tipo_usuario_id')
+                                <div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1" name="roles[]">
+                                        <label class="form-check-label" for="inlineCheckbox1">Administrador</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2" name="roles[]">
+                                        <label class="form-check-label" for="inlineCheckbox2">Avaliador</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3" name="roles[]">
+                                        <label class="form-check-label" for="inlineCheckbox3">Solicitante</label>
+                                    </div>
+                                </div>
+                                {{-- @error('tipo_usuario_id')
                                 <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
-                                @enderror
+                                @enderror --}}
                             </div>
                         </div>
 
@@ -286,22 +292,32 @@
 
                                 <div class="col-sm-5">
                                     <label for="tipo">Tipo do Usuário:<strong style="color: red">*</strong></label>
-                                    <select class="form-control" name="tipo_usuario_id">
-                                        <option value="1" @if($usuario->tipoUsuario == 1) selected @endif>
-                                            Administrador
-                                        </option>
-                                        <option value="2" @if($usuario->tipoUsuario == 2) selected @endif>
-                                            Avaliador
-                                        </option>
-                                        <option value="3" @if($usuario->tipoUsuario == 3) selected @endif>
-                                            Solicitante
-                                        </option>
-                                    </select>
-                                    @error('tipo_usuario_id')
+                                    <div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1" name="roles[]" @if ($usuario->hasRole('Administrador'))
+                                                checked disabled
+                                            @endif>
+                                            <label class="form-check-label" for="inlineCheckbox1">Administrador</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2" name="roles[]" @if ($usuario->hasRole('Avaliador'))
+                                                checked
+                                            @endif>
+                                            <label class="form-check-label" for="inlineCheckbox2">Avaliador</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3" name="roles[]" @if ($usuario->hasRole('Solicitante'))
+                                                checked
+                                            @endif>
+                                            <label class="form-check-label" for="inlineCheckbox3">Solicitante</label>
+                                        </div>
+                                    </div>
+                                    
+                                    {{-- @error('tipo_usuario_id')
                                     <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
+                                        </span> Alterar esta logica
+                                    @enderror --}}
                                 </div>
                             </div>
 

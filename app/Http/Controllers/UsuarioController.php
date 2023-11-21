@@ -24,8 +24,7 @@ class UsuarioController extends Controller
     }
 
     public function store(Request $request) {
-        
-        User::create([
+        $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make('password'),
@@ -34,7 +33,17 @@ class UsuarioController extends Controller
             'celular' => preg_replace('/[^0-9]/', '', $request->celular),
             'unidade_id' => $request->unidade,
             'tipo_usuario_id'=> 2,
-        ])->roles()->attach($request->role);
+        ]);
+        $i = 0;
+        foreach ($request->roles as $role) {
+            $i++;
+            if($role) {
+                $user->roles()->attach($i);
+            }else{
+                $user->roles()->detach($i);
+            }
+        }
+        
        
         
         return redirect(route('usuarios.index'))->with('sucesso', 'Usuário cadastrado com sucesso com senha padrão password!');
