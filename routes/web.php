@@ -58,7 +58,7 @@ Route::group(['middleware' => ['auth', 'verified', 'checkRole:Administrador']], 
     Route::prefix('/usuarios')->controller(UsuarioController::class)->group(function(){
         Route::get('/', [UsuarioController::class, 'index'])->name('usuarios.index');
         Route::post('/store', [UsuarioController::class, 'store'])->name('usuario.store');
-        Route::post('/update', [UsuarioController::class, 'update'])->name('usuario.update');
+        Route::put('/update/{id}', [UsuarioController::class, 'update'])->name('usuario.update');
 
     });
 
