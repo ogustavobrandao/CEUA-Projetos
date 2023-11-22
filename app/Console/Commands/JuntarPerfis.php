@@ -2,10 +2,12 @@
 
 namespace App\Console\Commands;
 
+use App\Mail\AvisoContaDuplicadaDeletada;
 use App\Models\Avaliacao;
 use App\Models\Solicitacao;
 use App\Models\User;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Mail;
 
 class JuntarPerfis extends Command
 {
@@ -36,6 +38,9 @@ class JuntarPerfis extends Command
             $outros = User::where('cpf', $user->cpf)->doesntHave('roles')->pluck('id');
             Avaliacao::whereIn('user_id', $outros)->update(['user_id' => $user->id]);
             Solicitacao::whereIn('user_id', $outros)->update(['user_id' => $user->id]);
+
+            Mail::to($user)->send(new AvisoContaDuplicadaDeletada($user));
+            User::whereIn('id', $outros)->delete();
         }
         return Command::SUCCESS;
     }
