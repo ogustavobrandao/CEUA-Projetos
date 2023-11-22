@@ -32,6 +32,8 @@ Route::get('/', function () {
     return view('welcome');
 })->name("welcome");
 
+Route::get('/create', [UsuarioController::class, 'createSolicitante'])->name('create_solicitante');
+Route::post('/store', [UsuarioController::class,'storeSolicitante'])->name('store_solicitante');
 Route::group(['middleware' => ['auth', 'verified']], function () {
 
     Route::get('/home', [HomeController::class, 'home'])->name('home');
@@ -58,7 +60,7 @@ Route::group(['middleware' => ['auth', 'verified', 'checkRole:Administrador']], 
     Route::prefix('/usuarios')->controller(UsuarioController::class)->group(function(){
         Route::get('/', [UsuarioController::class, 'index'])->name('usuarios.index');
         Route::post('/store', [UsuarioController::class, 'store'])->name('usuario.store');
-        Route::post('/update', [UsuarioController::class, 'update'])->name('usuario.update');
+        Route::put('/update/{id}', [UsuarioController::class, 'update'])->name('usuario.update');
 
     });
 
@@ -91,6 +93,8 @@ Route::group(['middleware' => ['auth', 'verified', 'checkRole:Administrador']], 
 
     Route::get('/solicitacao/planejamento/index/adm/{modelo_animal_id}', [SolicitacaoController::class, 'index_planejamento_adm'])->name('solicitacao.planejamento.index.adm');
     Route::get('/solicitacao/modelo_animal_tabela/adm/{id}', [SolicitacaoController::class, 'atualizar_modelo_animal_tabela_adm'])->name('solicitacao.modelo_animal_tabela_adm');
+    Route::post('/adm/aprovar', [AvaliacaoController::class, 'aprovarSolicitacaoAdm'])->name('adm.solicitacao.aprovar');
+
 });
 
 
@@ -109,8 +113,8 @@ Route::group(['middleware' => ['auth', 'verified', 'checkRole:Solicitante']], fu
     Route::get('/solicitacao/modal_atualizacao_colaborador/adm/{colaborador_id}', [SolicitacaoController::class, 'abrir_colaborador_modal_adm'])->name('solicitacao.modal_atualizacao_colaborador_adm');
     Route::post('/solicitacao/criar_eutanasia', [SolicitacaoController::class, 'criar_eutanasia'])->name('solicitacao.eutanasia.criar');
     Route::post('/solicitacao/criar_modelo_animal', [SolicitacaoController::class, 'criar_modelo_animal'])->name('solicitacao.modelo_animal.criar');
-    Route::post('/solicitacao/atualizar_modelo_animal', [SolicitacaoController::class, 'atualizar_modelo_animal'])->name('solicitacao.modelo_animal.update');
-    Route::get('/solicitacao/remover_modelo_animal/{id}', [SolicitacaoController::class, 'deletar_modelo_animal'])->name('solicitacao.modelo_animal.delete');
+    Route::put('/solicitacao/atualizar_modelo_animal/{id}', [SolicitacaoController::class, 'atualizar_modelo_animal'])->name('solicitacao.modelo_animal.update');
+    Route::delete('/solicitacao/remover_modelo_animal/{id}', [SolicitacaoController::class, 'deletar_modelo_animal'])->name('solicitacao.modelo_animal.delete');
     Route::get('/solicitacao/modelo_animal_tabela/{id}', [SolicitacaoController::class, 'atualizar_modelo_animal_tabela'])->name('solicitacao.modelo_animal_tabela');
     Route::post('/solicitacao/criar_perfil', [SolicitacaoController::class, 'criar_perfil'])->name('solicitacao.perfil.criar');
     Route::post('/solicitacao/criar_condicoes_animal', [SolicitacaoController::class, 'criar_condicoes_animal'])->name('solicitacao.condicoes_animal.criar');
@@ -138,6 +142,7 @@ Route::group(['middleware' => ['auth', 'verified', 'checkRole:Avaliador']], func
     Route::get('/avaliar/planejamento/{modelo_animal_id}', [SolicitacaoController::class, 'avaliarPlanejamento'])->name('avaliador.solicitacao.planejamento.avaliar');
 
     route::get('/home/avaliador', [HomeController::class, 'perfilAvaliador'])->name('perfil_avaliador');
+    Route::get('/solicitacao/colaborador_tabela/avaliador/{id}', [SolicitacaoController::class, 'atualizar_colaborador_tabela_avaliador'])->name('solicitacao.colaborador_tabela_avaliador');
 
 //Avaliação Individual
     Route::post('/avaliacao_individual/reprovar', [AvaliacaoIndividualController::class, 'realizarAvaliacao'])->name('avaliador.avaliacao_ind.realizarAvaliacao');

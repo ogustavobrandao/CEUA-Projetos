@@ -58,39 +58,7 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
-    protected function validator(array $data)
-    {
-        $data['cpf'] = preg_replace('/[^0-9]/', '', $data['cpf']);
-        $data['celular'] = preg_replace('/[^0-9]/', '', $data['celular']);
-        
-        return Validator::make($data, [
-            'name'          => ['required', 'string', 'min:10', 'max:255', 'regex:/^[A-Za-záâãéêíóôõúçÁÂÃÉÊÍÓÔÕÚÇ\s]+$/'],
-            'email'         => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password'      => ['required', 'string', 'min:8', 'confirmed'],
-            'cpf'           => ['required', 'cpf', 'min:11', 'max:11', 'unique:users'],
-            'celular'       => ['required', 'min:11', 'max:11'],
-            'rg'            => ['required', 'string', 'min:7', 'max:14', 'regex:/^[0-9]+$/'],
-            'instituicao'   => ['required', 'numeric'],
-            'unidade'       => ['required', 'numeric']
-        ],[
-            'name.regex'                    => "O nome informado é inválido",
-            'cpf.required'                  => 'O CPF é obrigatório',
-            'cpf.min'                       => 'Tamanho do CPF não é válido',
-            'cpf.max'                       => 'Tamanho do CPF não é válido',
-            'cpf.unique'                    => 'O CPF informado já está cadastrado',
-            'cpf.cpf'                       => 'O CPF informado não é válido',
-            'rg.required'                   => 'O campo RG é obrigatório',
-            'rg.min'                        => 'Tamanho do RG não é válido',
-            'rg.max'                        => 'Tamanho do RG não é válido',
-            'rg.regex'                      => "O RG informado é inválido",
-            'instituicao_id.required'       => 'O campo Instituição é obrigatório',
-            'instituicao_id.numeric'        => 'Instituição inválida',
-            'unidade_id.required'           => 'O campo Unidade é obrigatório',
-            'unidade_id.numeric'            => 'Unidade inválida',
-            'tipo_usuario_id.required'      => 'O campo tipo usuário é obrigatório',
-            'tipo_usuario_id.numeric'       => 'Tipo de usuário inválido'
-        ]);
-    }
+
 
     /**
      * Create a new user instance after a valid registration.
@@ -109,6 +77,7 @@ class RegisterController extends Controller
             'rg' => preg_replace('/[^0-9]/', '', $data['rg']),
             'celular' => preg_replace('/[^0-9]/', '', $data['celular']),
             'unidade_id' => $data['unidade'],
+            'tipo_usuario_id'=> 3,
         ])->roles()->attach(3);
     }
 }

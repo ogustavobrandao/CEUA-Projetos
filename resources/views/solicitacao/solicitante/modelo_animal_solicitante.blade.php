@@ -499,46 +499,36 @@
 
         <div class="col-sm-12 mt-3">
             <label for="termo_consentimento">Termo de Consentimento Livre e Esclarecido (TCLE):<strong style="color: red">*</strong></label>
-            @if(Auth::user()->hasRole('Avaliador') || Auth::user()->hasRole('Administrador'))
-                @if (!empty($modelo_animal->termo_consentimento))
-                <a class="btn btn-primary download-button"
-                   data-path="{{route('termo.download', ['modelo_animal_id' => $modelo_animal->id])}}">Baixar
-                    Termo de Consentimento</a>
-                @else
-                    <br>
-                    <a class="btn btn-secondary"
-                    href="#">Não Enviado</a>
+            
+            @if(!empty($modelo_animal))
+                <input class="form-control @error('termo_consentimento') is-invalid @enderror"
+                        id="termo_consentimento"
+                        type="file" accept="application/pdf" name="termo_consentimento"
+                        value="" autocomplete="termo_consentimento" autofocus
+                        @if($modelo_animal->termo_consentimento != null) style="width: 135px" @endif>
+                <div class="div_error" id="termo_consentimento_error" style="display: none">
+                    <span class="invalid-input">
+                        <strong id="termo_consentimento_error_message"></strong>
+                    </span>
+                </div>
+                @if($modelo_animal->termo_consentimento != null)
+                    <span
+                        style="border: 1px gray solid; border-radius: 10px; text-align: center; width: 250px; position: absolute; bottom: 0px; left: 155px; height: 38px; padding-top: 5px; background-color: #dcfadf">Um Arquivo Já Foi Enviado</span>
                 @endif
             @else
-                @if(!empty($modelo_animal))
-                    <input class="form-control @error('termo_consentimento') is-invalid @enderror"
-                           id="termo_consentimento"
-                           type="file" accept="application/pdf" name="termo_consentimento"
-                           value="" autocomplete="termo_consentimento" autofocus
-                           @if($modelo_animal->termo_consentimento != null) style="width: 135px" @endif>
-                    <div class="div_error" id="termo_consentimento_error" style="display: none">
-                        <span class="invalid-input">
-                            <strong id="termo_consentimento_error_message"></strong>
-                        </span>
-                    </div>
-                    @if($modelo_animal->termo_consentimento != null)
-                        <span
-                            style="border: 1px gray solid; border-radius: 10px; text-align: center; width: 250px; position: absolute; bottom: 0px; left: 155px; height: 38px; padding-top: 5px; background-color: #dcfadf">Um Arquivo Já Foi Enviado</span>
-                    @endif
-                @else
-                    <input class="form-control"
-                           id="termo_consentimento"
-                           type="file" accept="application/pdf" name="termo_consentimento"
-                           @if(isset($modelo_animal)) value="{{$modelo_animal->termo_consentimento}}"
-                           @else value="{{old('termo_consentimento')}}" @endif autocomplete="termo_consentimento"
-                           autofocus required>
-                    <div class="div_error" id="termo_consentimento_error" style="display: none">
-                        <span class="invalid-input">
-                            <strong id="termo_consentimento_error_message"></strong>
-                        </span>
-                    </div>
-                @endif
+                <input class="form-control"
+                        id="termo_consentimento"
+                        type="file" accept="application/pdf" name="termo_consentimento"
+                        @if(isset($modelo_animal)) value="{{$modelo_animal->termo_consentimento}}"
+                        @else value="{{old('termo_consentimento')}}" @endif autocomplete="termo_consentimento"
+                        autofocus required>
+                <div class="div_error" id="termo_consentimento_error" style="display: none">
+                    <span class="invalid-input">
+                        <strong id="termo_consentimento_error_message"></strong>
+                    </span>
+                </div>
             @endif
+            
         </div>
 
         <div class="col-sm-12 mt-3">
@@ -548,17 +538,7 @@
             title="A autorização da CEUA não requer a existência de licença prévia de outras instituições. Entretanto, o responsável deverá obter todas as autorizações legais cabíveis que a natureza do projeto exige antes do início das atividades com animais como, por exemplo, autorizações de instituições como Instituto Brasileiro do Meio Ambiente e dos Recursos Naturais Renováveis - IBAMA, Fundação Nacional do Índio - FUNAI, Comissão Nacional de Energia Nuclear - CNEN, Conselho de Gestão do Patrimônio Genético - CGEN, Comissão Técnica Nacional de Biossegurança - CTNBio, Instituto Chico Mendes de Conservação da Biodiversidade - ICMBio, dentre outras." style="color: darkred">
              <i class="fa-solid fa-circle-info fa-lg"></i></a>
             <small>Caso seja mais de um documento, anexar em um único PDF.</small>
-            @if(Auth::user()->hasRole('Avaliador') || Auth::user()->hasRole('Administrador'))
-                @if (!empty($modelo_animal->licencas_previas))
-                    <a class="btn btn-primary download-button"
-                       data-path="{{route('licencas_previas.download', ['modelo_animal_id' => $modelo_animal])}}">Baixar
-                    Licenças</a>
-                @else
-                    <br>
-                    <a class="btn btn-secondary"
-                    href="#">Não Enviado</a>
-                @endif
-            @else
+            
                 @if(!empty($modelo_animal))
                     <input class="form-control"
                            id="licencas_previas"
@@ -577,7 +557,7 @@
                            @if(isset($modelo_animal)) value="{{$modelo_animal->licencas_previas}}"
                            @else value="{{old('licencas_previas')}}" @endif autocomplete="licencas_previas">
                 @endif
-            @endif
+           
         </div>
     </div>
 </div>
@@ -749,28 +729,5 @@
             calcularTotal();
         });
     });
-    $(document).ready(function() {
 
-        var tipoUsuario = {{ Auth::user()->tipo_usuario_id }};
-
-        if (tipoUsuario === 1) {
-
-            $('input, select, textarea').prop('disabled', true);
-        }
-    });
-
-    window.onload = function() {
-        var isAdmin = <?php echo (Auth::user()->tipo_usuario_id == 1) ? 'true' : 'false'; ?>;
-
-        if (isAdmin) {
-            var forms = document.getElementsByTagName("form");
-            for (var i = forms.length - 1; i >= 0; i--) {
-                var form = forms[i];
-                while (form.firstChild) {
-                    form.parentNode.insertBefore(form.firstChild, form);
-                }
-                form.parentNode.removeChild(form);
-            }
-        }
-    }
 </script>

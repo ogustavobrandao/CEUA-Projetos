@@ -219,7 +219,7 @@
 
         </div>
         <br>
-        @include('component.botoes_new_form')
+
 
     </form>
 

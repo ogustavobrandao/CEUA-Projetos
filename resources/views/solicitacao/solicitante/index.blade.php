@@ -11,46 +11,57 @@
                         <div class="row">
                             <div class="col-md-12">
                                 
-                                <h2 class="titulo" id="titulo_0">1. Dados Iniciais
-                                    <a class="float-end" id="0_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
-                                    <a class="float-end" id="0_btn_down" style="display: none"><i
-                                            class="fa-solid fa-circle-chevron-down"></i></a>
-                                </h2>
-                                
+                                    <h2 class="titulo" id="titulo_0">1. Dados Iniciais
+                                        <a class="float-end" id="0_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
+                                        <a class="float-end" id="0_btn_down" style="display: none"><i
+                                                class="fa-solid fa-circle-chevron-down"></i></a>
+                                    </h2>
+                              
                             </div>
                         </div>
                     </div>
                     @include('component.modal_fail')
                     <div id="dados_iniciais">
-                        
-                        @include('solicitacao.solicitacao_adm')
-                        
+                        @if(Auth::user()->hasRole('Solicitante') && $solicitacao->status == 'avaliado'
+                                && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia')
+                            @include('solicitacao.solicitante.solicitacao',['tipo'=>0,'id'=>$solicitacao->id, 'status'=>$solicitacao->avaliacao_individual->status])
+                        @else
+                            @include('solicitacao.solicitante.solicitacao')
+                        @endif
                     </div>
                 </div>
                 <div class="mb-4">
                     <div class="card p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_1">
                         <div class="row">
                             <div class="col-md-12">
-                                <h2 class="titulo" id="titulo_1">2. Dados do Responsável
-                                    <a class="float-end" id="1_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
-                                    <a class="float-end" id="1_btn_down" style="display: none"><i
-                                            class="fa-solid fa-circle-chevron-down"></i></a>
-                                </h2>
-                              
+                                
+                                    <h2 class="titulo" id="titulo_1">2. Dados do Responsável
+                                        <a class="float-end" id="1_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
+                                        <a class="float-end" id="1_btn_down" style="display: none"><i
+                                                class="fa-solid fa-circle-chevron-down"></i></a>
+                                    </h2>
+
                             </div>
                         </div>
                     </div>
                     <div id="dados_responsavel">
-                       
-                        @include('solicitacao.responsavel_adm')
-                        
+                        @if(Auth::user()->hasRole('Solicitante') && $solicitacao->status == 'avaliado'
+                                && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia')
+                            @include('solicitacao.solicitante.responsavel',['tipo'=>1,'id'=>$solicitacao->responsavel->id, 'status'=>$solicitacao->responsavel->avaliacao_individual->status])
+                        @else
+                            @include('solicitacao.solicitante.responsavel')
+                        @endif
 
                     </div>
                 </div>
                 <div class="mb-4">
-                    
-                    @include('solicitacao.colaborador.form_adm', ['solicitacao' => $solicitacao])
-                    
+                    @if(Auth::user()->hasRole('Solicitante') && $solicitacao->status == 'avaliado'
+                                && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia')
+                        @include('solicitacao.colaborador.form_solicitante', ['solicitacao' => $solicitacao, 'status' => $solicitacao->avaliacao->first()->avaliacao_individual->where('tipo',2)->first()->status,
+                                 'tipo'=>2, 'id' => -1])
+                    @else
+                        @include('solicitacao.colaborador.form_solicitante', ['solicitacao' => $solicitacao])
+                    @endif
 
                 </div>
                 <div class="mb-4">
@@ -58,20 +69,23 @@
                         <div class="row">
                             <div class="col-md-12">
                                 
-                                <h2 class="titulo" id="titulo_3">4. Dados Complementares
-                                    <a class="float-end" id="3_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
-                                    <a class="float-end" id="3_btn_down" style="display: none"><i
-                                            class="fa-solid fa-circle-chevron-down"></i></a>
-                                </h2>
-                                
+                                    <h2 class="titulo" id="titulo_3">4. Dados Complementares
+                                        <a class="float-end" id="3_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
+                                        <a class="float-end" id="3_btn_down" style="display: none"><i
+                                                class="fa-solid fa-circle-chevron-down"></i></a>
+                                    </h2>
+                               
 
                             </div>
                         </div>
                     </div>
                     <div id="dados_complementares">
-                       
-                        @include('solicitacao.solicitacao_fim_adm')
-                       
+                        @if(Auth::user()->hasRole('Solicitante') && $solicitacao->status == 'avaliado'
+                                && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia')
+                            @include('solicitacao.solicitante.solicitacao_fim',['tipo'=>3,'id'=>$solicitacao->dadosComplementares->id,'status'=>$solicitacao->dadosComplementares->avaliacao_individual->status])
+                        @else
+                            @include('solicitacao.solicitante.solicitacao_fim')
+                        @endif
 
                     </div>
                 </div>
@@ -89,15 +103,15 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <form id="form4" method="POST" action="javascript:void(0)"
+                        <form id="form4" method="POST" action="{{route('solicitacao.modelo_animal.criar')}}"
                               enctype="multipart/form-data">
                             @csrf
                             <div class="modal-body">
-                                @include('solicitacao.modelo_animal_modal')
+                                @include('solicitacao.solicitante.modelo_animal_modal_solicitante')
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                                <button type="submit" class="btn btn-success btn-salvar-modelo_animal">Cadastrar</button>
+                                <button type="submit" class="btn btn-success ">Cadastrar</button>
                             </div>
                         </form>
                     </div>
@@ -111,7 +125,15 @@
                             <div class="col-md-12">
                                 
                                     <h3 class="titulo" id="titulo_4">5. Dados dos Modelos Animais
-                               
+
+                                        @if(Auth::user()->hasRole('Solicitante') && $solicitacao->status != 'avaliado')
+                                            <a class="float-end "
+                                               data-toggle="modal"
+                                               data-target="#modeloAnimalModal"
+                                               style="color: green"
+                                               title="Adicionar Modelo Animal"><i
+                                                    class="fa-solid fa-circle-plus fa-2xl"></i></a></h3>
+                                        @endif
 
                             </div>
                         </div>
@@ -130,11 +152,53 @@
                                 </tr>
                                 </thead>
                                 <tbody id="modelo_animal-info">
+                                    @foreach($solicitacao->modelosAnimais as $modelo_animal)
+                                        <tr id="fundo_modelo_{{$modelo_animal->id}}">
+                                            <td>
+                                                {{$modelo_animal->nome_cientifico}}
+                                            </td>
+                                            <td>
+                                                @if ($modelo_animal->procedencia == 'animal_comprado')
+                                                    Animal Comprado
+                                                @elseif ($modelo_animal->procedencia == 'animal_criacao')
+                                                    Animal Criação
+                                                @elseif ($modelo_animal->procedencia == 'animal_doado')
+                                                    Animal Doado
+                                                @elseif ($modelo_animal->procedencia == 'animal_silvestre')
+                                                    Animal Silvestre
+                                                @elseif ($modelo_animal->procedencia == 'aviario')
+                                                    Aviário
+                                                @elseif ($modelo_animal->procedencia == 'bioterio')
+                                                    Biotério
+                                                @elseif ($modelo_animal->procedencia == 'fazenda')
+                                                    Fazenda
+                                                @elseif ($modelo_animal->procedencia == 'outra_procedencia')
+                                                    {{$modelo_animal->outra_procedencia}}
+                                                @endif
+                                
+                                            </td>
+                                            <td>
+                                                {{$modelo_animal->perfil->linhagem ?? 'Não preenchido'}}
+                                            </td>
+                                            <td>
+                                                {{$modelo_animal->perfil->idade ?? 'Não preenchido'}}
+                                            </td>
+                                            <td class="text-center">
+                                                <a class="btn btn-primary"
+                                                    href="{{route('solicitacao.planejamento.index', ['modelo_animal_id' => $modelo_animal->id])}}">Abrir</a>
+                                                @if(Auth::user()->hasRole('Solicitante') && $solicitacao->status != 'avaliado')
+                                                    <a class="btn btn-danger btn-deletar-modelo-animal"
+                                                        href="{{route('solicitacao.modelo_animal.delete', ['id' => $modelo_animal->id])}}">Deletar</a>
+                                                @endif
+                                                
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
-
-                            @endif
                         </div>
+                    @endif
+                        
 
                         {{-- Contagem de aprovados--}}
                         <input type="hidden" id="dadosInicaisAval" value="0">
@@ -146,18 +210,13 @@
                         <div class="row mt-4 row">
                             <div class="col-3">
                                 
-                                <a type="button" class="btn btn-secondary w-100"
-                                   href="{{ route('solicitacao.admin.index') }}">Voltar</a>
-                               
+                                
+                                    <a type="button" class="btn btn-secondary w-100"
+                                       href="{{ route('solicitacao.solicitante.index') }}">Voltar</a>
+                                
                             </div>
                             <div class="col-4 DivAporvado">
-                                
-                                {{-- Aprovar Solicitação --}}
-                                <a type="button" class="btn w-100 btn-success"
-                                    data-toggle="modal" data-target="#aprovarModal"
-                                    title="Aprovar Solicitação." id="aprovarAvaliacao">Aprovar</a>
-
-                                
+                               
 
                                 @if(($solicitacao->status == null  ||
                                     ($solicitacao->status == 'avaliado' && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia'))
@@ -169,22 +228,13 @@
                                        style="border-color: #1d68a7; color: #1d68a7; background-color: #c0ddf6"
                                        title="Concluir Solicitação">Concluir Solicitação</a>
 
+                                @else
+                                    
+                                    <button class="btn btn-secondary w-75" disabled>Concluir Solicitação</button>
+                                    
                                 @endif
                             </div>
-                            <div class="col-3 DivAporvado">
-                                
-                                {{-- Reprovar Solicitação--}}
-                                <form method="POST" action="{{route('avaliador.solicitacao.reprovar')}}">
-                                    @csrf
-                                    <input type="hidden" name="avaliacao_id" value="{{$avaliacao->id}}">
-                                    <input type="hidden" name="solicitacao_id" value="{{$solicitacao->id}}">
-                                    <button type="submit" class="btn w-75 btn-danger font-weight-bold"
-                                            title="Reprovar Solicitação."
-                                            id="repovar">Reprovar
-                                    </button>
-                                </form>
-                                  
-                            </div>
+                          
 
                         </div>
                 </div>
@@ -215,64 +265,6 @@
                                         onclick="closeModal()">
                                     Fechar
                                 </button>
-                               
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Modal Aprovar -->
-            <div class="modal fade" id="aprovarModal" tabindex="-1" role="dialog"
-                    aria-labelledby="aprovarModalLabel"
-                    aria-hidden="true">
-                <div class="modal-dialog " role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="aprovarModalLabel">Período da licença</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <form method="POST" action="{{route('avaliador.solicitacao.aprovar')}}">
-                            @csrf
-                            <input type="hidden" name="solicitacao_id" value="{{$solicitacao->id}}">
-                            <input type="hidden" name="avaliacao_id" value="{{$avaliacao->id}}">
-                            <div class="modal-body">
-                                <div class="row">
-                                    <div class="col-sm-5">
-                                        <label for="inicio">Data de Início:<strong
-                                                style="color: red">*</strong></label>
-                                        <input class="form-control @error('inicio') is-invalid @enderror"
-                                                id="inicio"
-                                                type="date" name="inicio"
-                                                value="{{date('Y-m-d', strtotime($solicitacao->inicio))}}"
-                                                required autocomplete="inicio" autofocus>
-                                        @error('inicio')
-                                        <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                        @enderror
-                                    </div>
-                                    <div class="col-sm-2"></div>
-                                    <div class="col-sm-5">
-                                        <label for="fim">Data de Fim:<strong style="color: red">*</strong></label>
-                                        <input class="form-control @error('fim') is-invalid @enderror" id="fim"
-                                                type="date"
-                                                name="fim"
-                                                value="{{date('Y-m-d', strtotime($solicitacao->fim))}}"
-                                                required autocomplete="fim" autofocus>
-                                        @error('fim')
-                                        <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                        @enderror
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                                <button type="submit" class="btn btn-success">Confirmar</button>
                             </div>
                         </form>
                     </div>
@@ -321,23 +313,23 @@
     </script>
     <script>
 
+        //apagar depois
+        // function atualizarTabela_modeloAnimal() {
+        //     $.ajax({
+        //         url: '/solicitacao/modelo_animal_tabela/' + {{$solicitacao->id}},
+        //         method: 'GET',
+        //         success: function(response) {
+        //             $('#modelo_animal-info').html(response.html);
+        //         },
+        //         error: function(response) {
 
-        function atualizarTabela_modeloAnimal() {
-            $.ajax({
-                url: '/solicitacao/modelo_animal_tabela/adm/' + {{$solicitacao->id}},
-                method: 'GET',
-                success: function(response) {
-                    $('#modelo_animal-info').html(response.html);
-                },
-                error: function(response) {
-
-                    console.log('Erro ao atualizar a tabela.');
-                }
-            });
-        }
-        $(document).ready(function() {
-            atualizarTabela_modeloAnimal();
-        });
+        //             console.log('Erro ao atualizar a tabela.');
+        //         }
+        //     });
+        // }
+        // $(document).ready(function() {
+        //     atualizarTabela_modeloAnimal();
+        // });
 
         // Contador para verificar aprovações da lista de modelos animais
         var contadorModelo = 0;
@@ -466,6 +458,7 @@
                     $("#trocaConteudo").append(ret);
                     $("#titulo_pendencia").append("Pendência(s) - " + data[1]);
 
+                    
 
                     $("#pendenciaModal").modal('show');
                 }
@@ -477,35 +470,6 @@
             $("#licencaModal").modal('hide');
         }
 
-        function realizarAvaliacaoInd(tipo, avaliacao_id, id, status) {
-
-            if (($("#parecerAval").val() != "" && status == "reprovado") || (status == "aprovado")) {
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-
-                $.ajax({
-                    url: '{{route('avaliador.avaliacao_ind.realizarAvaliacao')}}',
-                    type: 'POST',
-                    data: {
-                        'tipo': tipo,
-                        'avaliacao_id': avaliacao_id,
-                        'id': id,
-                        'parecer': $("#parecerAval").val(),
-                        'status': status
-                    },
-                    success: function (data) {
-
-                        alterarCorCard(tipo, status);
-                        $("#pendenciaModal").modal('hide');
-                    }
-                });
-            } else {
-                console.log("deu não")
-            }
-        }
 
         function verificarAvalModelo(modelo, avaliacao) {
             $.ajax({
@@ -582,75 +546,28 @@
             }
         }
 
-        $(document).on('click', '.btn-salvar-modelo_animal', function (event) {
-            event.preventDefault();
+     
 
-            var form = $('#form4')[0];
-            var formData = new FormData(form);
-            $.ajax({
-                type: 'POST',
-                url: '{{ route('solicitacao.modelo_animal.criar') }}',
-                data: formData,
-                contentType: false,
-                processData: false,
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                dataType: 'json',
-                success: function (response) {
-                    var message = response.message;
+        function limparFormulario() {
+            $('#modeloAnimalModal').find('input:not([name="solicitacao_id"]):not([name="_token"]):not([name="geneticamente_modificado"]), textarea').val('');
+            $('#modeloAnimalModal').find('.default').prop('selected', true);
+            $('#modeloAnimalModal').find('.default').prop('checked', true);
+            $('#anexo_cqb').hide();
+            $("#anexo_outro_tipo, #anexo_outra_procedencia, #anexo_outro_tipo, #anexo_animal_silvestre_captura, #anexo_animal_silvestre_coleta, #anexo_animal_marcacao, #anexo_outras_informações")
+                .hide().find('input, radio').prop('disabled', true);
+        }
 
-                    if (message == 'success') {
-                        atualizarTabela_modeloAnimal();
-                        $('#modeloAnimalModal').find
-                        ('input:not([name="solicitacao_id"]):not([name="_token"]):not([name="geneticamente_modificado"]), textarea').val('');
-                        $('#modeloAnimalModal').find('.default').prop('selected', true);
-                        $('#modeloAnimalModal').find('.default').prop('checked', true);
-                        $('#anexo_cqb').hide();
-                        $("#anexo_outro_tipo").hide();
-                        $("#anexo_outra_procedencia").hide().find('input, radio').prop('disabled', true);
-                        $("#anexo_outro_tipo").hide().find('input, radio').prop('disabled', true);
-                        $("#anexo_animal_silvestre_captura").hide().find('input, radio').prop('disabled', true);
-                        $("#anexo_animal_silvestre_coleta").hide().find('input, radio').prop('disabled', true);
-                        $("#anexo_animal_marcacao").hide().find('input, radio').prop('disabled', true);
-                        $("#anexo_outras_informações").hide().find('input, radio').prop('disabled', true);
-
-
-                        $('.modal').hide();
-                        $('body').removeClass('modal-open');
-                        $('body').css('padding-right', '');
-                        $('.modal-backdrop').remove();
-                    }
-                },
-                error: function (xhr, status, error) {
-                    if (xhr.responseJSON && xhr.responseJSON.message) {
-                        $('.div_error').css('display', 'none');
-                        var errors = xhr.responseJSON.errors;
-                        var statusCode = xhr.status;
-                        if (statusCode == 422 && status == 'error') {
-                            for (var field in errors) {
-                                var fieldErrors = errors[field];
-                                var errorMessage = '';
-                                for (var i = 0; i < fieldErrors.length; i++) {
-                                    errorMessage += fieldErrors[i] + '\n';
-                                }
-                                var errorDiv = '#' + field + '_error';
-                                var errorMessageTag = '#' + field + '_error_message';
-                                $(errorMessageTag).html(errorMessage);
-                                $(errorDiv).css('display', 'block');
-                            }
-                        }
-                    } else {
-                        alert("Erro na requisição Ajax: " + error);
-                    }
-                }
-            });
-
-            return false;
-        });
+        function fecharModal() {
+            $('.modal').hide();
+            $('body').removeClass('modal-open');
+            $('body').css('padding-right', '');
+            $('.modal-backdrop').remove();
+        }
 
         $(document).on('click', '.btn-deletar-modelo-animal', function (event) {
             event.preventDefault();
+
+            var scrollPosition = window.scrollY;
 
             var url = $(this).attr('href');
             var csrfToken = '{{ csrf_token() }}';
@@ -658,26 +575,37 @@
             var confirmacao = confirm('Você tem certeza que deseja apagar?');
 
             if (confirmacao) {
-                $.ajax({
-                    type: 'POST',
-                    url: url,
-                    data: {
-                        _token: csrfToken,
-                        _method: 'GET',
-                    },
-                    dataType: 'json',
-                    success: function (response) {
-                        var message = response.message;
-                        if (message == 'success') {
-                            atualizarTabela_modeloAnimal();
-                        }
-                    },
-                    error: function (xhr, status, error) {
-                        alert("Erro na requisição Ajax: " + error);
-                    }
+                var form = $('<form>', {
+                    'method': 'POST',
+                    'action': url,
+                    'style': 'display: none;'
                 });
+
+                form.append($('<input>', {
+                    'name': '_token',
+                    'value': csrfToken,
+                    'type': 'hidden'
+                }));
+
+                form.append($('<input>', {
+                    'name': '_method',
+                    'value': 'DELETE',
+                    'type': 'hidden'
+                }));
+
+                $('body').append(form);
+
+                form.submit();
             }
+
+            localStorage.setItem('scrollPosition', scrollPosition);
         });
+
+        var scrollPosition = parseInt(localStorage.getItem('scrollPosition')) || 0;
+
+        window.scrollTo(0, scrollPosition);
+
+        localStorage.removeItem('scrollPosition');
 
 
     </script>

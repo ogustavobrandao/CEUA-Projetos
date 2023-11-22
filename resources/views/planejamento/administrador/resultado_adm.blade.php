@@ -88,7 +88,6 @@
 
         </div>
 
-        @include('component.botoes_new_form')
 
     </form>
 </div>

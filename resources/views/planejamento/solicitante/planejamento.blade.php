@@ -96,42 +96,32 @@
                     Quando não for o caso, justifique.</label>
             </div>
             <div class="col-sm-6">
-                @if(Auth::user()->hasRole('Avaliador') || Auth::user()->hasRole('Administrador'))
-                    @if($planejamento->anexo_formula == null)
-                        <br>
-                        <a class="btn btn-secondary"
-                        href="#">Não Enviado</a>
-                    @else
-                        <a class="btn btn-primary download-button"
-                           data-path="{{route('planejamento.formula.download', ['planejamento_id' => $planejamento->id])}}">Baixar
-                            Fórmula</a>
+               
+                @if(!empty($planejamento))
+                    <input class="form-control @error('anexo_formula') is-invalid @enderror" id="anexo_formula"
+                            type="file" accept="application/pdf" name="anexo_formula"
+                            value="" autocomplete="anexo_formula" autofocus
+                            @if($planejamento->anexo_formula != null) style="width: 135px" @endif>
+                    <div class="div_error" id="anexo_formula_error" style="display: none">
+                        <span class="invalid-input">
+                            <strong id="anexo_formula_error_message"></strong>
+                        </span>
+                    </div>
+                    @if($planejamento->anexo_formula != null)
+                        <span
+                            style="border: 1px gray solid; border-radius: 10px; text-align: center; width: 250px; position: absolute; bottom: 0px; left: 155px; height: 38px; padding-top: 5px; background-color: #dcfadf">Um Arquivo Já Foi Enviado</span>
                     @endif
                 @else
-                    @if(!empty($planejamento))
-                        <input class="form-control @error('anexo_formula') is-invalid @enderror" id="anexo_formula"
-                               type="file" accept="application/pdf" name="anexo_formula"
-                               value="" autocomplete="anexo_formula" autofocus
-                               @if($planejamento->anexo_formula != null) style="width: 135px" @endif>
-                        <div class="div_error" id="anexo_formula_error" style="display: none">
-                            <span class="invalid-input">
-                                <strong id="anexo_formula_error_message"></strong>
-                            </span>
-                        </div>
-                        @if($planejamento->anexo_formula != null)
-                            <span
-                                style="border: 1px gray solid; border-radius: 10px; text-align: center; width: 250px; position: absolute; bottom: 0px; left: 155px; height: 38px; padding-top: 5px; background-color: #dcfadf">Um Arquivo Já Foi Enviado</span>
-                        @endif
-                    @else
-                        <input class="form-control @error('anexo_formula') is-invalid @enderror" id="anexo_formula"
-                               type="file" accept="application/pdf" name="anexo_formula"
-                               value="{{old('anexo_formula')}}" autocomplete="anexo_formula" autofocus>
-                        <div class="div_error" id="anexo_formula_error" style="display: none">
-                            <span class="invalid-input">
-                                <strong id="anexo_formula_error_message"></strong>
-                            </span>
-                        </div>
-                    @endif
+                    <input class="form-control @error('anexo_formula') is-invalid @enderror" id="anexo_formula"
+                            type="file" accept="application/pdf" name="anexo_formula"
+                            value="{{old('anexo_formula')}}" autocomplete="anexo_formula" autofocus>
+                    <div class="div_error" id="anexo_formula_error" style="display: none">
+                        <span class="invalid-input">
+                            <strong id="anexo_formula_error_message"></strong>
+                        </span>
+                    </div>
                 @endif
+                
             </div>
         </div>
 

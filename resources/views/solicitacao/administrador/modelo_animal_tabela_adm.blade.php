@@ -31,10 +31,9 @@
                 {{$modelo_animal->perfil->idade ?? 'Não preenchido'}}
             </td>
             <td class="text-center">
-                
                 <a class="btn btn-primary"
-                    href="{{route('avaliador.solicitacao.planejamento.avaliar', ['modelo_animal_id' => $modelo_animal->id])}}">Abrir</a>
-                
+                    href="{{route('solicitacao.planejamento.index.adm', ['modelo_animal_id' => $modelo_animal->id])}}">Abrir</a>
+                   
             </td>
         </tr>
     @endforeach

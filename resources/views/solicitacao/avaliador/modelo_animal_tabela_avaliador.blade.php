@@ -20,7 +20,7 @@
                 @elseif ($modelo_animal->procedencia == 'fazenda')
                     Fazenda
                 @elseif ($modelo_animal->procedencia == 'outra_procedencia')
-                    {{$modelo_animal->outra_procedencia}}}
+                    {{$modelo_animal->outra_procedencia}}
                 @endif
 
             </td>
@@ -31,17 +31,10 @@
                 {{$modelo_animal->perfil->idade ?? 'Não preenchido'}}
             </td>
             <td class="text-center">
-                @if(Auth::user()->hasRole('Avaliador'))
-                    <a class="btn btn-primary"
-                       href="{{route('avaliador.solicitacao.planejamento.avaliar', ['modelo_animal_id' => $modelo_animal->id])}}">Abrir</a>
-                @else
-                    <a class="btn btn-primary"
-                       href="{{route('solicitacao.planejamento.index', ['modelo_animal_id' => $modelo_animal->id])}}">Abrir</a>
-                    @if(Auth::user()->hasRole('Solicitante') && $solicitacao->status != 'avaliado')
-                        <a class="btn btn-danger btn-deletar-modelo-animal"
-                           href="{{route('solicitacao.modelo_animal.delete', ['id' => $modelo_animal->id])}}">Deletar</a>
-                    @endif
-                @endif
+                
+                <a class="btn btn-primary"
+                    href="{{route('avaliador.solicitacao.planejamento.avaliar', ['modelo_animal_id' => $modelo_animal->id])}}">Abrir</a>
+                
             </td>
         </tr>
     @endforeach

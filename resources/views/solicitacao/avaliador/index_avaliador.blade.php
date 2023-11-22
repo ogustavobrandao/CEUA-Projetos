@@ -25,7 +25,7 @@
                     @include('component.modal_fail')
                     <div id="dados_iniciais">
                         
-                        @include('solicitacao.solicitacao',['tipo'=>0,'avaliacao_id'=>$avaliacao->id,'id'=>$solicitacao->id])
+                        @include('solicitacao.avaliador.solicitacao',['tipo'=>0,'avaliacao_id'=>$avaliacao->id,'id'=>$solicitacao->id])
                        
                     </div>
                 </div>
@@ -46,14 +46,14 @@
                     </div>
                     <div id="dados_responsavel">
                         
-                        @include('solicitacao.responsavel',['tipo'=>1,'avaliacao_id'=>$avaliacao->id,'id'=>$responsavel->id])
+                        @include('solicitacao.avaliador.responsavel',['tipo'=>1,'avaliacao_id'=>$avaliacao->id,'id'=>$responsavel->id])
                         
 
                     </div>
                 </div>
                 <div class="mb-4">
                     
-                    @include('solicitacao.colaborador.form', ['avaliacao_id' => $avaliacao->id, 'solicitacao' => $solicitacao, 'avaliacao' => $avaliacao, 'tipo'
+                    @include('solicitacao.colaborador.form_avaliador', ['avaliacao_id' => $avaliacao->id, 'solicitacao' => $solicitacao, 'avaliacao' => $avaliacao, 'tipo'
                             => 2, 'id' => -1])
                     
 
@@ -75,7 +75,7 @@
                     </div>
                     <div id="dados_complementares">
                         
-                        @include('solicitacao.solicitacao_fim',['tipo'=>3,'avaliacao_id'=>$avaliacao->id,'id'=>$solicitacao->dadosComplementares->id])
+                        @include('solicitacao.avaliador.solicitacao_fim',['tipo'=>3,'avaliacao_id'=>$avaliacao->id,'id'=>$solicitacao->dadosComplementares->id])
                         
 
                     </div>
@@ -98,7 +98,7 @@
                               enctype="multipart/form-data">
                             @csrf
                             <div class="modal-body">
-                                @include('solicitacao.modelo_animal_modal')
+                                @include('solicitacao.avaliador.modelo_animal_modal')
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
@@ -118,14 +118,7 @@
                                     <h3 class="titulo" id="titulo_4">5. Dados dos Modelos Animais <strong
                                             style="color: white">*</strong>
 
-                                        @if(Auth::user()->hasRole('Solicitante') && $solicitacao->status != 'avaliado')
-                                            <a class="float-end "
-                                               data-toggle="modal"
-                                               data-target="#modeloAnimalModal"
-                                               style="color: green"
-                                               title="Adicionar Modelo Animal"><i
-                                                    class="fa-solid fa-circle-plus fa-2xl"></i></a></h3>
-                                        @endif
+                                       
 
                                 @endif
 
@@ -146,6 +139,45 @@
                                 </tr>
                                 </thead>
                                 <tbody id="modelo_animal-info">
+                                    @foreach($solicitacao->modelosAnimais as $modelo_animal)
+                                        <tr id="fundo_modelo_{{$modelo_animal->id}}">
+                                            <td>
+                                                {{$modelo_animal->nome_cientifico}}
+                                            </td>
+                                            <td>
+                                                @if ($modelo_animal->procedencia == 'animal_comprado')
+                                                    Animal Comprado
+                                                @elseif ($modelo_animal->procedencia == 'animal_criacao')
+                                                    Animal Criação
+                                                @elseif ($modelo_animal->procedencia == 'animal_doado')
+                                                    Animal Doado
+                                                @elseif ($modelo_animal->procedencia == 'animal_silvestre')
+                                                    Animal Silvestre
+                                                @elseif ($modelo_animal->procedencia == 'aviario')
+                                                    Aviário
+                                                @elseif ($modelo_animal->procedencia == 'bioterio')
+                                                    Biotério
+                                                @elseif ($modelo_animal->procedencia == 'fazenda')
+                                                    Fazenda
+                                                @elseif ($modelo_animal->procedencia == 'outra_procedencia')
+                                                    {{$modelo_animal->outra_procedencia}}
+                                                @endif
+                                
+                                            </td>
+                                            <td>
+                                                {{$modelo_animal->perfil->linhagem ?? 'Não preenchido'}}
+                                            </td>
+                                            <td>
+                                                {{$modelo_animal->perfil->idade ?? 'Não preenchido'}}
+                                            </td>
+                                            <td class="text-center">
+                
+                                                <a class="btn btn-primary"
+                                                    href="{{route('avaliador.solicitacao.planejamento.avaliar', ['modelo_animal_id' => $modelo_animal->id])}}">Abrir</a>
+                                                
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
 
