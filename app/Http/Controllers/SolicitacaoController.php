@@ -385,7 +385,7 @@ class SolicitacaoController extends Controller
         $responsavel = Responsavel::find($colaborador->responsavel_id);
         $instituicaos = Instituicao::all();
 
-        $colaborador_modal = view('solicitacao.colaborador.colaborador_edicao_modal', ['colaborador' => $colaborador, 'solicitacao_id' => $responsavel->solicitacao_id, 'instituicaos' => $instituicaos, "tipo" => 2])->render();
+        $colaborador_modal = view('solicitacao.colaborador.colaborador_edicao_modal_solicitante', ['colaborador' => $colaborador, 'solicitacao_id' => $responsavel->solicitacao_id, 'instituicaos' => $instituicaos, "tipo" => 2])->render();
 
         return response()->json(['colaborador_modal' => $colaborador_modal]);
 

@@ -109,6 +109,7 @@ Route::group(['middleware' => ['auth', 'verified', 'checkRole:Solicitante']], fu
     Route::get('/solicitacao/colaborador/{id}', [SolicitacaoController::class, 'deletar_colaborador'])->name('solicitacao.colaborador.deletar');
     Route::get('/solicitacao/colaborador_tabela/adm/{id}', [SolicitacaoController::class, 'atualizar_colaborador_tabela_adm'])->name('solicitacao.colaborador_tabela_adm');
     Route::get('/solicitacao/colaborador_tabela/{id}', [SolicitacaoController::class, 'atualizar_colaborador_tabela'])->name('solicitacao.colaborador_tabela');
+    Route::get('solicitacao/colaborador_tabela/solicitante/{id}', [SolicitacaoController::class, 'atualizar_solicitante_solicitante'])->name('solicitacao.solicitante');
     Route::get('/solicitacao/modal_atualizacao_colaborador/{colaborador_id}', [SolicitacaoController::class, 'abrir_colaborador_modal'])->name('solicitacao.modal_atualizacao_colaborador');
     Route::get('/solicitacao/modal_atualizacao_colaborador/adm/{colaborador_id}', [SolicitacaoController::class, 'abrir_colaborador_modal_adm'])->name('solicitacao.modal_atualizacao_colaborador_adm');
     Route::post('/solicitacao/criar_eutanasia', [SolicitacaoController::class, 'criar_eutanasia'])->name('solicitacao.eutanasia.criar');
