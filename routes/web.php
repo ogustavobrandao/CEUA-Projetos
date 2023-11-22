@@ -32,6 +32,8 @@ Route::get('/', function () {
     return view('welcome');
 })->name("welcome");
 
+Route::get('/create', [UsuarioController::class, 'createSolicitante'])->name('create_solicitante');
+
 Route::group(['middleware' => ['auth', 'verified']], function () {
 
     Route::get('/home', [HomeController::class, 'home'])->name('home');

@@ -117,14 +117,15 @@
                                         {{ __('Entrar') }}
                                     </button>
                                 </div>
-                                @if (Route::has('register'))
-                                    <div class="col-md-6 text-center pr-0">
-                                        <a href="{{ route('register') }}"
-                                           class="btn w-75 color_bt-cadastrar font-weight-bold">
-                                            Cadastrar-se
-                                        </a>
-                                    </div>
-                                @endif
+                                <div class="col-md-6 text-center pr-0">
+
+                                    <a href="{{ route('create_solicitante') }}"
+                                    class="btn w-75 color_bt-cadastrar font-weight-bold">
+                                     Cadastrar-se
+                                    </a>
+                                </div>                                    
+                                
+                                 
                             </div>
                         </form>
                     </div>

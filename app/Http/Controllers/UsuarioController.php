@@ -6,6 +6,7 @@ use App\Http\Requests\StoreUsuarioRequest;
 use App\Http\Requests\UpdateUsuarioRequest;
 use App\Interfaces\IUsuarioService;
 use App\Models\Instituicao;
+use App\Models\Unidade;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -43,12 +44,31 @@ class UsuarioController extends Controller
                 $user->roles()->detach($i);
             }
         }
-        
-       
-        
         return redirect(route('usuarios.index'))->with('sucesso', 'Usuário cadastrado com sucesso com senha padrão password!');
     }
 
+    
+
+    public function createSolicitante(){
+        $instituicaos = Instituicao::all();
+        $unidades = Unidade::all();
+        return view('auth.register', compact('instituicaos', 'unidades'));
+        
+    }
+    public function storeSolicitante(Request $request){
+        User::create([
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'password' => Hash::make($request['password']),
+            'cpf' => preg_replace('/[^0-9]/', '', $request['cpf']),
+            'rg' => preg_replace('/[^0-9]/', '', $request['rg']),
+            'celular' => preg_replace('/[^0-9]/', '', $request['celular']),
+            'unidade_id' => $request['unidade'],
+            'tipo_usuario_id'=> 3,
+        ])->roles()->attach(3);
+
+        return redirect(route('welcome'))->with('success', 'Usuário criado com sucesso!');
+        }
     public function editar_perfil()
     {
         $instituicaos = Instituicao::all();
