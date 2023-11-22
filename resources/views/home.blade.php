@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('navbar-type')
+    @include('layouts.components.navbar')
+@endsection
+
 @section('content')
 <div class="container">
     <div class="row" style="border-bottom: #131833 2px solid">

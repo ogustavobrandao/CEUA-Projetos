@@ -11,19 +11,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <!-- Left Side Of Navbar -->
         <ul class="navbar-nav me-auto">
-            @auth()
-                @if(Auth::user()->hasRole('Administrador'))
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('instituicao.index') }}" style="color: white;">{{ __('Instituições') }}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{route('solicitacao.admin.index')}}" style="color: white;">{{ __('Solicitações') }}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{route('usuarios.index')}}" style="color: white;">{{ __('Usuários') }}</a>
-                    </li>
-                @endif
-            @endauth
+            @yield('navbar-links')
         </ul>
 
         <!-- Right Side Of Navbar -->
@@ -61,6 +49,12 @@
 
 
             @else
+                @if (Auth::user()->roles()->count() > 1)
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="{{ route('welcome') }}">Trocar perfil</a>
+                    </li>
+                @endif
+                
                 <li class="nav-item dropdown">
 
 

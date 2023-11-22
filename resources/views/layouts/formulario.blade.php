@@ -46,7 +46,7 @@
     </ul>
 </div>
 
-@include('layouts.components.navbar2')
+@include('layouts.components.navbar')
 <div id="app">
     @yield('login')
     <div class="row my-5 justify-content-center">
