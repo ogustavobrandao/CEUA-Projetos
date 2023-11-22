@@ -16,7 +16,7 @@
             <div class="col-md-6 p-5">
                 <div class="login_form d-flex align-items-center justify-content-center">
                     <div class="col-12">
-                        <form class="shadow p-3 bg-cinza rounded-sm py-3 pt-3-2" method="POST" action="{{ route('register') }}">
+                        <form class="shadow p-3 bg-cinza rounded-sm py-3 pt-3-2" method="POST" action="{{ route('store_solicitante') }}">
                             <div class="row">
                                 <div class="col-md-12 mt-4">
                                     <h1 class="text-left borda-bottom titulo px-3">Cadastro</h1>

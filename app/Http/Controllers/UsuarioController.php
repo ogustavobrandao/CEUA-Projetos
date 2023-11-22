@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreSolicitanteRequest;
 use App\Http\Requests\StoreUsuarioRequest;
 use App\Http\Requests\UpdateUsuarioRequest;
 use App\Interfaces\IUsuarioService;
@@ -55,7 +56,7 @@ class UsuarioController extends Controller
         return view('auth.register', compact('instituicaos', 'unidades'));
         
     }
-    public function storeSolicitante(Request $request){
+    public function storeSolicitante(StoreSolicitanteRequest $request){
         User::create([
             'name' => $request['name'],
             'email' => $request['email'],
@@ -66,7 +67,7 @@ class UsuarioController extends Controller
             'unidade_id' => $request['unidade'],
             'tipo_usuario_id'=> 3,
         ])->roles()->attach(3);
-
+        
         return redirect(route('welcome'))->with('success', 'Usuário criado com sucesso!');
         }
     public function editar_perfil()
