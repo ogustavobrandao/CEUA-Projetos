@@ -3,7 +3,7 @@
     <form id="form11" method="POST" action="">
         @csrf
         <input type="hidden" name="modelo_animal_id" value="{{$modelo_animal->id}}">
-        <div class="row col-md-12" style="pointer-events: none">
+        <div class="row col-md-12">
             <div class="col-sm-6 mt-2">
                 <label for="abate">Abate:<strong style="color: red">*</strong></label>
                 <div class="row ml-1">
@@ -38,7 +38,7 @@
                     retirados no decorrer do experimento / aula:<strong style="color: red">*</strong></label>
                 <textarea class="form-control @error('destino_animais') is-invalid @enderror" name="destino_animais"
                           id="destino_animais" autocomplete="destino_animais" autofocus
-                          required>@if(!empty($resultado) && $resultado->destino_animais != null){{$resultado->destino_animais}}@else{{old('destino_animais')}}@endif</textarea>
+                          required readonly>@if(!empty($resultado) && $resultado->destino_animais != null){{$resultado->destino_animais}}@else{{old('destino_animais')}}@endif</textarea>
                 <div class="div_error" id="destino_animais_error" style="display: none">
                     <span class="invalid-input">
                         <strong id="destino_animais_error_message"></strong>
@@ -50,7 +50,7 @@
                 <label for="outras_infos">Outras Informações Relevantes:<strong style="color: red">*</strong></label>
                 <textarea class="form-control @error('outras_infos') is-invalid @enderror" name="outras_infos"
                           id="outras_infos" autocomplete="outras_infos" autofocus
-                          required minlength="4">@if(!empty($resultado) && $resultado->outras_infos != null){{$resultado->outras_infos}}@endif</textarea>
+                          required minlength="4" readonly>@if(!empty($resultado) && $resultado->outras_infos != null){{$resultado->outras_infos}}@endif</textarea>
                 <div class="div_error" id="outras_infos_error" style="display: none">
                         <span class="invalid-input">
                             <strong id="outras_infos_error_message"></strong>
@@ -63,7 +63,7 @@
                     necessidade do uso de animais:<strong style="color: red">*</strong></label>
                 <textarea class="form-control @error('justificativa_metodos') is-invalid @enderror"
                           name="justificativa_metodos" id="justificativa_metodos" autocomplete="justificativa_metodos"
-                          autofocus required>@if(!empty($resultado) && $resultado->justificativa_metodos != null){{$resultado->justificativa_metodos}}@else{{old('justificativa_metodos')}}@endif</textarea>
+                          autofocus required readonly>@if(!empty($resultado) && $resultado->justificativa_metodos != null){{$resultado->justificativa_metodos}}@else{{old('justificativa_metodos')}}@endif</textarea>
                 <div class="div_error" id="justificativa_metodos_error" style="display: none">
                         <span class="invalid-input">
                             <strong id="justificativa_metodos_error_message"></strong>
@@ -77,7 +77,7 @@
                 <textarea class="form-control @error('resumo_procedimento') is-invalid @enderror"
                           name="resumo_procedimento" id="resumo_procedimento" autocomplete="resumo_procedimento"
                           autofocus
-                          required>@if(!empty($resultado) && $resultado->resumo_procedimento != null){{$resultado->resumo_procedimento}}@endif</textarea>
+                          required readonly>@if(!empty($resultado) && $resultado->resumo_procedimento != null){{$resultado->resumo_procedimento}}@endif</textarea>
                 <div class="div_error" id="resumo_procedimento_error" style="display: none">
                         <span class="invalid-input">
                             <strong id="resumo_procedimento_error_message"></strong>
