@@ -53,10 +53,10 @@ class SolicitacaoController extends Controller
     public function index_solicitacao($solicitacao_id)
     {
         $solicitacao = Solicitacao::find($solicitacao_id);
-        $instituicaos = Instituicao::all();
-        $grandeAreas = GrandeArea::all();
-        $areas = Area::all();
-        $subAreas = SubArea::all();
+        $instituicaos = Instituicao::orderBy('nome')->where('id', '<>', 9)->get();
+        $grandeAreas = GrandeArea::orderBy('nome')->get();
+        $areas = Area::orderBy('nome')->get();
+        $subAreas = SubArea::orderBy('nome')->get();
 
         if (Auth::user()->hasRole('Solicitante') && $solicitacao->status == 'avaliado' && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia') {
             $avaliacao = Avaliacao::where('solicitacao_id', $solicitacao_id)->where('user_id', $solicitacao->avaliacao->first()->user_id)->first();
