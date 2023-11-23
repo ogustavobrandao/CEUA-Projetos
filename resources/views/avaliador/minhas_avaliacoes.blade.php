@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('navbar-type')
+    @include('layouts.components.navbar')
+@endsection
+
 @section('content')
     <div class="row container-fluid min-vh justify-content-center">
         <div class="col-10">
