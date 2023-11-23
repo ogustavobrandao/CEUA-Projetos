@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('navbar-type')
+    @include('layouts.components.navbarAdmin')
+@endsection
+
 @section('content')
     <div class="col-12">
         <div class="shadow-lg p-5">

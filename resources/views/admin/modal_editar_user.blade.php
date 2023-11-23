@@ -141,7 +141,7 @@
                             <label for="unidade">{{ __('Unidade') }}<strong
                                     style="color: red">*</strong></label>
                             <select class="form-control" id="unidade{{$usuario->id}}" name="unidade">
-                                <option selected value="{{$usuario->unidade}}">
+                                <option selected value="{{$usuario->unidade->id}}">
                                     {{$usuario->unidade->nome}}
                                 </option>
                             </select>
