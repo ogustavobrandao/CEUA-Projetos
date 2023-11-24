@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreSolicitanteRequest;
 use App\Http\Requests\StoreUsuarioRequest;
 use App\Http\Requests\UpdateUsuarioRequest;
 use App\Interfaces\IUsuarioService;
 use App\Models\Instituicao;
+use App\Models\Unidade;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,22 +16,60 @@ use Illuminate\Support\Facades\Validator;
 
 class UsuarioController extends Controller
 {
-    private $usuarioService;
-
-    public function __construct(IUsuarioService $usuarioService) {
-        $this->usuarioService = $usuarioService;
-    }
 
     public function index() {
-        $dadosUsuario = $this->usuarioService->index();
-        return view('admin.usuarios_index', ["usuarios" => $dadosUsuario[0], "instituicaos" => $dadosUsuario[1]]);
+
+        $usuarios = User::all();
+        $instituicaos = Instituicao::all();
+        
+        return view('admin.usuarios_index', compact('usuarios', 'instituicaos'));
     }
 
-    public function store(StoreUsuarioRequest $request) {
-        $this->usuarioService->cadastrarUsuario($request->validated());
+    public function store(Request $request) {
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make('password'),
+            'cpf' => preg_replace('/[^0-9]/', '', $request->cpf),
+            'rg' => preg_replace('/[^0-9]/', '', $request->rg),
+            'celular' => preg_replace('/[^0-9]/', '', $request->celular),
+            'unidade_id' => $request->unidade,
+            'tipo_usuario_id'=> 2,
+        ]);
+        $i = 0;
+        foreach ($request->roles as $role) {
+            $i++;
+            if($role) {
+                $user->roles()->attach($i);
+            }else{
+                $user->roles()->detach($i);
+            }
+        }
         return redirect(route('usuarios.index'))->with('sucesso', 'Usuário cadastrado com sucesso com senha padrão password!');
     }
 
+    
+
+    public function createSolicitante(){
+        $instituicaos = Instituicao::all();
+        $unidades = Unidade::all();
+        return view('auth.register', compact('instituicaos', 'unidades'));
+        
+    }
+    public function storeSolicitante(StoreSolicitanteRequest $request){
+        User::create([
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'password' => Hash::make($request['password']),
+            'cpf' => preg_replace('/[^0-9]/', '', $request['cpf']),
+            'rg' => preg_replace('/[^0-9]/', '', $request['rg']),
+            'celular' => preg_replace('/[^0-9]/', '', $request['celular']),
+            'unidade_id' => $request['unidade'],
+            'tipo_usuario_id'=> 3,
+        ])->roles()->attach(3);
+        
+        return redirect(route('welcome'))->with('success', 'Usuário criado com sucesso!');
+        }
     public function editar_perfil()
     {
         $instituicaos = Instituicao::all();
@@ -71,8 +111,28 @@ class UsuarioController extends Controller
         return redirect()->back()->with('success', 'Senha alterada com sucesso!');
     }
 
-    public function update(UpdateUsuarioRequest $request) {
-        $this->usuarioService->atualizarUsuario($request->validated());
+    public function update(Request $request, $id) {
+        
+
+        $usuario = User::find($id);
+        
+        $usuario->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'cpf' => preg_replace('/[^0-9]/', '', $request->cpf),
+            'rg' => preg_replace('/[^0-9]/', '', $request->rg),
+            'celular' => preg_replace('/[^0-9]/', '', $request->celular),
+            'unidade_id' => $request->unidade,
+        ]);
+        //Para que a senha seja alterada apenas quando houver uma mudança feita pelo adm
+        if(!empty($request->password)){
+            $usuario->update([
+                'password' => Hash::make($request->password),
+            ]);
+        }
+        
+        $usuario->roles()->sync($request->input('roles', []));
+
         return redirect(route('usuarios.index'))->with('sucesso', 'Usuário editado com sucesso!');
     }
 }

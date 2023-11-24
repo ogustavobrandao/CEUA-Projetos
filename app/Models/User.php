@@ -59,11 +59,6 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
-    public function tipoUsuario()
-    {
-        return $this->belongsTo('App\Models\TipoUsuario');
-    }
-
     public function unidade()
     {
         return $this->belongsTo('App\Models\Unidade');
@@ -77,6 +72,13 @@ class User extends Authenticatable implements MustVerifyEmail
     public function solicitacoes()
     {
         return $this->hasMany('App\Models\Solicitacao');
+    }
+    public function roles(){
+        return $this->belongsToMany(Role::class, 'role_user', 'user_id', 'role_id');
+    }
+    public function hasRole($role)
+    {
+        return $this->roles()->where('nome', $role)->exists();
     }
 
 }

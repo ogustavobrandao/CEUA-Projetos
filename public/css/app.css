@@ -11062,10 +11062,6 @@ label {
 }
 
 .caixaSelecao {
-    left: 0;
-    top: 0;
-    position: absolute;
-    z-index: 1;
     border-radius: 1rem;
     width: 100%;
     height: 300px;

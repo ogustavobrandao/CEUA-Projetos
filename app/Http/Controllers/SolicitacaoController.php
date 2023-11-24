@@ -42,6 +42,7 @@ use App\Models\GrandeArea;
 use App\Models\Area;
 use App\Models\SubArea;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -52,12 +53,12 @@ class SolicitacaoController extends Controller
     public function index_solicitacao($solicitacao_id)
     {
         $solicitacao = Solicitacao::find($solicitacao_id);
-        $instituicaos = Instituicao::all();
-        $grandeAreas = GrandeArea::all();
-        $areas = Area::all();
-        $subAreas = SubArea::all();
+        $instituicaos = Instituicao::orderBy('nome')->where('id', '<>', 9)->get();
+        $grandeAreas = GrandeArea::orderBy('nome')->get();
+        $areas = Area::orderBy('nome')->get();
+        $subAreas = SubArea::orderBy('nome')->get();
 
-        if (Auth::user()->tipo_usuario_id == 3 && $solicitacao->status == 'avaliado' && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia') {
+        if (Auth::user()->hasRole('Solicitante') && $solicitacao->status == 'avaliado' && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia') {
             $avaliacao = Avaliacao::where('solicitacao_id', $solicitacao_id)->where('user_id', $solicitacao->avaliacao->first()->user_id)->first();
 
 
@@ -67,12 +68,12 @@ class SolicitacaoController extends Controller
             $avaliacaoColaborador = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)->where('tipo', 2)->first();
 
 
-            return view('solicitacao.index', compact('solicitacao',
+            return view('solicitacao.solicitante.index', compact('solicitacao',
                 'instituicaos', 'grandeAreas', 'areas', 'subAreas', 'avaliacaoDadosComp', 'avaliacaoDadosini', 'avaliacaoResponsavel', 'avaliacaoColaborador', 'avaliacao'));
 
         }
 
-        return view('solicitacao.index', compact('solicitacao', 'instituicaos', 'grandeAreas', 'areas', 'subAreas'));
+        return view('solicitacao.solicitante.index', compact('solicitacao', 'instituicaos', 'grandeAreas', 'areas', 'subAreas'));
     }
 
     public function avaliarSolicitacao($solicitacao_id)
@@ -102,7 +103,7 @@ class SolicitacaoController extends Controller
         } else {
             $avaliado = 'true';
         }
-        return view('solicitacao.index', compact('disabled', 'solicitacao', 'grandeAreas', 'areas', 'subAreas',
+        return view('solicitacao.avaliador.index_avaliador', compact('disabled', 'solicitacao', 'grandeAreas', 'areas', 'subAreas',
             'instituicaos', 'responsavel', 'colaboradores', 'modelo_animais', 'avaliacao',
             'avaliacaoDadosComp', 'avaliacaoDadosini', 'avaliacaoResponsavel', 'avaliacaoColaborador', 'avaliado'));
 
@@ -131,7 +132,7 @@ class SolicitacaoController extends Controller
 
         $solicitacao->save();
 
-        return redirect(route('solicitacao.index', ['solicitacao_id' => $solicitacao->id]));
+        return redirect(route('solicitacao.index', ['solicitacao_id' => $solicitacao->id, 'solicitacao_user_id' => $solicitacao->user_id]));
     }
 
 
@@ -354,13 +355,48 @@ class SolicitacaoController extends Controller
         return response()->json(['html' => $conteudoTabela]);
 
     }
+    public function atualizar_colaborador_tabela_avaliador($id)
+    {
+
+        $solicitacao = Solicitacao::find($id);
+        $colaboradores = $solicitacao->responsavel->colaboradores;
+        $instituicaos = Instituicao::all();
+
+        $conteudoTabela = view('solicitacao.colaborador.colaborador_tabela_avaliador', ['colaboradores' => $colaboradores, 'solicitacao' => $solicitacao, 'instituicaos' => $instituicaos, "tipo" => 2])->render();
+
+        return response()->json(['html' => $conteudoTabela]);
+
+    }
+    public function atualizar_colaborador_tabela_adm($id)
+    {
+
+        $solicitacao = Solicitacao::find($id);
+        $colaboradores = $solicitacao->responsavel->colaboradores;
+        $instituicaos = Instituicao::all();
+
+        $conteudoTabela = view('solicitacao.colaborador.colaborador_tabela_adm', ['colaboradores' => $colaboradores, 'solicitacao' => $solicitacao, 'instituicaos' => $instituicaos, "tipo" => 2])->render();
+
+        return response()->json(['html' => $conteudoTabela]);
+
+    }
     public function abrir_colaborador_modal($colaborador_id)
     {
         $colaborador= Colaborador::find($colaborador_id);
         $responsavel = Responsavel::find($colaborador->responsavel_id);
         $instituicaos = Instituicao::all();
 
-        $colaborador_modal = view('solicitacao.colaborador.colaborador_edicao_modal', ['colaborador' => $colaborador, 'solicitacao_id' => $responsavel->solicitacao_id, 'instituicaos' => $instituicaos, "tipo" => 2])->render();
+        $colaborador_modal = view('solicitacao.colaborador.colaborador_edicao_modal_solicitante', ['colaborador' => $colaborador, 'solicitacao_id' => $responsavel->solicitacao_id, 'instituicaos' => $instituicaos, "tipo" => 2])->render();
+
+        return response()->json(['colaborador_modal' => $colaborador_modal]);
+
+    }
+    public function abrir_colaborador_modal_adm($colaborador_id)
+    {
+        $colaborador= Colaborador::find($colaborador_id);
+        $responsavel = Responsavel::find($colaborador->responsavel_id);
+        $instituicaos = Instituicao::all();
+
+        $colaborador_modal = view('solicitacao.colaborador.colaborador_edicao_modal_adm', ['colaborador' => $colaborador, 'solicitacao_id' => $responsavel->solicitacao_id, 'instituicaos' => $instituicaos, "tipo" => 2])->render();
 
         return response()->json(['colaborador_modal' => $colaborador_modal]);
 
@@ -419,16 +455,12 @@ class SolicitacaoController extends Controller
         $perfil->modelo_animal_id = $modelo_animal->id;
         $perfil->save();
 
-        return response()->json([
-            'message' => 'success',
-            'campo' => 'Modelo animal'
-        ]);
+        return redirect()->back()->with('success','Modelo animal criado com sucesso');
     }
 
-    public function atualizar_modelo_animal(AtualizarModeloAnimalRequest $request)
+    public function atualizar_modelo_animal(Request $request, $id)
     {
-        $modelo_animal = ModeloAnimal::find($request->modelo_animal_id);
-
+        $modelo_animal = ModeloAnimal::find($id);
         $data = $request->all();
 
         if (($request->hasFile('termo_consentimento') && $request->file('termo_consentimento')->isValid())) {
@@ -466,18 +498,14 @@ class SolicitacaoController extends Controller
         $perfil->modelo_animal_id = $modelo_animal->id;
         $perfil->update();
 
-        return response()->json([
-            'message' => 'success',
-            'campo' => 'Modelo animal'
-        ]);
+        return redirect()->back()->with('success', 'Modelo animal atualizado com sucesso.');
     }
 
     public function deletar_modelo_animal($id)
     {
-
         ModeloAnimal::find($id)->delete();
-        return json_encode(['message' => 'success']);
-
+        return redirect()->back()->with('success', 'Modelo de animal excluído com sucesso.');
+    
     }
 
     public function atualizar_modelo_animal_tabela($solicitacao_id)
@@ -485,7 +513,27 @@ class SolicitacaoController extends Controller
         $solicitacao = Solicitacao::find($solicitacao_id);
         $modelosAnimais = ModeloAnimal::where('solicitacao_id', $solicitacao_id)->get();
 
-        $tabela_modelo_animal = view('solicitacao.modelo_animal_tabela', ['solicitacao' => $solicitacao, 'modelosAnimais' => $modelosAnimais])->render();
+        $tabela_modelo_animal = view('solicitacao.solicitante.modelo_animal_tabela', ['solicitacao' => $solicitacao, 'modelosAnimais' => $modelosAnimais])->render();
+
+        return response()->json(['html' => $tabela_modelo_animal]);
+
+    }
+    public function atualizar_modelo_animal_tabela_adm($solicitacao_id)
+    {
+        $solicitacao = Solicitacao::find($solicitacao_id);
+        $modelosAnimais = ModeloAnimal::where('solicitacao_id', $solicitacao_id)->get();
+
+        $tabela_modelo_animal = view('solicitacao.modelo_animal_tabela_adm', ['solicitacao' => $solicitacao, 'modelosAnimais' => $modelosAnimais])->render();
+
+        return response()->json(['html' => $tabela_modelo_animal]);
+
+    }
+    public function atualizar_modelo_animal_tabela_avaliador($solicitacao_id)
+    {
+        $solicitacao = Solicitacao::find($solicitacao_id);
+        $modelosAnimais = ModeloAnimal::where('solicitacao_id', $solicitacao_id)->get();
+
+        $tabela_modelo_animal = view('solicitacao.modelo_animal_tabela_avaliador', ['solicitacao' => $solicitacao, 'modelosAnimais' => $modelosAnimais])->render();
 
         return response()->json(['html' => $tabela_modelo_animal]);
 
@@ -643,7 +691,7 @@ class SolicitacaoController extends Controller
             $resultado = null;
         }
 
-        if (Auth::user()->tipo_usuario_id == 3 && $solicitacao->status == 'avaliado' && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia') {
+        if (Auth::user()->hasRole('Solicitante') && $solicitacao->status == 'avaliado' && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia') {
             $avaliacao = Avaliacao::where('solicitacao_id', $solicitacao->id)->where('user_id', $solicitacao->avaliacao->first()->user_id)->first();
             // Avaliações Individuais
             $avaliacaoPlanejamento = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)->where('planejamento_id', $planejamento->id)->first();
@@ -654,13 +702,38 @@ class SolicitacaoController extends Controller
             $avaliacaoResultado = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)->where('resultado_id', $resultado->id)->first();
             $avaliacaoModeloAnimal = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)->where('modelo_animal_id', $modelo_animal->id)->first();
 
-            return view('planejamento.index',
+            return view('planejamento.solicitante.index',
                 compact('modelo_animal', 'planejamento', 'solicitacao', 'condicoes_animal', 'procedimento', 'operacao', 'eutanasia', 'resultado', 'avaliacao',
                     'avaliacaoPlanejamento', 'avaliacaoCondicoesAnimal', 'avaliacaoProcedimento', 'avaliacaoOperacao',
                     'avaliacaoEutanasia', 'avaliacaoResultado', 'avaliacaoModeloAnimal'));
         }
 
-        return view('planejamento.index',
+        return view('planejamento.solicitante.index',
+            compact('modelo_animal', 'planejamento', 'solicitacao', 'condicoes_animal', 'procedimento', 'operacao', 'eutanasia', 'resultado'));
+    }
+
+    public function index_planejamento_adm($modelo_animal_id)
+    {
+        $modelo_animal = ModeloAnimal::find($modelo_animal_id);
+        $planejamento = Planejamento::where('modelo_animal_id', $modelo_animal_id)->first();
+        $solicitacao = Solicitacao::find($modelo_animal->solicitacao_id);
+
+        //Componentes que requerem ter Planejamento
+        if ($planejamento != null) {
+            $condicoes_animal = CondicoesAnimal::where('planejamento_id', $planejamento->id)->first();
+            $procedimento = Procedimento::where('planejamento_id', $planejamento->id)->first();
+            $operacao = Operacao::where('planejamento_id', $planejamento->id)->first();
+            $eutanasia = Eutanasia::where('planejamento_id', $planejamento->id)->first();
+            $resultado = Resultado::where('planejamento_id', $planejamento->id)->first();
+        } else {
+            $condicoes_animal = null;
+            $procedimento = null;
+            $operacao = null;
+            $eutanasia = null;
+            $resultado = null;
+        }
+
+        return view('planejamento.administrador.index_adm',
             compact('modelo_animal', 'planejamento', 'solicitacao', 'condicoes_animal', 'procedimento', 'operacao', 'eutanasia', 'resultado'));
     }
 
@@ -693,7 +766,7 @@ class SolicitacaoController extends Controller
         } else {
             $avaliado = 'true';
         }
-        return view('planejamento.index',
+        return view('planejamento.avaliador.index_avaliador',
             compact('modelo_animal', 'planejamento', 'solicitacao', 'condicoes_animal', 'procedimento', 'operacao', 'eutanasia', 'resultado', 'avaliacao',
                 'avaliacaoPlanejamento', 'avaliacaoCondicoesAnimal', 'avaliacaoProcedimento', 'avaliacaoOperacao',
                 'avaliacaoEutanasia', 'avaliacaoResultado', 'avaliacaoModeloAnimal', 'avaliado'));
@@ -983,13 +1056,14 @@ class SolicitacaoController extends Controller
         $avaliacoes = Avaliacao::all();
         $horario = Carbon::now('UTC')->toDateTime();
         $solicitacoes = Solicitacao::all();
-        $avaliadores = User::where('tipo_usuario_id', '2')->get();
-
+        $avaliadores = User::whereHas('roles', function (Builder $query) {
+            $query->where('nome', 'Avaliador');
+        })->get();
+        
         return view('admin.solicitacoes', compact('solicitacoes', 'avaliadores', 'avaliacoes', 'horario'));
     }
 
-    public
-    function concluir($solicitacao_id)
+    public function concluir($solicitacao_id)
     {
         $concluir = true;
         $solicitacao = Solicitacao::where('id', $solicitacao_id)->where('user_id', Auth::user()->id)->first();
@@ -1033,7 +1107,7 @@ class SolicitacaoController extends Controller
         $subAreas = SubArea::all();
 
 
-        return view('solicitacao.visualizar', compact('solicitacao', 'grandeAreas', 'areas', 'subAreas', 'instituicaos'));
+        return view('solicitacao.administrador.visualizar_adm', compact('solicitacao', 'grandeAreas', 'areas', 'subAreas', 'instituicaos'));
     }
 
     public function apreciacao_index()
@@ -1066,7 +1140,7 @@ class SolicitacaoController extends Controller
         $avaliacaoResponsavel = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)->where('responsavel_id', $responsavel->id)->first();
         $avaliacaoColaborador = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)->where('tipo', 2)->first();
 
-        return view('solicitacao.index', compact('disabled', 'solicitacao', 'grandeAreas', 'areas', 'subAreas',
+        return view('solicitacao.administrador.index_adm', compact('disabled', 'solicitacao', 'grandeAreas', 'areas', 'subAreas',
             'instituicaos', 'responsavel', 'colaboradores', 'modelo_animais', 'avaliacao',
             'avaliacaoDadosComp', 'avaliacaoDadosini', 'avaliacaoResponsavel', 'avaliacaoColaborador'));
 

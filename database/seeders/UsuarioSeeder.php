@@ -29,5 +29,6 @@ class UsuarioSeeder extends Seeder
             'tipo_usuario_id' => 3
         ]);
 
+
     }
 }
