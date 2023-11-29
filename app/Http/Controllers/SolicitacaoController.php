@@ -53,7 +53,7 @@ class SolicitacaoController extends Controller
     public function index_solicitacao($solicitacao_id)
     {
         $solicitacao = Solicitacao::find($solicitacao_id);
-        $instituicaos = Instituicao::orderBy('nome')->where('id', '<>', 9)->get();
+        $instituicaos = Instituicao::orderByRaw("nome = 'Universidade Federal do Agreste de Pernambuco (UFAPE)' DESC, nome ASC")->get();
         $grandeAreas = GrandeArea::orderBy('nome')->get();
         $areas = Area::orderBy('nome')->get();
         $subAreas = SubArea::orderBy('nome')->get();

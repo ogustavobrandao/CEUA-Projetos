@@ -65,7 +65,6 @@
                     <select class="form-control" id="instituicao" name="instituicao_id" onchange="unidades('')"
                         required>
                         <option disabled selected>Selecione uma Instituição</option>
-                        <option value="9">Universidade Federal do Agreste de Pernambuco (UFAPE)</option>
                         @foreach ($instituicaos as $instituicao)
                             <option @if (
                                 !empty($solicitacao->responsavel) &&
