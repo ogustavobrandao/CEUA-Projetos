@@ -28,9 +28,9 @@ Auth::routes(['verify' => true]);
 
 Route::get('/', function () {
     if (Auth::check())
-        return view('home');
+        return redirect()->route('home');
     return view('welcome');
-})->name("welcome");
+})->name('welcome');
 
 Route::get('/create', [UsuarioController::class, 'createSolicitante'])->name('create_solicitante');
 Route::post('/store', [UsuarioController::class,'storeSolicitante'])->name('store_solicitante');
