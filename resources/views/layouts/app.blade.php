@@ -47,9 +47,8 @@
         </li>
     </ul>
 </div>
-@if(!isset($nao_exibir) || !$nao_exibir)
-    @yield('navbar-type')
-@endif
+
+@include('layouts.components.navbar')
 @yield('login')
 @guest
     @yield('content')
