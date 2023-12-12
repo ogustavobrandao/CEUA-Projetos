@@ -19,7 +19,7 @@ class SolicitacaoFactory extends Factory
         return [
             'titulo_en' => 'Titulo English',
             'fim' => today(),
-            'user_id' => 3,
+            'user_id' => 1,
             'tipo' => 'Extensão',
             'titulo_pt' => 'Titulo Portugues',
             'inicio' => today(),
