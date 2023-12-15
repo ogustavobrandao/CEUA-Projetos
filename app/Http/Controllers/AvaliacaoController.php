@@ -132,95 +132,87 @@ class AvaliacaoController extends Controller
     {
         $solicitacao = Solicitacao::find($request->solicitacao_id);
         $avaliacao = Avaliacao::find($request->avaliacao_id);
-        if ($request->user()->hasRole('Avaliador')) {
-            $avaliador = User::find(Auth::user()->id);
+        $avaliador = User::find(Auth::user()->id);
 
-            if (!$solicitacao->avaliacao_individual || !$solicitacao->avaliacao_individual->status) {
+        if (!$solicitacao->avaliacao_individual || !$solicitacao->avaliacao_individual->status) {
+            return redirect()->back()->with('fail', 'Avaliação Pendente');
+        }
+
+        if (!$solicitacao->responsavel->avaliacao_individual || !$solicitacao->responsavel->avaliacao_individual->status) {
+            return redirect()->back()->with('fail', 'Avaliação Pendente');
+        }
+
+
+        $colaboradorAvaliacao = $solicitacao->avaliacao->first()->avaliacao_individual->where('tipo', 2)->first();
+        if (!$colaboradorAvaliacao || !$colaboradorAvaliacao->status) {
+            return redirect()->back()->with('fail', 'Avaliação Pendente');
+        }
+
+
+        if ($solicitacao->dadosComplementares) {
+            $avaliacaoDadosComplementares = $solicitacao->dadosComplementares->avaliacao_individual;
+            if (!$avaliacaoDadosComplementares || !$avaliacaoDadosComplementares->status) {
+                return redirect()->back()->with('fail', 'Avaliação Pendente');
+            }
+        }
+
+        foreach ($solicitacao->modelosAnimais as $modeloAnimal) {
+
+            $avaliacaoModelo = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)
+                ->where('modelo_animal_id', $modeloAnimal->id)
+                ->first();
+
+            if (!$avaliacaoModelo || $avaliacaoModelo->status === null) {
                 return redirect()->back()->with('fail', 'Avaliação Pendente');
             }
 
-            if (!$solicitacao->responsavel->avaliacao_individual || !$solicitacao->responsavel->avaliacao_individual->status) {
+            $avaliacaoPlanejamento = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)
+                ->where('planejamento_id', $modeloAnimal->planejamento->id)
+                ->first();
+
+            if (!$avaliacaoPlanejamento || $avaliacaoPlanejamento->status === null) {
                 return redirect()->back()->with('fail', 'Avaliação Pendente');
             }
 
+            $avaliacaoCondicoesAnimal = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)
+                ->where('condicoes_animal_id', $modeloAnimal->planejamento->condicoesAnimal->id)
+                ->first();
 
-            $colaboradorAvaliacao = $solicitacao->avaliacao->first()->avaliacao_individual->where('tipo', 2)->first();
-            if (!$colaboradorAvaliacao || !$colaboradorAvaliacao->status) {
+            if (!$avaliacaoCondicoesAnimal || $avaliacaoCondicoesAnimal->status === null) {
                 return redirect()->back()->with('fail', 'Avaliação Pendente');
             }
 
+            $avaliacaoProcedimento = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)
+                ->where('procedimento_id', $modeloAnimal->planejamento->procedimento->id)
+                ->first();
 
-            if ($solicitacao->dadosComplementares) {
-                $avaliacaoDadosComplementares = $solicitacao->dadosComplementares->avaliacao_individual;
-                if (!$avaliacaoDadosComplementares || !$avaliacaoDadosComplementares->status) {
-                    return redirect()->back()->with('fail', 'Avaliação Pendente');
-                }
+            if (!$avaliacaoProcedimento || $avaliacaoProcedimento->status === null) {
+                return redirect()->back()->with('fail', 'Avaliação Pendente');
             }
 
-            foreach ($solicitacao->modelosAnimais as $modeloAnimal) {
+            $avaliacaoOperacao = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)
+                ->where('operacao_id', $modeloAnimal->planejamento->operacao->id)
+                ->first();
 
-                $avaliacaoModelo = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)
-                    ->where('modelo_animal_id', $modeloAnimal->id)
-                    ->first();
-
-                if (!$avaliacaoModelo || $avaliacaoModelo->status === null) {
-                    return redirect()->back()->with('fail', 'Avaliação Pendente');
-                }
-
-                $avaliacaoPlanejamento = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)
-                    ->where('planejamento_id', $modeloAnimal->planejamento->id)
-                    ->first();
-
-                if (!$avaliacaoPlanejamento || $avaliacaoPlanejamento->status === null) {
-                    return redirect()->back()->with('fail', 'Avaliação Pendente');
-                }
-
-                $avaliacaoCondicoesAnimal = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)
-                    ->where('condicoes_animal_id', $modeloAnimal->planejamento->condicoesAnimal->id)
-                    ->first();
-
-                if (!$avaliacaoCondicoesAnimal || $avaliacaoCondicoesAnimal->status === null) {
-                    return redirect()->back()->with('fail', 'Avaliação Pendente');
-                }
-
-                $avaliacaoProcedimento = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)
-                    ->where('procedimento_id', $modeloAnimal->planejamento->procedimento->id)
-                    ->first();
-
-                if (!$avaliacaoProcedimento || $avaliacaoProcedimento->status === null) {
-                    return redirect()->back()->with('fail', 'Avaliação Pendente');
-                }
-
-                $avaliacaoOperacao = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)
-                    ->where('operacao_id', $modeloAnimal->planejamento->operacao->id)
-                    ->first();
-
-                if (!$avaliacaoOperacao || $avaliacaoOperacao->status === null) {
-                    return redirect()->back()->with('fail', 'Avaliação Pendente');
-                }
-
-                $avaliacaoEutanasia = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)
-                    ->where('eutanasia_id', $modeloAnimal->planejamento->eutanasia->id)
-                    ->first();
-
-                if (!$avaliacaoEutanasia || $avaliacaoEutanasia->status === null) {
-                    return redirect()->back()->with('fail', 'Avaliação Pendente');
-                }
-
-                $avaliacaoResultado = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)
-                    ->where('resultado_id', $modeloAnimal->planejamento->resultado->id)
-                    ->first();
-
-                if (!$avaliacaoResultado || $avaliacaoResultado->status === null) {
-                    return redirect()->back()->with('fail', 'Avaliação Pendente');
-                }
+            if (!$avaliacaoOperacao || $avaliacaoOperacao->status === null) {
+                return redirect()->back()->with('fail', 'Avaliação Pendente');
             }
 
-            Avaliacao::where('solicitacao_id', $solicitacao->id)->where('user_id', '!=', $avaliador->id)->delete();
-            $avaliacao->status = 'aprovado_avaliador';
-            $solicitacao->status = 'avaliado';
-            $solicitacao->update();
-            $avaliacao->update();
+            $avaliacaoEutanasia = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)
+                ->where('eutanasia_id', $modeloAnimal->planejamento->eutanasia->id)
+                ->first();
+
+            if (!$avaliacaoEutanasia || $avaliacaoEutanasia->status === null) {
+                return redirect()->back()->with('fail', 'Avaliação Pendente');
+            }
+
+            $avaliacaoResultado = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)
+                ->where('resultado_id', $modeloAnimal->planejamento->resultado->id)
+                ->first();
+
+            if (!$avaliacaoResultado || $avaliacaoResultado->status === null) {
+                return redirect()->back()->with('fail', 'Avaliação Pendente');
+            }
         }
 
         if (Auth::user()->hasRole('Administrador')) {
@@ -245,7 +237,7 @@ class AvaliacaoController extends Controller
 
         Mail::to($solicitacao->responsavel->contato->email)->send(new SendSolicitacaoStatus($solicitacao->responsavel, $avaliacao));
 
-        if(Auth::user()->hasRole('Administrador')){
+        if (Auth::user()->hasRole('Administrador')) {
             return redirect(route('solicitacao.admin.index'));
         }
         $admin = User::find(1);
@@ -447,7 +439,7 @@ class AvaliacaoController extends Controller
             }
         }
 
-        if (Auth::user()->id == 2){
+        if (Auth::user()->id == 2) {
             Avaliacao::where('solicitacao_id', $solicitacao->id)->where('user_id', '!=', $avaliador->id)->delete();
         }
         $avaliacao->status = 'reprovado';
@@ -464,7 +456,7 @@ class AvaliacaoController extends Controller
 
         Mail::to($solicitacao->responsavel->contato->email)->send(new SendSolicitacaoStatus($solicitacao->responsavel, $avaliacao));
 
-        if(Auth::user()->id == 1){
+        if (Auth::user()->id == 1) {
             return redirect(route('solicitacao.admin.index'));
         }
         return redirect(route('solicitacao.avaliador.index'));
