@@ -26,7 +26,7 @@ class StoreSolicitanteRequest extends FormRequest
         
         $rules = [
             'name'          => ['required', 'string', 'min:10', 'max:255', 'regex:/^[A-Za-záâãéêíóôõúçÁÂÃÉÊÍÓÔÕÚÇ\s]+$/'],
-            'email'         => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'email'         => ['required', 'string', 'email', 'max:255', 'unique:users', 'regex:/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/'],
             'password'      => ['required', 'string', 'min:8', 'confirmed'],
             'cpf'           => ['required', 'cpf', 'min:11', 'max:11', 'unique:users'],
             'celular'       => ['required', 'min:11', 'max:11'],
@@ -48,6 +48,8 @@ class StoreSolicitanteRequest extends FormRequest
     public function messages(){
         return [
                 'name.regex'                    => "O nome informado é inválido",
+                'email.required'                => 'O campo de e-mail é obrigatório.',
+                'email.email'                   => 'O campo de e-mail deve ser um endereço válido.',
                 'cpf.required'                  => 'O CPF é obrigatório',
                 'cpf.min'                       => 'Tamanho do CPF não é válido',
                 'cpf.max'                       => 'Tamanho do CPF não é válido',

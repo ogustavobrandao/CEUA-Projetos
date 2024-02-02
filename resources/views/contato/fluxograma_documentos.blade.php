@@ -38,11 +38,11 @@
             </li>
 
             <li>
-                <a href="https://docs.google.com/document/d/1ld-R2B0aX2kjPKBSWmdJg0nhfddc-GaD/edit?usp=sharing&ouid=107356873840947650097&rtpof=true&sd=true" class="legislation-link">Modelo de Ofício de Encaminhamento</a>
+                <a href="https://docs.google.com/document/d/1ld-R2B0aX2kjPKBSWmdJg0nhfddc-GaD/edit?usp=sharing&ouid=107356873840947650097&rtpof=true&sd=true" target="_blank" class="legislation-link">Modelo de Ofício de Encaminhamento</a>
             </li>
 
             <li>
-                <a href="https://docs.google.com/document/d/1OGSYRgq3aw3ikb8p0cIWejGIUYY-z3xB/edit?usp=sharing&ouid=107356873840947650097&rtpof=true&sd=true" class="legislation-link">Relatório Parcial/Final</a>
+                <a href="https://docs.google.com/document/d/1OGSYRgq3aw3ikb8p0cIWejGIUYY-z3xB/edit?usp=sharing&ouid=107356873840947650097&rtpof=true&sd=true" target="_blank" class="legislation-link">Relatório Parcial/Final</a>
             </li>
         </ul>
     </div>
