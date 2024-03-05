@@ -249,7 +249,8 @@
                 </span>
             </div>
             @if (isset($solicitacao->responsavel) && $solicitacao->responsavel->termo_responsabilidade != null)
-                <span style="border: 1px gray solid; border-radius: 10px; text-align: center;
+                <span
+                    style="border: 1px gray solid; border-radius: 10px; text-align: center;
                     width: 180px; position: absolute; bottom: 0px; left: 155px; height: 38px; 
                     padding-top: 5px; background-color: #dcfadf">
                     Um Arquivo Já Foi Enviado
@@ -264,55 +265,56 @@
                     <label for="treinamento">Treinamento:</label>
                 </div>
             @endif
-            
-            
+
+
             <div>
                 <div class="row ml-1 mt-2">
                     <div class="col-sm-6">
-                        <input class="form-check-input" type="radio" name="treinamento_radio"
-                            id="treinamento_sim" @if (!empty($solicitacao->responsavel) && $solicitacao->responsavel->treinamento != null) checked @endif>
+                        <input class="form-check-input" type="radio" name="treinamento_radio" id="treinamento_sim"
+                            @if (!empty($solicitacao->responsavel) && $solicitacao->responsavel->treinamento != null) checked @endif>
                         <label class="form-check-label" for="treinamento">Sim</label>
                     </div>
                     <div class="col-sm-2">
-                        <input class="form-check-input" type="radio" name="treinamento_radio"
-                            id="treinamento_nao" @if (
+                        <input class="form-check-input" type="radio" name="treinamento_radio" id="treinamento_nao"
+                            @if (
                                 (!empty($solicitacao->responsavel) && $solicitacao->responsavel->treinamento == null) ||
-                                    $solicitacao->responsavel == null) checked @endif
-                            value="false">
+                                    $solicitacao->responsavel == null) checked @endif value="false">
                         <label class="form-check-label" for="treinamento">
                             Não
                         </label>
                     </div>
                 </div>
-               
-            </div>
-        </div>             
 
-                        
+            </div>
+        </div>
+
+
 
 
         @if (!empty($solicitacao->responsavel) && $solicitacao->responsavel->treinamento != null)
-                    {{ $solicitacao->responsavel->treinamento }}
+            {{ $solicitacao->responsavel->treinamento }}
         @else
             {{ old('treinamento') }}
         @endif
-        
+
         <div class="col-sm-10 mt-2" id="treinamento" style="display: none;">
             <label>Descreva:</label>
-            <textarea class="form-control @error('treinamento') is-invalid @enderror"
-                      name="treinamento" id="treinamento" autocomplete="treinamento"
-                      autofocus
-                      required>@if(!empty($solicitacao->responsavel) && $solicitacao->responsavel->treinamento != null){{$solicitacao->responsavel->treinamento}}@else{{old('treinamento')}}@endif </textarea>
+            <textarea class="form-control @error('treinamento') is-invalid @enderror" name="treinamento" id="treinamento"
+                autocomplete="treinamento" autofocus required>
+@if (!empty($solicitacao->responsavel) && $solicitacao->responsavel->treinamento != null)
+{{ $solicitacao->responsavel->treinamento }}@else{{ old('treinamento') }}
+@endif
+</textarea>
         </div>
         <div class="div_error" id="treinamento_error" style="display: none">
             <span class="invalid-input">
                 <strong id="treinamento_error_message"></strong>
             </span>
         </div>
-                                 
-        
+
+
         @include('component.botoes_new_form')
-         
+
     </form>
 </div>
 
@@ -333,6 +335,9 @@
             },
             dataType: 'json',
             success: function(response) {
+                submitButton = $('#form1').find(':submit');
+                markSaved(submitButton, true);
+
                 var message = response.message;
                 var responsavel = response.exist;
                 if (message == 'success') {
