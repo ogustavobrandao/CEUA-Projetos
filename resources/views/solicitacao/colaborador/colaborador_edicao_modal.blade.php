@@ -47,9 +47,9 @@
                                 </div>
                             </div>
                             <div class="div_error cpf_error" style="display: none">
-                                        <span class="invalid-input">
-                                            <strong class="cpf_error_message"></strong>
-                                        </span>
+                                <span class="invalid-input">
+                                    <strong class="cpf_error_message"></strong>
+                                </span>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">

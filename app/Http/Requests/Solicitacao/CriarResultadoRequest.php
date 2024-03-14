@@ -21,15 +21,20 @@ class CriarResultadoRequest extends FormRequest
             'destino_animais' => 'required|min:4|max:1000',
             'justificativa_metodos' => 'required|min:4|max:1000',
             'resumo_procedimento' => 'required|min:4|max:1000',
-            'outras_infos' => 'required|min:4|max:1000',
+            'outras_informacoes' => 'required|min:4|max:1000',
         ];
     }
 
     public function messages()
     {
         return [
-            '*.required'  => 'O :attribute é obrigatório',
-            '*.required_if'  => 'O :attribute é obrigatório',
+            'abate.required'  => 'O campo abate é obrigatório',
+            'destino_animais.required'  => 'O campo destino dos animais é obrigatório.',
+            'justificativa_metodos.required'  => 'O campo justificativa dos métodos é obrigatório.',
+            'resumo_procedimento.required'  => 'O campo resumo do procedimento é obrigatório.',
+            'outras_informacoes.required'  => 'O campo outras informações é obrigatório.',
+            '*.required_if'  => 'O campo :attribute é obrigatório.',
+            'outras_informacoes.min' => 'Outras informações tem uma quantidade mínima.',
         ];
     }
     protected function failedValidation(Validator $validator)

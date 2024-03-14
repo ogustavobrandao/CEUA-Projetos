@@ -30,13 +30,16 @@ class CriarSolicitacaoRequest extends FormRequest
     public function messages()
     {
         return [
-            'titulo_pt.required' => 'O titulo em português é um campo obrigatório.',
-            'titulo_pt.string' => 'O titulo em português deve ser um texto',
-            'titulo_en.string' => 'O titulo em inglês deve ser um texto',
-            'titulo_pt.min' => 'O titulo em português deve possuir no minimo 5 caracteres',
-            'titulo_en.min' => 'O titulo em inglês deve possuir no minimo 5 caracteres',
-            'inicio.required' => 'A data de inicio é obrigatória',
-            'fim.required' => 'A data de fim é obrigatória',
+            'titulo_pt.required' => 'O título em português é um campo obrigatório.',
+            'titulo_pt.string' => 'O título em português deve ser um texto.',
+            'titulo_en.string' => 'O título em inglês deve ser um texto.',
+            'titulo_pt.min' => 'O título em português deve possuir no minimo 5 caracteres.',
+            'titulo_en.min' => 'O título em inglês deve possuir no minimo 5 caracteres.',
+            'inicio.required' => 'A data de início é obrigatória.',
+            'fim.required' => 'A data de fim é obrigatória.',
+            'grandeArea.required' => 'A grande área é obrigatória.',
+            'area.required' => 'A área é obrigatória.',
+            'subArea.required' => 'A subárea é obrigatória.',
         ];
     }
 

@@ -1,5 +1,5 @@
 <!-- Modal Edicao-->
-<div class="modal fade" id="modalEditarColaborador" tabindex="-1" role="dialog" aria-labelledby="modalEditarColaboradorLabel" aria-hidden="true">
+<div class="modal fade" id="modalEditarColaborador{{$colaborador->id}}" tabindex="-1" role="dialog" aria-labelledby="modalEditarColaborador{{$colaborador->id}}Label" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -10,9 +10,9 @@
             </div>
             <!-- Conteúdo do formulário para adicionar colaboradores -->
 
-            <form id="form2-1" method="POST" action="javascript:void(0)" enctype="multipart/form-data">
+            <form method="POST" action="{{route('solicitacao.colaborador.editar')}}" enctype="multipart/form-data">
                 @csrf
-                <input type="hidden" name="solicitacao_id" value="{{$solicitacao_id}}">
+                <input type="hidden" name="solicitacao_id" value="{{$solicitacao->id}}">
                 <input type="hidden" name="colaborador_id" value="{{$colaborador->id}}">
                 <div class="modal-body">
                     <div class="mt-2">
@@ -20,110 +20,111 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="nome">Nome:</label>
-                                    <input type="text" name="nome" class="form-control" id="nome" placeholder="Digite o nome do colaborador" value="{{$colaborador->nome}}" >
+                                    <label for="colab_nome">Nome:<strong style="color: red">*</strong></label>
+                                    <input type="text" name="colab_nome" class="form-control @error('colab_nome') is-invalid @enderror" value="{{$colaborador->nome}}" id="colab_nome" placeholder="Digite o nome do colaborador">
+
+                                    @error('colab_nome')
+                                        <div class="alert alert-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
-                            <div class="div_error nome_error" style="display: none">
-                                    <span class="invalid-input">
-                                        <strong class="nome_error_message"></strong>
-                                    </span>
-                            </div>
+                            
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="email">E-mail:</label>
-                                    <input type="email" name="email" class="form-control" id="email" placeholder="Digite o e-mail do colaborador" value="{{$colaborador->contato->email ?? 'Não informado'}}" >
+                                    <label for="colab_email">E-mail:<strong style="color: red">*</strong></label>
+                                    <input type="email" name="colab_email" class="form-control @error('colab_email') is-invalid @enderror" value="{{$colaborador->contato->email}}" id="colab_email" placeholder="Digite o e-mail do colaborador">
+
+                                    @error('colab_email')
+                                        <div class="alert alert-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
-                            <div class="div_error email_error" style="display: none">
-                                    <span class="invalid-input">
-                                        <strong class="email_error_message"></strong>
-                                    </span>
-                            </div>
+
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="cpf">CPF:</label>
-                                    <input type="text" name="cpf" class="form-control cpf" id="cpf" placeholder="Digite o CPF do colaborador" value="{{$colaborador->cpf}}" >
+                                    <label for="colab_cpf">CPF:<strong style="color: red">*</strong></label>
+                                    <input type="text" name="colab_cpf" class="form-control cpf @error('colab_cpf') is-invalid @enderror" value="{{$colaborador->cpf}}" id="colab_cpf" placeholder="Digite o CPF do colaborador">
+
+                                    @error('colab_cpf')
+                                        <div class="alert alert-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
-                            <div class="div_error cpf_error" style="display: none">
-                                        <span class="invalid-input">
-                                            <strong class="cpf_error_message"></strong>
-                                        </span>
-                            </div>
+                            
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="telefone">Telefone:</label>
-                                    <input type="text" name="telefone" class="form-control telefone" id="telefone" placeholder="Digite o telefone do colaborador" value="{{$colaborador->contato->telefone ?? 'Não Informado'}}" >
+                                    <label for="telefone">Telefone:<strong style="color: red">*</strong></label>
+                                    <input type="text" name="colab_telefone" class="form-control telefone @error('colab_telefone') @enderror" id="colab_telefone" placeholder="Digite o telefone do colaborador" value="{{$colaborador->contato->telefone ?? 'Não Informado'}}" >
                                 </div>
                             </div>
+
                             <div class="div_error telefone_error" style="display: none">
-                                    <span class="invalid-input">
-                                        <strong class="telefone_error_message"></strong>
-                                    </span>
+                                <span class="invalid-input">
+                                    <strong class="telefone_error_message"></strong>
+                                </span>
                             </div>
                         </div>
                         <h5>Informações Institucionais</h5>
                         <div class="row">
                             <div class="col-md-6">
-                                <label for="instituicao">Instituicão:<strong
+                                <label for="colab_instituicao">Instituicão:<strong
                                         style="color: red">*</strong></label>
-                                <select class="form-control" name='instituicao_id'
-                                        onchange="unidades()" >
-                                    <option disabled selected>Selecione uma Instituição</option>
+                                <select class="form-control @error('colab_instituicao_id') is-invalid @enderror" name='colab_instituicao_id'
+                                        onchange="unidades()">
+                                    <option class="default" disabled selected>Selecione uma Instituição</option>
                                     @foreach($instituicaos as $instituicao)
                                         <option value="{{$instituicao->id}}" @if($colaborador->instituicao_id == $instituicao->id) selected @endif>{{$instituicao->nome}}</option>
                                     @endforeach
                                 </select>
-                                <div class="div_error instituicao_error" style="display: none">
-                                    <span class="invalid-input">
-                                        <strong class="instituicao_error_message"></strong>
-                                    </span>
-                                </div>
+
+                                @error('colab_instituicao_id')
+                                        <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
+
                             <div class="col-md-6">
-                                <label for="grau_escolaridade">Grau de Escolaridade:<strong
+                                <label for="colab_grau_escolaridade">Grau de Escolaridade:<strong
                                         style="color: red">*</strong></label>
-                                <select class="form-control" id="grau_escolaridade" name="grau_escolaridade" >
-                                    <option disabled selected>Selecione um Grau de Escolaridade</option>
+                                <select class="form-control" id="colab_grau_escolaridade" name="colab_grau_escolaridade">
+                                    <option class="default" disabled selected>Selecione um Grau de Escolaridade</option>
                                     <option
-                                         value="graduacao_completa" @if($colaborador->grau_escolaridade == 'graduacao_completa') selected @endif>
+                                            value="graduacao_completa" @if($colaborador->grau_escolaridade == 'graduacao_completa') selected @endif>
                                         Graduação Completa
                                     </option>
                                     <option value="graduacao_incompleta" @if($colaborador->grau_escolaridade == 'graduacao_incompleta') selected @endif>
                                         Graduação Incompleta
                                     </option>
                                     <option
-                                         value="pos_graduacao_incompleta" @if($colaborador->grau_escolaridade == 'pos_graduacao_incompleta') selected @endif>
+                                            value="pos_graduacao_incompleta" @if($colaborador->grau_escolaridade == 'pos_graduacao_incompleta') selected @endif>
                                         Pós-Gradução Incompleta
                                     </option>
                                     <option
-                                         value="pos_graduacao_completa" @if($colaborador->grau_escolaridade == 'pos_graduacao_completa') selected @endif>
+                                            value="pos_graduacao_completa" @if($colaborador->grau_escolaridade == 'pos_graduacao_completa') selected @endif>
                                         Pós-Gradução Completa
                                     </option>
                                     <option
-                                         value="mestrado_incompleto" @if($colaborador->grau_escolaridade == 'mestrado_incompleto') selected @endif>
+                                            value="mestrado_incompleto" @if($colaborador->grau_escolaridade == 'mestrado_incompleto') selected @endif>
                                         Mestrado Incompleto
                                     </option>
                                     <option
-                                         value="mestrado_completo" @if($colaborador->grau_escolaridade == 'mestrado_completo') selected @endif>
+                                            value="mestrado_completo" @if($colaborador->grau_escolaridade == 'mestrado_completo') selected @endif>
                                         Mestrado Completo
                                     </option>
                                     <option
-                                         value="doutorado_completo" @if($colaborador->grau_escolaridade == 'doutorado_completo') selected @endif>
+                                            value="doutorado_completo" @if($colaborador->grau_escolaridade == 'doutorado_completo') selected @endif>
                                         Doutorado Incompleto
                                     </option>
                                     <option value="doutorado_incompleto" @if($colaborador->grau_escolaridade == 'doutorado_incompleto') selected @endif>
                                         Doutorado Completo
                                     </option>
                                 </select>
-                                <div class="div_error grau_escolaridade_error" style="display: none">
-                                    <span class="invalid-input">
-                                        <strong class="grau_escolaridade_error_message"></strong>
-                                    </span>
-                                </div>
+
+                                @error('colab_grau_escolaridade')
+                                        <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
+                           
                         <br>
                         <h5>Informações Complementares</h5>
                         <div class="row">
@@ -131,104 +132,78 @@
                                 <div>
                                     <label>Experiência Prévia:</label>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="opcao_experiencia_previa-{{$colaborador->id}}" id="opcaoSim" value="on" required @if($colaborador->experiencia_previa != '') checked @endif
-                                        >
+                                        <input class="form-check-input" type="radio" name="opcao_experiencia_previa" id="colab_experiencia_previa_sim{{$colaborador->id}}" @if($colaborador->experiencia_previa != null)checked @enderror >
                                         <label class="form-check-label" for="opcaoSim">Sim</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="opcao_experiencia_previa-{{$colaborador->id}}" id="opcaoNao" value="off" required @if($colaborador->experiencia_previa == '') checked @endif
-                                        >
+                                        <input class="form-check-input" type="radio" name="opcao_experiencia_previa" id="colab_experiencia_previa_nao{{$colaborador->id}}" value="false" @if($colaborador->experiencia_previa == null)checked @enderror >
                                         <label class="form-check-label" for="opcaoNao">Não</label>
                                     </div>
                                 </div>
-                                <div class="row col-sm-12">
-                                    <div class="col-sm-12" id="divexperiencia-{{$colaborador->id}}" @if($colaborador->experiencia_previa == '') style="display: none;" @endif>
-                                        <label>Enviar Arquivo de Experiência Prévia:<strong style="color: red">*</strong></label>
-                                        
-                                        <input name="experiencia_previa" class="form-control"
-                                                id="experiencia_previa" type="file" accept="application/pdf" style="width: 135px">
-                                        @if($colaborador->experiencia_previa != null)
-                                            <span style="border: 1px gray solid; border-radius: 10px; text-align: center; width: 180px; position: absolute; bottom: 0px; left: 155px; height: 38px; padding-top: 5px; background-color: #dcfadf">Um Arquivo Já Foi Enviado</span>
-                                        @endif
-                                        
-                                    </div>
-                                    <div class="div_error experiencia_previa_error" style="display: none">
-                                        <span class="invalid-input">
-                                            <strong class="experiencia_previa_error_message"></strong>
-                                        </span>
-                                    </div>
+
+                                <div class="col-sm-12" id="divExperiencia{{$colaborador->id}}" style="display: none;">
+                                    <label>Enviar Arquivo de Experiência Prévia:</label>
+                                    <input name="colab_experiencia_previa" class="form-control" id="colab_experiencia_previa" type="file" accept="application/pdf" value="{{$colaborador->experiencia_previa ?? ''}}">
+
+                                    @error('colab_experiencia_previa')
+                                        <div class="alert alert-danger">{{ $message }}</div>
+                                    @enderror
+
+                                    @if ($colaborador->experiencia_previa != null)
+                                        <span
+                                            style="border: 1px gray solid; border-radius: 10px; text-align: center; width: 210px; position: absolute; bottom: 0px; left: 146px; height: 38px; padding-top: 5px; background-color: #dcfadf">Um
+                                            Arquivo Já Foi Enviado</span>
+                                    @endif
                                 </div>
                             </div>
-
-                                <div class="col-sm-6">
-                                    <div>
-                                        <label class=" mt-2">Termo de Responsabilidade:</label>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="opcao_termo_responsabilidade-{{$colaborador->id}}" id="opcaoSim" value="on" required @if($colaborador->termo_responsabilidade != '') checked @endif
-                                            >
-                                            <label class="form-check-label" for="opcaoSim">Sim</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input default" type="radio" name="opcao_termo_responsabilidade-{{$colaborador->id}}" id="opcaoSim" value="off" required @if($colaborador->termo_responsabilidade == '') checked @endif
-                                            >
-                                            <label class="form-check-label" for="opcaoNao">Não</label>
-                                        </div>
-                                    </div>
-                                    <div class="row col-sm-12">
-                                        <div class="col-sm-12" id="divresponsabilidade-{{$colaborador->id}}" @if($colaborador->termo_responsabilidade == '') style="display: none;" @endif>
-                                            <label>Enviar arquivo de Responsabilidade:</label>
-                                                
-                                            <input class="form-control" id="termo_responsabilidade" type="file" accept="application/pdf"
-                                                name="termo_responsabilidade" style="width: 135px" >
-
-                                            @if($colaborador->termo_responsabilidade != null)
-                                                <span style="border: 1px gray solid; border-radius: 10px; text-align: center; width: 180px; position: absolute; bottom: 0px; left: 155px; height: 38px; padding-top: 5px; background-color: #dcfadf">Um Arquivo Já Foi Enviado</span>
-                                            @endif
-                                                
-                                        </div>
-                                        <div class="div_error termo_responsabilidade_error" style="display: none">
-                                            <span class="invalid-input">
-                                                <strong class="termo_responsabilidade_error_message"></strong>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-12 mt-2">
-                                <label>Treinamento:</label>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="opcao_treinamento-{{$colaborador->id}}" id="opcaoSim" value="on" required @if($colaborador->treinamento != 'Não') checked @endif
-                                    >
-                                    <label class="form-check-label" for="opcaoSim">Sim</label>
+                            <div class="col-md-6">
+                                <div>
+                                    <label class="py-3">Treinamento:</label>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="colab_treinamento_radio" id="colab_treinamento_sim{{$colaborador->id}}" @if($colaborador->treinamento_file != null)checked @enderror>
+                                        <label class="form-check-label" for="opcaoSim">Sim</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="colab_treinamento_radio" id="colab_treinamento_nao{{$colaborador->id}}" value="false" @if($colaborador->treinamento_file == null)checked @enderror>
+                                        <label class="form-check-label" for="opcaoNao">Não</label>
+                                    </div>
                                 </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="opcao_treinamento-{{$colaborador->id}}" id="opcaoNao" value="off" required @if($colaborador->treinamento == 'Não') checked @endif
-                                    >
-                                    <label class="form-check-label" for="opcaoNao">Não</label>
-                                </div>
-                            </div>
-                            <div class="row" id="divTreinamento-{{$colaborador->id}}"  @if($colaborador->treinamento == 'Não') style="display: none;" @endif>
-                                <div class="col-sm-12 mt-2">
-                                    <label for="treinamento">Descrever o treinamento:<strong style="color: red">*</strong></label>
-                                    <input class="form-control" id="treinamento"
-                                    type="text" name="treinamento"
-                                    value="{{$colaborador->treinamento}}"
-                                    required autocomplete="treinamento" autofocus >
-                                </div>
-                            </div>
-                        </div>
-                        <div class="div_error treinamento_error" style="display: none">
-                                    <span class="invalid-input">
-                                        <strong class="treinamento_error_message"></strong>
-                                    </span>
-                        </div>
-                    </div>
 
+                                <div id="divTreinamento{{$colaborador->id}}" style="display: none;">
+                                    <div class="col-sm-12 mt-2">
+                                        <label>Anexar Comprovante de Treinamento:<strong style="color: red">*</strong></label>
+                                        <input class="form-control @error('colab_treinamento_file') is-invalid @enderror" id="colab_treinamento_file{{$colaborador->id}}"
+                                        type="file" accept="application/pdf" name="colab_treinamento_file" value="{{$colaborador->treinamento_file ?? ''}}"
+                                        autocomplete="colab_treinamento_file">
+                                        
+                                        @error('colab_treinamento_file')
+                                        <div class="alert alert-danger">{{ $message }}</div>
+                                        @enderror
+                                        
+                                        @if ($colaborador->treinamento_file != null)
+                                            <span
+                                                style="border: 1px gray solid; border-radius: 10px; text-align: center; width: 210px; position: absolute; bottom: 67px; left: 146px; height: 38px; padding-top: 5px; background-color: #dcfadf">Um
+                                                Arquivo Já Foi Enviado</span>
+                                        @endif
+                                        
+                                        <label for="treinamento">Descrever o treinamento:<strong style="color: red">*</strong></label>
+                                        <input class="form-control" id="colab_treinamento{{$colaborador->id}}" type="text" name="colab_treinamento" value="{{$colaborador->treinamento ?? old('colab_treinamento')}}" autocomplete="treinamento" autofocus>
+                                        
+                                        @error('colab_treinamento')
+                                                <div class="alert alert-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
                 </div>
                 
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary btn-atualizar-colaborador">Atualizar</button>
+                    <button type="submit" class="btn btn-primary">Atualizar</button>
                 </div>
                 
             </form>
@@ -237,106 +212,50 @@
 </div>
 
 <script>
-    $('input[name="opcao_termo_responsabilidade-{{$colaborador->id}}"]').change(function() {
-        var selectedOption = $(this).val();
-        var divresponsabilidade = $('#divresponsabilidade-{{$colaborador->id}}');
+   $(document).ready(function() {
+        @if ($colaborador->treinamento_file != null)
+            $("#colab_treinamento_sim{{$colaborador->id}}").click();
+        @else
+            $("#colab_treinamento_nao{{$colaborador->id}}").click();
+        @endif
 
-        if (selectedOption === 'on') {
-            divresponsabilidade.show();
-        } else {
-            $(divresponsabilidade).hide().find('input').prop('value', '');
-            divresponsabilidade.hide();
+        @if ($colaborador->experiencia_previa != null)
+            $("#colab_experiencia_previa_sim{{$colaborador->id}}").click();
+        @else
+            $("#colab_experiencia_previa_nao{{$colaborador->id}}").click();
+        @endif
 
-        }
-    });
-    $('input[name="opcao_experiencia_previa-{{$colaborador->id}}"]').change(function() {
-        var selectedOption = $(this).val();
-        var divexperiencia = $('#divexperiencia-{{$colaborador->id}}');
+       
 
-        if (selectedOption === 'on') {
-
-            divexperiencia.show();
-        } else {
-            $(divexperiencia).hide().find('input').prop('value', '');
-            divexperiencia.hide();
-
-        }
-    });
-    $('input[name="opcao_treinamento-{{$colaborador->id}}"]').change(function() {
-        var selectedOption = $(this).val();
-        var divTreinamento = $('#divTreinamento-{{$colaborador->id}}');
-
-        if (selectedOption === 'on') {
-            $(divTreinamento).hide().find('input').prop('value', '');
-            divTreinamento.show();
-        } else {
-            $(divTreinamento).hide().find('input').prop('value', 'Não');
-            divTreinamento.hide();
-
-        }
     });
 
-    $(document).on('click', '.btn-atualizar-colaborador', function (event) {
-        event.preventDefault();
-
-        var form = $('#form2-1')[0];
-        var formData = new FormData(form);
-
-        $.ajax({
-            type: 'POST',
-            url: '{{ route('solicitacao.colaborador.editar') }}',
-            data: formData,
-            contentType: false,
-            processData: false,
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            dataType: 'json',
-            success: function (response) {
-                var message = response.message;
-
-                if (message == 'success') {
-                    atualizarTabela();
-                    $('.modal').hide();
-                    $('body').removeClass('modal-open');
-                    $('body').css('padding-right', '');
-                    $('.modal-backdrop').remove();
-
-                    $('#successModal').modal('show');
-                    $('#successModal').find('.msg-success').text('O colaborador foi salvo com sucesso!');
-
-                    $('.div_error').css('display', 'none');
-                    setTimeout(function () {
-                        $('#successModal').modal('hide');
-                    }, 2000);
-                }
-            },
-            error: function (xhr, status, error) {
-                if (xhr.responseJSON && xhr.responseJSON.message) {
-                    $('.div_error').css('display', 'none');
-                    var errors = xhr.responseJSON.errors;
-                    var statusCode = xhr.status;
-                    if (statusCode == 422 && status == 'error') {
-                        for (var field in errors) {
-                            var fieldErrors = errors[field];
-                            var errorMessage = '';
-                            for (var i = 0; i < fieldErrors.length; i++) {
-                                errorMessage += fieldErrors[i] + '\n';
-                            }
-                            var errorDiv = '.' + field + '_error';
-                            var errorMessageTag = '.' + field + '_error_message';
-                            $(errorMessageTag).html(errorMessage);
-                            $(errorDiv).css('display', 'block');
-                        }
-                    }
-                } else {
-                    alert("Erro na requisição Ajax: " + error);
-                }
-            }
-        });
-
-        return false;
+    $("#colab_treinamento_sim{{$colaborador->id}}").click(function() {
+        $("#colab_treinamento{{$colaborador->id}}").show().find('input, textarea').prop('disabled', false);
+        $("#divTreinamento{{$colaborador->id}}").show().find('input, textarea').prop('disabled', false);
+        
     });
+
+    $("#colab_treinamento_nao{{$colaborador->id}}").click(function() {
+        $("#colab_treinamento{{$colaborador->id}}").hide().find('input, textarea').prop('disabled', true);
+        $("#colab_treinamento{{$colaborador->id}}").prop('required', false);
+        $("#divTreinamento{{$colaborador->id}}").hide().find('input, textarea').prop('disabled', true);
+
+    });
+
+    $("#colab_experiencia_previa_sim{{$colaborador->id}}").click(function() {
+        $("#divExperiencia{{$colaborador->id}}").show().find('input, textarea').prop('disabled', false);
+        $("#colab_treinamento_nao{{$colaborador->id}}").prop('disabled', false);
+
+    });
+
+    $("#colab_experiencia_previa_nao{{$colaborador->id}}").click(function() {
+        $("#divExperiencia{{$colaborador->id}}").hide().find('input, textarea').prop('disabled', true);
+        $("#colab_experiencia_previa{{$colaborador->id}}").prop('required', false);
+        $("#colab_treinamento_sim{{$colaborador->id}}").click();
+        $("#colab_treinamento_nao{{$colaborador->id}}").prop('disabled', true);
+
+    });
+
 </script>
 
 <script>

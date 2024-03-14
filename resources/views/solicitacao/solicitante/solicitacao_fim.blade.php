@@ -8,7 +8,8 @@
             <div class="col-sm-12 mt-2">
                 <label for="resumo">Resumo do Projeto de Pesquisa / de Extensão / de Aula Prática / de Treinamento:<strong style="color: red">*</strong></label>
                 <textarea class="form-control @error('resumo') is-invalid @enderror" name="resumo" id="resumo" autocomplete="resumo" autofocus
-                          required>@if(!empty($solicitacao->dadosComplementares) && $solicitacao->dadosComplementares->resumo != null){{$solicitacao->dadosComplementares->resumo}}@else{{old('resumo')}}@endif</textarea>
+                        required>@if(!empty($solicitacao->dadosComplementares) && $solicitacao->dadosComplementares->resumo != null){{$solicitacao->dadosComplementares->resumo}}@else{{old('resumo')}}@endif</textarea>
+
                 <div class="div_error" id="resumo_error" style="display: none">
                     <span class="invalid-input">
                         <strong id="resumo_error_message"></strong>
@@ -19,7 +20,8 @@
             <div class="col-sm-12 mt-2">
                 <label for="objetivos">Objetivos (na íntegra):<strong style="color: red">*</strong></label>
                 <textarea class="form-control @error('objetivos') is-invalid @enderror" name="objetivos" id="objetivos" autocomplete="objetivos" autofocus
-                          required>@if(!empty($solicitacao->dadosComplementares) && $solicitacao->dadosComplementares->objetivos != null){{$solicitacao->dadosComplementares->objetivos}}@else{{old('objetivos')}}@endif</textarea>
+                        required>@if(!empty($solicitacao->dadosComplementares) && $solicitacao->dadosComplementares->objetivos != null){{$solicitacao->dadosComplementares->objetivos}}@else{{old('objetivos')}}@endif</textarea>
+
                 <div class="div_error" id="objetivos_error" style="display: none">
                     <span class="invalid-input">
                         <strong id="objetivos_error_message"></strong>
@@ -31,6 +33,7 @@
                 <label for="justificativa">Justificativa:<strong style="color: red">*</strong></label>
                 <textarea class="form-control @error('justificativa') is-invalid @enderror" name="justificativa" id="justificativa" autocomplete="justificativa"
                           autofocus required>@if(!empty($solicitacao->dadosComplementares) && $solicitacao->dadosComplementares->justificativa != null){{$solicitacao->dadosComplementares->justificativa}}@else{{old('justificativa')}}@endif</textarea>
+
                 <div class="div_error" id="justificativa_error" style="display: none">
                     <span class="invalid-input">
                         <strong id="justificativa_error_message"></strong>
@@ -41,7 +44,8 @@
             <div class="col-sm-12 mt-2">
                 <label for="relevancia">Relevância:<strong style="color: red">*</strong></label>
                 <textarea class="form-control @error('relevancia') is-invalid @enderror" name="relevancia" id="relevancia" autocomplete="relevancia" autofocus
-                          required>@if(!empty($solicitacao->dadosComplementares) && $solicitacao->dadosComplementares->relevancia != null){{$solicitacao->dadosComplementares-> relevancia}}@else{{old('relevancia')}}@endif</textarea>
+                        required>@if(!empty($solicitacao->dadosComplementares) && $solicitacao->dadosComplementares->relevancia != null){{$solicitacao->dadosComplementares-> relevancia}}@else{{old('relevancia')}}@endif</textarea>
+
                 <div class="div_error" id="relevancia_error" style="display: none">
                     <span class="invalid-input">
                         <strong id="relevancia_error_message"></strong>
@@ -53,15 +57,15 @@
                 <label for="referencias">Referências:</label>
                 <textarea class="form-control @error('referencias') is-invalid @enderror" name="referencias" id="referencias" autocomplete="referencias" autofocus
                           >@if(!empty($solicitacao->dadosComplementares) && $solicitacao->dadosComplementares->referencias != null){{$solicitacao->dadosComplementares-> referencias}}@else{{old('referencias')}}@endif</textarea>
+
                 <div class="div_error" id="referencias_error" style="display: none">
                     <span class="invalid-input">
                         <strong id="referencias_error_message"></strong>
                     </span>
                 </div>
             </div>
-
-
         </div>
+
         @include('component.botoes_new_form')
     </form>
 </div>

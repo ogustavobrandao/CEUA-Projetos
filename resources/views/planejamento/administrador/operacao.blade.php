@@ -31,6 +31,7 @@
                     <label for="anexo_cirurgia">Descrição:<strong style="color: red">*</strong></label>
                     <textarea class="form-control" name="detalhes_cirurgia" id="detalhes_cirurgia" autocomplete="detalhes_cirurgia"
                               required readonly> @if(!empty($operacao) && $operacao->detalhes_cirurgia != null){{$operacao->detalhes_cirurgia}}@else{{old('detalhes_cirurgia')}}@endif</textarea>
+                              
                     <div class="div_error" id="detalhes_cirurgia_error" style="display: none">
                         <span class="invalid-input">
                             <strong id="detalhes_cirurgia_error_message"></strong>

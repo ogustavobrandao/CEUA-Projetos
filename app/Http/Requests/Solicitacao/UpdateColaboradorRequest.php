@@ -2,14 +2,11 @@
 
 namespace App\Http\Requests\Solicitacao;
 
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Support\Facades\Redirect;
+use Illuminate\Foundation\Http\FormRequest;
 
-class CriarColaboradorRequest extends FormRequest
+class UpdateColaboradorRequest extends FormRequest
 {
-
     public function authorize()
     {
         return true; 
@@ -30,11 +27,10 @@ class CriarColaboradorRequest extends FormRequest
             'colab_instituicao_id' => 'required',
             'colab_grau_escolaridade' => 'required|string',
             'colab_opcao_experiencia_previa' => 'in:on,off',
-            'colab_experiencia_previa' => 'required_if:opcao_experiencia_previa,on|mimes:pdf',
+            'colab_experiencia_previa' => 'required_if:colab_opcao_experiencia_previa,on|mimes:pdf',
             'colab_opcao_termo_responsabilidade' => 'in:on,off',
             'colab_termo_responsabilidade' => 'required_if:opcao_termo_responsabilidade,on|mimes:pdf',
-            'colab_treinamento' => 'required_if:colab_treinamento_radio,on|min:3|max:1000',
-            'colab_treinamento_file' => 'required_if:colab_treinamento_radio,on|mimes:pdf',
+            'colab_treinamento' => 'required_if:opcao_treinamento,on|min:3|max:1000',
             'colab_email' => 'required|email',
         ];
     }
@@ -44,12 +40,12 @@ class CriarColaboradorRequest extends FormRequest
         return [
             'colab_nome.required' => 'O nome é obrigatório.',
             'colab_cpf.required' => 'O CPF é obrigatório.',
-            'colab_instituicao_id' => 'A instituição é obrigatória.',
+            'colab_instituicao_id.required' => 'A instituição é obrigatória.',
             'colab_grau_escolaridade.required' => 'O grau de escolaridade é obrigatório.',
             'colab_experiencia_previa.required_if' => 'A experiência prévia é obrigatória caso a opção sim esteja marcada.',
-            'colab_termo_responsabilidade.required_if' => 'O termo de responsabilidade é obrigatória caso a opção sim esteja marcada.',
             'mimes:pdf' => 'O :attribute deve ser um PDF',
-            'colab_treinamento.required_if' => 'O treinamento é obrigatório caso a opção sim esteja marcada.',
+            'colab_treinamento.required_if' => 'O campo treinamento é obrigatório caso a opção sim esteja marcada.',
+            'colab_treinamento_file.required_if' => 'O arquivo de treinamento é obrigatório caso a opção sim esteja marcada.',
             'colab_email.required' => 'O email é obrigatório.',
             'colab_email.email' => 'O email deve ser um endereço de e-mail válido.',
             'colab_telefone.required' => 'O telefone é obrigatório.',
@@ -59,9 +55,9 @@ class CriarColaboradorRequest extends FormRequest
 
     protected function failedValidation(Validator $validator)
     {
-        session()->flash('falhaValidacao', true);
+        session()->flash('falhaValidacao', false);
+        session()->flash('colaborador', $this->input('colaborador_id'));
 
         parent::failedValidation($validator);
     }
-
 }

@@ -210,7 +210,7 @@
                                             id="aprovarAvaliacao">Aprovar
                                     </button>
                                 </form>
-                                {{-- Reprovar Solicitação--}}
+                                {{-- Reprovar Solicitação Com Pendências--}}
                                 <form method="POST" action="{{route('avaliador.solicitacao.aprovarPendencia')}}">
                                     @csrf
                                     <input type="hidden" name="avaliacao_id" value="{{$avaliacao->id}}">

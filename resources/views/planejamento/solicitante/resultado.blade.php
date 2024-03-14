@@ -1,8 +1,8 @@
 <div class="card shadow-topoff border-top-0 p-3 my-n3 bg-white" style="border-radius: 0px 0px 10px 10px">
-
     <form id="form11" method="POST" action="">
         @csrf
         <input type="hidden" name="modelo_animal_id" value="{{$modelo_animal->id}}">
+        
         <div class="row col-md-12">
             <div class="col-sm-6 mt-2">
                 <label for="abate">Abate:<strong style="color: red">*</strong></label>
@@ -25,7 +25,8 @@
                 <label for="destino_animais">Destino dos Animais Abatidos:<strong style="color: red">*</strong></label>
                 <textarea class="form-control @error('abate') is-invalid @enderror" name="abate" id="destino_animais"
                           autocomplete="destino_animais" autofocus
-                          required disabled>@if(!empty($resultado) && $resultado->abate != null){{$resultado->abate}}@else{{old('abate')}}@endif</textarea>
+                           disabled required>@if(!empty($resultado) && $resultado->abate != null){{$resultado->abate}}@else{{old('abate')}}@endif</textarea>
+
                 <div class="div_error" id="abate_error" style="display: none">
                     <span class="invalid-input">
                         <strong id="abate_error_message"></strong>
@@ -37,8 +38,9 @@
                 <label for="destino_animais">Destino dos animais sobreviventes após a conclusão do experimento / aula ou
                     retirados no decorrer do experimento / aula:<strong style="color: red">*</strong></label>
                 <textarea class="form-control @error('destino_animais') is-invalid @enderror" name="destino_animais"
-                          id="destino_animais" autocomplete="destino_animais" autofocus
-                          required>@if(!empty($resultado) && $resultado->destino_animais != null){{$resultado->destino_animais}}@else{{old('destino_animais')}}@endif</textarea>
+                          id="destino_animais" autocomplete="destino_animais" autofocus required
+                          >@if(!empty($resultado) && $resultado->destino_animais != null){{$resultado->destino_animais}}@else{{old('destino_animais')}}@endif</textarea>
+                          
                 <div class="div_error" id="destino_animais_error" style="display: none">
                     <span class="invalid-input">
                         <strong id="destino_animais_error_message"></strong>
@@ -47,14 +49,15 @@
             </div>
 
             <div class="col-sm-12 mt-2">
-                <label for="outras_infos">Outras Informações Relevantes:<strong style="color: red">*</strong></label>
-                <textarea class="form-control @error('outras_infos') is-invalid @enderror" name="outras_infos"
-                          id="outras_infos" autocomplete="outras_infos" autofocus
-                          required minlength="4">@if(!empty($resultado) && $resultado->outras_infos != null){{$resultado->outras_infos}}@endif</textarea>
-                <div class="div_error" id="outras_infos_error" style="display: none">
-                        <span class="invalid-input">
-                            <strong id="outras_infos_error_message"></strong>
-                        </span>
+                <label for="outras_informacoes">Outras Informações Relevantes:<strong style="color: red">*</strong></label>
+                <textarea class="form-control @error('outras_informacoes') is-invalid @enderror" name="outras_informacoes"
+                          id="outras_informacoes" autocomplete="outras_informacoes" autofocus required
+                           minlength="4">@if(!empty($resultado) && $resultado->outras_informacoes != null){{$resultado->outras_informacoes}}@endif</textarea>
+                           
+                <div class="div_error" id="outras_informacoes_error" style="display: none">
+                    <span class="invalid-input">
+                        <strong id="outras_informacoes_error_message"></strong>
+                    </span>
                 </div>
             </div>
 
@@ -64,10 +67,11 @@
                 <textarea class="form-control @error('justificativa_metodos') is-invalid @enderror"
                           name="justificativa_metodos" id="justificativa_metodos" autocomplete="justificativa_metodos"
                           autofocus required>@if(!empty($resultado) && $resultado->justificativa_metodos != null){{$resultado->justificativa_metodos}}@else{{old('justificativa_metodos')}}@endif</textarea>
+
                 <div class="div_error" id="justificativa_metodos_error" style="display: none">
-                        <span class="invalid-input">
-                            <strong id="justificativa_metodos_error_message"></strong>
-                        </span>
+                    <span class="invalid-input">
+                        <strong id="justificativa_metodos_error_message"></strong>
+                    </span>
                 </div>
             </div>
 
@@ -76,16 +80,15 @@
                         style="color: red">*</strong></label>
                 <textarea class="form-control @error('resumo_procedimento') is-invalid @enderror"
                           name="resumo_procedimento" id="resumo_procedimento" autocomplete="resumo_procedimento"
-                          autofocus
-                          required>@if(!empty($resultado) && $resultado->resumo_procedimento != null){{$resultado->resumo_procedimento}}@endif</textarea>
+                          autofocus required
+                          >@if(!empty($resultado) && $resultado->resumo_procedimento != null){{$resultado->resumo_procedimento}}@endif</textarea>
+
                 <div class="div_error" id="resumo_procedimento_error" style="display: none">
-                        <span class="invalid-input">
-                            <strong id="resumo_procedimento_error_message"></strong>
-                        </span>
+                    <span class="invalid-input">
+                        <strong id="resumo_procedimento_error_message"></strong>
+                    </span>
                 </div>
             </div>
-
-
         </div>
 
         @include('component.botoes_new_form')

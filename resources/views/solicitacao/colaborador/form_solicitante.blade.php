@@ -30,10 +30,12 @@
                                 class="fa-solid fa-circle-chevron-up"></i></a>
                         <a class="float-end" id="2_btn_down" style="display: none"><i
                                 class="fa-solid fa-circle-chevron-down"></i></a>
-                        <a class="float-end mr-2" href="#" data-toggle="modal" data-target="#modalAdicionarColaborador"
-                           style="color: green"
-                           title="Adicionar Colaborador">
-                            <i class="fa-solid fa-circle-plus fa-2xl"></i></a>
+
+                        <button class="float-end mr-2" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalAdicionarColaborador" style="color: green"
+                        title="Adicionar Colaborador">
+                        <i class="fa-solid fa-circle-plus fa-2xl"></i>
+                        </button>
+                     
 
                     @endif
                 </h2>
@@ -55,7 +57,43 @@
                     <th class="text-center" scope="col" style="width: 20%">Ações</th>
                 </tr>
                 </thead>
-                <tbody id="colaboradores-info">
+                <tbody>
+                    @if(isset($solicitacao->responsavel))
+                        @foreach($solicitacao->responsavel->colaboradores as $colaborador)
+
+                            <tr id="fundo_colaborador_{{$colaborador->id}}">
+                                <td>
+                                    {{$colaborador->nome}}
+                                </td>
+                                <td>
+                                    {{$colaborador->contato->email}}
+                                </td>
+                                <td>
+                                    {{$colaborador->cpf}}
+                                </td>
+                                <td>
+                                    {{$colaborador->contato->telefone}}
+                                </td>
+                                <td>
+
+                                    <div class="d-flex">
+                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalEditarColaborador{{$colaborador->id}}">
+                                            Abrir
+                                        </button>
+                                        @include('solicitacao.colaborador.colaborador_edicao_modal_solicitante', ['solicitacao'=> $solicitacao, 'colaborador' => $colaborador])
+                                        
+                                        <form action="{{route('solicitacao.colaborador.deletar', ['id' => $colaborador->id])}}" method="post">
+                                            @csrf
+                                            @method('DELETE')
+                                        
+                                            <button class="btn btn-danger" type="submit">Deletar</button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                    @endif
+
 
                 </tbody>
             </table>
@@ -84,66 +122,82 @@
             </div>
         </div>
 </div>
+
+<script src="{{ asset('js/masks.js') }}"></script>
+
 <script>
-    function atualizarTabela() {
-        $.ajax({
-            url: '/solicitacao/colaborador_tabela/' + {{$solicitacao->id}},
-            method: 'GET',
-            success: function(response) {
-                $('#colaboradores-info').html(response.html);
-            },
-            error: function(response) {
 
-                console.log('Erro ao atualizar a tabela.');
-            }
-        });
-    }
-    $(document).ready(function() {
-        atualizarTabela();
-    });
-
-    $(document).on('click', '.btn-deletar-colaborador', function (event) {
-        event.preventDefault();
-
-        var colaboradorId = $(this).data('colaborador-id');
-
-        $.ajax({
-            url: '/solicitacao/colaborador/' + colaboradorId,
-            data: {
-                _token: '{{ csrf_token() }}',
-            },
-            dataType: 'json',
-            success: function (response) {
-                var message = response.message;
-                if (message == 'success') {
-                    atualizarTabela();
-                }
-            },
-            error: function (xhr, status, error) {
-                alert("Erro na requisição Ajax: " + error);
+    document.addEventListener('DOMContentLoaded', function() {
+            var colabExperienciaPreviaSim = document.getElementById('colab_experiencia_previa_sim');
+            if (colabExperienciaPreviaSim.checked) {
+                colabExperienciaPreviaSim.click();
             }
         });
 
-        return false;
+    $("#colab_treinamento_sim").click(function() {
+        $("#colab_treinamento").show().find('input, textarea').prop('disabled', false);
+        $("#colab_treinamento_file").show().find('input, textarea').prop('disabled', false);
+        $("#divTreinamento").show().find('input, textarea').prop('disabled', false);
+        
     });
 
-    $(document).on('click', '.btn-abrirModal-colaborador', function (event) {
-        event.preventDefault();
-        var colaborador_id = $(this).data('colaborador-id');
-        $.ajax({
-            url: '/solicitacao/modal_atualizacao_colaborador/' + colaborador_id,
-            method: 'GET',
-            success: function(response) {
-                $('.modalColaborador').html('')
-                $('.modalColaborador').html(response.colaborador_modal);
-                $('#modalEditarColaborador').modal('show');
-            },
-            error: function(response) {
-                console.log('Erro ao atualizar a modal.');
-            }
-        });
+    $("#colab_treinamento_nao").click(function() {
+        $("#colab_treinamento").hide().find('input, textarea').prop('disabled', true);
+        $("#colab_treinamento").prop('required', false);
+        $("#colab_treinamento_file").hide().find('input, textarea').prop('disabled', true);
+        $("#colab_treinamento_file").prop('required', false);
+        $("#divTreinamento").hide().find('input, textarea').prop('disabled', true);
+
     });
-    $(document).on('click', '[data-dismiss="modal"]', function() {
-        $('#modalEditarColaborador').modal('hide');
+
+    $("#colab_experiencia_previa_sim").click(function() {
+        $("#divExperiencia").show().find('input, textarea').prop('disabled', false);
+        $("#colab_treinamento_nao").prop('disabled', false);
+
+    });
+
+    $("#colab_experiencia_previa_nao").click(function() {
+        $("#divExperiencia").hide().find('input, textarea').prop('disabled', true);
+        $("#colab_experiencia_previa").prop('required', false);
+        $("#colab_treinamento_sim").click();
+        $("#colab_treinamento_nao").prop('disabled', true);
+
     });
 </script>
+
+<script>
+
+    $(document).ready(function () {
+        $('.modal').on('hidden.bs.modal', function () {
+            limparErros();
+        });
+    });
+    
+    function limparErros() {
+        $('.alert-danger').hide();
+        $('select, input').removeClass('is-invalid');
+    }
+
+    
+</script>
+@if($errors->any() && session()->has('falhaValidacao'))
+    @php
+        $falhaValidacao = session()->get('falhaValidacao');
+    @endphp
+
+    @if($falhaValidacao == true)
+        <script>
+            $(document).ready(function() {
+                $('#modalAdicionarColaborador').modal('show');
+            
+            });
+        </script>
+    @else
+        <script>
+            $(document).ready(function() {
+                $('#modalEditarColaborador{{session()->get('colaborador')}}').modal('show');
+            
+            });
+        </script>
+    @endif
+@endif

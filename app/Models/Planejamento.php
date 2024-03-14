@@ -23,10 +23,6 @@ class Planejamento extends Model
         'modelo_animal_id',
     ];
 
-    public function solicitacao() {
-        return $this->belongsTo('App\Models\Solicitacao');
-    }
-
     public function operacao(){
         return $this->hasOne('App\Models\Operacao');
     }

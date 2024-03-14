@@ -10,7 +10,7 @@
     <p>
         <font face="Times New Roman" font size="4" color="black">
             Olá, {{$responsavel->nome}}.<br>
-            O status da solicitação de projeto que você é responsável foi atualizado e encontra-se
+            O status da solicitação de projeto <strong>{{strtoupper($avaliacao->solicitacao->titulo_pt)}}</strong> que você é responsável foi atualizado e encontra-se
             <b>
                 @if($avaliacao->status == 'aprovado_colegiado')
                     APROVADA!

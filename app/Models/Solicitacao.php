@@ -20,12 +20,24 @@ class Solicitacao extends Model
         'subArea',
         'usuario_id',
     ];
-
+    //renomear grandearea, area, subarea
     public function avaliacao()
     {
         return $this->hasMany('App\Models\Avaliacao');
     }
 
+    public function grandeArea(){
+        return $this->belongsTo(GrandeArea::class);
+    }
+
+    public function area(){
+        return $this->belongsTo(Area::class);
+    }
+
+    public function subArea(){
+        return $this->belongsTo(SubArea::class);
+    }
+    
     public function responsavel()
     {
         return $this->hasOne('App\Models\Responsavel');
@@ -36,10 +48,6 @@ class Solicitacao extends Model
         return $this->hasMany('App\Models\ModeloAnimal');
     }
 
-    public function planejamento()
-    {
-        return $this->belongsTo('App\Models\Planejamento');
-    }
     public function dadosComplementares()
     {
         return $this->hasOne('App\Models\DadosComplementares');

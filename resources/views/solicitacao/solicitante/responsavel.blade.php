@@ -7,9 +7,10 @@
             <div class="col-sm-4">
                 <label for="nome">Nome Completo:<strong style="color: red">*</strong></label>
                 <input class="form-control @error('nome') is-invalid @enderror" id="nome" type="text"
-                    name="nome"
-                    value="@if (!empty($solicitacao->responsavel) && $solicitacao->responsavel->nome != null) {{ $solicitacao->responsavel->nome }}@else{{ old('nome') }} @endif"
-                    required autocomplete="nome" autofocus>
+                    name="nome" required
+                    value="@if(!empty($solicitacao->responsavel) && $solicitacao->responsavel->nome != null){{ $solicitacao->responsavel->nome }}@else{{ old('nome') }}@endif"
+                     autocomplete="nome" autofocus>
+
                 <div class="div_error" id="nome_error" style="display: none">
                     <span class="invalid-input">
                         <strong id="nome_error_message"></strong>
@@ -20,9 +21,10 @@
             <div class="col-sm-4">
                 <label for="nome">E-mail:<strong style="color: red">*</strong></label>
                 <input class="form-control @error('email') is-invalid @enderror" id="email" type="email"
-                    name="email"
+                    name="email" required
                     value="@if (!empty($solicitacao->responsavel) && $solicitacao->responsavel->contato->email != null) {{ $solicitacao->responsavel->contato->email }} @else {{ old('email') }} @endif"
-                    required autocomplete="email" autofocus>
+                     autocomplete="email" autofocus>
+
                 <div class="div_error" id="email_error" style="display: none">
                     <span class="invalid-input">
                         <strong id="email_error_message"></strong>
@@ -33,9 +35,10 @@
             <div class="col-sm-4">
                 <label for="telefone">Telefone:<strong style="color: red">*</strong></label>
                 <input class="form-control @error('telefone') is-invalid @enderror" id="telefone" type="text"
-                    name="telefone"
-                    value="@if (!empty($solicitacao->responsavel) && $solicitacao->responsavel->contato->telefone != null) {{ $solicitacao->responsavel->contato->telefone }} @else{{ old('telefone') }} @endif"
-                    required autocomplete="telefone" autofocus>
+                    name="telefone" required
+                    value="@if(!empty($solicitacao->responsavel) && $solicitacao->responsavel->contato->telefone != null){{ $solicitacao->responsavel->contato->telefone }}@else{{old('telefone')}}@endif"
+                     autocomplete="telefone" autofocus>
+
                 <div class="div_error" id="telefone_error" style="display: none">
                     <span class="invalid-input">
                         <strong id="telefone_error_message"></strong>
@@ -46,9 +49,10 @@
             <div class="col-sm-4 mt-2">
                 <label for="cpf">CPF:<strong style="color: red">*</strong></label>
                 <input class="form-control @error('cpf') is-invalid @enderror" id="cpf" type="text"
-                    name="cpf"
+                    name="cpf" required
                     value="@if (!empty($solicitacao->responsavel) && $solicitacao->responsavel->cpf != null) {{ $solicitacao->responsavel->cpf }} @else{{ old('cpf') }} @endif"
-                    required autocomplete="cpf" autofocus>
+                     autocomplete="cpf" autofocus>
+
                 <div class="div_error" id="cpf_error" style="display: none">
                     <span class="invalid-input">
                         <strong id="cpf_error_message"></strong>
@@ -62,8 +66,7 @@
             <div class="row">
                 <div class="col-sm-4">
                     <label for="instituicao">Instituição:<strong style="color: red">*</strong></label>
-                    <select class="form-control" id="instituicao" name="instituicao_id" onchange="unidades('')"
-                        required>
+                    <select required class="form-control @error('instituicao_id') is-invalid @enderror" id="instituicao" name="instituicao_id" onchange="unidades('')">
                         <option disabled selected>Selecione uma Instituição</option>
                         @foreach ($instituicaos as $instituicao)
                             <option @if (
@@ -72,22 +75,34 @@
                                 {{ $instituicao->nome }}</option>
                         @endforeach
                     </select>
+
+                    <div class="div_error" id="instituicao_id_error" style="display: none">
+                        <span class="invalid-input">
+                            <strong id="instituicao_id_error_message"></strong>
+                        </span>
+                    </div>
                 </div>
 
                 <div class="col-sm-4">
                     <label for="unidade">Unidade:<strong style="color: red">*</strong></label>
-                    <select class="form-control" id="unidade" name="unidade_id" onchange="departamentos()" required>
+                    <select class="form-control @error('unidade_id') is-invalid @enderror" id="unidade" name="unidade_id" onchange="departamentos()" >
                         <option disabled selected>Selecione uma Unidade</option>
                         @if (isset($solicitacao->responsavel))
                             <option value="{{ $solicitacao->responsavel->departamento->unidade->id }}" selected>
                                 {{ $solicitacao->responsavel->departamento->unidade->nome }}</option>
                         @endif
                     </select>
+
+                    <div class="div_error" id="unidade_id_error" style="display: none">
+                        <span class="invalid-input">
+                            <strong id="unidade_id_error_message"></strong>
+                        </span>
+                    </div>
                 </div>
 
                 <div class="col-sm-4">
                     <label for="departamento">Departamento:<strong style="color: red">*</strong></label>
-                    <select class="form-control" id="departamento" name="departamento_id" required>
+                    <select class="form-control @error('departamento_id') is-invalid @enderror" id="departamento" name="departamento_id" >
                         <option disabled selected>Selecione um Departamento</option>
                         @if (isset($solicitacao->responsavel))
                             <option value="{{ $solicitacao->responsavel->departamento->id }}" selected>
@@ -96,13 +111,19 @@
                             <option value="" selected>Selecione um Departamento</option>
                         @endif
                     </select>
+
+                    <div class="div_error" id="departamento_id_error" style="display: none">
+                        <span class="invalid-input">
+                            <strong id="departamento_id_error_message"></strong>
+                        </span>
+                    </div>
                 </div>
 
             </div>
             <div class="row mt-2">
                 <div class="col-sm-6">
                     <label for="vinculo_instituicao">Vínculo:<strong style="color: red">*</strong></label>
-                    <select class="form-control" id="vinculo_instituicao" name="vinculo_instituicao" required>
+                    <select required class="form-control @error('vinculo_instituicao') is-invalid @enderror" id="vinculo_instituicao" name="vinculo_instituicao" >
                         <option disabled selected>Selecione um Vinculo</option>
                         <option @if (old('vinculo_instituicao') == 'pesquisador_docente' ||
                                 (!empty($solicitacao->responsavel) && $solicitacao->responsavel->vinculo_instituicao == 'pesquisador_docente')) selected @endif value="pesquisador_docente">
@@ -124,11 +145,17 @@
                             value="pesquisador_tecnico_superior">Pesquisador/Graduação Incompleta
                         </option>
                     </select>
+
+                    <div class="div_error" id="vinculo_instituicao_error" style="display: none">
+                        <span class="invalid-input">
+                            <strong id="vinculo_instituicao_error_message"></strong>
+                        </span>
+                    </div>
                 </div>
 
                 <div class="col-sm-6">
                     <label for="grau_escolaridade">Grau de Escolaridade:<strong style="color: red">*</strong></label>
-                    <select class="form-control" id="grau_escolaridade" name="grau_escolaridade" required>
+                    <select required class="form-control @error('grau_escolaridade') is-invalid @enderror" id="grau_escolaridade" name="grau_escolaridade" >
                         <option disabled selected>Selecione um Grau de Escolaridade</option>
                         <option @if (old('grau_escolaridade') == 'graduacao_completa' ||
                                 (!empty($solicitacao->responsavel) && $solicitacao->responsavel->grau_escolaridade == 'graduacao_completa')) selected @endif value="graduacao_completa">Graduação
@@ -164,6 +191,12 @@
                             Doutorado Completo
                         </option>
                     </select>
+                    
+                    <div class="div_error" id="grau_escolaridade_error" style="display: none">
+                        <span class="invalid-input">
+                            <strong id="grau_escolaridade_error_message"></strong>
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -177,16 +210,15 @@
             @endif
 
             <div class="row ml-1 mt-2">
-                <div class="col-sm-6">
+                <div class="col-sm-2">
                     <input class="form-check-input" type="radio" name="experiencia_previa_radio"
                         id="experiencia_previa_sim" @if (!empty($solicitacao->responsavel) && $solicitacao->responsavel->experiencia_previa != null) checked @endif>
                     <label class="form-check-label" for="experiencia_previa_sim">Sim</label>
                 </div>
-                <div class="col-sm-6">
+                <div class="col-sm-2">
                     <input class="form-check-input" type="radio" name="experiencia_previa_radio"
-                        id="experiencia_previa_nao" @if (
-                            (!empty($solicitacao->responsavel) && $solicitacao->responsavel->experiencia_previa == null) ||
-                                empty($solicitacao->responsavel)) checked @endif value="false">
+                        id="experiencia_previa_nao" @if ((!empty($solicitacao->responsavel) && $solicitacao->responsavel->experiencia_previa == null) ||
+                            empty($solicitacao->responsavel)) checked @endif value="false">
                     <label class="form-check-label" for="experiencia_previa_nao">
                         Não
                     </label>
@@ -199,6 +231,7 @@
             <input class="form-control @error('experiencia_previa') is-invalid @enderror" id="experiencia_previa"
                 type="file" accept="application/pdf" name="experiencia_previa" value=""
                 autocomplete="experiencia_previa" @if (isset($solicitacao->responsavel) && $solicitacao->responsavel->experiencia_previa != null) style="width: 135px" @endif>
+
             <div class="div_error" id="experiencia_previa_error" style="display: none">
                 <span class="invalid-input">
                     <strong id="experiencia_previa_error_message"></strong>
@@ -212,50 +245,6 @@
         </div>
 
 
-        @if (Auth::user()->hasRole('Solicitante'))
-            <div class="col-sm-2">
-                <label>Termo de Responsabilidade:</label>
-            </div>
-        @endif
-
-        <div class="row ml-1 mt-2">
-            <div class="col-sm-6">
-                <input class="form-check-input" type="radio" name="termo_responsabilidade_radio"
-                    id="termo_responsabilidade_sim" @if (!empty($solicitacao->responsavel) && $solicitacao->responsavel->termo_responsabilidade != null) checked @endif>
-                <label class="form-check-label" for="termo_responsabilidade">Sim</label>
-            </div>
-            <div class="col-sm-2">
-                <input class="form-check-input" type="radio" name="termo_responsabilidade_radio"
-                    id="termo_responsabilidade_nao" @if (
-                        (!empty($solicitacao->responsavel) && $solicitacao->responsavel->termo_responsabilidade == null) ||
-                            $solicitacao->responsavel == null) checked @endif value="false">
-                <label class="form-check-label" for="termo_responsabilidade">
-                    Não
-                </label>
-            </div>
-        </div>
-
-
-        <div class="col-sm-4 mt-4" id="anexo_termo_responsabilidade" style="display: none;">
-            <label>Anexar Termo de Responsabilidade:</label>
-            {{-- <li><a href="" target="blank">Modelo Termo de Responsabilidade</a></li> --}}
-            <input class="form-control @error('termo_responsabilidade') is-invalid @enderror"
-                id="termo_responsabilidade" type="file" accept="application/pdf" name="termo_responsabilidade"
-                value="" autocomplete="termo_responsabilidade"
-                @if (isset($solicitacao->responsavel) && $solicitacao->responsavel->termo_responsabilidade != null) style="width: 135px" @endif>
-            <div class="div_error" id="termo_responsabilidade_error" style="display: none">
-                <span class="invalid-input">
-                    <strong id="termo_responsabilidade_error_message"></strong>
-                </span>
-            </div>
-            @if (isset($solicitacao->responsavel) && $solicitacao->responsavel->termo_responsabilidade != null)
-                <span style="border: 1px gray solid; border-radius: 10px; text-align: center;
-                    width: 180px; position: absolute; bottom: 0px; left: 155px; height: 38px; 
-                    padding-top: 5px; background-color: #dcfadf">
-                    Um Arquivo Já Foi Enviado
-                </span>
-            @endif
-        </div>
 
 
         <div class="row">
@@ -264,21 +253,17 @@
                     <label for="treinamento">Treinamento:</label>
                 </div>
             @endif
-            
-            
             <div>
                 <div class="row ml-1 mt-2">
-                    <div class="col-sm-6">
+                    <div class="col-sm-2">
                         <input class="form-check-input" type="radio" name="treinamento_radio"
                             id="treinamento_sim" @if (!empty($solicitacao->responsavel) && $solicitacao->responsavel->treinamento != null) checked @endif>
                         <label class="form-check-label" for="treinamento">Sim</label>
                     </div>
                     <div class="col-sm-2">
                         <input class="form-check-input" type="radio" name="treinamento_radio"
-                            id="treinamento_nao" @if (
-                                (!empty($solicitacao->responsavel) && $solicitacao->responsavel->treinamento == null) ||
-                                    $solicitacao->responsavel == null) checked @endif
-                            value="false">
+                            id="treinamento_nao" @if ((!empty($solicitacao->responsavel) && $solicitacao->responsavel->treinamento == null) ||
+                            $solicitacao->responsavel == null) checked @endif value="false">
                         <label class="form-check-label" for="treinamento">
                             Não
                         </label>
@@ -288,28 +273,72 @@
             </div>
         </div>             
 
-                        
+        <div class="col-sm-4 mt-4" id="anexo_treinamento" style="display: none;">
+            <label>Anexar Comprovante de Treinamento:<strong style="color: red">*</strong></label>
+            <input class="form-control @error('treinamento_file') is-invalid @enderror" id="treinamento_file"
+                type="file" accept="application/pdf" name="treinamento_file" 
+                autocomplete="treinamento_file" @if (isset($solicitacao->responsavel) && $solicitacao->responsavel->treinamento_file != null) value="{{$solicitacao->responsavel->treinamento_file}}" style="width: 135px"@endif>
 
-
-        @if (!empty($solicitacao->responsavel) && $solicitacao->responsavel->treinamento != null)
+            <div class="div_error" id="treinamento_file_error" style="display: none">
+                <span class="invalid-input">
+                    <strong id="treinamento_file_error_message"></strong>
+                </span>
+            </div>
+            @if (isset($solicitacao->responsavel) && $solicitacao->responsavel->treinamento_file != null)
+                <span
+                    style="border: 1px gray solid; border-radius: 10px; text-align: center; width: 180px; position: absolute; bottom: 0px; left: 155px; height: 38px; padding-top: 5px; background-color: #dcfadf">Um
+                    Arquivo Já Foi Enviado</span>
+            @endif
+        </div>
+        
+        {{-- @if (!empty($solicitacao->responsavel) && $solicitacao->responsavel->treinamento != null)
                     {{ $solicitacao->responsavel->treinamento }}
         @else
             {{ old('treinamento') }}
-        @endif
+        @endif --}}
         
+
+
+
         <div class="col-sm-10 mt-2" id="treinamento" style="display: none;">
-            <label>Descreva:</label>
+            <label>Descreva:<strong style="color: red">*</strong></label>
             <textarea class="form-control @error('treinamento') is-invalid @enderror"
-                      name="treinamento" id="treinamento" autocomplete="treinamento"
-                      autofocus
-                      required>@if(!empty($solicitacao->responsavel) && $solicitacao->responsavel->treinamento != null){{$solicitacao->responsavel->treinamento}}@else{{old('treinamento')}}@endif </textarea>
+                      name="treinamento" id="treinamento" autocomplete="treinamento" autofocus
+                      >@if(!empty($solicitacao->responsavel) && $solicitacao->responsavel->treinamento != null){{$solicitacao->responsavel->treinamento}}@else{{old('treinamento')}}@endif</textarea>
         </div>
+
         <div class="div_error" id="treinamento_error" style="display: none">
             <span class="invalid-input">
                 <strong id="treinamento_error_message"></strong>
             </span>
         </div>
-                                 
+                 
+        
+        <div class="row">
+            <div class="col-sm-4 mt-4" id="anexo_termo_responsabilidade">
+                <label>Termo de Responsabilidade:<strong style="color: red">*</strong></label>
+                {{-- <li><a href="" target="blank">Modelo Termo de Responsabilidade</a></li> --}}
+                <input class="form-control @error('termo_responsabilidade') is-invalid @enderror"
+                    id="termo_responsabilidade" type="file" accept="application/pdf" name="termo_responsabilidade"
+                    value="" autocomplete="termo_responsabilidade" required
+                    @if (isset($solicitacao->responsavel) && $solicitacao->responsavel->termo_responsabilidade != null) style="width: 135px" @endif>
+                <div class="div_error" id="termo_responsabilidade_error" style="display: none">
+                    <span class="invalid-input">
+                        <strong id="termo_responsabilidade_error_message"></strong>
+                    </span>
+                </div>
+                @if (isset($solicitacao->responsavel) && $solicitacao->responsavel->termo_responsabilidade != null)
+                    <span style="border: 1px gray solid; border-radius: 10px; text-align: center;
+                        width: 180px; position: absolute; bottom: 0px; left: 155px; height: 38px; 
+                        padding-top: 5px; background-color: #dcfadf">
+                        Um Arquivo Já Foi Enviado
+                    </span>
+                @endif
+            </div>
+            
+        </div>
+
+
         
         @include('component.botoes_new_form')
          
@@ -399,43 +428,42 @@
             $("#experiencia_previa_nao").click();
         @endif
 
-        @if (!empty($solicitacao->responsavel) && $solicitacao->responsavel->termo_responsabilidade != null)
-            $("#termo_responsabilidade_sim").attr('checked', true);
-            $("#termo_responsabilidade_sim").click();
-        @else
-            $("#termo_responsabilidade_nao").attr('checked', true);
-            $("#termo_responsabilidade_nao").click();
-        @endif
+       
 
     });
 
     $("#treinamento_sim").click(function() {
         $("#treinamento").show().find('input, textarea').prop('disabled', false);
+        $("#anexo_treinamento").show().find('input, textarea').prop('disabled', false);
+        
     });
 
     $("#treinamento_nao").click(function() {
         $("#treinamento").hide().find('input, textarea').prop('disabled', true);
         $("#treinamento").prop('required', false);
+        $("#anexo_treinamento").hide().find('input, textarea').prop('disabled', true);
+
     });
 
     $("#experiencia_previa_sim").click(function() {
         $("#anexo_experiencia").show().find('input, textarea').prop('disabled', false);
+        $("#treinamento_nao").prop('disabled', false);
+
 
     });
 
     $("#experiencia_previa_nao").click(function() {
         $("#anexo_experiencia").hide().find('input, textarea').prop('disabled', true);
         $("#experiencia_previa").prop('required', false);
+        $("#treinamento_sim").click();
+        $("#treinamento_nao").prop('disabled', true);
+
+
+        
+        
     });
 
-    $("#termo_responsabilidade_sim").click(function() {
-        $("#anexo_termo_responsabilidade").show().find('input, textarea').prop('disabled', false);
-    });
-
-    $("#termo_responsabilidade_nao").click(function() {
-        $("#anexo_termo_responsabilidade").hide().find('input, textarea').prop('disabled', true);
-        $("#termo_responsabilidade").prop('required', false);
-    });
+    
 </script>
 <script>
     function checkResponsavel() {

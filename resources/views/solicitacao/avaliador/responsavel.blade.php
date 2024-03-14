@@ -195,6 +195,7 @@
             <input class="form-control @error('experiencia_previa') is-invalid @enderror" id="experiencia_previa"
                 type="file" accept="application/pdf" name="experiencia_previa" value=""
                 autocomplete="experiencia_previa" @if (isset($solicitacao->responsavel) && $solicitacao->responsavel->experiencia_previa != null) style="width: 135px" @endif>
+                
             <div class="div_error" id="experiencia_previa_error" style="display: none">
                 <span class="invalid-input">
                     <strong id="experiencia_previa_error_message"></strong>
@@ -235,6 +236,7 @@
                 id="termo_responsabilidade" type="file" accept="application/pdf" name="termo_responsabilidade"
                 value="" autocomplete="termo_responsabilidade"
                 @if (isset($solicitacao->responsavel) && $solicitacao->responsavel->termo_responsabilidade != null) style="width: 135px" @endif>
+
             <div class="div_error" id="termo_responsabilidade_error" style="display: none">
                 <span class="invalid-input">
                     <strong id="termo_responsabilidade_error_message"></strong>

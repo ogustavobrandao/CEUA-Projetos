@@ -171,9 +171,32 @@
                         @if(Auth::user()->hasRole('Solicitante') && $solicitacao->status == 'avaliado'
                                 && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia')
                             @include('planejamento.solicitante.eutanasia',['tipo'=>9,'id'=>$eutanasia->id,'status'=>$avaliacaoEutanasia->status])
-                            @include('planejamento.solicitante.resultado',['tipo'=>10,'id'=>$resultado->id,'status'=>$avaliacaoResultado->status])
                         @else
                             @include('planejamento.solicitante.eutanasia')
+                        @endif
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <div class="card shadow-lg p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_9">
+                        <div class="row">
+                            <div class="col-md-12">
+                                
+                                <h2 class="titulo" id="titulo_10">Resultado
+                                    <a class="float-end" id="10_btn_up"><i
+                                            class="fa-solid fa-circle-chevron-down"></i></a>
+                                    <a class="float-end" id="10_btn_down" style="display: none"><i
+                                            class="fa-solid fa-circle-chevron-up"></i></a>
+                                </h2>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div id="resultado" style="display: none;">
+                        @if(Auth::user()->hasRole('Solicitante') && $solicitacao->status == 'avaliado'
+                                && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia')
+                            @include('planejamento.solicitante.resultado',['tipo'=>10,'id'=>$resultado->id,'status'=>$avaliacaoResultado->status])
+                        @else
                             @include('planejamento.solicitante.resultado')
                         @endif
                     </div>

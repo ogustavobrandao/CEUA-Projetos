@@ -10,7 +10,7 @@ class AvaliacaoIndividual extends Model
     use HasFactory;
 
     public function eutanasia(){
-        return $this->hasOne('App\Models\Eutanasia');
+        return $this->belongsTo('App\Models\Eutanasia');
     }
 
     public function solicitacao(){

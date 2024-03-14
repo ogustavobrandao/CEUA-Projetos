@@ -21,7 +21,7 @@ class ResultadoFactory extends Factory
             'destino_animais' => 'Destino',
             'justificativa_metodos' => 'Justificativa dos Metodos',
             'resumo_procedimento' => 'Resumo do ProcedimentoSeeder',
-            'outras_infos' => 'Outras informações',
+            'outras_informacoes' => 'Outras informações',
             'planejamento_id' => 1
         ];
     }

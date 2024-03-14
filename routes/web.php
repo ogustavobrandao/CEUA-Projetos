@@ -106,7 +106,7 @@ Route::group(['middleware' => ['auth', 'verified', 'checkRole:Solicitante']], fu
     Route::post('/solicitacao/criar_responsavel', [SolicitacaoController::class, 'criar_responsavel'])->name('solicitacao.responsavel.criar');
     Route::post('/solicitacao/criar_colaborador', [SolicitacaoController::class, 'criar_colaborador'])->name('solicitacao.colaborador.criar');
     Route::post('/solicitacao/editar_colaborador', [SolicitacaoController::class, 'editar_colaborador'])->name('solicitacao.colaborador.editar');
-    Route::get('/solicitacao/colaborador/{id}', [SolicitacaoController::class, 'deletar_colaborador'])->name('solicitacao.colaborador.deletar');
+    Route::delete('/solicitacao/colaborador/{id}', [SolicitacaoController::class, 'deletar_colaborador'])->name('solicitacao.colaborador.deletar');
     Route::get('/solicitacao/colaborador_tabela/adm/{id}', [SolicitacaoController::class, 'atualizar_colaborador_tabela_adm'])->name('solicitacao.colaborador_tabela_adm');
     Route::get('/solicitacao/colaborador_tabela/{id}', [SolicitacaoController::class, 'atualizar_colaborador_tabela'])->name('solicitacao.colaborador_tabela');
     Route::get('solicitacao/colaborador_tabela/solicitante/{id}', [SolicitacaoController::class, 'atualizar_solicitante_solicitante'])->name('solicitacao.solicitante');
@@ -125,6 +125,7 @@ Route::group(['middleware' => ['auth', 'verified', 'checkRole:Solicitante']], fu
     Route::post('/solicitacao/criar_operacao', [SolicitacaoController::class, 'criar_operacao'])->name('solicitacao.operacao.criar');
     Route::post('/solicitacao/criar_solicitacao_fim', [SolicitacaoController::class, 'criar_solicitacao_fim'])->name('solicitacao.solicitacao_fim.criar');
     Route::get('/solicitacao/{solicitacao_id}/index', [SolicitacaoController::class, 'index_solicitacao'])->name('solicitacao.index');
+    Route::delete('/solicitacao/{solicitacao_id}', [SolicitacaoController::class, 'destroySolicitacao'])->name('solicitacao.delete');
 
     Route::get('/solicitacao/planejamento/index/{modelo_animal_id}', [SolicitacaoController::class, 'index_planejamento'])->name('solicitacao.planejamento.index');
 
