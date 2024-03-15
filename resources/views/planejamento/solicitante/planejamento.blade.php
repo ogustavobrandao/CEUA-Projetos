@@ -1,8 +1,9 @@
 <div class="card shadow-lg p-3 bg-white" style="border-radius: 0px 0px 10px 10px">
 
-    <form id="form6" method="POST" action="{{route('solicitacao.planejamento.criar')}}" enctype="multipart/form-data">
+    <form id="form6" method="POST" action="{{ route('solicitacao.planejamento.criar') }}"
+        enctype="multipart/form-data">
         @csrf
-        <input type="hidden" name="modelo_animal_id" value="{{$modelo_animal->id}}">
+        <input type="hidden" name="modelo_animal_id" value="{{ $modelo_animal->id }}">
         <div class="row">
             <h3 class="subtitulo">Planejamento Estatístico / Delineamento Experimental / Desenho Experimental</h3>
             <div class="col-sm-2">
@@ -20,7 +21,8 @@
             </div>
 
             <div class="col-sm-5">
-                <label for="especificar_grupo">Especificar cada grupo (controle, tratado, utilizado para treinamento, se for o caso)
+                <label for="especificar_grupo">Especificar cada grupo (controle, tratado, utilizado para treinamento, se
+                    for o caso)
                     e número de animais por grupo:<strong style="color: red">*</strong></label>
                 <textarea class="form-control @error('especificar_grupo') is-invalid @enderror" id="especificar_grupo"
                           name="especificar_grupo"  autocomplete="especificar_grupo"
@@ -51,8 +53,8 @@
                 <label>Anexar <span style="color: darkred">PDF</span> de amostra:</label>
             </div>
             <div class="col-sm-6">
-                @if(\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2)
-                    @if($planejamento->anexo_amostra_planejamento == null)
+                @if (\Illuminate\Support\Facades\Auth::user()->tipo_usuario_id == 2)
+                    @if ($planejamento->anexo_amostra_planejamento == null)
                         <br>
                         <a class="btn btn-secondary"
                         href="#">Não Enviado</a>
@@ -62,17 +64,17 @@
                         Amostra</a>
                     @endif
                 @else
-                    @if(!empty($planejamento))
+                    @if (!empty($planejamento))
                         <input class="form-control @error('anexo_amostra_planejamento') is-invalid @enderror" id="anexo_amostra_planejamento"
                                type="file" name="anexo_amostra_planejamento"
                                value="" autocomplete="anexo_amostra_planejamento" autofocus
-                               @if($planejamento->anexo_amostra_planejamento != null) style="width: 135px" @endif>
+                               @if ($planejamento->anexo_amostra_planejamento != null) style="width: 135px" @endif>
                         @error('anexo_amostra_planejamento')
                         <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
             </span>
                         @enderror
-                        @if($planejamento->anexo_amostra_planejamento != null)
+                        @if ($planejamento->anexo_amostra_planejamento != null)
                             <span
                                 style="border: 1px gray solid; border-radius: 10px; text-align: center; width: 250px; position: absolute; bottom: 0px; left: 155px; height: 38px; padding-top: 5px; background-color: #dcfadf">Um Arquivo Já Foi Enviado</span>
                         @endif
@@ -98,32 +100,33 @@
                     Quando não for o caso, justifique.</label>
             </div>
             <div class="col-sm-6">
-               
-                @if(!empty($planejamento))
+
+                @if (!empty($planejamento))
                     <input class="form-control @error('anexo_formula') is-invalid @enderror" id="anexo_formula"
-                            type="file" accept="application/pdf" name="anexo_formula"
-                            value="" autocomplete="anexo_formula" autofocus
-                            @if($planejamento->anexo_formula != null) style="width: 135px" @endif>
+                        type="file" accept="application/pdf" name="anexo_formula" value=""
+                        autocomplete="anexo_formula" autofocus
+                        @if ($planejamento->anexo_formula != null) style="width: 135px" @endif>
                     <div class="div_error" id="anexo_formula_error" style="display: none">
                         <span class="invalid-input">
                             <strong id="anexo_formula_error_message"></strong>
                         </span>
                     </div>
-                    @if($planejamento->anexo_formula != null)
+                    @if ($planejamento->anexo_formula != null)
                         <span
-                            style="border: 1px gray solid; border-radius: 10px; text-align: center; width: 250px; position: absolute; bottom: 0px; left: 155px; height: 38px; padding-top: 5px; background-color: #dcfadf">Um Arquivo Já Foi Enviado</span>
+                            style="border: 1px gray solid; border-radius: 10px; text-align: center; width: 250px; position: absolute; bottom: 0px; left: 155px; height: 38px; padding-top: 5px; background-color: #dcfadf">Um
+                            Arquivo Já Foi Enviado</span>
                     @endif
                 @else
                     <input class="form-control @error('anexo_formula') is-invalid @enderror" id="anexo_formula"
-                            type="file" accept="application/pdf" name="anexo_formula"
-                            value="{{old('anexo_formula')}}" autocomplete="anexo_formula" autofocus>
+                        type="file" accept="application/pdf" name="anexo_formula" value="{{ old('anexo_formula') }}"
+                        autocomplete="anexo_formula" autofocus>
                     <div class="div_error" id="anexo_formula_error" style="display: none">
                         <span class="invalid-input">
                             <strong id="anexo_formula_error_message"></strong>
                         </span>
                     </div>
                 @endif
-                
+
             </div>
         </div>
 
@@ -179,14 +182,14 @@
                 </div>
                 <div class="col-auto mt-3" style="margin-left: -20px">
                     <span
-                        style="font-weight: lighter!important; font-size: 14px!important; color: dimgray; text-decoration: none!important;">(1,2,3 ou 4)</span>
+                        style="font-weight: lighter!important; font-size: 14px!important; color: dimgray; text-decoration: none!important;">(1,2,3
+                        ou 4)</span>
                 </div>
             </div>
             <div class="col-sm-12">
                 <label for="grau_select">Grau de Invasividade:<strong style="color: red">*</strong>
-                    <a target="_blank"
-                       href="https://www2.dti.ufv.br/ceua/scripts/grau-invasividade.html"
-                       title="Informações sobre o grau de invasividade" style="color: darkred">
+                    <a target="_blank" href="https://www2.dti.ufv.br/ceua/scripts/grau-invasividade.html"
+                        title="Informações sobre o grau de invasividade" style="color: darkred">
                         <i class="fa-solid fa-circle-info fa-lg"></i>
                     </a>
                 </label>
@@ -195,18 +198,15 @@
                             @if($planejamento != null && $planejamento->grau_invasividade == "GI1") selected @endif>GI1 =
                         Experimentos que causam pouco ou nenhum desconforto ou estresse
                     </option>
-                    <option value="GI2"
-                            @if($planejamento != null && $planejamento->grau_invasividade == "GI2") selected @endif>GI2 =
+                    <option value="GI2" @if ($planejamento != null && $planejamento->grau_invasividade == 'GI2') selected @endif>GI2 =
                         Experimentos que causam estresse, desconforto ou dor, de leve
                         intensidade
                     </option>
-                    <option value="GI3"
-                            @if($planejamento != null && $planejamento->grau_invasividade == "GI3") selected @endif>GI3 =
+                    <option value="GI3" @if ($planejamento != null && $planejamento->grau_invasividade == 'GI3') selected @endif>GI3 =
                         Experimentos que causam estresse, desconforto ou dor, de intensidade
                         intermediária
                     </option>
-                    <option value="GI4"
-                            @if($planejamento != null && $planejamento->grau_invasividade == "GI4") selected @endif>GI4 =
+                    <option value="GI4" @if ($planejamento != null && $planejamento->grau_invasividade == 'GI4') selected @endif>GI4 =
                         Experimentos que causam dor de alta intensidade
                     </option>
                 </select>
@@ -220,7 +220,7 @@
 
 </div>
 <script>
-    $('#form6').submit(function (event) {
+    $('#form6').submit(function(event) {
         event.preventDefault();
 
         var formData = new FormData(this);
@@ -235,20 +235,24 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             dataType: 'json',
-            success: function (response) {
+            success: function(response) {
+                var submitButton = $('#form6').find(':submit');
+                markSaved(submitButton, true);
+
                 var message = response.message;
                 if (message == 'success') {
                     var campo = response.campo;
                     $('#successModal').modal('show');
-                    $('#successModal').find('.msg-success').text('O ' + campo + ' foi salvo com sucesso!');
+                    $('#successModal').find('.msg-success').text('O ' + campo +
+                        ' foi salvo com sucesso!');
 
                     $('.div_error').css('display', 'none');
-                    setTimeout(function () {
+                    setTimeout(function() {
                         $('#successModal').modal('hide');
                     }, 2000);
                 }
             },
-            error: function (xhr, status, error) {
+            error: function(xhr, status, error) {
                 if (xhr.responseJSON && xhr.responseJSON.message) {
                     $('.div_error').css('display', 'none');
                     var errors = xhr.responseJSON.errors;
@@ -266,12 +270,12 @@
                             $(errorDiv).css('display', 'block')
                         }
                     }
-                    if(status == 'error'){
+                    if (status == 'error') {
                         $('#failModal').modal('show');
                         $('#failModal').find('.msg-fail').text(xhr.responseJSON.message);
-                        setTimeout(function (){
+                        setTimeout(function() {
                             $('#failModal').modal('hide');
-                        },2000)
+                        }, 2000)
                     }
                 } else {
                     alert("Erro na requisição Ajax: " + error);

@@ -269,9 +269,9 @@
                         </label>
                     </div>
                 </div>
-               
+
             </div>
-        </div>             
+        </div>
 
         <div class="col-sm-4 mt-4" id="anexo_treinamento" style="display: none;">
             <label>Anexar Comprovante de Treinamento:<strong style="color: red">*</strong></label>
@@ -341,7 +341,7 @@
 
         
         @include('component.botoes_new_form')
-         
+
     </form>
 </div>
 
@@ -362,6 +362,9 @@
             },
             dataType: 'json',
             success: function(response) {
+                submitButton = $('#form1').find(':submit');
+                markSaved(submitButton, true);
+
                 var message = response.message;
                 var responsavel = response.exist;
                 if (message == 'success') {

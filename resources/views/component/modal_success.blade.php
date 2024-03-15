@@ -9,7 +9,7 @@
                 <div class="row">
                     <div class="col-12 text-center">
                         <i class="fas fa-check-circle fa-5x text-success mb-3"></i>
-                        <h4 class="text-success msg-success" style="font-size: 18px"></h4>
+                        <h4 class="text-success" style="font-size: 18px">Os dados foram salvos com sucesso!</h4>
                     </div>
                 </div>
             </div>

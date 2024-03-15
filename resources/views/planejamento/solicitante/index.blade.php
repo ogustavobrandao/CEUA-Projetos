@@ -455,5 +455,29 @@
                 });
             });
         </script>
+        
+        <script>
+            $(document).ready(function() {
+                $('input, textarea, select').on('input change', function() {
+                    handleInputChange(this);
+                });
+            });
 
+            function handleInputChange(input) {
+                var form = $(input).closest('form');
+                markSaved(form.find(':submit'), false);
+            }
+
+            function markSaved(button, saved) {
+                if (saved) {
+                    $(button).text('Salvo');
+                    $(button).prop('disabled', true);
+                    $(button).removeClass('btn-primary').addClass('btn-success');
+                } else {
+                    $(button).text('Salvar');
+                    $(button).prop('disabled', false);
+                    $(button).removeClass('btn-success').addClass('btn-primary');
+                }
+            }
+        </script>
 @endsection

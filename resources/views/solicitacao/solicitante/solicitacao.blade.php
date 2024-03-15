@@ -1,7 +1,7 @@
 <div class="card p-3 bg-white" style="border-radius: 0px 0px 10px 10px">
-    <form id="form0" method="POST" action="{{route('solicitacao.criar')}}">
+    <form id="form0" method="POST" action="{{ route('solicitacao.criar') }}">
         @csrf
-        <input type="hidden" name="solicitacao_id" value="{{$solicitacao->id}}">
+        <input type="hidden" name="solicitacao_id" value="{{ $solicitacao->id }}">
         <div class="row">
             <div class="col-12">
                 <h3 class="subtitulo">Finalidade</h3>
@@ -10,7 +10,7 @@
         <div class="row">
             <div class="col-sm-4">
                 <label for="tipo">Tipo:</label>
-                <input class="form-control" type="text" value="{{ $solicitacao->tipo  }}" disabled>
+                <input class="form-control" type="text" value="{{ $solicitacao->tipo }}" disabled>
             </div>
 
             <div class="col-sm-4">
@@ -25,6 +25,9 @@
                     <span class="invalid-input">
                         <strong id="inicio_error_message"></strong>
                     </span>
+                    <span class="invalid-input">
+                        <strong id="inicio_error_message"></strong>
+                    </span>
                 </div>
             </div>
 
@@ -36,6 +39,9 @@
                        autocomplete="fim" autofocus required>
 
                 <div class="div_error" id="fim_error" style="display: none">
+                    <span class="invalid-input">
+                        <strong id="fim_error_message"></strong>
+                    </span>
                     <span class="invalid-input">
                         <strong id="fim_error_message"></strong>
                     </span>
@@ -70,15 +76,18 @@
                     <span class="invalid-input">
                         <strong id="titulo_en_error_message"></strong>
                     </span>
+                    <span class="invalid-input">
+                        <strong id="titulo_en_error_message"></strong>
+                    </span>
                 </div>
             </div>
 
             <div class="col-12 mt-2">
                 <h3 class="subtitulo">Área e Subárea do Conhecimento
                     <a target="_blank"
-                       href="http://lattes.cnpq.br/documents/11871/24930/TabeladeAreasdoConhecimento.pdf/d192ff6b-3e0a-4074-a74d-c280521bd5f7"
-                       title="Para mais informações sobre das áreas e subáreas de conhecimento, acessar documento do CNPQ."
-                       style="color: darkred">
+                        href="http://lattes.cnpq.br/documents/11871/24930/TabeladeAreasdoConhecimento.pdf/d192ff6b-3e0a-4074-a74d-c280521bd5f7"
+                        title="Para mais informações sobre das áreas e subáreas de conhecimento, acessar documento do CNPQ."
+                        style="color: darkred">
                         <i class="fa-solid fa-circle-info fa-lg"></i>
                     </a>
                 </h3>
@@ -89,14 +98,18 @@
                 <select class="form-control @error('grandeArea') is-invalid @enderror" id="grandeArea" name="grandeArea"
                         onchange="areas()" required>
                     <option value="" disabled selected hidden>Selecione a Grande Área</option>
-                    @foreach($grandeAreas as $grandeArea)
-                        <option @if(old('grandeArea') !== null ? old('grandeArea') : (isset($solicitacao) ? $solicitacao->grande_area_id : '')
-                          == $grandeArea->id ) selected
-                                @endif value="{{$grandeArea->id}}">{{$grandeArea->nome}}</option>
+                    @foreach ($grandeAreas as $grandeArea)
+                        <option @if (old('grandeArea') !== null
+                                ? old('grandeArea')
+                                : (isset($solicitacao) ? $solicitacao->grande_area_id : '') == $grandeArea->id) selected @endif value="{{ $grandeArea->id }}">
+                            {{ $grandeArea->nome }}</option>
                     @endforeach
                 </select>
 
                 <div class="div_error" id="grandeArea_error" style="display: none">
+                    <span class="invalid-input">
+                        <strong id="grandeArea_error_message"></strong>
+                    </span>
                     <span class="invalid-input">
                         <strong id="grandeArea_error_message"></strong>
                     </span>
@@ -110,13 +123,16 @@
                 <select class="form-control @error('area') is-invalid @enderror" id="area" name="area"
                         onchange="subareas()" required>
                     <option value="" disabled selected hidden>Selecione a Área</option>
-                    @foreach($areas as $area)
-                        <option @if(old('area') !== null ? old('area') : (isset($solicitacao) ? $solicitacao->area_id : '')
-                          == $area->id ) selected @endif value="{{$area->id}}">{{$area->nome}}</option>
+                    @foreach ($areas as $area)
+                        <option @if (old('area') !== null ? old('area') : (isset($solicitacao) ? $solicitacao->area_id : '') == $area->id) selected @endif value="{{ $area->id }}">
+                            {{ $area->nome }}</option>
                     @endforeach
                 </select>
 
                 <div class="div_error" id="area_error" style="display: none">
+                    <span class="invalid-input">
+                        <strong id="area_error_message"></strong>
+                    </span>
                     <span class="invalid-input">
                         <strong id="area_error_message"></strong>
                     </span>
@@ -128,13 +144,16 @@
                 <input type="hidden" id="oldSubArea" value="{{ old('subArea') }}">
                 <select class="form-control @error('subArea') is-invalid @enderror" id="subArea" name="subArea" required>
                     <option value="" disabled selected hidden>Selecione a Subárea</option>
-                    @foreach($subAreas as $subArea)
-                        <option @if(old('subArea') !== null ? old('subArea') : (isset($solicitacao) ? $solicitacao->sub_area_id : '')
-                              ==$subArea->id ) selected @endif value="{{$subArea->id}}">{{$subArea->nome}}</option>
+                    @foreach ($subAreas as $subArea)
+                        <option @if (old('subArea') !== null ? old('subArea') : (isset($solicitacao) ? $solicitacao->sub_area_id : '') == $subArea->id) selected @endif value="{{ $subArea->id }}">
+                            {{ $subArea->nome }}</option>
                     @endforeach
                 </select>
 
                 <div class="div_error" id="subArea_error" style="display: none">
+                    <span class="invalid-input">
+                        <strong id="subArea_error_message"></strong>
+                    </span>
                     <span class="invalid-input">
                         <strong id="subArea_error_message"></strong>
                     </span>
@@ -150,33 +169,35 @@
 @include('component.modal_success')
 
 <script>
-
-    $('#form0').submit(function (event) {
+    $('#form0').submit(function(event) {
         event.preventDefault()
         var formData = $(this).serialize();
         $.ajax({
             type: 'POST',
             url: '{{ route('solicitacao.criar') }}',
             data: formData,
-            headers:
-                {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
             dataType: 'json',
-            success: function (response) {
+            success: function(response) {
+                submitButton = $('#form0').find(':submit');
+                markSaved(submitButton, true);
+
                 var message = response.message;
                 if (message == 'success') {
                     var campo = response.campo;
                     $('#successModal').modal('show');
-                    $('#successModal').find('.msg-success').text('Os ' + campo + ' foram salvos com sucesso!');
+                    $('#successModal').find('.msg-success').text('Os ' + campo +
+                        ' foram salvos com sucesso!');
 
                     $('.div_error').css('display', 'none');
-                    setTimeout(function () {
+                    setTimeout(function() {
                         $('#successModal').modal('hide');
                     }, 2000);
                 }
             },
-            error: function (xhr, status, error) {
+            error: function(xhr, status, error) {
                 if (xhr.responseJSON && xhr.responseJSON.message) {
                     $('.div_error').css('display', 'none');
                     var errors = xhr.responseJSON.errors;
@@ -194,12 +215,12 @@
                             $(errorDiv).css('display', 'block')
                         }
                     }
-                    if(status == 'error'){
+                    if (status == 'error') {
                         $('#failModal').modal('show');
                         $('#failModal').find('.msg-fail').text(xhr.responseJSON.message);
-                        setTimeout(function (){
+                        setTimeout(function() {
                             $('#failModal').modal('hide');
-                        },2000)
+                        }, 2000)
                     }
                 } else {
                     alert("Erro na requisição Ajax: " + error);
@@ -209,15 +230,15 @@
         })
     })
 
-    @if(!empty($solicitacao) && $solicitacao->outra_area_conhecimento != null)
-    $(function () {
-        if ($('#area_conhecimento').val() == 'outras') {
-            $('#outra_area_conhecimento_div').show();
-        }
-    })
+    @if (!empty($solicitacao) && $solicitacao->outra_area_conhecimento != null)
+        $(function() {
+            if ($('#area_conhecimento').val() == 'outras') {
+                $('#outra_area_conhecimento_div').show();
+            }
+        })
     @endif
 
-    $('#area_conhecimento').on('change', function () {
+    $('#area_conhecimento').on('change', function() {
         if ($('#area_conhecimento').val() != 'outras') {
             $('#outra_area_conhecimento_div').hide();
             $('#outra_area_conhecimento').prop('required', false);
@@ -229,28 +250,28 @@
     });
 
     /*
- * FUNCAO: Gerar as areas
- *
- */
+     * FUNCAO: Gerar as areas
+     *
+     */
     function areas() {
         var grandeArea = $('#grandeArea').val();
         $.ajax({
             type: 'POST',
             url: '{{ route('area.consulta') }}',
             data: 'id=' + grandeArea,
-            headers:
-                {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
             success: (dados) => {
 
                 if (dados.length > 0) {
                     if ($('#oldArea').val() == null || $('#oldArea').val() == "") {
                         var option = '<option selected disabled>-- Área --</option>';
                     }
-                    $.each(dados, function (i, obj) {
+                    $.each(dados, function(i, obj) {
                         if ($('#oldArea').val() != null && $('#oldArea').val() == obj.id) {
-                            option += '<option selected value="' + obj.id + '">' + obj.nome + '</option>';
+                            option += '<option selected value="' + obj.id + '">' + obj.nome +
+                                '</option>';
                         } else {
                             option += '<option value="' + obj.id + '">' + obj.nome + '</option>';
                         }
@@ -269,27 +290,27 @@
     }
 
     /*
-    * FUNCAO: Gerar as subareas
-    *
-    */
+     * FUNCAO: Gerar as subareas
+     *
+     */
     function subareas() {
         var area = $('#area').val();
         $.ajax({
             type: 'POST',
             url: '{{ route('subarea.consulta') }}',
             data: 'id=' + area,
-            headers:
-                {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
             success: (dados) => {
                 if (dados.length > 0) {
                     if ($('#oldSubArea').val() == null || $('#oldSubArea').val() == "") {
                         var option = '<option selected disabled>-- Subárea --</option>';
                     }
-                    $.each(dados, function (i, obj) {
+                    $.each(dados, function(i, obj) {
                         if ($('#oldSubArea').val() != null && $('#oldSubArea').val() == obj.id) {
-                            option += '<option selected value="' + obj.id + '">' + obj.nome + '</option>';
+                            option += '<option selected value="' + obj.id + '">' + obj.nome +
+                                '</option>';
                         } else {
                             option += '<option value="' + obj.id + '">' + obj.nome + '</option>';
                         }
@@ -306,5 +327,4 @@
         })
 
     }
-
 </script>

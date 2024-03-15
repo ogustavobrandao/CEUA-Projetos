@@ -1,7 +1,7 @@
 <div class="card p-3 bg-white" style="border-radius: 0px 0px 10px 10px">
-    <form id="form3" method="POST" action="{{route('solicitacao.solicitacao_fim.criar')}}">
+    <form id="form3" method="POST" action="{{ route('solicitacao.solicitacao_fim.criar') }}">
         @csrf
-        <input type="hidden" name="solicitacao_id" value="{{$solicitacao->id}}">
+        <input type="hidden" name="solicitacao_id" value="{{ $solicitacao->id }}">
         <div class="row col-md-12">
             <h3 class="subtitulo">Informações</h3>
 
@@ -70,32 +70,35 @@
     </form>
 </div>
 <script>
-    $('#form3').submit(function (event) {
+    $('#form3').submit(function(event) {
         event.preventDefault()
         var formData = $(this).serialize();
         $.ajax({
             type: 'POST',
             url: '{{ route('solicitacao.solicitacao_fim.criar') }}',
             data: formData,
-            headers:
-                {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
             dataType: 'json',
-            success: function (response) {
+            success: function(response) {
+                submitButton = $('#form3').find(':submit');
+                markSaved(submitButton, true);
+
                 var message = response.message;
                 if (message == 'success') {
                     var campo = response.campo;
                     $('#successModal').modal('show');
-                    $('#successModal').find('.msg-success').text('Os ' + campo + ' foram salvos com sucesso!');
+                    $('#successModal').find('.msg-success').text('Os ' + campo +
+                        ' foram salvos com sucesso!');
 
                     $('.div_error').css('display', 'none');
-                    setTimeout(function () {
+                    setTimeout(function() {
                         $('#successModal').modal('hide');
                     }, 2000);
                 }
             },
-            error: function (xhr, status, error) {
+            error: function(xhr, status, error) {
                 if (xhr.responseJSON && xhr.responseJSON.message) {
                     $('.div_error').css('display', 'none');
                     var errors = xhr.responseJSON.errors;
@@ -113,12 +116,12 @@
                             $(errorDiv).css('display', 'block')
                         }
                     }
-                    if(status == 'error'){
+                    if (status == 'error') {
                         $('#failModal').modal('show');
                         $('#failModal').find('.msg-fail').text(xhr.responseJSON.message);
-                        setTimeout(function (){
+                        setTimeout(function() {
                             $('#failModal').modal('hide');
-                        },2000)
+                        }, 2000)
                     }
                 } else {
                     alert("Erro na requisição Ajax: " + error);
@@ -127,4 +130,3 @@
         })
     })
 </script>
-

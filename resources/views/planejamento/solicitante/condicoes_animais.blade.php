@@ -163,6 +163,9 @@
             },
             dataType: 'json',
             success: function (response) {
+                var submitButton = $('#form7').find(':submit');
+                markSaved(submitButton, true);
+
                 var message = response.message;
                 if (message == 'success') {
                     var campo = response.campo;
