@@ -3,7 +3,11 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modalEditarColaboradorLabel">Editar Colaborador</h5>
+                @if(isset($visualizar))
+                    <h5 class="modal-title" id="modalEditarColaboradorLabel">Visualizar Colaborador</h5>
+                @else
+                    <h5 class="modal-title" id="modalEditarColaboradorLabel">Editar Colaborador</h5>
+                @endif
                 <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -141,20 +145,32 @@
                                     </div>
                                 </div>
 
-                                <div class="col-sm-12" id="divExperiencia{{$colaborador->id}}" style="display: none;">
-                                    <label>Enviar Arquivo de Experiência Prévia:</label>
-                                    <input name="colab_experiencia_previa" class="form-control" id="colab_experiencia_previa" type="file" accept="application/pdf" value="{{$colaborador->experiencia_previa ?? ''}}">
-
-                                    @error('colab_experiencia_previa')
-                                        <div class="alert alert-danger">{{ $message }}</div>
-                                    @enderror
-
-                                    @if ($colaborador->experiencia_previa != null)
-                                        <span
-                                            style="border: 1px gray solid; border-radius: 10px; text-align: center; width: 210px; position: absolute; bottom: 0px; left: 146px; height: 38px; padding-top: 5px; background-color: #dcfadf">Um
-                                            Arquivo Já Foi Enviado</span>
+                                @if(isset($visualizar))
+                                    @if($colaborador->experiencia_previa == null)
+                                        <br>
+                                        <a class="btn btn-secondary"
+                                        href="#">Não Enviado</a>
+                                    @else
+                                        <a class="btn btn-primary download-button"
+                                        data-path="{{route('experiencias_previasColaborador.download', ['colaborador_id' => $colaborador->id])}}">Baixar
+                                            Experiência Prévia</a>
                                     @endif
-                                </div>
+                                @else
+                                    <div class="col-sm-12" id="divExperiencia{{$colaborador->id}}" style="display: none;">
+                                        <label>Enviar Arquivo de Experiência Prévia:</label>
+                                        <input name="colab_experiencia_previa" class="form-control" id="colab_experiencia_previa" type="file" accept="application/pdf" value="{{$colaborador->experiencia_previa ?? ''}}">
+
+                                        @error('colab_experiencia_previa')
+                                            <div class="alert alert-danger">{{ $message }}</div>
+                                        @enderror
+
+                                        @if ($colaborador->experiencia_previa != null)
+                                            <span
+                                                style="border: 1px gray solid; border-radius: 10px; text-align: center; width: 210px; position: absolute; bottom: 0px; left: 146px; height: 38px; padding-top: 5px; background-color: #dcfadf">Um
+                                                Arquivo Já Foi Enviado</span>
+                                        @endif
+                                    </div>
+                                @endif
                             </div>
                         </div>
                         <div class="row">
@@ -174,20 +190,31 @@
                                 <div id="divTreinamento{{$colaborador->id}}" style="display: none;">
                                     <div class="col-sm-12 mt-2">
                                         <label>Anexar Comprovante de Treinamento:<strong style="color: red">*</strong></label>
-                                        <input class="form-control @error('colab_treinamento_file') is-invalid @enderror" id="colab_treinamento_file{{$colaborador->id}}"
-                                        type="file" accept="application/pdf" name="colab_treinamento_file" value="{{$colaborador->treinamento_file ?? ''}}"
-                                        autocomplete="colab_treinamento_file">
-                                        
-                                        @error('colab_treinamento_file')
-                                        <div class="alert alert-danger">{{ $message }}</div>
-                                        @enderror
-                                        
-                                        @if ($colaborador->treinamento_file != null)
-                                            <span
-                                                style="border: 1px gray solid; border-radius: 10px; text-align: center; width: 210px; position: absolute; bottom: 67px; left: 146px; height: 38px; padding-top: 5px; background-color: #dcfadf">Um
-                                                Arquivo Já Foi Enviado</span>
+                                        @if(isset($visualizar))
+                                            @if($colaborador->treinamento_file == null)
+                                                <a class="btn btn-secondary"
+                                                href="#">Não Enviado</a>
+                                            @else
+                                                <a class="btn btn-primary download-button"
+                                                data-path="{{route('treinamento_fileColaborador.download', ['colaborador_id' => $colaborador->id])}}">Baixar
+                                                    Arquivo de Treinamento</a>
+                                            @endif
+                                        @else
+                                            <input class="form-control @error('colab_treinamento_file') is-invalid @enderror" id="colab_treinamento_file{{$colaborador->id}}"
+                                            type="file" accept="application/pdf" name="colab_treinamento_file" value="{{$colaborador->treinamento_file ?? ''}}"
+                                            autocomplete="colab_treinamento_file">
+                                            
+                                            @error('colab_treinamento_file')
+                                                <div class="alert alert-danger">{{ $message }}</div>
+                                            @enderror
+                                            
+                                            @if ($colaborador->treinamento_file != null)
+                                                <span
+                                                    style="border: 1px gray solid; border-radius: 10px; text-align: center; width: 210px; position: absolute; bottom: 67px; left: 146px; height: 38px; padding-top: 5px; background-color: #dcfadf">Um
+                                                    Arquivo Já Foi Enviado</span>
+                                            @endif
                                         @endif
-                                        
+
                                         <label for="treinamento">Descrever o treinamento:<strong style="color: red">*</strong></label>
                                         <input class="form-control" id="colab_treinamento{{$colaborador->id}}" type="text" name="colab_treinamento" value="{{$colaborador->treinamento ?? old('colab_treinamento')}}" autocomplete="treinamento" autofocus>
                                         
@@ -203,14 +230,34 @@
                 </div>
                 
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Atualizar</button>
+                    @if(isset($visualizar))
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Voltar</button>
+
+                    @else
+                        <button type="submit" class="btn btn-primary">Atualizar</button>
+                    @endif
                 </div>
                 
             </form>
         </div>
     </div>
 </div>
+@if(isset($visualizar))
 
+    <script>
+        $('form input, form select, form textarea').prop('disabled', true);
+        @if ($colaborador->treinamento_file != null)
+            $("#colab_treinamento{{$colaborador->id}}").show().find('input, textarea').prop('disabled', false);
+            $("#divTreinamento{{$colaborador->id}}").show().find('input, textarea').prop('disabled', false);
+        @endif
+        @if($colaborador->experiencia_previa != null)
+            $("#divExperiencia{{$colaborador->id}}").show().find('input, textarea').prop('disabled', false);
+            $("#colab_treinamento_nao{{$colaborador->id}}").prop('disabled', false);
+        @endif
+
+    </script>
+
+@endif
 <script>
    $(document).ready(function() {
         @if ($colaborador->treinamento_file != null)
@@ -256,50 +303,4 @@
 
     });
 
-</script>
-
-<script>
-    $(document).ready(function() {
-        $('.download-button').click(function(e) {
-            e.preventDefault();
-            var downloadLink = $(this).attr('href');
-            var verifyLink = $(this).data('path');
-
-            $.ajax({
-                url: verifyLink,
-                method: 'GET',
-                xhrFields: {
-                    responseType: 'blob'
-                },
-                success: function (data) {
-                    var a = document.createElement('a');
-                    var url = window.URL.createObjectURL(data);
-                    a.href = url;
-                    a.download = 'arquivo.pdf';
-                    document.body.append(a);
-                    a.click();
-                    a.remove();
-                    window.URL.revokeObjectURL(url);
-                },
-                error: function (xhr, status) {
-
-                    if (status == 'error') {
-                        $('.modal').hide();
-                        $('body').removeClass('modal-open');
-                        $('body').css('padding-right', '');
-                        $('body').css('overflow', '');
-                        $('.modal-backdrop').remove();
-
-
-                        $('#failModal').modal('show');
-                        $('#failModal').find('.msg-fail').text('Arquivo não encontrado, é necessário solicitar o reenvio!');
-                        setTimeout(function (){
-                            $('#failModal').modal('hide');
-
-                        },2000)
-                        }
-                }
-            });
-        });
-    });
 </script>

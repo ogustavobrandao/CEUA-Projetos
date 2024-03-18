@@ -371,18 +371,6 @@ class SolicitacaoController extends Controller
        return redirect()->back();
     }
 
-    public function atualizar_colaborador_tabela_avaliador($id)
-    {
-
-        $solicitacao = Solicitacao::find($id);
-        $colaboradores = $solicitacao->responsavel->colaboradores;
-        $instituicaos = Instituicao::all();
-
-        $conteudoTabela = view('solicitacao.colaborador.colaborador_tabela_avaliador', ['colaboradores' => $colaboradores, 'solicitacao' => $solicitacao, 'instituicaos' => $instituicaos, "tipo" => 2])->render();
-
-        return response()->json(['html' => $conteudoTabela]);
-
-    }
     public function atualizar_colaborador_tabela_adm($id)
     {
 
@@ -395,17 +383,17 @@ class SolicitacaoController extends Controller
         return response()->json(['html' => $conteudoTabela]);
 
     }
-    public function abrir_colaborador_modal($colaborador_id)
-    {
-        $colaborador= Colaborador::find($colaborador_id);
-        $responsavel = Responsavel::find($colaborador->responsavel_id);
-        $instituicaos = Instituicao::all();
+    // public function abrir_colaborador_modal($colaborador_id)
+    // {
+    //     $colaborador= Colaborador::find($colaborador_id);
+    //     $responsavel = Responsavel::find($colaborador->responsavel_id);
+    //     $instituicaos = Instituicao::all();
 
-        $colaborador_modal = view('solicitacao.colaborador.colaborador_edicao_modal_solicitante', ['colaborador' => $colaborador, 'solicitacao_id' => $responsavel->solicitacao_id, 'instituicaos' => $instituicaos, "tipo" => 2])->render();
+    //     $colaborador_modal = view('solicitacao.colaborador.colaborador_edicao_modal_solicitante', ['colaborador' => $colaborador, 'solicitacao_id' => $responsavel->solicitacao_id, 'instituicaos' => $instituicaos, "tipo" => 2])->render();  O que é tipo
 
-        return response()->json(['colaborador_modal' => $colaborador_modal]);
+    //     return response()->json(['colaborador_modal' => $colaborador_modal]);
 
-    }
+    // }
     public function abrir_colaborador_modal_adm($colaborador_id)
     {
         $colaborador= Colaborador::find($colaborador_id);
@@ -604,6 +592,14 @@ class SolicitacaoController extends Controller
         return Storage::download($path);
     }
 
+    public function downloadTreinamento_fileColaborador($colaborador_id){
+        $colaborador = Colaborador::find($colaborador_id);
+        $path = 'colaborador/treinamentos/' . $colaborador->treinamento_file;
+        $this->verifyPath($path);
+        return Storage::download($path);
+    }
+
+    
     public function downloadTermoResponsabilidadeColaborador($colaborador_id)
     {
         $colaborador = Colaborador::find($colaborador_id);
@@ -611,7 +607,14 @@ class SolicitacaoController extends Controller
         $this->verifyPath($path);
         return Storage::download($path);
     }
-
+    
+    public function downloadTreinamento_fileResponsavel($responsavel_id){
+        $responsavel = Responsavel::find($responsavel_id);
+        $path = 'treinamento/' . $responsavel->treinamento_file;
+        $this->verifyPath($path);
+        return Storage::download($path);
+    }
+    
     public function downloadAnexoAmostraPlanejamento($planejamento_id)
     {
         $planejamento = Planejamento::find($planejamento_id);

@@ -28,14 +28,10 @@
                 <div class="col-sm-12" id="estresse" style="display: none;">
                     <label for="estresse">Descreva o estresse / dor Intencional nos animais e justifique:<strong
                             style="color: red">*</strong></label>
-                    <textarea class="form-control @error('estresse') is-invalid @enderror" name="estresse" id="estresse"
+                    <textarea class="form-control" name="estresse" id="estresse"
                               autocomplete="estresse" autofocus
                               required readonly>@if(!empty($procedimento) && $procedimento->estresse != null){{$procedimento->estresse}}@else{{old('estresse')}}@endif</textarea>
-                    <div class="div_error" id="estresse_error" style="display: none">
-                    <span class="invalid-input">
-                        <strong id="estresse_error_message"></strong>
-                    </span>
-                    </div>
+
                 </div>
             </div>
 
@@ -60,14 +56,10 @@
                 <div class="col-sm-12" id="anestesico" style="display: none;">
                     <label for="anestesico">Uso de anestésicos com dose (UI ou mg/kg), via de administração:<strong
                             style="color: red">*</strong></label>
-                    <textarea class="form-control @error('anestesico') is-invalid @enderror" name="anestesico"
+                    <textarea class="form-control" name="anestesico"
                               id="anestesico" autocomplete="anestesico" autofocus
                               required readonly>@if(!empty($procedimento) && $procedimento->anestesico != null){{$procedimento->anestesico}}@else{{old('anestesico')}}@endif</textarea>
-                    <div class="div_error" id="anestesico_error" style="display: none">
-                    <span class="invalid-input">
-                        <strong id="anestesico_error_message"></strong>
-                    </span>
-                    </div>
+
                 </div>
             </div>
 
@@ -90,14 +82,10 @@
                 </div>
                 <div class="col-sm-12" id="relaxante" style="display: none;">
                     <label for="relaxante">Uso de Relaxante Muscular:<strong style="color: red">*</strong></label>
-                    <textarea class="form-control @error('relaxante') is-invalid @enderror" name="relaxante" id="relaxante"
+                    <textarea class="form-control" name="relaxante" id="relaxante"
                               autocomplete="relaxante" autofocus
                               required readonly>@if(!empty($procedimento) && $procedimento->relaxante != null){{$procedimento->relaxante}}@else{{old('relaxante')}}@endif</textarea>
-                    <div class="div_error" id="relaxante_error" style="display: none">
-                    <span class="invalid-input">
-                        <strong id="relaxante_error_message"></strong>
-                    </span>
-                    </div>
+ 
                 </div>
             </div>
 
@@ -123,14 +111,10 @@
                 <div class="col-sm-12" id="analgesico" style="display: none;">
                     <label for="analgesico">Uso de analgésicos com dose (UI ou mg/kg), via de administração:<strong
                             style="color: red">*</strong></label>
-                    <textarea class="form-control @error('analgesico') is-invalid @enderror" name="analgesico"
+                    <textarea class="form-control" name="analgesico"
                               id="analgesico" autocomplete="analgesico" autofocus
                               required readonly>@if(!empty($procedimento) && $procedimento->analgesico != null){{$procedimento->analgesico}}@else{{old('analgesico')}}@endif</textarea>
-                    <div class="div_error" id="analgesico_error" style="display: none">
-                    <span class="invalid-input">
-                        <strong id="analgesico_error_message"></strong>
-                    </span>
-                    </div>
+  
                 </div>
             </div>
 
@@ -139,14 +123,10 @@
             <div class="col-sm-12" id="anestesico" style="display: none;">
                 <label for="anestesico">Uso de anestésicos com dose (UI ou mg/kg), via de administração:<strong
                         style="color: red">*</strong></label>
-                <textarea class="form-control @error('anestesico') is-invalid @enderror" name="anestesico"
+                <textarea class="form-control" name="anestesico"
                           id="anestesico" autocomplete="anestesico" autofocus
                           required readonly>@if(!empty($procedimento) && $procedimento->anestesico != null){{$procedimento->anestesico}}@else{{old('anestesico')}}@endif</textarea>
-                <div class="div_error" id="anestesico_error" style="display: none">
-                    <span class="invalid-input">
-                        <strong id="anestesico_error_message"></strong>
-                    </span>
-                </div>
+
             </div>
 
             <h3 class="subtitulo">Imobilização / Contenção do Animal:</h3>
@@ -172,14 +152,10 @@
             <div class="col-sm-12 mt-3" id="imobilizacao" style="display: none;">
                 <label for="imobilizacao">Imobilização / Contenção do Animal:<strong
                         style="color: red">*</strong></label>
-                <textarea class="form-control @error('imobilizacao') is-invalid @enderror" name="imobilizacao"
+                <textarea class="form-control" name="imobilizacao"
                           id="imobilizacao" autocomplete="imobilizacao" autofocus
                           required readonly>@if(!empty($procedimento) && $procedimento->imobilizacao != null){{$procedimento->imobilizacao}}@else{{old('imobilizacao')}}@endif</textarea>
-                <div class="div_error" id="imobilizacao_error" style="display: none">
-                    <span class="invalid-input">
-                        <strong id="imobilizacao_error_message"></strong>
-                    </span>
-                </div>
+
             </div>
 
             <h3 class="subtitulo">Exposição / Inoculação / Administração:</h3>
@@ -206,15 +182,11 @@
             <div class="col-sm-12 mt-3" id="inoculacao_substancia" style="display: none;">
                 <label for="inoculacao_substancia">Exposição / Inoculação / Administração:<strong
                         style="color: red">*</strong></label>
-                <textarea class="form-control @error('inoculacao_substancia') is-invalid @enderror"
+                <textarea class="form-control"
                           name="inoculacao_substancia" id="inoculacao_substancia" autocomplete="inoculacao_substancia"
                           autofocus
                           required readonly>@if(!empty($procedimento) && $procedimento->inoculacao_substancia != null){{$procedimento->inoculacao_substancia}}@else{{old('inoculacao_substancia')}}@endif</textarea>
-                <div class="div_error" id="inoculacao_substancia_error" style="display: none">
-                    <span class="invalid-input">
-                        <strong id="inoculacao_substancia_error_message"></strong>
-                    </span>
-                </div>
+
             </div>
 
             <h3 class="subtitulo">Extração de Materiais Biológicos:</h3>
@@ -239,14 +211,10 @@
 
             <div class="col-sm-12 mt-3" id="extracao" style="display: none;">
                 <label for="extracao">Extração de Materiais Biológicos:<strong style="color: red">*</strong></label>
-                <textarea class="form-control @error('extracao') is-invalid @enderror" name="extracao" id="extracao"
+                <textarea class="form-control" name="extracao" id="extracao"
                           autocomplete="extracao" autofocus
                           required readonly>@if(!empty($procedimento) && $procedimento->extracao != null){{$procedimento->extracao}}@else{{old('extracao')}}@endif</textarea>
-                <div class="div_error" id="extracao_error" style="display: none">
-                    <span class="invalid-input">
-                        <strong id="extracao_error_message"></strong>
-                    </span>
-                </div>
+   
             </div>
 
             <h3 class="subtitulo">Condições Alimentares</h3>
@@ -272,16 +240,12 @@
 
                 <div class="col-sm-4 mt-2" id="jejum" style="display: none;">
                     <label for="jejum">Jejum<small> (em horas)</small>:<strong style="color: red">*</strong></label>
-                    <input type="text" class="form-control @error('jejum') is-invalid @enderror" name="jejum" id="jejum"
+                    <input type="text" class="form-control" name="jejum" id="jejum"
                            autocomplete="jejum" autofocus
                            required disabled placeholder="Informar tempo de jejum em horas"
                            @if(!empty($procedimento) && $procedimento->jejum != null) value="{{$procedimento->jejum}}"
                            @else value="{{old('jejum')}}" @endif>
-                    @error('jejum')
-                    <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-                    @enderror
+
                 </div>
             </div>
 
@@ -309,16 +273,12 @@
                 <div class="col-sm-4 mt-2" id="restricao_hidrica" style="display: none;">
                     <label for="restricao_hidrica">Restrição Hídrica<small> (em horas)</small>:<strong
                             style="color: red">*</strong></label>
-                    <input type="text" class="form-control @error('restricao_hidrica') is-invalid @enderror"
+                    <input type="text" class="form-control"
                            name="restricao_hidrica" id="restricao_hidrica" autocomplete="restricao_hidrica" autofocus
                            required disabled placeholder="Informar tempo de restrição hídrica em horas"
                            @if(!empty($procedimento) && $procedimento->restricao_hidrica != null) value="{{$procedimento->restricao_hidrica}}"
                            @else value="{{old('restricao_hidrica')}}" @endif>
-                    <div class="div_error" id="restricao_hidrica_error" style="display: none">
-                    <span class="invalid-input">
-                        <strong id="restricao_hidrica_error_message"></strong>
-                    </span>
-                    </div>
+
                 </div>
         </div>
 

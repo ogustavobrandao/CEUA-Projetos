@@ -16,14 +16,12 @@
                     <div class="card shadow-lg p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_4">
                         <div class="row">
                             <div class="col-md-12">
-                                
                                 <h2 class="titulo" id="titulo_4">Dados Base do Modelo Animal <strong
                                         style="color: red">*</strong>
                                     <a class="float-end" id="4_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
                                     <a class="float-end" id="4_btn_down" style="display: none"><i
                                             class="fa-solid fa-circle-chevron-down"></i></a>
                                 </h2>
-                                
                             </div>
                         </div>
                     </div>
@@ -44,7 +42,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
 
             <h2 class="titulo_h2 border-bottom" id="expand_dados_solicitacao"><span class="titulo_spam">Planejamento</span></h2>
@@ -70,7 +67,6 @@
                         
                     </div>
                 </div>
-
             </div>
 
             <h2 class="titulo_h2 border-bottom" id="expand_dados_solicitacao"><span class="titulo_spam">Componentes Conjuntos ao Planejamento</span>
@@ -99,6 +95,7 @@
                       
                     </div>
                 </div>
+                
                 <div class="mb-4">
                     <div class="card shadow-lg p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_7">
                         <div class="row">
@@ -160,11 +157,31 @@
                     <div id="eutanasia" style="display: none;">
                     
                         @include('planejamento.avaliador.eutanasia_avaliador',['tipo'=>9,'avaliacao_id'=>$avaliacao->id,'id'=>$eutanasia->id])
-                        @include('planejamento.avaliador.resultado_avaliador',['tipo'=>10,'avaliacao_id'=>$avaliacao->id,'id'=>$resultado->id])
                     
                     </div>
                 </div>
 
+                <div class="mb-4">
+                    <div class="card shadow-lg p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_10">
+                        <div class="row">
+                            <div class="col-md-12">
+                                
+                                <h2 class="titulo" id="titulo_10">Resultado <strong style="color: red">*</strong>
+                                    <a class="float-end" id="10_btn_up"><i
+                                            class="fa-solid fa-circle-chevron-down"></i></a>
+                                    <a class="float-end" id="10_btn_down" style="display: none"><i
+                                            class="fa-solid fa-circle-chevron-up"></i></a>
+                                </h2>
+                               
+                            </div>
+                        </div>
+                    </div>
+                    <div id="resultado" style="display: none; ">
+                        
+                        @include('planejamento.avaliador.resultado_avaliador',['tipo'=>10,'avaliacao_id'=>$avaliacao->id,'id'=>$resultado->id])
+                        
+                    </div>
+                </div>
 
                 <div class="row col-md-10 m-0">
                     <div class="col-4 pl-0">

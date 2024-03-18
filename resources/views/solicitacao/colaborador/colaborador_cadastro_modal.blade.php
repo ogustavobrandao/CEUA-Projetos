@@ -23,11 +23,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="colab_nome">Nome:<strong style="color: red">*</strong></label>
-                                     @if(isset($colaborador))
-                                        <input type="text" name="colab_nome" class="form-control @error('colab_nome') is-invalid @enderror" value="{{$colaborador->nome}}" id="colab_nome" placeholder="Digite o nome do colaborador">
-                                     @else
-                                        <input type="text" name="colab_nome" class="form-control @error('colab_nome') is-invalid @enderror" value="{{old('colab_nome')}}" id="colab_nome" placeholder="Digite o nome do colaborador">
-                                    @endif
+                                    <input type="text" name="colab_nome" class="form-control @error('colab_nome') is-invalid @enderror" value="{{old('colab_nome')}}" id="colab_nome" placeholder="Digite o nome do colaborador">
 
                                     @error('colab_nome')
                                         <div class="alert alert-danger">{{ $message }}</div>
@@ -48,7 +44,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="colab_cpf">CPF:<strong style="color: red">*</strong></label>
-                                    <input type="text" name="colab_cpf" class="form-control cpf" value="" id="colab_cpf" placeholder="Digite o CPF do colaborador">
+                                    <input type="text" name="colab_cpf" class="form-control cpf" value="{{old('colab_cpf')}}" id="colab_cpf" placeholder="Digite o CPF do colaborador">
 
                                     @error('colab_cpf')
                                         <div class="alert alert-danger">{{ $message }}</div>
@@ -58,7 +54,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="colab_telefone">Telefone:<strong style="color: red">*</strong></label>
-                                    <input type="text" name="colab_telefone" class="form-control telefone" value="" id="colab_telefone" placeholder="Digite o telefone do colaborador">
+                                    <input type="text" name="colab_telefone" class="form-control telefone" value="{{old('colab_telefone')}}" id="colab_telefone" placeholder="Digite o telefone do colaborador">
 
                                     @error('colab_telefone')
                                         <div class="alert alert-danger">{{ $message }}</div>

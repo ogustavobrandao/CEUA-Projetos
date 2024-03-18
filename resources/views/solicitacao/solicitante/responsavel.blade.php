@@ -244,9 +244,6 @@
             @endif
         </div>
 
-
-
-
         <div class="row">
             @if (Auth::user()->hasRole('Solicitante'))
                 <div class="col-sm-2 mt-2">

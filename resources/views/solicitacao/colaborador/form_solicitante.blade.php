@@ -56,7 +56,6 @@
                 <tbody>
                     @if(isset($solicitacao->responsavel))
                         @foreach($solicitacao->responsavel->colaboradores as $colaborador)
-
                             <tr id="fundo_colaborador_{{$colaborador->id}}">
                                 <td>
                                     {{$colaborador->nome}}
@@ -78,12 +77,10 @@
                                         </button>
                                         @include('solicitacao.colaborador.colaborador_edicao_modal_solicitante', ['solicitacao'=> $solicitacao, 'colaborador' => $colaborador])
                                         
-                                        <form action="{{route('solicitacao.colaborador.deletar', ['id' => $colaborador->id])}}" method="post">
-                                            @csrf
-                                            @method('DELETE')
+                                        <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalDeletar{{$colaborador->id}}">Deletar</button>
+                                        @include('solicitacao.solicitante.deletar_colaborador_modal', ['colaborador' => $colaborador])
                                         
-                                            <button class="btn btn-danger" type="submit">Deletar</button>
-                                        </form>
+                                        
                                     </div>
                                 </td>
                             </tr>

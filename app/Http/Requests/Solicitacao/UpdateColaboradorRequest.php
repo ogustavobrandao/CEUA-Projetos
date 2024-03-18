@@ -31,6 +31,7 @@ class UpdateColaboradorRequest extends FormRequest
             'colab_opcao_termo_responsabilidade' => 'in:on,off',
             'colab_termo_responsabilidade' => 'required_if:opcao_termo_responsabilidade,on|mimes:pdf',
             'colab_treinamento' => 'required_if:opcao_treinamento,on|min:3|max:1000',
+            'colab_treinamento_file' => 'required_if:colab_treinamento_radio,on|mimes:pdf',
             'colab_email' => 'required|email',
         ];
     }
