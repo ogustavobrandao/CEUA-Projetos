@@ -26,12 +26,12 @@ class UpdateColaboradorRequest extends FormRequest
             ],
             'colab_instituicao_id' => 'required',
             'colab_grau_escolaridade' => 'required|string',
-            'colab_opcao_experiencia_previa' => 'in:on,off',
-            'colab_experiencia_previa' => 'required_if:colab_opcao_experiencia_previa,on|mimes:pdf',
+            'opcao_experiencia_previa' => 'in:on,off',
+            'colab_experiencia_previa' => 'mimes:pdf',
             'colab_opcao_termo_responsabilidade' => 'in:on,off',
             'colab_termo_responsabilidade' => 'required_if:opcao_termo_responsabilidade,on|mimes:pdf',
             'colab_treinamento' => 'required_if:opcao_treinamento,on|min:3|max:1000',
-            'colab_treinamento_file' => 'required_if:colab_treinamento_radio,on|mimes:pdf',
+            'colab_treinamento_file' => 'mimes:pdf',
             'colab_email' => 'required|email',
         ];
     }

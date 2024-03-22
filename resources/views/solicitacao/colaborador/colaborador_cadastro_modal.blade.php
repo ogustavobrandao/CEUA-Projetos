@@ -175,7 +175,7 @@
 
                                 
                                 <label for="treinamento">Descrever o treinamento:<strong style="color: red">*</strong></label>
-                                <input class="form-control" id="colab_treinamento" type="text" name="colab_treinamento" value="{{old('colab_treinamento')}}" autocomplete="treinamento" autofocus>
+                                <input class="form-control" id="colab_treinamento" type="text" name="colab_treinamento" value="{{old('colab_treinamento')}}" minlength="3" maxlength="1000" autocomplete="treinamento" autofocus>
                                 
                                 @error('colab_treinamento')
                                         <div class="alert alert-danger">{{ $message }}</div>

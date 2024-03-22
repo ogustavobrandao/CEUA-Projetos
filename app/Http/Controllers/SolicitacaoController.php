@@ -258,9 +258,7 @@ class SolicitacaoController extends Controller
             'cpf' => $request->colab_cpf, 
             'treinamento' => $request->colab_treinamento, 
             'grau_escolaridade' => $request->colab_grau_escolaridade,
-            'experiencia_previa' => $request->colab_experiencia_previa,
             'instituicao_id' => $request->colab_instituicao_id,
-            'treinamento_file' => $request->colab_treinamento_file,
         ];
 
      
@@ -312,30 +310,47 @@ class SolicitacaoController extends Controller
             'cpf' => $request->colab_cpf, 
             'treinamento' => $request->colab_treinamento, 
             'grau_escolaridade' => $request->colab_grau_escolaridade,
-            'experiencia_previa' => $request->colab_experiencia_previa,
             'instituicao_id' => $request->colab_instituicao_id,
-            'treinamento_file' => $request->colab_treinamento_file,
             'email' => $request->colab_email,
             'telefone' => $request->colab_telefone,
         ];
+
         $colaborador = Colaborador::find($request->colaborador_id);
+
+        if($request->input('opcao_experiencia_previa') == 'false'){
+
+            $this->deletar_documento($colaborador->experiencia_previa, 'colaborador/experiencias/');
+            $colaborador->experiencia_previa = null;
+        }
+
+        if($request->input('colab_treinamento_radio') == 'false'){
+            $this->deletar_documento($colaborador->treinamento_file, 'colaborador/treinamentos/');
+            $colaborador->treinamento_file = null;
+                
+        }
 
         $nomes = [
             'experiencia_previa' => $colaborador->colab_experiencia_previa ?? null,
             'treinamento_file' => $colaborador->colab_treinamento_file ?? null,
         ];
 
-        unset($data["experiencia_previa"]);
-        unset($data["treinamento_file"]);
-
-        $this->salvarArquivosColaborador($request, $nomes);
+        $data = array_merge($data, $this->salvarArquivosColaborador($request, $nomes));
 
         $colaborador->update($data);
-
         $colaborador->contato->update($data);
 
         return redirect()->back();
 
+    }
+
+    public function deletar_documento($arquivo, $caminho){
+        if (!empty($arquivo)) {
+            $diretorioArquivo = $caminho . $arquivo;
+            $caminhoCompleto = Storage::path($diretorioArquivo);
+            if (file_exists($caminhoCompleto)) {
+                Storage::delete($diretorioArquivo);
+            }
+        }
     }
 
     public function deletar_colaborador($id)
@@ -369,41 +384,6 @@ class SolicitacaoController extends Controller
         $colaborador->delete();
 
        return redirect()->back();
-    }
-
-    public function atualizar_colaborador_tabela_adm($id)
-    {
-
-        $solicitacao = Solicitacao::find($id);
-        $colaboradores = $solicitacao->responsavel->colaboradores;
-        $instituicaos = Instituicao::all();
-
-        $conteudoTabela = view('solicitacao.colaborador.colaborador_tabela_adm', ['colaboradores' => $colaboradores, 'solicitacao' => $solicitacao, 'instituicaos' => $instituicaos, "tipo" => 2])->render();
-
-        return response()->json(['html' => $conteudoTabela]);
-
-    }
-    // public function abrir_colaborador_modal($colaborador_id)
-    // {
-    //     $colaborador= Colaborador::find($colaborador_id);
-    //     $responsavel = Responsavel::find($colaborador->responsavel_id);
-    //     $instituicaos = Instituicao::all();
-
-    //     $colaborador_modal = view('solicitacao.colaborador.colaborador_edicao_modal_solicitante', ['colaborador' => $colaborador, 'solicitacao_id' => $responsavel->solicitacao_id, 'instituicaos' => $instituicaos, "tipo" => 2])->render();  O que é tipo
-
-    //     return response()->json(['colaborador_modal' => $colaborador_modal]);
-
-    // }
-    public function abrir_colaborador_modal_adm($colaborador_id)
-    {
-        $colaborador= Colaborador::find($colaborador_id);
-        $responsavel = Responsavel::find($colaborador->responsavel_id);
-        $instituicaos = Instituicao::all();
-
-        $colaborador_modal = view('solicitacao.colaborador.colaborador_edicao_modal_adm', ['colaborador' => $colaborador, 'solicitacao_id' => $responsavel->solicitacao_id, 'instituicaos' => $instituicaos, "tipo" => 2])->render();
-
-        return response()->json(['colaborador_modal' => $colaborador_modal]);
-
     }
 
     public function criar_solicitacao_fim(CriarSolicitacaoFimRequest $request)
@@ -654,12 +634,6 @@ class SolicitacaoController extends Controller
         $this->verifyPath($path);
         return Storage::download($path);
     }
-
-// public function downloadTreinamento($responsavel_id)
-// {
-//     $responsavel = Responsavel::find($responsavel_id);
-//     return Storage::download('treinamentos/' . $responsavel->treinamento);
-// }
 
     public function downloadExperiencia($responsavel_id)
     {

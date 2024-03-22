@@ -3,29 +3,16 @@
     <h3 class="subtitulo">Informações do Animal/Uso</h3>
     <div class="col-sm-6">
         <label for="nome_cientifico">Nome Científico:<strong style="color: red">*</strong></label>
-        <input class="form-control @error('nome_cientifico') is-invalid @enderror" id="nome_cientifico" type="text"
-               name="nome_cientifico" @if(isset($modelo_animal)) value="{{$modelo_animal->nome_cientifico}}"
-               @else value="{{old('nome_cientifico')}}" @endif required
-               autocomplete="nome_cientifico" autofocus>
-        <div class="div_error" id="nome_cientifico_error" style="display: none">
-            <span class="invalid-input">
-                <strong id="nome_cientifico_error_message"></strong>
-            </span>
-        </div>
+        <input class="form-control" id="nome_cientifico" type="text"
+               name="nome_cientifico" value="{{$modelo_animal->nome_cientifico}}"
+               autocomplete="nome_cientifico">
     </div>
 
     <div class="col-sm-6">
         <label for="nome_vulgar">Nome Vulgar:<strong style="color: red">*</strong></label>
-        <input class="form-control @error('nome_vulgar') is-invalid @enderror" id="nome_vulgar" type="text"
-               name="nome_vulgar" @if(isset($modelo_animal)) value="{{$modelo_animal->nome_vulgar}}"
-               @else value="{{old('nome_vulgar')}}" @endif required
-               autocomplete="nome_vulgar"
-               autofocus>
-        <div class="div_error" id="nome_vulgar_error" style="display: none">
-            <span class="invalid-input">
-                <strong id="nome_vulgar_error_message"></strong>
-            </span>
-        </div>
+        <input class="form-control" id="nome_vulgar" type="text"
+               name="nome_vulgar" value="{{$modelo_animal->nome_vulgar}}"
+               autocomplete="nome_vulgar">
     </div>
 
     <div class="col-sm-12 mt-2">
@@ -36,13 +23,8 @@
              <i class="fa-solid fa-circle-info fa-lg"></i>
          </a>
         </label>
-        <textarea class="form-control @error('justificativa') is-invalid @enderror" name="justificativa" id="justificativa" autocomplete="justificativa" autofocus
-            required> @if(isset($modelo_animal)){{$modelo_animal->justificativa}}@else{{old('justificativa')}}@endif </textarea>
-        <div class="div_error" id="justificativa_error" style="display: none">
-            <span class="invalid-input">
-                <strong id="justificativa_error_message"></strong>
-            </span>
-        </div>
+        <textarea class="form-control" name="justificativa" id="justificativa" autocomplete="justificativa"
+            >{{$modelo_animal->justificativa}}</textarea>
     </div>
 
 </div>
@@ -52,7 +34,7 @@
     <div class="row">
         <div class="col-sm-6">
             <label for="procedencia">Procedência:<strong style="color: red">*</strong></label>
-            <select class="form-control @error('procedencia') is-invalid @enderror" id="procedencia" name="procedencia">
+            <select class="form-control" id="procedencia" name="procedencia">
                 <option disabled selected>Selecione a Procedência</option>
                 <option value="animal_comprado"
                         @if(isset($modelo_animal) && $modelo_animal->procedencia == "animal_comprado") selected @endif>
@@ -84,18 +66,12 @@
                     Outra Procedência
                 </option>
             </select>
-            <div class="div_error" id="procedencia_error" style="display: none">
-                <span class="invalid-input">
-                    <strong id="procedencia_error_message"></strong>
-                </span>
-            </div>
         </div>
 
         <div class="col-sm-3" id="anexo_outra_procedencia" style="display: none;">
             <label for="anexo_outra_procedencia">Especifique a procedência:</label>
-            <input class="form-control @error('') is-invalid @enderror" name="tipo_outra_procedencia" id="tipo_outra_procedencia"
-                   autocomplete="tipo_outra_procedencia" autofocus d @if(isset($modelo_animal->perfil) && $modelo_animal->tipo_outra_procedencia != null)
-                       value="{{$modelo_animal->tipo_outra_procedencia}}"@endif>
+            <input class="form-control" name="tipo_outra_procedencia" id="tipo_outra_procedencia"
+                   autocomplete="tipo_outra_procedencia" value="{{$modelo_animal->tipo_outra_procedencia}}"disabled>
         </div>
 
         <div class="row">
@@ -147,11 +123,6 @@
                         Não
                     </label>
                 </div>
-                <div class="div_error" id="flag_coleta_especimes_error" style="display: none">
-            <span class="invalid-input">
-                <strong id="flag_coleta_especimes_error_message"></strong>
-            </span>
-                </div>
                 <div class="col-sm-13 m-2" id="anexo_coleta_especimes" style="display: none;">
                     <label for="anexo_coleta_especimes">Descreva:<strong style="color: red">*</strong></label>
                     <input class="form-control @error('coleta_especimes') is-invalid @enderror" id="coleta_especimes" type="text" name="coleta_especimes"
@@ -178,16 +149,10 @@
                         Não
                     </label>
                 </div>
-                <div class="div_error" id="flag_marcacao_error" style="display: none">
-                    <span class="invalid-input">
-                <strong id="flag_marcacao_error_message"></strong>
-            </span>
-                </div>
                 <div class="col-sm-13 mt-2" id="anexo_marcacao" style="display: none;">
                     <label for="anexo_marcacao">Descreva:<strong style="color: red">*</strong></label>
-                    <input class="form-control @error('marcacao') is-invalid @enderror" id="marcacao" type="text" name="marcacao"
-                    @if(isset($modelo_animal) && ($modelo_animal->marcacao != null)) value="{{$modelo_animal->marcacao}}"
-                    @else value="{{old('marcacao')}}" @endif required autocomplete="marcacao" autofocus>
+                    <input class="form-control" id="marcacao" type="text" name="marcacao"
+                    value="{{$modelo_animal->marcacao}}" autocomplete="marcacao">
                 </div>
             </div>
         </div>
@@ -209,16 +174,10 @@
                         Não
                     </label>
                 </div>
-                <div class="div_error" id="flag_outras_info_error" style="display: none">
-                    <span class="invalid-input">
-                        <strong id="flag_outras_info_error_message"></strong>
-                    </span>
-                </div>
                 <div class="col-sm-13 mt-2" id="anexo_outras_info" style="display: none;">
                     <label for="anexo_outras_info">Descreva:<strong style="color: red">*</strong></label>
-                    <input class="form-control @error('outras_info') is-invalid @enderror" id="outras_info" type="text" name="outras_info"
-                    @if(isset($modelo_animal) && ($modelo_animal->outras_info != null)) value="{{$modelo_animal->outras_info}}"
-                    @else value="{{old('outras_info')}}" @endif required autocomplete="outras_info" autofocus>
+                    <input class="form-control" id="outras_info" type="text" name="outras_info"
+                        value="{{$modelo_animal->outras_info}}" autocomplete="outras_info">
                 </div>
             </div>
         </div>
@@ -241,16 +200,10 @@
                         Não
                     </label>
                 </div>
-                <div class="div_error" id="geneticamente_modificado_error" style="display: none">
-                    <span class="invalid-input">
-                        <strong id="geneticamente_modificado_error_message"></strong>
-                    </span>
-                </div>
                 <div class="col-sm-4" id="anexo_cqb" style="display: none;">
                     <label for="anexo_cqb">Número CQB:<strong style="color: red">*</strong></label>
-                    <input class="form-control @error('numero_cqb') is-invalid @enderror" id="numero_cqb" type="number" name="numero_cqb"
-                    @if(isset($modelo_animal) && ($modelo_animal->numero_cqb != null)) value="{{$modelo_animal->numero_cqb}}"
-                    @else value="{{old('numero_cqb')}}" @endif required autocomplete="numero_cqb" autofocus>
+                    <input class="form-control" id="numero_cqb" type="number" name="numero_cqb"
+                    value="{{$modelo_animal->numero_cqb}}" autocomplete="numero_cqb">
                 </div>
             </div>
         </div>
@@ -260,7 +213,7 @@
         <h3 class="subtitulo">Tipo Animal</h3>
         <div class="col-sm-6">
             <label for="grupo_animal">Grupo Animal:<strong style="color: red">*</strong></label>
-            <select class="form-control @error('grupo_animal') is-invalid @enderror" id="grupo_animal"
+            <select class="form-control" id="grupo_animal"
                     name="grupo_animal">
                     <option disabled selected>Selecione o Grupo Animal</option>
                     <option value="anfibio"
@@ -380,31 +333,17 @@
                         Outro a especificar
                     </option>
                 </select>
-
-            <div class="div_error" id="grupo_animal_error" style="display: none">
-            <span class="invalid-input">
-                <strong id="grupo_animal_error_message"></strong>
-            </span>
-            </div>
         </div>
 
         <div class="col-sm-3" id="anexo_outro_tipo" style="display: none;">
             <label for="anexo_outro_tipo">Especifique:</label>
-            <input class="form-control @error('') is-invalid @enderror" name="tipo_grupo_animal" autocomplete="tipo_grupo_animal" autofocus
-            required @if(!empty($modelo_animal->perfil) && $modelo_animal->perfil->tipo_grupo_animal != null) value="{{$modelo_animal->perfil->tipo_grupo_animal}}"@endif>
+            <input class="form-control" name="tipo_grupo_animal" autocomplete="tipo_grupo_animal"
+                value="{{$modelo_animal->perfil->tipo_grupo_animal}}">
         </div>
 
         <div class="col-sm-6">
             <label for="linhagem">Linhagem / Raça:<strong style="color: red">*</strong></label>
-            <input class="form-control @error('linhagem') is-invalid @enderror" id="linhagem" type="text"
-                   name="linhagem" @if(isset($modelo_animal->perfil)) value="{{$modelo_animal->perfil->linhagem}}" @else
-                       value="{{old('linhagem')}}" @endif required autocomplete="linhagem"
-                   autofocus>
-            <div class="div_error" id="linhagem_error" style="display: none">
-                <span class="invalid-input">
-                    <strong id="linhagem_error_message"></strong>
-                </span>
-            </div>
+            <input class="form-control" id="linhagem" type="text" name="linhagem"value="{{$modelo_animal->perfil->linhagem}}"autocomplete="linhagem">
         </div>
 
     </div>
@@ -412,19 +351,13 @@
     <div class="row mt-2">
         <div class="col-sm-4 pr-0">
             <label for="idade">Idade:<strong style="color: red">*</strong></label>
-            <input class="form-control @error('idade') is-invalid @enderror" id="idade" type="number" name="idade"
-                   @if(isset($modelo_animal->perfil)) value="{{$modelo_animal->perfil->idade}}"
-                   @else value="{{old('idade')}}" @endif required autocomplete="idade" autofocus>
-            <div class="div_error" id="idade_error" style="display: none">
-                <span class="invalid-input">
-                    <strong id="idade_error_message"></strong>
-                </span>
-            </div>
+            <input class="form-control" id="idade" type="number" name="idade"
+                value="{{$modelo_animal->perfil->idade}}"autocomplete="idade">
         </div>
 
         <div class="col-sm-2 pl-1">
             <label for="periodo">Periodo:<strong style="color: red">*</strong></label>
-            <select class="form-control" name="periodo" autofocus>
+            <select class="form-control" name="periodo">
                 <option value="Dias"
                         @if(isset($modelo_animal->perfil) && $modelo_animal->perfil->periodo == "Dias" || isset($modelo_animal->perfil) && $modelo_animal->perfil->periodo == null) selected @endif>
                     Dias
@@ -442,15 +375,8 @@
 
         <div class="col-sm-6">
             <label for="peso">Peso Aproximado:<strong style="color: red">*</strong></label>
-            <input class="form-control @error('peso') is-invalid @enderror" id="peso" type="text" name="peso"
-                   @if(isset($modelo_animal->perfil)) value="{{$modelo_animal->perfil->peso}}"
-                   @else value="{{old('peso')}}" @endif required autocomplete="peso"
-                   autofocus>
-            <div class="div_error" id="peso_error" style="display: none">
-                <span class="invalid-input">
-                    <strong id="peso_error_message"></strong>
-                </span>
-            </div>
+            <input class="form-control" id="peso" type="text" name="peso"
+                   value="{{$modelo_animal->perfil->peso}}" autocomplete="peso">
         </div>
 
     </div>
@@ -459,58 +385,32 @@
 
         <div class="col-sm-4">
             <label for="machos">Quantidade de Machos:<strong style="color: red">*</strong></label>
-            <input class="form-control @error('machos') is-invalid @enderror" id="machos" type="number" name="machos"
-                   @if(isset($modelo_animal->perfil)) value="{{$modelo_animal->perfil->machos}}"
-                   @else value="{{old('machos')}}" @endif required autocomplete="machos"
-                   autofocus>
-            <div class="div_error" id="machos_error" style="display: none">
-                <span class="invalid-input">
-                    <strong id="machos_error_message"></strong>
-                </span>
-            </div>
+            <input class="form-control" id="machos" type="number" name="machos"
+                value="{{$modelo_animal->perfil->machos}}" autocomplete="machos">
         </div>
 
         <div class="col-sm-4">
             <label for="femeas">Quantidade de Fêmeas:<strong style="color: red">*</strong></label>
-            <input class="form-control @error('femeas') is-invalid @enderror" id="femeas" type="number" name="femeas"
-                   @if(isset($modelo_animal->perfil)) value="{{$modelo_animal->perfil->femeas}}"
-                   @else value="{{old('femeas')}}" @endif required autocomplete="femeas"
-                   autofocus>
-            <div class="div_error" id="femeas_error" style="display: none">
-                <span class="invalid-input">
-                    <strong id="femeas_error_message"></strong>
-                </span>
-            </div>
+            <input class="form-control" id="femeas" type="number" name="femeas"
+                   value="{{$modelo_animal->perfil->femeas}}" autocomplete="femeas">
         </div>
 
         <div class="col-sm-4">
             <label for="quantidade">Quantidade Total:<strong style="color: red">*</strong></label>
-            <input class="form-control @error('quantidade') is-invalid @enderror" id="quantidade" type="number"
-                   name="quantidade"
-                   @if(isset($modelo_animal->perfil)) value="{{$modelo_animal->perfil->quantidade}}"
-                   @else value="{{old('quantidade')}}" @endif required autocomplete="quantidade"
-                   autofocus readonly>
-            <div class="div_error" id="quantidade_error" style="display: none">
-                <span class="invalid-input">
-                    <strong id="quantidade_error_message"></strong>
-                </span>
-            </div>
+            <input class="form-control" id="quantidade" type="number"
+                name="quantidade" value="{{$modelo_animal->perfil->quantidade}}"autocomplete="quantidade"readonly>
         </div>
 
         <div class="col-sm-12 mt-3">
             <label for="termo_consentimento">Termo de Consentimento Livre e Esclarecido (TCLE):<strong style="color: red">*</strong></label>
             
                 @if(!empty($modelo_animal))
-                    <input class="form-control @error('termo_consentimento') is-invalid @enderror"
+                    <input class="form-control"
                            id="termo_consentimento"
                            type="file" accept="application/pdf" name="termo_consentimento"
                            value="" autocomplete="termo_consentimento" autofocus
                            @if($modelo_animal->termo_consentimento != null) style="width: 135px" @endif>
-                    <div class="div_error" id="termo_consentimento_error" style="display: none">
-                        <span class="invalid-input">
-                            <strong id="termo_consentimento_error_message"></strong>
-                        </span>
-                    </div>
+                   
                     @if($modelo_animal->termo_consentimento != null)
                         <span
                             style="border: 1px gray solid; border-radius: 10px; text-align: center; width: 250px; position: absolute; bottom: 0px; left: 155px; height: 38px; padding-top: 5px; background-color: #dcfadf">Um Arquivo Já Foi Enviado</span>
@@ -522,11 +422,7 @@
                            @if(isset($modelo_animal)) value="{{$modelo_animal->termo_consentimento}}"
                            @else value="{{old('termo_consentimento')}}" @endif autocomplete="termo_consentimento"
                            autofocus required>
-                    <div class="div_error" id="termo_consentimento_error" style="display: none">
-                        <span class="invalid-input">
-                            <strong id="termo_consentimento_error_message"></strong>
-                        </span>
-                    </div>
+                    
                 @endif
     
         </div>
