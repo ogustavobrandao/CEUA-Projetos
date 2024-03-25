@@ -31,9 +31,15 @@ class CriarPlanejamentoRequest extends FormRequest
     {
 
         return [
-            '*.required'  => 'O :attribute é obrigatório',
-            '*.numeric'  => 'O :attribute deve ser um número',
-            'num_animais_grupo.min' => 'O número deve ser acima ou igual a 0'
+            'num_animais_grupo.required'  => 'O campo número dos grupos de animais é obrigatório.',
+            'especificar_grupo.required'  => 'O campo :attribute é obrigatório.',
+            'criterios.required'  => 'O campo :attribute é obrigatório.',
+            'desc_materiais_metodos.required'  => 'O campo descrição de materias e métodos é obrigatório.',
+            'analise_estatistica.required'  => 'O campo análise estatística é obrigatório.',
+            'outras_infos.required'  => 'O campo outras informações é obrigatório.',
+            '*.required'  => 'O :attribute é obrigatório.',
+            '*.numeric'  => 'O valor deve ser um número.',
+            'num_animais_grupo.min' => 'O número deve ser acima ou igual a 0.'
         ];
     }
     protected function failedValidation(Validator $validator)

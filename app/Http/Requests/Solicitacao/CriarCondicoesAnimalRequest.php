@@ -32,8 +32,16 @@ class CriarCondicoesAnimalRequest extends FormRequest
     public function messages()
     {
         return [
-            '*.required'  => 'O :attribute é obrigatório',
-            '*.numeric'  => 'O :attribute deve ser um número',
+            'condicoes_particulares.required'  => 'O campo condições particulares é obrigatório.',
+            'local.required'  => 'O campo local é obrigatório.',
+            'ambiente_alojamento.required'  => 'O campo ambiente de alojamento é obrigatório.',
+            'tipo_cama.required'  => 'O campo tipo de cama é obrigatório.',
+            'num_animais_ambiente.required'  => 'O campo número de animais por ambiente é obrigatório.',
+            'dimensoes_ambiente.required'  => 'O campo dimensões do ambiente é obrigatório.',
+            'periodo.required'  => 'O campo período é obrigatório.',
+            'profissional_responsavel.required'  => 'O profissional responsável é obrigatório.',
+            'email_responsavel.required'  => 'O campo e-mail do responsável é obrigatório.',
+            '*.numeric'  => 'O campo deve ser um número',
             'num_animais_ambiente.min' => 'O número deve ser acima ou igual a 0'
         ];
     }

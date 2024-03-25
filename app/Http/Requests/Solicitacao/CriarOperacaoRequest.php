@@ -42,7 +42,15 @@ class CriarOperacaoRequest extends FormRequest
     public function messages()
     {
         return [
-            '*.required_if' => 'O campo :attribute é obrigatório',
+            'detalhes_cirurgia.required_if' => 'O campo descrição da cirurgia é obrigatório.',
+            'observacao_recuperacao.required_if' => 'O campo  é obrigatório',
+            'detalhes_observacao_recuperacao.required_if' => 'O campo período de observação é obrigatório.',
+            'analgesia_recuperacao.required_if' => 'O campo  é obrigatório',
+            'detalhes_analgesia_recuperacao.required_if' => 'O campo de descrição do uso de analgesia é obrigatório.',
+            'detalhes_nao_uso_analgesia_recuperacao.required_if' => 'O campo de descrição do não uso de analgesia é obrigatório.',
+            'outros_cuidados_recuperacao.required_if' => 'O campo  é obrigatório',
+            'detalhes_outros_cuidados_recuperacao.required_if' => 'O campo descrição de outros cuidados é obrigatório.',
+
         ];
     }
     protected function failedValidation(Validator $validator)

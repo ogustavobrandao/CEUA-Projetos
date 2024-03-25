@@ -47,16 +47,38 @@
         <div class="card p-3 bg-white" style="border-radius: 0px 0px 10px 10px;">
             <table class="table">
                 <thead>
-                <tr>
-                    <th scope="col">Nome</th>
-                    <th scope="col">E-mail</th>
-                    <th scope="col">CPF</th>
-                    <th scope="col">Telefone</th>
-                    <th class="text-center" scope="col" style="width: 20%">Ações</th>
-                </tr>
+                    <tr>
+                        <th scope="col">Nome</th>
+                        <th scope="col">E-mail</th>
+                        <th scope="col">CPF</th>
+                        <th scope="col">Telefone</th>
+                        <th class="text-center" scope="col" style="width: 20%">Ações</th>
+                    </tr>
                 </thead>
-                <tbody id="colaboradores-info">
-
+                <tbody>
+                    @foreach($solicitacao->responsavel->colaboradores as $colaborador)
+                        <tr id="fundo_colaborador_{{$colaborador->id}}">
+                            <td>
+                                {{$colaborador->nome}}
+                            </td>
+                            <td>
+                                {{$colaborador->contato->email}}
+                            </td>
+                            <td>
+                                {{$colaborador->cpf}}
+                            </td>
+                            <td>
+                                {{$colaborador->contato->telefone}}
+                            </td>
+                    
+                            <td>
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalEditarColaborador{{$colaborador->id}}">
+                                    Abrir
+                                </button>
+                                @include('solicitacao.colaborador.colaborador_edicao_modal_solicitante', ['solicitacao'=> $solicitacao, 'colaborador' => $colaborador, 'visualizar' => true])
+                            </td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
             @if(Auth::user()->hasRole('Avaliador'))
@@ -84,66 +106,3 @@
             </div>
         </div>
 </div>
-<script>
-    function atualizarTabela() {
-        $.ajax({
-            url: '/solicitacao/colaborador_tabela/avaliador/' + {{$solicitacao->id}},
-            method: 'GET',
-            success: function(response) {
-                $('#colaboradores-info').html(response.html);
-            },
-            error: function(response) {
-
-                console.log('Erro ao atualizar a tabela.');
-            }
-        });
-    }
-    $(document).ready(function() {
-        atualizarTabela();
-    });
-
-    $(document).on('click', '.btn-deletar-colaborador', function (event) {
-        event.preventDefault();
-
-        var colaboradorId = $(this).data('colaborador-id');
-
-        $.ajax({
-            url: '/solicitacao/colaborador/' + colaboradorId,
-            data: {
-                _token: '{{ csrf_token() }}',
-            },
-            dataType: 'json',
-            success: function (response) {
-                var message = response.message;
-                if (message == 'success') {
-                    atualizarTabela();
-                }
-            },
-            error: function (xhr, status, error) {
-                alert("Erro na requisição Ajax: " + error);
-            }
-        });
-
-        return false;
-    });
-
-    $(document).on('click', '.btn-abrirModal-colaborador', function (event) {
-        event.preventDefault();
-        var colaborador_id = $(this).data('colaborador-id');
-        $.ajax({
-            url: '/solicitacao/modal_atualizacao_colaborador/' + colaborador_id,
-            method: 'GET',
-            success: function(response) {
-                $('.modalColaborador').html('')
-                $('.modalColaborador').html(response.colaborador_modal);
-                $('#modalEditarColaborador').modal('show');
-            },
-            error: function(response) {
-                console.log('Erro ao atualizar a modal.');
-            }
-        });
-    });
-    $(document).on('click', '[data-dismiss="modal"]', function() {
-        $('#modalEditarColaborador').modal('hide');
-    });
-</script>

@@ -17,9 +17,9 @@ class Colaborador extends Model
         'treinamento',
         'grau_escolaridade',
         'experiencia_previa',
-        'termo_responsabilidade',
         'instituicao_id',
         'responsavel_id',
+        'treinamento_file',
     ];
 
     public function contato(){

@@ -34,7 +34,16 @@ class CriarProcedimentoRequest extends FormRequest
     {
 
         return [
-            '*.required_if' => 'O de texto :attribute é obrigatório',
+            'estresse.required_if' => 'O campo estresse / dor intencional é obrigatório.',
+            'anestesico.required_if' => 'O campo uso de anestésicos é obrigatório.',
+            'relaxante.required_if' => 'O campo uso de relaxante muscular é obrigatório.',
+            'analgesico.required_if' => 'O campo uso de analgésicos é obrigatório.',
+            'imobilizacao.required_if' => 'O campo imobilização / contenção é obrigatório.',
+            'inoculacao_substancia.required_if' => 'O campo inoculação de substância é obrigatório.',
+            'extracao.required_if' => 'O campo extração de materiais é obrigatório.',
+            'jejum.required_if' => 'O campo jejum é obrigatório',
+            'restricao_hidrica.required_if' => 'O campo restrição hídrica é obrigatório.',
+            
         ];
     }
     protected function failedValidation(Validator $validator)

@@ -28,8 +28,11 @@ class CriarEutanasiaRequest extends FormRequest
     public function messages()
     {
         return [
-            '*.required' => 'O :attribute é obrigatório',
-            '*.required_if' => 'O :attribute é obrigatório',
+            'destino.required' => 'O campo destino é obrigatório.',
+            'descarte.required' => 'O campo descarte é obrigatório.',
+            'metodo.required_if' => 'O campo método é obrigatório.',
+            'descricao.required_if' => 'O campo descrição é obrigatório.',
+            'justificativa_metodo.required_if' => 'O campo justificativa do método é obrigatório.',
         ];
     }
     protected function failedValidation(Validator $validator)

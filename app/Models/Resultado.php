@@ -14,7 +14,7 @@ class Resultado extends Model
         'destino_animais',
         'justificativa_metodos',
         'resumo_procedimento',
-        'outras_infos',
+        'outras_informacoes',
         'planejamento_id',
     ];
 

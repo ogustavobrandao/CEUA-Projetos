@@ -16,27 +16,32 @@
             <div class="col-sm-4">
                 <label for="inicio">Início:<strong style="color: red">*</strong></label>
                 <input class="form-control @error('inicio') is-invalid @enderror" id="inicio" type="date"
-                    name="inicio"
-                    @if (!empty($solicitacao) && $solicitacao->inicio != null) value="{{ $solicitacao->inicio }}"
-                       @else value="{{ old('inicio') }}" @endif
-                    required autocomplete="inicio" autofocus>
+                       name="inicio"
+                       @if(!empty($solicitacao) && $solicitacao->inicio != null) value="{{$solicitacao->inicio}}"
+                       @else value="{{old('inicio')}}" @endif
+                       autocomplete="inicio" autofocus required>
+
                 <div class="div_error" id="inicio_error" style="display: none">
                     <span class="invalid-input">
                         <strong id="inicio_error_message"></strong>
                     </span>
+                    <span class="invalid-input">
+                        <strong id="inicio_error_message"></strong>
+                    </span>
                 </div>
-
             </div>
 
             <div class="col-sm-4">
-
                 <label for="inicio">Fim:<strong style="color: red">*</strong></label>
-                <input class="form-control @error('fim') is-invalid @enderror" id="fim" type="date"
-                    name="fim"
-                    @if (!empty($solicitacao) && $solicitacao->fim != null) value="{{ $solicitacao->fim }}"
-                       @else value="{{ old('fim') }}" @endif
-                    required autocomplete="fim" autofocus>
+                <input class="form-control @error('fim') is-invalid @enderror" id="fim" type="date" name="fim"
+                       @if(!empty($solicitacao) && $solicitacao->fim != null) value="{{$solicitacao->fim}}"
+                       @else value="{{old('fim')}}" @endif
+                       autocomplete="fim" autofocus required>
+
                 <div class="div_error" id="fim_error" style="display: none">
+                    <span class="invalid-input">
+                        <strong id="fim_error_message"></strong>
+                    </span>
                     <span class="invalid-input">
                         <strong id="fim_error_message"></strong>
                     </span>
@@ -46,20 +51,15 @@
 
         <div class="row mt-2">
             <div class="col-12">
-                <h3 class="subtitulo">Titulo do Projeto / Aula Prática / Treinamento</h3>
+                <h3 class="subtitulo">Título do Projeto / Aula Prática / Treinamento</h3>
             </div>
         </div>
         <div class="row">
             <div class="col-sm-5">
                 <label for="titulo_pt">Título em Português:<strong style="color: red">*</strong></label>
-                <textarea class="form-control @error('titulo_pt') is-invalid @enderror" id="titulo_pt" name="titulo_pt" required
-                    autocomplete="titulo_pt" autofocus>
-@if (!empty($solicitacao) && $solicitacao->titulo_pt != null)
-{{ $solicitacao->titulo_pt }}
-@else
-{{ old('titulo_pt') }}
-@endif
-</textarea>
+                <textarea title="Tá errado" class="form-control @error('titulo_pt') is-invalid @enderror" id="titulo_pt"
+                        name="titulo_pt" autocomplete="titulo_pt" autofocus required>@if(!empty($solicitacao) && $solicitacao->titulo_pt != null) {{$solicitacao->titulo_pt}}@else{{ old('titulo_pt') }}@endif</textarea>
+
                 <div class="div_error" id="titulo_pt_error" style="display: none">
                     <span class="invalid-input">
                         <strong id="titulo_pt_error_message"></strong>
@@ -68,15 +68,14 @@
             </div>
 
             <div class="col-sm-5">
-                <label for="titulo_en">Titulo em Inglês (apenas para projeto):</label>
-                <textarea class="form-control @error('titulo_en') is-invalid @enderror" id="titulo_en" name="titulo_en" autofocus>
-@if (!empty($solicitacao) && $solicitacao->titulo_en != null)
-{{ $solicitacao->titulo_en }}
-@else
-{{ old('titulo_en') }}
-@endif
-</textarea>
+                <label for="titulo_en">Título em Inglês (apenas para projeto):</label>
+                <textarea class="form-control @error('titulo_en') is-invalid @enderror" id="titulo_en"
+                       name="titulo_en" autofocus>@if(!empty($solicitacao) && $solicitacao->titulo_en != null) {{$solicitacao->titulo_en}} @else {{ old('titulo_en') }} @endif</textarea>
+
                 <div class="div_error" id="titulo_en_error" style="display: none">
+                    <span class="invalid-input">
+                        <strong id="titulo_en_error_message"></strong>
+                    </span>
                     <span class="invalid-input">
                         <strong id="titulo_en_error_message"></strong>
                     </span>
@@ -97,7 +96,7 @@
                 <label for="grandeArea" class="col-form-label">{{ __('Grande Área') }} <span
                         style="color: red; font-weight:bold">*</span></label>
                 <select class="form-control @error('grandeArea') is-invalid @enderror" id="grandeArea" name="grandeArea"
-                    onchange="areas()">
+                        onchange="areas()" required>
                     <option value="" disabled selected hidden>Selecione a Grande Área</option>
                     @foreach ($grandeAreas as $grandeArea)
                         <option @if (old('grandeArea') !== null
@@ -106,25 +105,34 @@
                             {{ $grandeArea->nome }}</option>
                     @endforeach
                 </select>
+
                 <div class="div_error" id="grandeArea_error" style="display: none">
+                    <span class="invalid-input">
+                        <strong id="grandeArea_error_message"></strong>
+                    </span>
                     <span class="invalid-input">
                         <strong id="grandeArea_error_message"></strong>
                     </span>
                 </div>
             </div>
+
             <div class="form-group col-md-4">
                 <label for="area" class="col-form-label">{{ __('Área') }} <span
                         style="color: red; font-weight:bold">*</span></label>
                 <input type="hidden" id="oldArea" value="{{ old('area') }}">
                 <select class="form-control @error('area') is-invalid @enderror" id="area" name="area"
-                    onchange="subareas()">
+                        onchange="subareas()" required>
                     <option value="" disabled selected hidden>Selecione a Área</option>
                     @foreach ($areas as $area)
                         <option @if (old('area') !== null ? old('area') : (isset($solicitacao) ? $solicitacao->area_id : '') == $area->id) selected @endif value="{{ $area->id }}">
                             {{ $area->nome }}</option>
                     @endforeach
                 </select>
+
                 <div class="div_error" id="area_error" style="display: none">
+                    <span class="invalid-input">
+                        <strong id="area_error_message"></strong>
+                    </span>
                     <span class="invalid-input">
                         <strong id="area_error_message"></strong>
                     </span>
@@ -134,7 +142,7 @@
                 <label for="subArea" class="col-form-label">{{ __('Subárea') }} <span
                         style="color: red; font-weight:bold">*</span></label>
                 <input type="hidden" id="oldSubArea" value="{{ old('subArea') }}">
-                <select class="form-control @error('subArea') is-invalid @enderror" id="subArea" name="subArea">
+                <select class="form-control @error('subArea') is-invalid @enderror" id="subArea" name="subArea" required>
                     <option value="" disabled selected hidden>Selecione a Subárea</option>
                     @foreach ($subAreas as $subArea)
                         <option @if (old('subArea') !== null ? old('subArea') : (isset($solicitacao) ? $solicitacao->sub_area_id : '') == $subArea->id) selected @endif value="{{ $subArea->id }}">
@@ -143,6 +151,9 @@
                 </select>
 
                 <div class="div_error" id="subArea_error" style="display: none">
+                    <span class="invalid-input">
+                        <strong id="subArea_error_message"></strong>
+                    </span>
                     <span class="invalid-input">
                         <strong id="subArea_error_message"></strong>
                     </span>
