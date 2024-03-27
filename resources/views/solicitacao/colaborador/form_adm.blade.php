@@ -31,7 +31,7 @@
             </tr>
             </thead>
             <tbody>
-                @foreach($colaboradores as $colaborador)
+                @foreach($solicitacao->responsavel->colaboradores as $colaborador)
 
                     <tr id="fundo_colaborador_{{$colaborador->id}}">
                         <td>
@@ -58,7 +58,7 @@
             </tbody>
         </table>
         
-        @if($solicitacao->status == 'avaliado' && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia'
+        @if(!isset($visualizar) && $solicitacao->status == 'avaliado' && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia'
             && $status == "reprovado" )
             <div class="row justify-content-end">
                 <div class="col-3">

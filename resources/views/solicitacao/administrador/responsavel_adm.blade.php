@@ -162,13 +162,13 @@
 
         <div class="col-sm-4 mt-4" id="anexo_experiencia">
             <label>Anexar Comprovante de Experiência Prévia:</label>
-            @if($responsavel->experiencia_previa == null)
+            @if($solicitacao->responsavel->experiencia_previa == null)
                 <br>
                 <a class="btn btn-secondary"
                 href="#">Não Enviado</a>
             @else
                 <a class="btn btn-primary download-button"
-                data-path="{{route('experiencia.download', ['responsavel_id' => $responsavel->id])}}">Baixar
+                data-path="{{route('experiencia.download', ['responsavel_id' => $solicitacao->responsavel->id])}}">Baixar
                     Arquivo de Experiência Prévia</a>
             @endif
         </div>
@@ -199,13 +199,13 @@
 
         <div class="col-sm-4 mt-4" id="anexo_treinamento">
             <label>Anexar Comprovante de Treinamento:<strong style="color: red">*</strong></label>
-            @if($responsavel->treinamento_file== null)
+            @if($solicitacao->responsavel->treinamento_file== null)
                 <br>
                 <a class="btn btn-secondary"
                 href="#">Não Enviado</a>
             @else
                 <a class="btn btn-primary download-button"
-                data-path="{{route('treinamento_file.downloadTermoResponsabilidade', ['responsavel_id' => $responsavel->id])}}">Baixar
+                data-path="{{route('treinamento_file.downloadTermoResponsabilidade', ['responsavel_id' => $solicitacao->responsavel->id])}}">Baixar
                     Arquivo de Treinamento</a>
             @endif
         </div>
@@ -222,7 +222,7 @@
                 <label>Termo de Responsabilidade:<strong style="color: red">*</strong></label>
 
                 <a class="btn btn-primary download-button"
-                data-path="{{route('termo_responsabilidade.downloadTermoResponsabilidade', ['responsavel_id' => $responsavel->id])}}">Baixar
+                data-path="{{route('termo_responsabilidade.downloadTermoResponsabilidade', ['responsavel_id' => $solicitacao->responsavel->id])}}">Baixar
                     Termo de Responsabilidade</a>
 
             </div>
