@@ -17,6 +17,7 @@ use App\Http\Requests\Solicitacao\CriarSolicitacaoFimRequest;
 use App\Http\Requests\Solicitacao\CriarSolicitacaoRequest;
 use App\Http\Requests\Solicitacao\EditarColaboradorRequest;
 use App\Http\Requests\Solicitacao\UpdateColaboradorRequest;
+use App\Mail\SendAvaliadorReavaliar;
 use App\Mail\SendNotificacaoSolicitacao;
 use App\Models\AvaliacaoIndividual;
 use App\Models\HistoricoSolicitacao;
@@ -1078,16 +1079,18 @@ class SolicitacaoController extends Controller
         $solicitacao->status = 'nao_avaliado';
         $solicitacao->update();
 
-        $historico = new HistoricoSolicitacao();
-        $historico->solicitacao_id = $solicitacao_id;
-        $historico->status_solicitacao = $solicitacao->status;
-        $historico->nome_usuario_modificador = Auth::user()->name;
-
-        $historico->save();
-
-        $admin = User::find(1);
-        Mail::to($admin->email)->send(new SendNotificacaoSolicitacao($admin));
-
+        HistoricoSolicitacao::Create([
+            'solicitacao_id' => $solicitacao_id,
+            'status_solicitacao' => $solicitacao->status,
+            'nome_usuario_modificador' => Auth::user()->name,
+        ]);
+        if($solicitacao->avaliacao()->exists()){
+            $avaliador = User::find($solicitacao->avaliador_atual_id);
+            Mail::to($avaliador->email)->send(new SendAvaliadorReavaliar($avaliador));
+        }else{
+            $admin = User::find(1);
+            Mail::to($admin->email)->send(new SendNotificacaoSolicitacao($admin));
+        }
         return redirect(route('solicitacao.solicitante.index'))->with(['success' => 'Solicitação concluída com sucesso!']);
     }
 

@@ -40,7 +40,7 @@
                                     <a class="btn btn-group" href="{{ route('solicitacao.admin.visualizar', ['solicitacao_id' => $solicitacao->id]) }}"><i
                                             class="fa-solid fa-up-right-from-square"></i></a>
 
-                                    @if($solicitacao->Avaliacao()->where('status', '!=','aprovadaPendencia')->first())        
+                                    @if($solicitacao->status == 'nao_avaliado' || $solicitacao->Avaliacao()->where('status', '!=','aprovadaPendencia')->first())        
                                         <button class="btn btn-group" type="button" data-toggle="modal"
                                                 data-target="#addAvaliador_{{$solicitacao->id}}">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
