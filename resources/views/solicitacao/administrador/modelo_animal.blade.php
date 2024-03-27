@@ -404,26 +404,14 @@
         <div class="col-sm-12 mt-3">
             <label for="termo_consentimento">Termo de Consentimento Livre e Esclarecido (TCLE):<strong style="color: red">*</strong></label>
             
-                @if(!empty($modelo_animal))
-                    <input class="form-control"
-                           id="termo_consentimento"
-                           type="file" accept="application/pdf" name="termo_consentimento"
-                           value="" autocomplete="termo_consentimento" autofocus
-                           @if($modelo_animal->termo_consentimento != null) style="width: 135px" @endif>
-                   
-                    @if($modelo_animal->termo_consentimento != null)
-                        <span
-                            style="border: 1px gray solid; border-radius: 10px; text-align: center; width: 250px; position: absolute; bottom: 0px; left: 155px; height: 38px; padding-top: 5px; background-color: #dcfadf">Um Arquivo Já Foi Enviado</span>
-                    @endif
-                @else
-                    <input class="form-control"
-                           id="termo_consentimento"
-                           type="file" accept="application/pdf" name="termo_consentimento"
-                           @if(isset($modelo_animal)) value="{{$modelo_animal->termo_consentimento}}"
-                           @else value="{{old('termo_consentimento')}}" @endif autocomplete="termo_consentimento"
-                           autofocus required>
-                    
-                @endif
+            @if (!empty($modelo_animal->termo_consentimento))
+                <a class="btn btn-primary download-button"
+                    data-path="{{route('termo.download', ['modelo_animal_id' => $modelo_animal->id])}}">Baixar
+                    Termo de Consentimento</a>
+            @else
+                <br>
+                <a class="btn btn-secondary" href="#">Não Enviado</a>
+            @endif
     
         </div>
 
@@ -435,24 +423,15 @@
              <i class="fa-solid fa-circle-info fa-lg"></i></a>
             <small>Caso seja mais de um documento, anexar em um único PDF.</small>
        
-                @if(!empty($modelo_animal))
-                    <input class="form-control"
-                           id="licencas_previas"
-                           type="file" accept="application/pdf" name="licencas_previas"
-                           value="" autocomplete="licencas_previas"
-                           @if($modelo_animal->licencas_previas != null) style="width: 135px" @endif>
-
-                    @if($modelo_animal->licencas_previas != null)
-                        <span
-                            style="border: 1px gray solid; border-radius: 10px; text-align: center; width: 250px; position: absolute; bottom: 0px; left: 155px; height: 38px; padding-top: 5px; background-color: #dcfadf">Um Arquivo Já Foi Enviado</span>
-                    @endif
-                @else
-                    <input class="form-control"
-                           id="licencas_previas"
-                           type="file" accept="application/pdf" name="licencas_previas"
-                           @if(isset($modelo_animal)) value="{{$modelo_animal->licencas_previas}}"
-                           @else value="{{old('licencas_previas')}}" @endif autocomplete="licencas_previas">
-                @endif
+            @if (!empty($modelo_animal->licencas_previas))
+                <a class="btn btn-primary download-button"
+                    data-path="{{route('licencas_previas.download', ['modelo_animal_id' => $modelo_animal])}}">Baixar
+                Licenças</a>
+            @else
+                <br>
+                <a class="btn btn-secondary"
+                href="#">Não Enviado</a>
+            @endif
         
         </div>
     </div>

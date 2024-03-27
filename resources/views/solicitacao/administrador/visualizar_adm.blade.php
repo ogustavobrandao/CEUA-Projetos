@@ -40,7 +40,7 @@
                     </div>
                 </div>
                 <div class="mb-4">
-                    @include('solicitacao.colaborador.form_adm')
+                    @include('solicitacao.colaborador.form_adm', ['visualizar' => true])    <var></var>
                 </div>
                 <div class="mb-4">
                     <div class="card p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_3">
