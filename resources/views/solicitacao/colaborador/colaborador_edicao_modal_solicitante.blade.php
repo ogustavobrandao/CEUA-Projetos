@@ -8,12 +8,12 @@
                 @else
                     <h5 class="modal-title" id="modalEditarColaboradorLabel">Editar Colaborador</h5>
                 @endif
-                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <a href="#" data-bs-dismiss="modal" aria-label="Fechar" class="btn btn-lg text-decoration-none">
+                    <span aria-hidden="true"><strong>&times;</strong></span>
+                </a>
             </div>
+            
             <!-- Conteúdo do formulário para adicionar colaboradores -->
-
             <form method="POST" action="{{route('solicitacao.colaborador.editar')}}" enctype="multipart/form-data">
                 @csrf
                 <input type="hidden" name="solicitacao_id" value="{{$solicitacao->id}}">
@@ -71,7 +71,7 @@
                         <h5>Informações Institucionais</h5>
                         <div class="row">
                             <div class="col-md-6">
-                                <label for="colab_instituicao">Instituicão:<strong
+                                <label for="colab_instituicao">Instituição:<strong
                                         style="color: red">*</strong></label>
                                 <select class="form-control @error('colab_instituicao_id') is-invalid @enderror" name='colab_instituicao_id'
                                         onchange="unidades()">

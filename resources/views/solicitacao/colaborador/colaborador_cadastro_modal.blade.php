@@ -65,7 +65,7 @@
                         <h5>Informações Institucionais</h5>
                         <div class="row">
                             <div class="col-md-6">
-                                <label for="colab_instituicao">Instituicão:<strong
+                                <label for="colab_instituicao">Instituição:<strong
                                         style="color: red">*</strong></label>
                                 <select class="form-control @error('colab_instituicao_id') is-invalid @enderror" name='colab_instituicao_id'
                                         onchange="unidades()">
