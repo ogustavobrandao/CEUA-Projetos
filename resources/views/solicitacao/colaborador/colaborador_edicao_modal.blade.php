@@ -66,7 +66,7 @@
                         <h5>Informações Institucionais</h5>
                         <div class="row">
                             <div class="col-md-6">
-                                <label for="instituicao">Instituicão:<strong
+                                <label for="instituicao">Instituição:<strong
                                         style="color: red">*</strong></label>
                                 <select class="form-control" name='instituicao_id'
                                         onchange="unidades()" @if(Auth::user()->hasRole('Administrador') || Auth::user()->hasRole('Avaliador')) disabled @endif>
