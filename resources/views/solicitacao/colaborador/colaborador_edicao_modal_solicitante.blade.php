@@ -12,8 +12,8 @@
                     <span aria-hidden="true"><strong>&times;</strong></span>
                 </a>
             </div>
+            
             <!-- Conteúdo do formulário para adicionar colaboradores -->
-
             <form method="POST" action="{{route('solicitacao.colaborador.editar')}}" enctype="multipart/form-data">
                 @csrf
                 <input type="hidden" name="solicitacao_id" value="{{$solicitacao->id}}">
