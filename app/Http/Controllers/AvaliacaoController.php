@@ -252,24 +252,24 @@ class AvaliacaoController extends Controller
         $avaliacao = Avaliacao::find($request->avaliacao_id);
 
         if (!$solicitacao->avaliacao_individual || !$solicitacao->avaliacao_individual->status) {
-            return redirect()->back()->with('fail', 'Avaliação Pendente');
+            return redirect()->back()->with('fail', 'Avaliação Individual Pendente');
         }
 
         if (!$solicitacao->responsavel->avaliacao_individual || !$solicitacao->responsavel->avaliacao_individual->status) {
-            return redirect()->back()->with('fail', 'Avaliação Pendente');
+            return redirect()->back()->with('fail', 'Avaliação de Responsável Pendente');
         }
 
 
         $colaboradorAvaliacao = $solicitacao->avaliacao->first()->avaliacao_individual->where('tipo', 2)->first();
         if (!$colaboradorAvaliacao || !$colaboradorAvaliacao->status) {
-            return redirect()->back()->with('fail', 'Avaliação Pendente');
+            return redirect()->back()->with('fail', 'Avaliação do Colaborador Pendente');
         }
 
 
         if ($solicitacao->dadosComplementares) {
             $avaliacaoDadosComplementares = $solicitacao->dadosComplementares->avaliacao_individual;
             if (!$avaliacaoDadosComplementares || !$avaliacaoDadosComplementares->status) {
-                return redirect()->back()->with('fail', 'Avaliação Pendente');
+                return redirect()->back()->with('fail', 'Avaliação dos Dados Complementares Pendente');
             }
         }
 
@@ -281,7 +281,7 @@ class AvaliacaoController extends Controller
                 ->first();
 
             if (!$avaliacaoModelo || $avaliacaoModelo->status === null) {
-                return redirect()->back()->with('fail', 'Avaliação Pendente');
+                return redirect()->back()->with('fail', 'Avaliação do Modelo Animal Pendente');
             }
 
             $avaliacaoPlanejamento = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)
@@ -289,7 +289,7 @@ class AvaliacaoController extends Controller
                 ->first();
 
             if (!$avaliacaoPlanejamento || $avaliacaoPlanejamento->status === null) {
-                return redirect()->back()->with('fail', 'Avaliação Pendente');
+                return redirect()->back()->with('fail', 'Avaliação do Planejamento Pendente');
             }
 
             $avaliacaoCondicoesAnimal = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)
@@ -297,7 +297,7 @@ class AvaliacaoController extends Controller
                 ->first();
 
             if (!$avaliacaoCondicoesAnimal || $avaliacaoCondicoesAnimal->status === null) {
-                return redirect()->back()->with('fail', 'Avaliação Pendente');
+                return redirect()->back()->with('fail', 'Avaliação das Condições Animais Pendente');
             }
 
             $avaliacaoProcedimento = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)
@@ -305,7 +305,7 @@ class AvaliacaoController extends Controller
                 ->first();
 
             if (!$avaliacaoProcedimento || $avaliacaoProcedimento->status === null) {
-                return redirect()->back()->with('fail', 'Avaliação Pendente');
+                return redirect()->back()->with('fail', 'Avaliação de Procedimento Pendente');
             }
 
             $avaliacaoOperacao = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)
@@ -313,7 +313,7 @@ class AvaliacaoController extends Controller
                 ->first();
 
             if (!$avaliacaoOperacao || $avaliacaoOperacao->status === null) {
-                return redirect()->back()->with('fail', 'Avaliação Pendente');
+                return redirect()->back()->with('fail', 'Avaliação da Operação Pendente');
             }
 
             $avaliacaoEutanasia = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)
@@ -321,7 +321,7 @@ class AvaliacaoController extends Controller
                 ->first();
 
             if (!$avaliacaoEutanasia || $avaliacaoEutanasia->status === null) {
-                return redirect()->back()->with('fail', 'Avaliação Pendente');
+                return redirect()->back()->with('fail', 'Avaliação da Eutanásia Pendente');
             }
 
             $avaliacaoResultado = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)
@@ -329,7 +329,7 @@ class AvaliacaoController extends Controller
                 ->first();
 
             if (!$avaliacaoResultado || $avaliacaoResultado->status === null) {
-                return redirect()->back()->with('fail', 'Avaliação Pendente');
+                return redirect()->back()->with('fail', 'Avaliação do Resultado Pendente');
             }
         }
 
