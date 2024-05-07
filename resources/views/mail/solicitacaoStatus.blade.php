@@ -14,7 +14,7 @@
             <b>
                 @if($avaliacao->status == 'aprovado_colegiado')
                     APROVADA!
-                @elseif($avaliacao->status == 'reprovada')
+                @elseif($avaliacao->status == 'reprovado')
                     REPROVADA!
                 @elseif($avaliacao->status == 'aprovado_avaliador')
                     APROVADA na primeira fase de avaliação - Aguardando Revisão pelo Colegiado
