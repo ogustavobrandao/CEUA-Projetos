@@ -75,12 +75,9 @@
 <script>
 
     $(document).ready(function () {
-        @if(!empty($resultado) && $resultado->abate != null)
-        $("#abate_sim").attr('checked', true);
-        $("#abate_sim").click();
-        @else
-        $("#abate_nao").attr('checked', true);
-        @endif
+        if($("#abate_sim").prop('checked')){
+            $("#destino_animal_abatido").show();
+        }
     });
 
     $("#abate_sim").click(function () {
@@ -90,65 +87,3 @@
         $("#destino_animal_abatido").hide().find('input, textarea').prop('disabled', true);
     });
 </script>
-<script>
-    $('#form11').submit(function (event) {
-        event.preventDefault();
-
-        var formData = new FormData(this);
-
-        $.ajax({
-            type: 'POST',
-            url: '{{route('solicitacao.resultado.criar')}}',
-            data: formData,
-            contentType: false,
-            processData: false,
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            dataType: 'json',
-            success: function (response) {
-                var message = response.message;
-                if (message == 'success') {
-                    var campo = response.campo;
-                    $('#successModal').modal('show');
-                    $('#successModal').find('.msg-success').text('A ' + campo + ' foi salva com sucesso!');
-
-                    $('.div_error').css('display', 'none');
-                    setTimeout(function () {
-                        $('#successModal').modal('hide');
-                    }, 2000);
-                }
-            },
-            error: function (xhr, status, error) {
-                if (xhr.responseJSON && xhr.responseJSON.message) {
-                    $('.div_error').css('display', 'none');
-                    var errors = xhr.responseJSON.errors;
-                    var statusCode = xhr.status;
-                    if (statusCode == 422 && status == 'error') {
-                        for (var field in errors) {
-                            var fieldErrors = errors[field];
-                            var errorMessage = ''
-                            for (var i = 0; i < fieldErrors.length; i++) {
-                                errorMessage += fieldErrors[i] + '\n';
-                            }
-                            var errorDiv = '#' + field + '_error'
-                            var errorMessageTag = '#' + field + '_error_message';
-                            $(errorMessageTag).html(errorMessage);
-                            $(errorDiv).css('display', 'block')
-                        }
-                    }
-                    if(status == 'error'){
-                        $('#failModal').modal('show');
-                        $('#failModal').find('.msg-fail').text(xhr.responseJSON.message);
-                        setTimeout(function (){
-                            $('#failModal').modal('hide');
-                        },2000)
-                    }
-                } else {
-                    alert("Erro na requisição Ajax: " + error);
-                }
-            }
-        });
-    });
-</script>
-
