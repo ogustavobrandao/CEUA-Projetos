@@ -293,33 +293,34 @@
 
     // Verificação para exibição inicial dos campos de texto caso estejam preenchidos
     $(document).ready(function () {
-        @if(!empty($procedimento) && $procedimento->restricao_hidrica != null)
-        $("#restricao_hidrica_sim").click();
-        @endif
-        @if(!empty($procedimento) && $procedimento->jejum != null)
-        $("#jejum_sim").click();
-        @endif
-        @if(!empty($procedimento) && $procedimento->extracao != null)
-        $("#extracao_sim").click();
-        @endif
-        @if(!empty($procedimento) && $procedimento->inoculacao_substancia != null)
-        $("#inoculacao_substancia_sim").click();
-        @endif
-        @if(!empty($procedimento) && $procedimento->imobilizacao != null)
-        $("#imobilizacao_sim").click();
-        @endif
-        @if(!empty($procedimento) && $procedimento->analgesico != null)
-        $("#analgesico_sim").click();
-        @endif
-        @if(!empty($procedimento) && $procedimento->relaxante != null)
-        $("#relaxante_sim").click();
-        @endif
-        @if(!empty($procedimento) && $procedimento->anestesico != null)
-        $("#anestesico_sim").click();
-        @endif
-        @if(!empty($procedimento) && $procedimento->estresse != null)
-        $("#estresse_sim").click();
-        @endif
+        if($("#estresse_sim").prop('checked')){
+            $("#estresse").show();
+        }
+        if($("#anestesico_sim").prop('checked')){
+            $("#anestesico").show();
+        }
+        if($("#relaxante_sim").prop('checked')){
+            $("#relaxante").show();
+        }
+        if($("#analgesico_sim").prop('checked')){
+            $("#analgesico").show();
+        }
+        if($("#imobilizacao_sim").prop('checked')){
+            $("#imobilizacao").show();
+        }
+        if($("#inoculacao_substancia_sim").prop('checked')){
+            $("#inoculacao_substancia").show();
+        }
+        if($("#extracao_sim").prop('checked')){
+            $("#extracao").show();
+        }
+        if($("#jejum_sim").prop('checked')){
+            $("#jejum").show();
+        }
+        if($("#restricao_hidrica_sim").prop('checked')){
+            $("#restricao_hidrica").show();
+        }
+        
     });
 
     //Condições Alimentares
@@ -397,65 +398,3 @@
     });
 
 </script>
-<script>
-    $('#form8').submit(function (event) {
-        event.preventDefault();
-
-        var formData = new FormData(this);
-
-        $.ajax({
-            type: 'POST',
-            url: '{{ route('solicitacao.procedimento.criar') }}',
-            data: formData,
-            contentType: false,
-            processData: false,
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            dataType: 'json',
-            success: function (response) {
-                var message = response.message;
-                if (message == 'success') {
-                    var campo = response.campo;
-                    $('#successModal').modal('show');
-                    $('#successModal').find('.msg-success').text('O ' + campo + ' foi salvo com sucesso!');
-
-                    $('.div_error').css('display', 'none');
-                    setTimeout(function () {
-                        $('#successModal').modal('hide');
-                    }, 2000);
-                }
-            },
-            error: function (xhr, status, error) {
-                if (xhr.responseJSON && xhr.responseJSON.message) {
-                    $('.div_error').css('display', 'none');
-                    var errors = xhr.responseJSON.errors;
-                    var statusCode = xhr.status;
-                    if (statusCode == 422 && status == 'error') {
-                        for (var field in errors) {
-                            var fieldErrors = errors[field];
-                            var errorMessage = ''
-                            for (var i = 0; i < fieldErrors.length; i++) {
-                                errorMessage += fieldErrors[i] + '\n';
-                            }
-                            var errorDiv = '#' + field + '_error'
-                            var errorMessageTag = '#' + field + '_error_message';
-                            $(errorMessageTag).html(errorMessage);
-                            $(errorDiv).css('display', 'block')
-                        }
-                    }
-                    if(status == 'error'){
-                        $('#failModal').modal('show');
-                        $('#failModal').find('.msg-fail').text(xhr.responseJSON.message);
-                        setTimeout(function (){
-                            $('#failModal').modal('hide');
-                        },2000)
-                    }
-                } else {
-                    alert("Erro na requisição Ajax: " + error);
-                }
-            }
-        });
-    });
-</script>
-
