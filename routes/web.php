@@ -179,6 +179,7 @@ Route::get('/calendarioReunioes', [ContatoController::class, 'calendarioReunioes
 
 //Downloads documentos
 Route::get('/modelo/termo/responsabilidade/download', [SolicitacaoController::class,'ModeloTermoResponsabilidade_download'])->name('modelo.termo.responsabilidade.download');
+Route::get('/experiencia/previa', [SolicitacaoController::class, 'termoExperienciaPreviaDownload'])->name('experiencia_previa_download');
 Route::get('/declaracao/consentimento/download', [SolicitacaoController::class,'DeclaracaoConsentimento_download'])->name('declaracao.consentimento.download');
 Route::get('/declaracao/isencao/download', [SolicitacaoController::class,'DeclaracaoIsencao_download'])->name('declaracao.isencao.download');
 

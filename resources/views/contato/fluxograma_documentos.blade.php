@@ -22,11 +22,15 @@
             </li>
 
             <li>
-                <a href="{{route('declaracao.consentimento.download')}}" class="legislation-link">Modelo de Termo Livre de Consentimento</a>
+                <a href="{{route('declaracao.consentimento.download')}}" class="legislation-link">Termo Livre de Consentimento</a>
             </li>
 
             <li>
-                <a href="{{route('modelo.termo.responsabilidade.download')}}" class="legislation-link">Modelo de Termo de Responsabilidade</a>
+                <a href="{{route('modelo.termo.responsabilidade.download')}}" class="legislation-link">Termo de Responsabilidade</a>
+            </li>
+
+            <li>
+                <a href="{{route('experiencia_previa_download')}}" class="legislation-link">Termo de Experiência Prévia</a>
             </li>
 
             <li>

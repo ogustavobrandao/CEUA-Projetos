@@ -662,6 +662,10 @@ class SolicitacaoController extends Controller
         return response()->download($file, 'TERMO CONSENTIMENTO LIVRE ESCLARECIDO(TCLE).pdf');
     }
 
+    public function termoExperienciaPreviaDownload(){
+        $file = public_path('/assets/TERMO-DE-EXPERIENCIA-PREVIA.pdf');
+        return response()->download($file, 'Termo de Experiência Prévia.pdf');
+    }
 
 
     public function index_planejamento($modelo_animal_id)
