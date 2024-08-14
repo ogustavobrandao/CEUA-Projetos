@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('login')
+@section('content')
     <style>
         .home_background {
             width: 80%;

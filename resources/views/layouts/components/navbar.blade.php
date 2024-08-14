@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-dark navbar_color">
+<nav class="navbar navbar-expand-md navbar-dark" style="background-color: #972E3F">
 
     <a class="navbar-brand ml-4" href="{{ route('home') }}">
         {{ config('app.name', 'Laravel') }}

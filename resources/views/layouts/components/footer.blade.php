@@ -1,4 +1,4 @@
-<footer class="container-fluid pt-1 mt-5 navbar_color">
+<footer class="container-fluid pt-1 mt-5" style="background-color: #972E3F">
     <div class="container-fluid px-lg-5">
         <div class="row justify-content-between  my-2">
             <div class="col-md-4 d-flex align-items-center justify-content-center py-1">

@@ -1,6 +1,6 @@
 @extends('layouts.formulario')
 
-@section('content')
+@section('form')
     <div class="row justify-content-center">
         <div class="col-11">
             <h2 class="titulo_h2 border-bottom" id="expand_dados_solicitacao"><span class="font-weight-bold">Solicitação</span>
@@ -319,25 +319,7 @@
         });
     </script>
     <script>
-        //apagar depois
-        // function atualizarTabela_modeloAnimal() {
-        //     $.ajax({
-        //         url: '/solicitacao/modelo_animal_tabela/' + {{ $solicitacao->id }},
-        //         method: 'GET',
-        //         success: function(response) {
-        //             $('#modelo_animal-info').html(response.html);
-        //         },
-        //         error: function(response) {
 
-        //             console.log('Erro ao atualizar a tabela.');
-        //         }
-        //     });
-        // }
-        // $(document).ready(function() {
-        //     atualizarTabela_modeloAnimal();
-        // });
-
-        // Contador para verificar aprovações da lista de modelos animais
         var contadorModelo = 0;
 
         $(document).ready(function() {
