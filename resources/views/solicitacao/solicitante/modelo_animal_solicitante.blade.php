@@ -500,9 +500,7 @@
         <div class="col-sm-12 mt-3">
             <label for="observacao">Observação:</label>
             <textarea class="form-control @error('observacao') is-invalid @enderror" id="observacao"
-                name="observacao"
-                @if(isset($modelo_animal->perfil)) value="{{$modelo_animal->perfil->observacao}}"
-                @else value="{{old('observacao')}}" @endif rows="5"></textarea>
+                name="observacao" rows="5">{{ isset($modelo_animal->perfil) ? $modelo_animal->perfil->observacao : old('observacao') }}</textarea>
             <div class="div_error" id="observacao_error" style="display: none">
                 <span class="invalid-input">
                     <strong id="observacao_error_message"></strong>
