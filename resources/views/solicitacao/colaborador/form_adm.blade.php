@@ -17,58 +17,64 @@
         </div>
     </div>
 </div>
-    @include('solicitacao.colaborador.colaborador_cadastro_modal_adm')
 <div id="dados_colaborador">
 
-        <div class="card p-3 bg-white" style="border-radius: 0px 0px 10px 10px;">
-            <table class="table">
-                <thead>
-                <tr>
-                    <th scope="col">Nome</th>
-                    <th scope="col">E-mail</th>
-                    <th scope="col">CPF</th>
-                    <th scope="col">Telefone</th>
-                    <th class="text-center" scope="col" style="width: 20%">Ações</th>
-                </tr>
-                </thead>
-                <tbody id="colaboradores-info">
+    <div class="card p-3 bg-white" style="border-radius: 0px 0px 10px 10px;">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Nome</th>
+                <th scope="col">E-mail</th>
+                <th scope="col">CPF</th>
+                <th scope="col">Telefone</th>
+                <th class="text-center" scope="col" style="width: 20%">Ações</th>
+            </tr>
+            </thead>
+            <tbody>
+                @foreach($solicitacao->responsavel->colaboradores as $colaborador)
 
-                </tbody>
-            </table>
-            
-            @if($solicitacao->status == 'avaliado' && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia'
-                && $status == "reprovado" )
-                <div class="row justify-content-end">
-                    <div class="col-3">
-                        <a type="button" class="btn btn-danger w-100"
-                            onclick="showAvaliacaoIndividual({{$tipo}},{{$solicitacao->avaliacao->first()->id}},{{$id}})"
-                        >Pendência</a>
+                    <tr id="fundo_colaborador_{{$colaborador->id}}">
+                        <td>
+                            {{$colaborador->nome}}
+                        </td>
+                        <td>
+                            {{$colaborador->contato->email}}
+                        </td>
+                        <td>
+                            {{$colaborador->cpf}}
+                        </td>
+                        <td>
+                            {{$colaborador->contato->telefone}}
+                        </td>
+                        
+                        <td>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalEditarColaborador{{$colaborador->id}}">
+                                Abrir
+                            </button>
+                            @include('solicitacao.colaborador.colaborador_edicao_modal_solicitante', ['solicitacao'=> $solicitacao, 'colaborador' => $colaborador, 'visualizar' => true])
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+        
+        @if(!isset($visualizar) && $solicitacao->status == 'avaliado' && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia'
+            && $status == "reprovado" )
+            <div class="row justify-content-end">
+                <div class="col-3">
+                    <a type="button" class="btn btn-danger w-100"
+                        onclick="showAvaliacaoIndividual({{$tipo}},{{$solicitacao->avaliacao->first()->id}},{{$id}})"
+                    >Pendência</a>
 
-                    </div>
                 </div>
-                <div class="modal-footer"></div>
-            @endif
-
-            
-            <div class="modalColaborador">
-
             </div>
-        </div>
+            <div class="modal-footer"></div>
+        @endif
+
+    </div>
 </div>
 <script>
-    function atualizarTabela() {
-        $.ajax({
-            url: '/solicitacao/colaborador_tabela/adm/' + {{$solicitacao->id}},
-            method: 'GET',
-            success: function(response) {
-                $('#colaboradores-info').html(response.html);
-            },
-            error: function(response) {
-
-                console.log('Erro ao atualizar a tabela.');
-            }
-        });
-    }
+    
     $(document).ready(function() {
         atualizarTabela();
     });
@@ -96,25 +102,5 @@
         });
 
         return false;
-    });
-
-    $(document).on('click', '.btn-abrirModal-colaborador', function (event) {
-        event.preventDefault();
-        var colaborador_id = $(this).data('colaborador-id');
-        $.ajax({
-            url: '/solicitacao/modal_atualizacao_colaborador/adm/' + colaborador_id,
-            method: 'GET',
-            success: function(response) {
-                $('.modalColaborador').html('')
-                $('.modalColaborador').html(response.colaborador_modal);
-                $('#modalEditarColaborador').modal('show');
-            },
-            error: function(response) {
-                console.log('Erro ao atualizar a modal.');
-            }
-        });
-    });
-    $(document).on('click', '[data-dismiss="modal"]', function() {
-        $('#modalEditarColaborador').modal('hide');
     });
 </script>

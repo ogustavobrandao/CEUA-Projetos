@@ -30,6 +30,11 @@ class ModeloAnimal extends Model
         'numero_cqb',
     ];
 
+
+    public function solicitacao(){
+        return $this->belongsTo(Solicitacao::class);
+    }
+    
     public function perfil(){
         return $this->hasOne('App\Models\Perfil');
     }

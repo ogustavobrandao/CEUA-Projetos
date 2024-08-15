@@ -25,62 +25,42 @@
             <div id="eutanasia_dados" class="row">
                 <div class="col-sm-12 mt-2">
                     <label for="descricao">Descrição:<strong style="color: red">*</strong></label>
-                    <textarea class="form-control @error('descricao') is-invalid @enderror" name="descricao" id="descricao"
+                    <textarea class="form-control" name="descricao" id="descricao"
                               autocomplete="descricao" autofocus required readonly>@if(!empty($eutanasia) && $eutanasia->descricao != null){{$eutanasia->descricao}}@else{{old('descricao')}}@endif</textarea>
-                    <div class="div_error" id="descricao_error" style="display: none">
-                        <span class="invalid-input">
-                            <strong id="descricao_error_message"></strong>
-                        </span>
-                    </div>
+
                 </div>
 
                 <div class="col-sm-12 mt-2">
                     <label for="metodo">Substância, Dose, Via:<strong style="color: red">*</strong></label>
-                    <textarea class="form-control @error('metodo') is-invalid @enderror" name="metodo" id="metodo"
+                    <textarea class="form-control" name="metodo" id="metodo"
                               autocomplete="metodo" autofocus required readonly>@if(!empty($eutanasia) && $eutanasia->metodo != null){{$eutanasia->metodo}}@else{{old('metodo')}}@endif</textarea>
-                    <div class="div_error" id="metodo_error" style="display: none">
-                        <span class="invalid-input">
-                            <strong id="metodo_error_message"></strong>
-                        </span>
-                    </div>
+
                 </div>
 
                 <div class="col-sm-12 mt-2">
                     <label for="justificativa_metodo">Caso Método Restrito, Justifique:<strong
                             style="color: red">*</strong></label>
-                    <textarea class="form-control @error('justificativa_metodo') is-invalid @enderror"
+                    <textarea class="form-control"
                               name="justificativa_metodo" id="justificativa_metodo" autocomplete="justificativa_metodo"
                               autofocus
                               required readonly>@if(!empty($eutanasia) &&  $eutanasia->justificativa_metodo != null){{$eutanasia->justificativa_metodo}}@else{{old('justificativa_metodo')}}@endif</textarea>
-                    <div class="div_error" id="justificativa_metodo_error" style="display: none">
-                        <span class="invalid-input">
-                            <strong id="justificativa_metodo_error_message"></strong>
-                        </span>
-                    </div>
+
                 </div>
             </div>
 
             <div class="col-sm-12 mt-2">
                 <label for="destino">Destino dos Animais Mortos e / ou Tecidos / Fragmentos:<strong
                         style="color: red">*</strong></label>
-                <textarea class="form-control @error('destino') is-invalid @enderror" name="destino" id="destino"
+                <textarea class="form-control" name="destino" id="destino"
                           autocomplete="destino" autofocus required readonly>@if(!empty($eutanasia) && $eutanasia->destino != null){{$eutanasia->destino}}@else{{old('destino')}}@endif</textarea>
-                <div class="div_error" id="destino_error" style="display: none">
-                        <span class="invalid-input">
-                            <strong id="destino_error_message"></strong>
-                        </span>
-                </div>
+
             </div>
 
             <div class="col-sm-12 mt-2">
                 <label for="descarte">Forma de Descarte da Carcaça:<strong style="color: red">*</strong></label>
-                <textarea class="form-control @error('descarte') is-invalid @enderror" name="descarte" id="descarte"
+                <textarea class="form-control" name="descarte" id="descarte"
                           autocomplete="descarte" autofocus required readonly>@if(!empty($eutanasia) && $eutanasia->descarte != null){{$eutanasia->descarte}}@else{{old('descarte')}}@endif</textarea>
-                <div class="div_error" id="descarte_error" style="display: none">
-                        <span class="invalid-input">
-                            <strong id="descarte_error_message"></strong>
-                        </span>
-                </div>
+
             </div>
         </div>
         @include('component.botoes_new_form_avaliador')

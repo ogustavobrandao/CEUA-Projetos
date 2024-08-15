@@ -27,15 +27,16 @@ class CriarResponsavelRequest extends FormRequest
             ],
             'cpf' => [
                 'required',
-                'regex:/^\d{3}\.\d{3}\.\d{3}-\d{2}$/',
+                'cpf',
             ],
             'instituicao_id' => 'required|integer',
             'unidade_id' => 'required|integer',
             'departamento_id' => 'required|integer',
             'vinculo_instituicao' => 'required',
             'grau_escolaridade' => 'required',
-            'experiencia_previa' => 'mimes:pdf',
-            'termo_responsabilidade' => 'mimes:pdf',
+            'experiencia_previa' => 'required_if:experiencia_previa_radio,on','mimes:pdf',
+            'termo_responsabilidade' => 'required','mimes:pdf',
+            'treinamento_file' => 'required_if:treinamento_radio,on','mimes:pdf',
             'treinamento' => 'required_if:treinamento_radio,on|min:4|max:1000',
         ];
     }
@@ -51,11 +52,19 @@ class CriarResponsavelRequest extends FormRequest
             'telefone.required' => 'O telefone é obrigatório.',
             'telefone.regex' => 'O telefone teve ter o formato válido.',
             'cpf.required' => 'O CPF é obrigatório.',
-            'cpf.regex' => 'O CPF deve ter o formato válido.',
+            'cpf.cpf' => 'O CPF deve ter o formato válido.',
+            'instituicao_id.required' => 'O campo instituição é obrigatório.',
+            'instituicao_id.integer' => 'O campo instituição deve ser um número inteiro.',
             'vinculo_instituicao.required' => 'O vínculo com a instituição é obrigatório.',
             'grau_escolaridade.required' => 'O grau de escolaridade é obrigatório.',
             'mimes:pdf' => 'O :attribute deve ser um PDF',
-            'treinamento.required' => 'O :attribute é obrigatório quando a opção sim estiver marcada',
+            'treinamento.required_if' => 'O  campo de treinamento é obrigatório.',
+            'treinamento_file.required_if' => 'O campo de PDF do treinamento é obrigatório.',
+            'termo_responsabilidade.required' => 'O campo termo de responsabilidade é obrigatório.',
+            'unidade_id.required' => 'O campo unidade é obrigatório.',
+            'departamento_id.required' => 'O campo departamento é obrigatório.',
+            'experiencia_previa.required_if' => 'O campo de PDF da experiência prévia é obrigatóio'
+
         ];
     }
     protected function failedValidation(Validator $validator)

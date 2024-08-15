@@ -16,6 +16,7 @@ class Responsavel extends Model
         'vinculo_instituicao',
         'experiencia_previa',
         'termo_responsabilidade',
+        'treinamento_file',
         'solicitacao_id',
         'departamento_id',
     ];

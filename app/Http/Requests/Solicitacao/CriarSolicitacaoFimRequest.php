@@ -21,6 +21,7 @@ class CriarSolicitacaoFimRequest extends FormRequest
             'justificativa' => 'required|string|min:5|max:1000',
             'objetivos' => 'required|string|min:5|max:1000',
             'resumo' => 'required|string|min:5|max:1000',
+            'referencias' => 'max:1000',
         ];
     }
 
@@ -30,6 +31,8 @@ class CriarSolicitacaoFimRequest extends FormRequest
             'required' =>  'O campo :attribute é obrigatório.',
             'string' => 'O campo :attribute deve ser um texto',
             'min' => 'O campo :attribute deve possuir no minimo 5 caracteres',
+            'relevancia.required' => 'O campo relevância é obrigatório.',
+            'referencias.max' => 'O campo referências deve possuir no máximo 1000 caracteres.'
         ];
     }
     protected function failedValidation(Validator $validator)

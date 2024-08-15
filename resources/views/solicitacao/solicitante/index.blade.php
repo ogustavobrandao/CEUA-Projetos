@@ -39,13 +39,11 @@
                     <div class="card p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_1">
                         <div class="row">
                             <div class="col-md-12">
-
                                 <h2 class="titulo" id="titulo_1">2. Dados do Responsável
                                     <a class="float-end" id="1_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
                                     <a class="float-end" id="1_btn_down" style="display: none"><i
                                             class="fa-solid fa-circle-chevron-down"></i></a>
                                 </h2>
-
                             </div>
                         </div>
                     </div>
@@ -61,7 +59,6 @@
                         @else
                             @include('solicitacao.solicitante.responsavel')
                         @endif
-
                     </div>
                 </div>
                 <div class="mb-4">
@@ -85,14 +82,11 @@
                     <div class="card p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_3">
                         <div class="row">
                             <div class="col-md-12">
-
                                 <h2 class="titulo" id="titulo_3">4. Dados Complementares
                                     <a class="float-end" id="3_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
                                     <a class="float-end" id="3_btn_down" style="display: none"><i
-                                            class="fa-solid fa-circle-chevron-down"></i></a>
+                                        class="fa-solid fa-circle-chevron-down"></i></a>
                                 </h2>
-
-
                             </div>
                         </div>
                     </div>

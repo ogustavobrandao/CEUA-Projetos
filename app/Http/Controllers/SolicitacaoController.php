@@ -16,6 +16,8 @@ use App\Http\Requests\Solicitacao\CriarResultadoRequest;
 use App\Http\Requests\Solicitacao\CriarSolicitacaoFimRequest;
 use App\Http\Requests\Solicitacao\CriarSolicitacaoRequest;
 use App\Http\Requests\Solicitacao\EditarColaboradorRequest;
+use App\Http\Requests\Solicitacao\UpdateColaboradorRequest;
+use App\Mail\SendAvaliadorReavaliar;
 use App\Mail\SendNotificacaoSolicitacao;
 use App\Models\AvaliacaoIndividual;
 use App\Models\HistoricoSolicitacao;
@@ -184,6 +186,16 @@ class SolicitacaoController extends Controller
             $request->termo_responsabilidade = $nomeAnexo;
         }
 
+        if (($request->hasFile('treinamento_file') && $request->file('treinamento_file')->isValid())) {
+            $anexo = $request->treinamento_file->extension();
+            $nomeAnexo = "treinamento_file_" . $solicitacao->id . date('Ymd') . date('His') . '.' . $anexo;
+            if ($responsavel->treinamento_file != null) {
+                $nomeAnexo = $responsavel->treinamento_file;
+            }
+            $request->treinamento_file->storeAs('treinamento/', $nomeAnexo);
+            $request->treinamento_file = $nomeAnexo;
+        }
+
         $responsavel->solicitacao_id = $request->solicitacao_id;
         $responsavel->nome = $request->nome;
         $responsavel->cpf = $request->cpf;
@@ -205,6 +217,12 @@ class SolicitacaoController extends Controller
         if ($request->termo_responsabilidade_radio == "false")
             $request->termo_responsabilidade = null;
         $responsavel->termo_responsabilidade = $request->termo_responsabilidade;
+        
+        if ($request->treinamento_file == null && $responsavel->treinamento_file != null)
+            $request->treinamento_file = $responsavel->treinamento_file;
+        if ($request->treinamento_radio == "false")
+            $request->treinamento_file = null;
+        $responsavel->treinamento_file = $request->treinamento_file;
 
         if (isset($solicitacao->responsavel)) {
             $responsavel->update();
@@ -236,9 +254,16 @@ class SolicitacaoController extends Controller
 
     public function criar_colaborador(CriarColaboradorRequest $request)
     {
-        $data = $request->all();
+        $data = [
+            'nome' => $request->colab_nome,
+            'cpf' => $request->colab_cpf, 
+            'treinamento' => $request->colab_treinamento, 
+            'grau_escolaridade' => $request->colab_grau_escolaridade,
+            'instituicao_id' => $request->colab_instituicao_id,
+        ];
 
-        $responsavel = Solicitacao::find($request->all()['solicitacao_id'])->responsavel;
+     
+        $responsavel = Solicitacao::find($request->solicitacao_id)->responsavel;
         if (isset($responsavel)) {
             $data['responsavel_id'] = $responsavel->id;
 
@@ -248,62 +273,85 @@ class SolicitacaoController extends Controller
 
             $contato = new Contato();
 
-            $contato->email = $request->all()['email'];
-            $contato->telefone = $request->all()['telefone'];
+            $contato->email = $request->colab_email;
+            $contato->telefone = $request->colab_telefone;
             $contato->colaborador_id = $colaborador->id;
             $contato->save();
 
-            return response()->json([
-                'message' => 'success']);
+            return redirect()->back()->with('success');
         }
-        return redirect(['message' => 'Necessário cadastrar o responsável primeiro!'], 400);
+        return redirect()->back();
     }
 
     private function salvarArquivosColaborador($request, $nomes = null)
     {
         $nomeAnexos = [];
 
-        if (($request->hasFile('experiencia_previa') && $request->file('experiencia_previa')->isValid())) {
-            $extensao = $request->experiencia_previa->extension();
+        if (($request->hasFile('colab_experiencia_previa') && $request->file('colab_experiencia_previa')->isValid())) {
+            $extensao = $request->colab_experiencia_previa->extension();
             $nomeAnexoExperiencia = "experiencia_" . $request->solicitacao_id . date('Ymd') . date('His') . '.' . $extensao;
-            $request->experiencia_previa->storeAs('colaborador/experiencias/', $nomes['experiencia_previa'] ?? $nomeAnexoExperiencia);
+            $request->colab_experiencia_previa->storeAs('colaborador/experiencias/', $nomes['experiencia_previa'] ?? $nomeAnexoExperiencia);
             $nomeAnexos['experiencia_previa'] = $nomeAnexoExperiencia;
         }
 
-        if (($request->hasFile('termo_responsabilidade') && $request->file('termo_responsabilidade')->isValid())) {
-            $extensao = $request->termo_responsabilidade->extension();
-            $nomeAnexoTermo = "termo_responsabilidade_" . $request->solicitacao_id . date('Ymd') . date('His') . '.' . $extensao;
-            $request->termo_responsabilidade->storeAs('colaborador/termo_responsabilidade/', $nomes['termo_responsabilidade'] ?? $nomeAnexoTermo);
-            $nomeAnexos['termo_responsabilidade'] = $nomeAnexoTermo;
+        if (($request->hasFile('colab_treinamento_file') && $request->file('colab_treinamento_file')->isValid())) {
+            $extensao = $request->colab_treinamento_file->extension();
+            $nomeAnexoTermo = "treinamento_file_" . $request->solicitacao_id . date('Ymd') . date('His') . '.' . $extensao;
+            $request->colab_treinamento_file->storeAs('colaborador/treinamentos/', $nomes['treinamento_file'] ?? $nomeAnexoTermo);
+            $nomeAnexos['treinamento_file'] = $nomeAnexoTermo;
         }
 
         return $nomeAnexos;
     }
 
-    public function editar_colaborador(CriarColaboradorRequest $request)
+    public function editar_colaborador(UpdateColaboradorRequest $request)
     {
-        $data = $request->all();
-        $colaborador = Colaborador::find($data['colaborador_id']);
-
-        $nomes = [
-            'experiencia_previa' => $colaborador->experiencia_previa ?? null,
-            'termo_responsabilidade' => $colaborador->termo_responsabilidade ?? null
+        $data = [
+            'nome' => $request->colab_nome,
+            'cpf' => $request->colab_cpf, 
+            'treinamento' => $request->colab_treinamento, 
+            'grau_escolaridade' => $request->colab_grau_escolaridade,
+            'instituicao_id' => $request->colab_instituicao_id,
+            'email' => $request->colab_email,
+            'telefone' => $request->colab_telefone,
         ];
 
-        unset($data["experiencia_previa"]);
-        unset($data["termo_responsabilidade"]);
+        $colaborador = Colaborador::find($request->colaborador_id);
 
-        $this->salvarArquivosColaborador($request, $nomes);
+        if($request->input('opcao_experiencia_previa') == 'false'){
+
+            $this->deletar_documento($colaborador->experiencia_previa, 'colaborador/experiencias/');
+            $colaborador->experiencia_previa = null;
+        }
+
+        if($request->input('colab_treinamento_radio') == 'false'){
+            $this->deletar_documento($colaborador->treinamento_file, 'colaborador/treinamentos/');
+            $colaborador->treinamento_file = null;
+                
+        }
+
+        $nomes = [
+            'experiencia_previa' => $colaborador->colab_experiencia_previa ?? null,
+            'treinamento_file' => $colaborador->colab_treinamento_file ?? null,
+        ];
+
+        $data = array_merge($data, $this->salvarArquivosColaborador($request, $nomes));
 
         $colaborador->update($data);
-
         $colaborador->contato->update($data);
 
-        return response()->json([
-            'message' => 'success',
-            'campo' => 'Colaborador'
-        ]);
+        return redirect()->back();
 
+    }
+
+    public function deletar_documento($arquivo, $caminho){
+        if (!empty($arquivo)) {
+            $diretorioArquivo = $caminho . $arquivo;
+            $caminhoCompleto = Storage::path($diretorioArquivo);
+            if (file_exists($caminhoCompleto)) {
+                Storage::delete($diretorioArquivo);
+            }
+        }
     }
 
     public function deletar_colaborador($id)
@@ -316,12 +364,12 @@ class SolicitacaoController extends Controller
 
         $caminhos = [
             'colaborador/experiencias/',
-            'colaborador/termo_responsabilidade/'
+            'colaborador/treinamentos/'
         ];
 
         $arquivos = [
             $colaborador->experiencia_previa,
-            $colaborador->termo_responsabilidade,
+            $colaborador->treinamento_file,
         ];
 
         foreach ($arquivos as $index => $arquivo) {
@@ -334,72 +382,9 @@ class SolicitacaoController extends Controller
             }
         }
 
-        $solicitacao_id = $colaborador->responsavel->solicitacao->id;
-
         $colaborador->delete();
 
-        return response()->json([
-            'message' => 'success'
-        ]);
-    }
-
-    public function atualizar_colaborador_tabela($id)
-    {
-
-        $solicitacao = Solicitacao::find($id);
-        $colaboradores = $solicitacao->responsavel->colaboradores;
-        $instituicaos = Instituicao::all();
-
-        $conteudoTabela = view('solicitacao.colaborador.colaborador_tabela', ['colaboradores' => $colaboradores, 'solicitacao' => $solicitacao, 'instituicaos' => $instituicaos, "tipo" => 2])->render();
-
-        return response()->json(['html' => $conteudoTabela]);
-
-    }
-    public function atualizar_colaborador_tabela_avaliador($id)
-    {
-
-        $solicitacao = Solicitacao::find($id);
-        $colaboradores = $solicitacao->responsavel->colaboradores;
-        $instituicaos = Instituicao::all();
-
-        $conteudoTabela = view('solicitacao.colaborador.colaborador_tabela_avaliador', ['colaboradores' => $colaboradores, 'solicitacao' => $solicitacao, 'instituicaos' => $instituicaos, "tipo" => 2])->render();
-
-        return response()->json(['html' => $conteudoTabela]);
-
-    }
-    public function atualizar_colaborador_tabela_adm($id)
-    {
-
-        $solicitacao = Solicitacao::find($id);
-        $colaboradores = $solicitacao->responsavel->colaboradores;
-        $instituicaos = Instituicao::all();
-
-        $conteudoTabela = view('solicitacao.colaborador.colaborador_tabela_adm', ['colaboradores' => $colaboradores, 'solicitacao' => $solicitacao, 'instituicaos' => $instituicaos, "tipo" => 2])->render();
-
-        return response()->json(['html' => $conteudoTabela]);
-
-    }
-    public function abrir_colaborador_modal($colaborador_id)
-    {
-        $colaborador= Colaborador::find($colaborador_id);
-        $responsavel = Responsavel::find($colaborador->responsavel_id);
-        $instituicaos = Instituicao::all();
-
-        $colaborador_modal = view('solicitacao.colaborador.colaborador_edicao_modal_solicitante', ['colaborador' => $colaborador, 'solicitacao_id' => $responsavel->solicitacao_id, 'instituicaos' => $instituicaos, "tipo" => 2])->render();
-
-        return response()->json(['colaborador_modal' => $colaborador_modal]);
-
-    }
-    public function abrir_colaborador_modal_adm($colaborador_id)
-    {
-        $colaborador= Colaborador::find($colaborador_id);
-        $responsavel = Responsavel::find($colaborador->responsavel_id);
-        $instituicaos = Instituicao::all();
-
-        $colaborador_modal = view('solicitacao.colaborador.colaborador_edicao_modal_adm', ['colaborador' => $colaborador, 'solicitacao_id' => $responsavel->solicitacao_id, 'instituicaos' => $instituicaos, "tipo" => 2])->render();
-
-        return response()->json(['colaborador_modal' => $colaborador_modal]);
-
+       return redirect()->back();
     }
 
     public function criar_solicitacao_fim(CriarSolicitacaoFimRequest $request)
@@ -588,6 +573,14 @@ class SolicitacaoController extends Controller
         return Storage::download($path);
     }
 
+    public function downloadTreinamento_fileColaborador($colaborador_id){
+        $colaborador = Colaborador::find($colaborador_id);
+        $path = 'colaborador/treinamentos/' . $colaborador->treinamento_file;
+        $this->verifyPath($path);
+        return Storage::download($path);
+    }
+
+    
     public function downloadTermoResponsabilidadeColaborador($colaborador_id)
     {
         $colaborador = Colaborador::find($colaborador_id);
@@ -595,7 +588,14 @@ class SolicitacaoController extends Controller
         $this->verifyPath($path);
         return Storage::download($path);
     }
-
+    
+    public function downloadTreinamento_fileResponsavel($responsavel_id){
+        $responsavel = Responsavel::find($responsavel_id);
+        $path = 'treinamento/' . $responsavel->treinamento_file;
+        $this->verifyPath($path);
+        return Storage::download($path);
+    }
+    
     public function downloadAnexoAmostraPlanejamento($planejamento_id)
     {
         $planejamento = Planejamento::find($planejamento_id);
@@ -636,12 +636,6 @@ class SolicitacaoController extends Controller
         return Storage::download($path);
     }
 
-// public function downloadTreinamento($responsavel_id)
-// {
-//     $responsavel = Responsavel::find($responsavel_id);
-//     return Storage::download('treinamentos/' . $responsavel->treinamento);
-// }
-
     public function downloadExperiencia($responsavel_id)
     {
         $responsavel = Responsavel::find($responsavel_id);
@@ -668,6 +662,10 @@ class SolicitacaoController extends Controller
         return response()->download($file, 'TERMO CONSENTIMENTO LIVRE ESCLARECIDO(TCLE).pdf');
     }
 
+    public function termoExperienciaPreviaDownload(){
+        $file = public_path('/assets/TERMO-DE-EXPERIENCIA-PREVIA.pdf');
+        return response()->download($file, 'Termo de Experiência Prévia.pdf');
+    }
 
 
     public function index_planejamento($modelo_animal_id)
@@ -1085,16 +1083,18 @@ class SolicitacaoController extends Controller
         $solicitacao->status = 'nao_avaliado';
         $solicitacao->update();
 
-        $historico = new HistoricoSolicitacao();
-        $historico->solicitacao_id = $solicitacao_id;
-        $historico->status_solicitacao = $solicitacao->status;
-        $historico->nome_usuario_modificador = Auth::user()->name;
-
-        $historico->save();
-
-        $admin = User::find(1);
-        Mail::to($admin->email)->send(new SendNotificacaoSolicitacao($admin));
-
+        HistoricoSolicitacao::Create([
+            'solicitacao_id' => $solicitacao_id,
+            'status_solicitacao' => $solicitacao->status,
+            'nome_usuario_modificador' => Auth::user()->name,
+        ]);
+        if($solicitacao->avaliacao()->exists()){
+            $avaliador = User::find($solicitacao->avaliador_atual_id);
+            Mail::to($avaliador->email)->send(new SendAvaliadorReavaliar($avaliador));
+        }else{
+            $admin = User::find(1);
+            Mail::to($admin->email)->send(new SendNotificacaoSolicitacao($admin));
+        }
         return redirect(route('solicitacao.solicitante.index'))->with(['success' => 'Solicitação concluída com sucesso!']);
     }
 
@@ -1162,5 +1162,12 @@ class SolicitacaoController extends Controller
         $historicos = $solicitacao->historico_solicitacao;
         $pdf = \PDF::loadView('PDF/historico', compact('solicitacao', 'historicos'));
         return $pdf->download('historico.pdf');
+    }
+
+    public function destroySolicitacao($solicitacao_id){
+        $solicitacao = Solicitacao::find($solicitacao_id);
+        $solicitacao->delete();
+        return redirect()->back();
+
     }
 }

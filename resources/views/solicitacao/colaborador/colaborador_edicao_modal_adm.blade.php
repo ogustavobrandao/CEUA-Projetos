@@ -58,15 +58,15 @@
                                 </div>
                             </div>
                             <div class="div_error telefone_error" style="display: none">
-                                    <span class="invalid-input">
-                                        <strong class="telefone_error_message"></strong>
-                                    </span>
+                                <span class="invalid-input">
+                                    <strong class="telefone_error_message"></strong>
+                                </span>
                             </div>
                         </div>
                         <h5>Informações Institucionais</h5>
                         <div class="row">
                             <div class="col-md-6">
-                                <label for="instituicao">Instituicão:<strong
+                                <label for="instituicao">Instituição:<strong
                                         style="color: red">*</strong></label>
                                 <select class="form-control" name='instituicao_id'
                                         onchange="unidades()" disabled>
@@ -117,6 +117,7 @@
                                         Doutorado Completo
                                     </option>
                                 </select>
+                                
                                 <div class="div_error grau_escolaridade_error" style="display: none">
                                     <span class="invalid-input">
                                         <strong class="grau_escolaridade_error_message"></strong>

@@ -67,7 +67,6 @@
 @include('layouts.components.footer')
 </body>
 </html>
-<script type="text/javascript" src="https://code.jquery.com/jquery-1.7.2.min.js"></script>
 <script>
     if ($('#instituicao'))
         function unidades(id) {

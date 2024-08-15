@@ -20,7 +20,7 @@
                         </div>
                         <div class="col-sm-2">
                             <input class="form-check-input" type="radio" name="flag_cirurgia" id="cirurgia_nao" value="false"
-                                   checked>
+                                >
                             <label class="form-check-label" for="flag_cirurgia">
                                 Não
                             </label>
@@ -31,6 +31,7 @@
                     <label for="anexo_cirurgia">Descrição:<strong style="color: red">*</strong></label>
                     <textarea class="form-control" name="detalhes_cirurgia" id="detalhes_cirurgia" autocomplete="detalhes_cirurgia"
                               required readonly> @if(!empty($operacao) && $operacao->detalhes_cirurgia != null){{$operacao->detalhes_cirurgia}}@else{{old('detalhes_cirurgia')}}@endif</textarea>
+
                     <div class="div_error" id="detalhes_cirurgia_error" style="display: none">
                         <span class="invalid-input">
                             <strong id="detalhes_cirurgia_error_message"></strong>
@@ -155,45 +156,45 @@
     $(document).ready(function () {
 
         @if(isset($operacao) && ($operacao->flag_cirurgia == "true_unica"))
-        $("#cirurgia_sim_unica").attr('checked', true);
-        $("#cirurgia_sim_unica").click();
-        $("#anexo_cirurgia").show();
-        $("#pos_operatorio").show();
+            $("#cirurgia_sim_unica").attr('checked', true);
+            $("#cirurgia_sim_unica").click();
+            $("#anexo_cirurgia").show();
+            $("#pos_operatorio").show();
         @elseif(isset($operacao) && ($operacao->flag_cirurgia == "true_multipla"))
-        $("#cirurgia_sim_multipla").attr('checked', true);
-        $("#cirurgia_sim_multipla").click();
-        $("#anexo_cirurgia").show();
-        $("#pos_operatorio").show();
+            $("#cirurgia_sim_multipla").attr('checked', true);
+            $("#cirurgia_sim_multipla").click();
+            $("#anexo_cirurgia").show();
+            $("#pos_operatorio").show();
         @else
-        $("#cirurgia_nao").attr('checked', true);
-        $("#anexo_cirurgia").hide();
-        $("#pos_operatorio1").hide();
-        $("#pos_operatorio2").hide();
-        $("#pos_operatorio3").hide();
+            $("#cirurgia_nao").attr('checked', true);
+            $("#anexo_cirurgia").hide();
+            $("#pos_operatorio1").hide();
+            $("#pos_operatorio2").hide();
+            $("#pos_operatorio3").hide();
         @endif
 
         @if(isset($operacao) && ($operacao->observacao_recuperacao != null))
-        $("#observacao_recuperacao_sim").attr('checked', true);
-        $("#anexo_observacao_recuperacao").show();
+            $("#observacao_recuperacao_sim").attr('checked', true);
+            $("#anexo_observacao_recuperacao").show();
         @else
-        $("#observacao_recuperacao_nao").attr('checked', true);
-        $("#anexo_observacao_recuperacao").hide();
+            $("#observacao_recuperacao_nao").attr('checked', true);
+            $("#anexo_observacao_recuperacao").hide();
         @endif
 
         @if(isset($operacao) && ($operacao->outros_cuidados_recuperacao != null))
-        $("#outros_cuidados_recuperacao_sim").attr('checked', true);
-        $("#anexo_outros_cuidados_recuperacao").show();
+            $("#outros_cuidados_recuperacao_sim").attr('checked', true);
+            $("#anexo_outros_cuidados_recuperacao").show();
         @else
-        $("#outros_cuidados_recuperacao_nao").attr('checked', true);
-        $("#anexo_outros_cuidados_recuperacao").hide();
+            $("#outros_cuidados_recuperacao_nao").attr('checked', true);
+            $("#anexo_outros_cuidados_recuperacao").hide();
         @endif
 
         @if(isset($operacao) && ($operacao->analgesia_recuperacao == true))
-        $("#analgesia_recuperacao_sim").attr('checked', true);
-        $("#anexo_analgesia_recuperacao").show();
+            $("#analgesia_recuperacao_sim").attr('checked', true);
+            $("#anexo_analgesia_recuperacao").show();
         @else
-        $("#analgesia_recuperacao_nao").attr('checked', true);
-        $("#anexo_nao_uso_analgesia_recuperacao").show();
+            $("#analgesia_recuperacao_nao").attr('checked', true);
+            $("#anexo_nao_uso_analgesia_recuperacao").show();
         @endif
 
         $("#cirurgia_sim_unica").click(function () {
@@ -254,66 +255,5 @@
 
     });
 </script>
-<script>
-    $('#form9').submit(function (event) {
-        event.preventDefault();
 
-        var formData = new FormData(this);
-
-        $.ajax({
-            type: 'POST',
-            url: '{{ route('solicitacao.operacao.criar') }}',
-            data: formData,
-            contentType: false,
-            processData: false,
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            dataType: 'json',
-            success: function (response) {
-                var message = response.message;
-                if (message == 'success') {
-                    var campo = response.campo;
-                    $('#successModal').modal('show');
-                    $('#successModal').find('.msg-success').text('A ' + campo + ' foi salva com sucesso!');
-
-                    $('.div_error').css('display', 'none');
-                    setTimeout(function () {
-                        $('#successModal').modal('hide');
-                    }, 2000);
-                }
-            },
-            error: function (xhr, status, error) {
-                if (xhr.responseJSON && xhr.responseJSON.message) {
-                    $('.div_error').css('display', 'none');
-                    var errors = xhr.responseJSON.errors;
-                    var statusCode = xhr.status;
-                    if (statusCode == 422 && status == 'error') {
-                        for (var field in errors) {
-                            var fieldErrors = errors[field];
-                            var errorMessage = ''
-                            for (var i = 0; i < fieldErrors.length; i++) {
-                                errorMessage += fieldErrors[i] + '\n';
-                            }
-                            var errorDiv = '#' + field + '_error'
-                            var errorMessageTag = '#' + field + '_error_message';
-                            $(errorMessageTag).html(errorMessage);
-                            $(errorDiv).css('display', 'block')
-                        }
-                    }
-                    if(status == 'error'){
-
-                        $('#failModal').modal('show');
-                        $('#failModal').find('.msg-fail').text(xhr.responseJSON.message);
-                        setTimeout(function (){
-                            $('#failModal').modal('hide');
-                        },2000)
-                    }
-                } else {
-                    alert("Erro na requisição Ajax: " + error);
-                }
-            }
-        });
-    });
-</script>
 
