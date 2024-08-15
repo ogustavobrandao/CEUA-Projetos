@@ -42,6 +42,7 @@ class CriarModeloAnimalRequest extends FormRequest
             'linhagem' => 'required',
             'machos' => 'required',
             'femeas' => 'required',
+            'observacao' => 'nullable'
         ];
     }
     public function messages()

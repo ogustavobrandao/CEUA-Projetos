@@ -496,15 +496,25 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="col-sm-12 mt-3">
+            <label for="observacao">Observação:</label>
+            <textarea class="form-control @error('observacao') is-invalid @enderror" id="observacao"
+                name="observacao" rows="3">{{ isset($modelo_animal->perfil) ? $modelo_animal->perfil->observacao : old('observacao') }}</textarea>
+            <div class="div_error" id="observacao_error" style="display: none">
+                <span class="invalid-input">
+                    <strong id="observacao_error_message"></strong>
+                </span>
+            </div>
+        </div>
+
         <div class="col-sm-12 mt-3">
             <label for="termo_consentimento">Termo de Consentimento Livre e Esclarecido (TCLE):<strong style="color: red">*</strong></label>
                 @if(!empty($modelo_animal))
                     <input class="form-control @error('termo_consentimento') is-invalid @enderror"
-                           id="termo_consentimento"
-                           type="file" accept="application/pdf" name="termo_consentimento"
-                           value="" autocomplete="termo_consentimento" autofocus
-                           @if($modelo_animal->termo_consentimento != null) style="width: 135px" @endif>
+                        id="termo_consentimento"
+                        type="file" accept="application/pdf" name="termo_consentimento"
+                        value="" autocomplete="termo_consentimento" autofocus
+                        @if($modelo_animal->termo_consentimento != null) style="width: 135px" @endif>
                     <div class="div_error" id="termo_consentimento_error" style="display: none">
                         <span class="invalid-input">
                             <strong id="termo_consentimento_error_message"></strong>
@@ -516,11 +526,11 @@
                     @endif
                 @else
                     <input class="form-control @error('termo_consentimento') is-invalid @enderror"
-                           id="termo_consentimento"
-                           type="file" accept="application/pdf" name="termo_consentimento"
-                           @if(isset($modelo_animal)) value="{{$modelo_animal->termo_consentimento}}"
-                           @else value="{{old('termo_consentimento')}}" @endif autocomplete="termo_consentimento"
-                           autofocus required>
+                        id="termo_consentimento"
+                        type="file" accept="application/pdf" name="termo_consentimento"
+                        @if(isset($modelo_animal)) value="{{$modelo_animal->termo_consentimento}}"
+                        @else value="{{old('termo_consentimento')}}" @endif autocomplete="termo_consentimento"
+                        autofocus required>
                     <div class="div_error" id="termo_consentimento_error" style="display: none">
                         <span class="invalid-input">
                             <strong id="termo_consentimento_error_message"></strong>
@@ -528,7 +538,6 @@
                     </div>
                 @endif
         </div>
-    </div>
 
         <div class="col-sm-12 mt-3">
             <label for="licencas_previas">Licenças Prévias de outras instituições (IBAMA, FUNAI, CNEN, CTNBio, CGEN, ICMBio.):</label>
