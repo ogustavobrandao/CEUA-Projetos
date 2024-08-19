@@ -17,8 +17,8 @@ class CriarCondicoesAnimalRequest extends FormRequest
     public function rules()
     {
         return [
-            'condicoes_particulares' => 'required|min:4|max:1000',
-            'local' => 'required|min:4|max:1000',
+            'condicoes_particulares' => 'required|min:4',
+            'local' => 'required|min:4',
             'ambiente_alojamento' => 'required',
             'tipo_cama' => 'required',
             'num_animais_ambiente' => 'required|numeric|min:0',
