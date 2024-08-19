@@ -66,24 +66,8 @@
                         @endif
                     @endif
                 @endforeach
-                <div id="historicoModalContent"></div>
                 </tbody>
             </table>
         </div>
     </div>
 </div>
-<script>
-    function carregarHistoricoModal(solicitacao_id) {
-        $.ajax({
-            url: '/historico_modal/' + solicitacao_id,
-            method: 'GET',
-            success: function (response) {
-                $('#historicoModalContent').html(response.html);
-                $('#historicoModal').modal('show');
-            },
-            error: function () {
-                console.log('Erro ao carregar o modal de histórico.');
-            }
-        });
-    }
-</script>
