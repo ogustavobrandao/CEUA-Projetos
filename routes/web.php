@@ -183,3 +183,30 @@ Route::get('/experiencia/previa', [SolicitacaoController::class, 'termoExperienc
 Route::get('/declaracao/consentimento/download', [SolicitacaoController::class,'DeclaracaoConsentimento_download'])->name('declaracao.consentimento.download');
 Route::get('/declaracao/isencao/download', [SolicitacaoController::class,'DeclaracaoIsencao_download'])->name('declaracao.isencao.download');
 
+
+
+
+Route::get('/solicitacao/{solicitacao_id}/test', function ($solicitacao_id) {
+    $solicitacao = \App\Models\Solicitacao::find($solicitacao_id);
+    $instituicaos = \App\Models\Instituicao::orderByRaw("nome = 'Universidade Federal do Agreste de Pernambuco (UFAPE)' DESC, nome ASC")->get();
+    $grandeAreas = \App\Models\GrandeArea::orderBy('nome')->get();
+    $areas = \App\Models\Area::orderBy('nome')->get();
+    $subAreas = \App\Models\SubArea::orderBy('nome')->get();
+
+    if (Auth::user()->hasRole('Solicitante') && $solicitacao->status == 'avaliado' && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia') {
+        $avaliacao = \App\Models\Avaliacao::where('solicitacao_id', $solicitacao_id)->where('user_id', $solicitacao->avaliacao->first()->user_id)->first();
+
+
+        $avaliacaoDadosComp = \App\Models\AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)->where('dados_complementares_id', $solicitacao->dadosComplementares->id)->first();
+        $avaliacaoDadosini = \App\Models\AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)->where('solicitacao_id', $solicitacao->id)->first();
+        $avaliacaoResponsavel = \App\Models\AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)->where('responsavel_id', $solicitacao->responsavel->id)->first();
+        $avaliacaoColaborador = \App\Models\AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)->where('tipo', 2)->first();
+
+
+        return view('solicitacao.solicitante.solicitante_form', compact('solicitacao',
+            'instituicaos', 'grandeAreas', 'areas', 'subAreas', 'avaliacaoDadosComp', 'avaliacaoDadosini', 'avaliacaoResponsavel', 'avaliacaoColaborador', 'avaliacao'));
+
+    }
+
+    return view('solicitacao.solicitante.solicitante_form', compact('solicitacao', 'instituicaos', 'grandeAreas', 'areas', 'subAreas'));
+});
