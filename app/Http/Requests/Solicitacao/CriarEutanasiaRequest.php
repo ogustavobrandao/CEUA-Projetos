@@ -17,11 +17,11 @@ class CriarEutanasiaRequest extends FormRequest
     public function rules()
     {
         return [
-            'destino' => 'required|min:4|max:1000',
-            'descarte' => 'required|min:4|max:1000',
-            'metodo' => 'required_if:eutanasia,true|min:4|max:1000',
-            'descricao' => 'required_if:eutanasia,true|min:4|max:1000',
-            'justificativa_metodo' => 'required_if:eutanasia,true|min:4|max:1000',
+            'destino' => 'required|min:4',
+            'descarte' => 'required|min:4',
+            'metodo' => 'required_if:eutanasia,true|min:4',
+            'descricao' => 'required_if:eutanasia,true|min:4',
+            'justificativa_metodo' => 'required_if:eutanasia,true|min:4',
         ];
     }
 

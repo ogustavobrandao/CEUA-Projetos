@@ -17,11 +17,11 @@ class CriarSolicitacaoFimRequest extends FormRequest
     {
         return [
             'solicitacao_id' => 'required|integer',
-            'relevancia' => 'required|string|min:5|max:1000',
-            'justificativa' => 'required|string|min:5|max:1000',
-            'objetivos' => 'required|string|min:5|max:1000',
-            'resumo' => 'required|string|min:5|max:1000',
-            'referencias' => 'max:1000',
+            'relevancia' => 'required|string|min:5',
+            'justificativa' => 'required|string|min:5',
+            'objetivos' => 'required|string|min:5',
+            'resumo' => 'required|string|min:5',
+            'referencias' => 'nullable',
         ];
     }
 

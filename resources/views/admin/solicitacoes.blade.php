@@ -20,10 +20,11 @@
             <div id="page2" class="tab-pane fade">
                 @include('admin.apreciacao_index')
             </div>
+            <div id="historicoModalContent"></div>
+
         </div>
     </div>
     <script>
-
         $('.table').DataTable({
             searching: true,
             "language": {
@@ -51,12 +52,32 @@
         $('.here').find('input').addClass('search-input');
 
         $('.search-input').addClass('search-bar-input border w-100')
-        $('.search-input').wrap('<div class="row col-12 my-3"><div class="col-md-11 m-0 p-0 search-bar-column" style="height: 60px"> </div></div>')
+        $('.search-input').wrap(
+            '<div class="row col-12 my-3"><div class="col-md-11 m-0 p-0 search-bar-column" style="height: 60px"> </div></div>'
+            )
 
         $('.here').find('label').contents().unwrap();
-        $('.search-bar-column').after('<div class="col-1 p-0 m-0 float-left search-img"><img src="{{asset('images/search.png')}}" height="42px" width="50px"><div>');
-
+        $('.search-bar-column').after(
+            '<div class="col-1 p-0 m-0 float-left search-img"><img src="{{ asset('images/search.png') }}" height="42px" width="50px"><div>'
+            );
     </script>
+
+    <script>
+        function carregarHistoricoModal(solicitacao_id) {
+            $.ajax({
+                url: '/historico_modal/' + solicitacao_id,
+                method: 'GET',
+                success: function(response) {
+                    $('#historicoModalContent').html(response.html);
+                    $('#historicoModal').modal('show');
+                },
+                error: function() {
+                    console.log('Erro ao carregar o modal de histórico.');
+                }
+            });
+        }
+    </script>
+
     <style>
         .list-group {
             max-height: 300px;
