@@ -51,7 +51,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-white"
-                            href="{{ route('leis_decretos') }}">{{ __('Duvidas e legislação') }}</a>
+                            href="{{ route('leis_decretos') }}">{{ __('Dúvidas e legislação') }}</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-white" href="{{ route('sobre') }}">{{ __('Sobre o sistema') }}</a>

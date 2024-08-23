@@ -2,6 +2,17 @@
 
 @section('content')
 
+    <style>
+        .table-bordered tbody td {
+            border-color: #972E3F;
+        }
+
+        .table-bordered thead th{
+            border-width: 2px;
+            border-color: #972E3F;
+        }
+    </style>
+
 <div class="container">
     <br>
     <div class="row" style="border-bottom: #131833 2px solid">
@@ -12,6 +23,12 @@
         <br>
         <h2 class="text-center">CEUA</h2>
         <br>
+        <article class="alert alert-danger">
+            <p>Os projetos deverão ser submetidos  30 (trinta) dias
+                 antes da reunião da CEUA-UFAPE, para que o processo de
+                  avaliação possa ser cumprido como descrito no fluxograma.
+                  Dessa maneira, a data de inicio do projeto deve ser posterior a essa tramitação.</p>
+        </article>
         <div class="table-responsive">
             <table class="table table-bordered text-center">
                 <thead>
