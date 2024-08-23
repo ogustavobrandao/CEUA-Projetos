@@ -8,10 +8,10 @@
                         <hr class="bg-secondary w-80 mt-3">
                     </div>
                 </div>
-                @if($errors->any())
+                @if ($errors->any())
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
                         <ul>
-                            @foreach($errors->all() as $erro)
+                            @foreach ($errors->all() as $erro)
                                 <li>{{ $erro }}</li>
                             @endforeach
                         </ul>
@@ -23,11 +23,11 @@
 
                 <table class="table table-hover">
                     <thead>
-                    <tr>
-                        <th scope="col">Título</th>
-                        <th scope="col">Solicitante</th>
-                        <th class="w-25 text-center" scope="col">Ações</th>
-                    </tr>
+                        <tr>
+                            <th scope="col">Título</th>
+                            <th scope="col">Solicitante</th>
+                            <th class="w-25 text-center" scope="col">Ações</th>
+                        </tr>
                     </thead>
                     <tbody>
                     @foreach($solicitacoes as $solicitacao)
@@ -68,100 +68,117 @@
                                         </button>
                                     @endif
 
-                                </td>
-                            </tr>
-                        @endif
+                                        <a href="#" class="btn"
+                                            onclick="carregarHistoricoModal({{ $solicitacao->id }})"
+                                            title="Histórico da solicitação">
+                                            <i class="fas fa-history"></i>
+                                        </a>
 
-                        {{--Modal de adição de avaliador--}}
-                        <div class="modal fade" id="addAvaliador_{{$solicitacao->id}}" tabindex="-1" role="dialog"
-                             aria-labelledby="cadastroModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="cadastroModalLabel">Atribuir Avaliador</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <form method="POST" action="{{route('avaliador.atribuir')}}" id="adicionarAvaliadorForm{{$solicitacao->id}}">
-                                        @csrf
-                                        <input type="hidden" name="solicitacao_id" value="{{$solicitacao->id}}">
-                                        <div class="modal-body">
-                                            <div class="row justify-content-center mt-2">
-                                                <div class="col-sm-10">
-                                                    <label for="avaliador">Clique para selecionar um ou mais
-                                                        avaliadores:</label>
-                                                    <div class="list-group">
-                                                        @foreach($avaliadores as $avaliador)
-                                                            @if(empty($avaliador->avaliacoes->where('solicitacao_id',$solicitacao->id)->first()))
-                                                                <label class="list-group-item">
-                                                                    <input class="form-check-input me-1" type="checkbox"
-                                                                           name="avaliadores_id[]"
-                                                                           value="{{$avaliador->id}}">
-                                                                    {{$avaliador->name}}
-                                                                </label>
-                                                            @endif
-                                                        @endforeach
+                                    </td>
+                                </tr>
+                            @endif
+
+                            {{-- Modal de adição de avaliador --}}
+                            <div class="modal fade" id="addAvaliador_{{ $solicitacao->id }}" tabindex="-1"
+                                role="dialog" aria-labelledby="cadastroModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="cadastroModalLabel">Atribuir Avaliador</h5>
+                                            <button type="button" class="close" data-dismiss="modal"
+                                                aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <form method="POST" action="{{ route('avaliador.atribuir') }}"
+                                            id="adicionarAvaliadorForm{{ $solicitacao->id }}">
+                                            @csrf
+                                            <input type="hidden" name="solicitacao_id" value="{{ $solicitacao->id }}">
+                                            <div class="modal-body">
+                                                <div class="row justify-content-center mt-2">
+                                                    <div class="col-sm-10">
+                                                        <label for="avaliador">Clique para selecionar um ou mais
+                                                            avaliadores:</label>
+                                                        <div class="list-group">
+                                                            @foreach ($avaliadores as $avaliador)
+                                                                @if (empty($avaliador->avaliacoes->where('solicitacao_id', $solicitacao->id)->first()))
+                                                                    <label class="list-group-item">
+                                                                        <input class="form-check-input me-1"
+                                                                            type="checkbox" name="avaliadores_id[]"
+                                                                            value="{{ $avaliador->id }}">
+                                                                        {{ $avaliador->name }}
+                                                                    </label>
+                                                                @endif
+                                                            @endforeach
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                                                Fechar
-                                            </button>
-                                            <button id="submitAdicionarAvaliador{{$solicitacao->id}}" type="submit" class="btn btn-success" onclick="submitAdicionarAvaliador({{$solicitacao->id}})">Atribuir</button>
-                                        </div>
-                                    </form>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-dismiss="modal">
+                                                    Fechar
+                                                </button>
+                                                <button id="submitAdicionarAvaliador{{ $solicitacao->id }}"
+                                                    type="submit" class="btn btn-success"
+                                                    onclick="submitAdicionarAvaliador({{ $solicitacao->id }})">Atribuir</button>
+                                            </div>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        {{--Modal de remoção de avaliador--}}
-                        <div class="modal fade" id="removeAvaliador_{{$solicitacao->id}}" tabindex="-1" role="dialog"
-                             aria-labelledby="cadastroModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="cadastroModalLabel">Remover Avaliador</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <form method="POST" id="removerAvaliadorForm{{$solicitacao->id}}" action="{{route('avaliador.remover')}}">
-                                        @csrf
-                                        <input type="hidden" name="solicitacao_id" value="{{$solicitacao->id}}">
-                                        <div class="modal-body">
-                                            <div class="row justify-content-center mt-2">
-                                                <div class="col-sm-10">
-                                                    <label for="avaliador">Clique para selecionar um ou mais
-                                                        avaliadores:</label>
-                                                    <div class="list-group">
-                                                        @foreach($avaliadores as $avaliador)
-                                                            @if(!empty($avaliador->avaliacoes->where('solicitacao_id',$solicitacao->id)->first()))
-                                                                <label class="list-group-item">
-                                                                    <input class="form-check-input me-1" type="checkbox"
-                                                                           name="avaliadores_id[]"
-                                                                           value="{{$avaliador->id}}">
-                                                                    {{$avaliador->name}}
-                                                                </label>
-                                                            @endif
-                                                        @endforeach
+                            {{-- Modal de remoção de avaliador --}}
+                            <div class="modal fade" id="removeAvaliador_{{ $solicitacao->id }}" tabindex="-1"
+                                role="dialog" aria-labelledby="cadastroModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="cadastroModalLabel">Remover Avaliador</h5>
+                                            <button type="button" class="close" data-dismiss="modal"
+                                                aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <form method="POST" id="removerAvaliadorForm{{ $solicitacao->id }}"
+                                            action="{{ route('avaliador.remover') }}">
+                                            @csrf
+                                            <input type="hidden" name="solicitacao_id"
+                                                value="{{ $solicitacao->id }}">
+                                            <div class="modal-body">
+                                                <div class="row justify-content-center mt-2">
+                                                    <div class="col-sm-10">
+                                                        <label for="avaliador">Clique para selecionar um ou mais
+                                                            avaliadores:</label>
+                                                        <div class="list-group">
+                                                            @foreach ($avaliadores as $avaliador)
+                                                                @if (!empty($avaliador->avaliacoes->where('solicitacao_id', $solicitacao->id)->first()))
+                                                                    <label class="list-group-item">
+                                                                        <input class="form-check-input me-1"
+                                                                            type="checkbox" name="avaliadores_id[]"
+                                                                            value="{{ $avaliador->id }}">
+                                                                        {{ $avaliador->name }}
+                                                                    </label>
+                                                                @endif
+                                                            @endforeach
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                                                Fechar
-                                            </button>
-                                            <button id="submitRemoverAvaliador{{$solicitacao->id}}" type="submit" class="btn btn-danger" onclick="submitRemoverAvaliador({{$solicitacao->id}})">Remover</button>
-                                        </div>
-                                    </form>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-dismiss="modal">
+                                                    Fechar
+                                                </button>
+                                                <button id="submitRemoverAvaliador{{ $solicitacao->id }}"
+                                                    type="submit" class="btn btn-danger"
+                                                    onclick="submitRemoverAvaliador({{ $solicitacao->id }})">Remover</button>
+                                            </div>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    @endforeach
+                        @endforeach
                     </tbody>
                 </table>
             </div>
@@ -181,4 +198,3 @@
             $("#adicionarAvaliadorForm" + id).submit();
         }
     </script>
-

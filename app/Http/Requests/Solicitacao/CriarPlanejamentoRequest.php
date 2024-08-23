@@ -17,11 +17,11 @@ class CriarPlanejamentoRequest extends FormRequest
     {
         return [
             'num_animais_grupo' => 'required|numeric|min:1',
-            'especificar_grupo' => 'required|min:4|max:1000',
-            'criterios' => 'required|min:4|max:1000',
-            'desc_materiais_metodos' => 'required|min:4|max:1000',
-            'analise_estatistica' => 'required|min:4|max:1000',
-            'outras_infos' => 'required|min:4|max:1000',
+            'especificar_grupo' => 'required|min:4',
+            'criterios' => 'required|min:4',
+            'desc_materiais_metodos' => 'required|min:4',
+            'analise_estatistica' => 'required|min:4',
+            'outras_infos' => 'required|min:4',
             'grau_invasividade' => 'required',
 
         ];

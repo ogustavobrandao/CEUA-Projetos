@@ -17,11 +17,11 @@ class CriarResultadoRequest extends FormRequest
     {
 
         return [
-            'abate' => 'required_if:abate_radio,==,true|min:4|max:1000',
-            'destino_animais' => 'required|min:4|max:1000',
-            'justificativa_metodos' => 'required|min:4|max:1000',
-            'resumo_procedimento' => 'required|min:4|max:1000',
-            'outras_informacoes' => 'required|min:4|max:1000',
+            'abate' => 'required_if:abate_radio,==,true|min:4',
+            'destino_animais' => 'required|min:4',
+            'justificativa_metodos' => 'required|min:4',
+            'resumo_procedimento' => 'required|min:4',
+            'outras_informacoes' => 'required|min:4',
         ];
     }
 

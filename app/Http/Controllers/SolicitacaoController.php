@@ -438,6 +438,7 @@ class SolicitacaoController extends Controller
         $perfil->femeas = $request->femeas;
         $perfil->total = $request->quantidade;
         $perfil->modelo_animal_id = $modelo_animal->id;
+        $perfil->observacao = $request->observacao;
         $perfil->save();
 
         return redirect()->back()->with('success','Modelo animal criado com sucesso');
@@ -481,6 +482,7 @@ class SolicitacaoController extends Controller
         $perfil->femeas = $request->femeas;
         $perfil->total = $request->quantidade;
         $perfil->modelo_animal_id = $modelo_animal->id;
+        $perfil->observacao = $request->observacao;
         $perfil->update();
 
         return redirect()->back()->with('success', 'Modelo animal atualizado com sucesso.');

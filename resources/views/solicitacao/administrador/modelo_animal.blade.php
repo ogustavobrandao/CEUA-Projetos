@@ -402,6 +402,17 @@
         </div>
 
         <div class="col-sm-12 mt-3">
+            <label for="observacao">Observação:</label>
+            <textarea class="form-control @error('observacao') is-invalid @enderror" id="observacao"
+                name="observacao" rows="5">{{ isset($modelo_animal->perfil) ? $modelo_animal->perfil->observacao : old('observacao') }}</textarea>
+            <div class="div_error" id="observacao_error" style="display: none">
+                <span class="invalid-input">
+                    <strong id="observacao_error_message"></strong>
+                </span>
+            </div>
+        </div>
+
+        <div class="col-sm-12 mt-3">
             <label for="termo_consentimento">Termo de Consentimento Livre e Esclarecido (TCLE):<strong style="color: red">*</strong></label>
             
             @if (!empty($modelo_animal->termo_consentimento))

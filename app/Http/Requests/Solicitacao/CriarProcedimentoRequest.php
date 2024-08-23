@@ -17,13 +17,13 @@ class CriarProcedimentoRequest extends FormRequest
     public function rules()
     {
         return [
-            'estresse' => 'required_if:estresse_radio,on|min:4|max:255',
-            'anestesico' => 'required_if:anestesico_radio,on|min:4|max:255',
-            'relaxante' => 'required_if:relaxante_radio,on|min:4|max:255',
-            'analgesico' => 'required_if:analgesico_radio,on|min:4|max:255',
-            'imobilizacao' => 'required_if:imobilizacao_radio,on|min:4|max:255',
-            'inoculacao_substancia' => 'required_if:inoculacao_substancia_radio,on|min:4|max:255',
-            'extracao' => 'required_if:extracao_radio,on|min:4|max:255',
+            'estresse' => 'required_if:estresse_radio,on|min:4',
+            'anestesico' => 'required_if:anestesico_radio,on|min:4',
+            'relaxante' => 'required_if:relaxante_radio,on|min:4',
+            'analgesico' => 'required_if:analgesico_radio,on|min:4',
+            'imobilizacao' => 'required_if:imobilizacao_radio,on|min:4',
+            'inoculacao_substancia' => 'required_if:inoculacao_substancia_radio,on|min:4',
+            'extracao' => 'required_if:extracao_radio,on|min:4',
             'jejum' => 'required_if:jejum_radio,on|min:4|max:255',
             'restricao_hidrica' => 'required_if:restricao_hidrica_radio,on|min:4|max:255',
         ];
