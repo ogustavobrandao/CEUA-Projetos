@@ -1,4 +1,7 @@
-<div class="card p-3 bg-white" style="border-radius: 0px 0px 10px 10px">
+@extends('layouts.formulario')
+
+@section('form')
+
     <form id="form1" method="POST" action="{{ route('solicitacao.responsavel.criar') }}" enctype="multipart/form-data">
         @csrf
         <input type="hidden" name="solicitacao_id" value="{{ $solicitacao->id }}">
@@ -191,7 +194,7 @@
                             Doutorado Completo
                         </option>
                     </select>
-                    
+
                     <div class="div_error" id="grau_escolaridade_error" style="display: none">
                         <span class="invalid-input">
                             <strong id="grau_escolaridade_error_message"></strong>
@@ -273,7 +276,7 @@
         <div class="col-sm-4 mt-4" id="anexo_treinamento" style="display: none;">
             <label>Anexar Comprovante de Treinamento:<strong style="color: red">*</strong></label>
             <input class="form-control @error('treinamento_file') is-invalid @enderror" id="treinamento_file"
-                type="file" accept="application/pdf" name="treinamento_file" 
+                type="file" accept="application/pdf" name="treinamento_file"
                 autocomplete="treinamento_file" @if (isset($solicitacao->responsavel) && $solicitacao->responsavel->treinamento_file != null) value="{{$solicitacao->responsavel->treinamento_file}}" style="width: 135px"@endif>
 
             <div class="div_error" id="treinamento_file_error" style="display: none">
@@ -287,13 +290,13 @@
                     Arquivo Já Foi Enviado</span>
             @endif
         </div>
-        
+
         {{-- @if (!empty($solicitacao->responsavel) && $solicitacao->responsavel->treinamento != null)
                     {{ $solicitacao->responsavel->treinamento }}
         @else
             {{ old('treinamento') }}
         @endif --}}
-        
+
 
 
 
@@ -309,8 +312,8 @@
                 <strong id="treinamento_error_message"></strong>
             </span>
         </div>
-                 
-        
+
+
         <div class="row">
             <div class="col-sm-4 mt-4" id="anexo_termo_responsabilidade">
                 <label>Termo de Responsabilidade:<strong style="color: red">*</strong></label>
@@ -326,21 +329,20 @@
                 </div>
                 @if (isset($solicitacao->responsavel) && $solicitacao->responsavel->termo_responsabilidade != null)
                     <span style="border: 1px gray solid; border-radius: 10px; text-align: center;
-                        width: 180px; position: absolute; bottom: 0px; left: 155px; height: 38px; 
+                        width: 180px; position: absolute; bottom: 0px; left: 155px; height: 38px;
                         padding-top: 5px; background-color: #dcfadf">
                         Um Arquivo Já Foi Enviado
                     </span>
                 @endif
             </div>
-            
+
         </div>
 
 
-        
+
         @include('component.botoes_new_form')
 
     </form>
-</div>
 
 <script src="{{ asset('js/masks.js') }}"></script>
 <script>
@@ -428,14 +430,14 @@
             $("#experiencia_previa_nao").click();
         @endif
 
-       
+
 
     });
 
     $("#treinamento_sim").click(function() {
         $("#treinamento").show().find('input, textarea').prop('disabled', false);
         $("#anexo_treinamento").show().find('input, textarea').prop('disabled', false);
-        
+
     });
 
     $("#treinamento_nao").click(function() {
@@ -459,11 +461,11 @@
         $("#treinamento_nao").prop('disabled', true);
 
 
-        
-        
+
+
     });
 
-    
+
 </script>
 <script>
     function checkResponsavel() {
@@ -526,3 +528,4 @@
         });
     });
 </script>
+@endsection

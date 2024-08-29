@@ -429,7 +429,7 @@
 
             $.ajax({
                 url: '/avaliacao_individual/' + tipo + '/' + avaliacao_id + '/' + id,
-                type: 'GET',
+                type: 'GET', --}}
                 dataType: 'json',
                 success: function(data) {
                     var ret = "";

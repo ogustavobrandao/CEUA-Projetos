@@ -58,7 +58,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 Route::group(['middleware' => ['auth', 'verified', 'checkRole:Administrador']], function () {
 
     route::get('/home/adm', [HomeController::class, 'perfilAdmin'])->name('perfil_adm');
-    
+
     //criação de usuário pelo adm
     Route::prefix('/usuarios')->controller(UsuarioController::class)->group(function(){
         Route::get('/', [UsuarioController::class, 'index'])->name('usuarios.index');
@@ -73,8 +73,8 @@ Route::group(['middleware' => ['auth', 'verified', 'checkRole:Administrador']], 
         Route::get('/index', 'index')->name('instituicao.index');
         Route::get('/{instituicao_id}/delete', 'delete')->name('instituicao.delete');
     });
-    
-   
+
+
 
     Route::get('/instituicao/{instituicao_id}/unidade/index', [UnidadeController::class, 'index'])->name('unidade.index');
     Route::post('/unidade/store', [UnidadeController::class, 'store'])->name('unidade.store');
@@ -123,10 +123,16 @@ Route::group(['middleware' => ['auth', 'verified', 'checkRole:Solicitante']], fu
     Route::post('/solicitacao/criar_resultado', [SolicitacaoController::class, 'criar_resultado'])->name('solicitacao.resultado.criar');
     Route::post('/solicitacao/criar_operacao', [SolicitacaoController::class, 'criar_operacao'])->name('solicitacao.operacao.criar');
     Route::post('/solicitacao/criar_solicitacao_fim', [SolicitacaoController::class, 'criar_solicitacao_fim'])->name('solicitacao.solicitacao_fim.criar');
-    Route::get('/solicitacao/{solicitacao_id}/index', [SolicitacaoController::class, 'index_solicitacao'])->name('solicitacao.index');
+    Route::get('/solicitacao/{solicitacao_id}/index', [SolicitacaoController::class, 'create_inicio'])->name('solicitacao.index');//mudar o name depois
+    Route::get('/solicitacao/{solicitacao_id}/responsavel', [SolicitacaoController::class, 'create_responsavel'])->name('solicitacao.create_responsavel');
+    Route::get('/solicitacao/{solicitacao_id}/colaborador', [SolicitacaoController::class, 'create_colaborador'])->name('solicitacao.create_colaborador');
+    Route::get('/solicitacao/{solicitacao_id}/complementar', [SolicitacaoController::class, 'create_complementares'])->name('solicitacao.create_complementares');
+    Route::get('/solicitacao/{solicitacao_id}/modelo', [SolicitacaoController::class, 'create_modelo_animal'])->name('solicitacao.create_modelo_animal');
+    Route::get('/solicitacao/planejamento/index/{modelo_animal_id}', [SolicitacaoController::class, 'index_planejamento'])->name('solicitacao.planejamento.index');
+
+
     Route::delete('/solicitacao/{solicitacao_id}', [SolicitacaoController::class, 'destroySolicitacao'])->name('solicitacao.delete');
 
-    Route::get('/solicitacao/planejamento/index/{modelo_animal_id}', [SolicitacaoController::class, 'index_planejamento'])->name('solicitacao.planejamento.index');
 
     Route::get('/solicitacao/{solicitacao_id}/concluir', [SolicitacaoController::class, 'concluir'])->name('solicitacao.concluir');
 

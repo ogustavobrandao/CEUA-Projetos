@@ -60,7 +60,7 @@
                                         </button>
                                         @include('solicitante.deletar_solicitacao_modal', ['solicitacao' => $solicitacao])
                                     </div>
-                                       
+
 
                                 @elseif(($solicitacao->status == "nao_avaliado"))
                                     {{--<a class="btn"

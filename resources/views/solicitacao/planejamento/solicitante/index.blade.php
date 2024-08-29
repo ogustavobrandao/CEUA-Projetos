@@ -1,6 +1,6 @@
 @extends('layouts.formulario')
 
-@section('content')
+@section('form')
     @error('planejamento_id')
     <div class="alert alert-danger alert-dismissible fade show">
         <strong>{{ $message }}</strong>
@@ -16,13 +16,13 @@
                     <div class="card shadow-lg p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_4">
                         <div class="row">
                             <div class="col-md-12">
-                                
+
                                 <h2 class="titulo" id="titulo_4">Dados Base do Modelo Animal
                                     <a class="float-end" id="4_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
                                     <a class="float-end" id="4_btn_down" style="display: none"><i
                                             class="fa-solid fa-circle-chevron-down"></i></a>
                                 </h2>
-                               
+
                             </div>
                         </div>
                     </div>
@@ -34,7 +34,7 @@
                                 @csrf
                                 <input type="hidden" name="modelo_animal_id" value="{{$modelo_animal->id}}">
                                 <div class="modal-body">
-                                    @include('solicitacao.solicitante.modelo_animal_solicitante')
+                                    @include('solicitacao.planejamento.solicitante.modelo_animal_solicitante')
                                     @if(Auth::user()->hasRole('Solicitante') && $solicitacao->status == 'avaliado'
                                     && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia')
                                         @include('component.botoes_new_form',['tipo'=>4,'id'=>$modelo_animal->id,'status'=>$avaliacaoModeloAnimal->status])
@@ -55,7 +55,7 @@
                     <div class="card shadow-lg p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_5">
                         <div class="row">
                             <div class="col-md-12">
-                                
+
                                 <h2 class="titulo" id="titulo_5">Dados Base do Planejamento
                                     <a class="float-end" id="5_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
                                     <a class="float-end" id="5_btn_down" style="display: none"><i
@@ -67,9 +67,9 @@
                     <div id="planejamento">
                         @if(Auth::user()->hasRole('Solicitante') && $solicitacao->status == 'avaliado'
                                 && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia')
-                            @include('planejamento.solicitante.planejamento',['tipo'=>5,'id'=>$planejamento->id,'status'=>$avaliacaoPlanejamento->status])
+                            @include('solicitacao.planejamento.solicitante.planejamento',['tipo'=>5,'id'=>$planejamento->id,'status'=>$avaliacaoPlanejamento->status])
                         @else
-                            @include('planejamento.solicitante.planejamento')
+                            @include('solicitacao.planejamento.solicitante.planejamento')
                         @endif
                     </div>
                 </div>
@@ -90,16 +90,16 @@
                                     <a class="float-end" id="6_btn_down" style="display: none"><i
                                             class="fa-solid fa-circle-chevron-up"></i></a>
                                 </h2>
-                           
+
                             </div>
                         </div>
                     </div>
                     <div id="condicao_animal" style="display: none;">
                         @if(Auth::user()->hasRole('Solicitante') && $solicitacao->status == 'avaliado'
                                 && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia')
-                            @include('planejamento.solicitante.condicoes_animais',['tipo'=>6,'id'=>$condicoes_animal->id,'status'=>$avaliacaoCondicoesAnimal->status])
+                            @include('solicitacao.planejamento.solicitante.condicoes_animais',['tipo'=>6,'id'=>$condicoes_animal->id,'status'=>$avaliacaoCondicoesAnimal->status])
                         @else
-                            @include('planejamento.solicitante.condicoes_animais')
+                            @include('solicitacao.planejamento.solicitante.condicoes_animais')
                         @endif
                     </div>
                 </div>
@@ -107,23 +107,23 @@
                     <div class="card shadow-lg p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_7">
                         <div class="row">
                             <div class="col-md-12">
-                               
+
                                 <h2 class="titulo" id="titulo_7">Procedimento
                                     <a class="float-end" id="7_btn_up"><i
                                             class="fa-solid fa-circle-chevron-down"></i></a>
                                     <a class="float-end" id="7_btn_down" style="display: none"><i
                                             class="fa-solid fa-circle-chevron-up"></i></a>
                                 </h2>
-                              
+
                             </div>
                         </div>
                     </div>
                     <div id="procedimento" style="display: none; ">
                         @if(Auth::user()->hasRole('Solicitante') && $solicitacao->status == 'avaliado'
                                 && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia')
-                            @include('planejamento.solicitante.procedimento',['tipo'=>7,'id'=>$procedimento->id,'status'=>$avaliacaoProcedimento->status])
+                            @include('solicitacao.planejamento.solicitante.procedimento',['tipo'=>7,'id'=>$procedimento->id,'status'=>$avaliacaoProcedimento->status])
                         @else
-                            @include('planejamento.solicitante.procedimento',['tipo'=>7])
+                            @include('solicitacao.planejamento.solicitante.procedimento',['tipo'=>7])
                         @endif
                     </div>
                 </div>
@@ -131,23 +131,23 @@
                     <div class="card shadow-lg p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_8">
                         <div class="row">
                             <div class="col-md-12">
-                               
+
                                 <h2 class="titulo" id="titulo_8">Cirurgia
                                     <a class="float-end" id="8_btn_up"><i
                                             class="fa-solid fa-circle-chevron-down"></i></a>
                                     <a class="float-end" id="8_btn_down" style="display: none"><i
                                             class="fa-solid fa-circle-chevron-up"></i></a>
                                 </h2>
-                             
+
                             </div>
                         </div>
                     </div>
                     <div id="operacao" style="display: none; ">
                         @if(Auth::user()->hasRole('Solicitante') && $solicitacao->status == 'avaliado'
                                 && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia')
-                            @include('planejamento.solicitante.operacao',['tipo'=>8,'id'=>$operacao->id,'status'=>$avaliacaoOperacao->status])
+                            @include('solicitacao.planejamento.solicitante.operacao',['tipo'=>8,'id'=>$operacao->id,'status'=>$avaliacaoOperacao->status])
                         @else
-                            @include('planejamento.solicitante.operacao')
+                            @include('solicitacao.planejamento.solicitante.operacao')
                         @endif
                     </div>
                 </div>
@@ -156,23 +156,23 @@
                     <div class="card shadow-lg p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_9">
                         <div class="row">
                             <div class="col-md-12">
-                                
+
                                 <h2 class="titulo" id="titulo_9">Finalização
                                     <a class="float-end" id="9_btn_up"><i
                                             class="fa-solid fa-circle-chevron-down"></i></a>
                                     <a class="float-end" id="9_btn_down" style="display: none"><i
                                             class="fa-solid fa-circle-chevron-up"></i></a>
                                 </h2>
-                                
+
                             </div>
                         </div>
                     </div>
                     <div id="eutanasia" style="display: none;">
                         @if(Auth::user()->hasRole('Solicitante') && $solicitacao->status == 'avaliado'
                                 && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia')
-                            @include('planejamento.solicitante.eutanasia',['tipo'=>9,'id'=>$eutanasia->id,'status'=>$avaliacaoEutanasia->status])
+                            @include('solicitacao.planejamento.solicitante.eutanasia',['tipo'=>9,'id'=>$eutanasia->id,'status'=>$avaliacaoEutanasia->status])
                         @else
-                            @include('planejamento.solicitante.eutanasia')
+                            @include('solicitacao.planejamento.solicitante.eutanasia')
                         @endif
                     </div>
                 </div>
@@ -181,33 +181,28 @@
                     <div class="card shadow-lg p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_9">
                         <div class="row">
                             <div class="col-md-12">
-                                
+
                                 <h2 class="titulo" id="titulo_10">Resultado
                                     <a class="float-end" id="10_btn_up"><i
                                             class="fa-solid fa-circle-chevron-down"></i></a>
                                     <a class="float-end" id="10_btn_down" style="display: none"><i
                                             class="fa-solid fa-circle-chevron-up"></i></a>
                                 </h2>
-                                
+
                             </div>
                         </div>
                     </div>
                     <div id="resultado" style="display: none;">
-                        @if(Auth::user()->hasRole('Solicitante') && $solicitacao->status == 'avaliado'
-                                && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia')
-                            @include('planejamento.solicitante.resultado',['tipo'=>10,'id'=>$resultado->id,'status'=>$avaliacaoResultado->status])
-                        @else
-                            @include('planejamento.solicitante.resultado')
-                        @endif
+                        @if(Auth::user()->hasRole('Solicitante') && 
                     </div>
                 </div>
 
 
                 <div class="row col-md-10 m-0">
                     <div class="col-4 pl-0">
-            
+
                         <a type="button" class="btn btn-secondary w-100" href="{{ route('solicitacao.index', ['solicitacao_id' => $solicitacao->id]) }}">Voltar</a>
-                   
+
                     </div>
                 </div>
 
@@ -395,8 +390,8 @@
                 $("#pendenciaModal").modal('hide');
             }
 
-     
-            
+
+
 
             function alterarCorCard(tipo, status) {
                 if (status == "aprovado") {
@@ -455,7 +450,7 @@
                 });
             });
         </script>
-        
+
         <script>
             $(document).ready(function() {
                 $('input, textarea, select').on('input change', function() {

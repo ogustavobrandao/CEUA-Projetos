@@ -113,7 +113,7 @@
 
                             <div class="row">
                                 <div class="col-md-6 text-center pl-0">
-                                    <button type="submit" class="btn w-75 navbar_color text-white font-weight-bold">
+                                    <button type="submit" class="btn w-75 text-white btn-red font-weight-bold">
                                         {{ __('Entrar') }}
                                     </button>
                                 </div>
@@ -123,9 +123,9 @@
                                     class="btn w-75 color_bt-cadastrar font-weight-bold">
                                      Cadastrar-se
                                     </a>
-                                </div>                                    
-                                
-                                 
+                                </div>
+
+
                             </div>
                         </form>
                     </div>

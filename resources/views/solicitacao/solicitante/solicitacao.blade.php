@@ -1,4 +1,7 @@
-<div class="card p-3 bg-white" style="border-radius: 0px 0px 10px 10px">
+@extends('layouts.formulario')
+
+@section('form')
+
     <form id="form0" method="POST" action="{{ route('solicitacao.criar') }}">
         @csrf
         <input type="hidden" name="solicitacao_id" value="{{ $solicitacao->id }}">
@@ -164,7 +167,6 @@
         @include('component.botoes_new_form')
     </form>
 
-</div>
 
 @include('component.modal_success')
 
@@ -328,3 +330,4 @@
 
     }
 </script>
+@endsection

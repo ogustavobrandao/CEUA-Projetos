@@ -22,6 +22,21 @@
         integrity="sha512-pHVGpX7F/27yZ0ISY+VVjyULApbDlD0/X0rgGbTqCE7WFW5MezNTWG/dnhtbBuICzsd0WQPgpE4REBLv+UqChw=="
         crossorigin="anonymous"></script>
 
+    <style>
+        .btn-red{
+            background-color: #972E3F;
+            color: white;
+            transition: background-color 0.3s ease;
+        }
+        .btn-red:hover {
+            background-color: #141f5e;
+            color: white;
+        }
+
+        .text-red{
+            color: #972E3F
+        }
+    </style>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -47,20 +62,20 @@
                 </li>
             </ul>
         </div>
-    
+
         @include('layouts.components.navbar')
     </header>
 
 
-    
+
 
     <main class="flex-grow-1">
         @include('layouts.components.messages')
 
         @yield('content')
     </main>
-   
-    
+
+
     @include('layouts.components.footer')
 </body>
 

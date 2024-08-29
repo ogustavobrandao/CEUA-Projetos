@@ -52,30 +52,187 @@ use Illuminate\Support\Facades\Auth;
 class SolicitacaoController extends Controller
 {
 
-    public function index_solicitacao($solicitacao_id)
-    {
+    public function create_inicio($solicitacao_id){
         $solicitacao = Solicitacao::find($solicitacao_id);
         $instituicaos = Instituicao::orderByRaw("nome = 'Universidade Federal do Agreste de Pernambuco (UFAPE)' DESC, nome ASC")->get();
         $grandeAreas = GrandeArea::orderBy('nome')->get();
         $areas = Area::orderBy('nome')->get();
         $subAreas = SubArea::orderBy('nome')->get();
 
-        if (Auth::user()->hasRole('Solicitante') && $solicitacao->status == 'avaliado' && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia') {
-            $avaliacao = Avaliacao::where('solicitacao_id', $solicitacao_id)->where('user_id', $solicitacao->avaliacao->first()->user_id)->first();
+        if($solicitacao->status == 'avaliado' &&
+            $solicitacao->avaliacao->first()->status == 'aprovadaPendencia'){
 
+            $avaliacao = Avaliacao::where('solicitacao_id', $solicitacao_id)->where('user_id', $solicitacao->avaliacao->first()->user_id)->first();
 
             $avaliacaoDadosComp = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)->where('dados_complementares_id', $solicitacao->dadosComplementares->id)->first();
             $avaliacaoDadosini = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)->where('solicitacao_id', $solicitacao->id)->first();
             $avaliacaoResponsavel = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)->where('responsavel_id', $solicitacao->responsavel->id)->first();
             $avaliacaoColaborador = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)->where('tipo', 2)->first();
 
+                return view('solicitacao.solicitante.solicitacao', ['tipo' => 0,
+                'id' => $solicitacao->id,
+                'status' => $solicitacao->avaliacao_individual->status, 'solicitacao',
+                'instituicaos', 'grandeAreas', 'areas', 'subAreas', 'avaliacaoDadosComp', 'avaliacaoDadosini', 'avaliacaoResponsavel', 'avaliacaoColaborador', 'avaliacao']);
+        }
 
-            return view('solicitacao.solicitante.index', compact('solicitacao',
-                'instituicaos', 'grandeAreas', 'areas', 'subAreas', 'avaliacaoDadosComp', 'avaliacaoDadosini', 'avaliacaoResponsavel', 'avaliacaoColaborador', 'avaliacao'));
+        return view('solicitacao.solicitante.solicitacao', compact('solicitacao', 'instituicaos', 'grandeAreas', 'areas', 'subAreas'));
+
+    }
+
+    public function create_responsavel($solicitacao_id)
+    {
+        $solicitacao = Solicitacao::find($solicitacao_id);
+        $instituicaos = Instituicao::orderByRaw("nome = 'Universidade Federal do Agreste de Pernambuco (UFAPE)' DESC, nome ASC")->get();
+
+
+        if($solicitacao->status == 'avaliado' &&
+            $solicitacao->avaliacao->first()->status == 'aprovadaPendencia'){
+
+                return view('solicitacao.solicitante.responsavel', ['tipo' => 1,
+                'id' => $solicitacao->responsavel->id,
+                'status' => $solicitacao->responsavel->avaliacao_individual->status,]);
+        }
+
+        return view('solicitacao.solicitante.responsavel', compact('solicitacao', 'instituicaos'));
+    }
+
+    public function create_colaborador($solicitacao_id){
+        $solicitacao = Solicitacao::find($solicitacao_id);
+        $instituicaos = Instituicao::orderByRaw("nome = 'Universidade Federal do Agreste de Pernambuco (UFAPE)' DESC, nome ASC")->get();
+
+
+        if($solicitacao->status == 'avaliado' &&
+        $solicitacao->avaliacao->first()->status == 'aprovadaPendencia'){
+            return view('solicitacao.colaborador.form_solicitante', [  'solicitacao' => $solicitacao,
+            'status' => $solicitacao->avaliacao->first()->avaliacao_individual->where('tipo', 2)->first()->status,
+            'tipo' => 2,
+            'id' => -1,]);
+        }
+
+        return view('solicitacao.colaborador.form_solicitante', compact('solicitacao', 'instituicaos'));
+
+    }
+
+    public function create_complementares($solicitacao_id){
+        $solicitacao = Solicitacao::find($solicitacao_id);
+
+        if( $solicitacao->status == 'avaliado' &&
+        $solicitacao->avaliacao->first()->status == 'aprovadaPendencia'){
+            return view('solicitacao.solicitante.solicitacao_fim', [ 'tipo' => 3,
+            'id' => $solicitacao->dadosComplementares->id,
+            'status' => $solicitacao->dadosComplementares->avaliacao_individual->status,]);
+        }
+        return view('solicitacao.solicitante.solicitacao_fim', compact('solicitacao'));
+    }
+
+    public function create_modelo_animal($solicitacao_id){
+        $solicitacao = Solicitacao::find($solicitacao_id);
+
+        return view('solicitacao.solicitante.modelo_animal', compact('solicitacao'));
+    }
+
+    public function create_planejamento_modelo_animal(){
+        return view('solicitacao.planejamento.solicitante.modelo_animal_solicitante');
+    }
+
+    public function create_planejamento($solicitacao_id){
+        $solicitacao = Solicitacao::find($solicitacao_id);
+
+        if($solicitacao->status == 'avaliado' && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia'){
+            return view('solicitacao.planejamento.solicitante.planejamento',['tipo'=>5,'id'=>$planejamento->id,'status'=>$avaliacaoPlanejamento->status]);
+
+        }
+        return view('solicitacao.planejamento.solicitante.planejamento');
+
+    }
+
+    public function create_planejamento_condicao_animal($solicitacao_id){
+        $solicitacao = Solicitacao::find($solicitacao_id);
+        if($solicitacao->status == 'avaliado' && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia'){
+            return view('solicitacao.planejamento.solicitante.condicoes_animais',['tipo'=>6,'id'=>$condicoes_animal->id,'status'=>$avaliacaoCondicoesAnimal->status]);
+
+        }
+        return view('solicitacao.planejamento.solicitante.condicoes_animais');
+    }
+
+    public function create_planejamento_procedimento($solicitacao_id){
+        $solicitacao = Solicitacao::find($solicitacao_id);
+
+        if($solicitacao->status == 'avaliado' && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia'){
+            return view('solicitacao.planejamento.solicitante.procedimento',['tipo'=>7,'id'=>$procedimento->id,'status'=>$avaliacaoProcedimento->status]);
+        }
+        return view('solicitacao.planejamento.solicitante.procedimento',['tipo'=>7]);
+    }
+
+    public function create_planejamento_operacao($solicitacao_id){
+        $solicitacao = Solicitacao::find($solicitacao_id);
+
+        if($solicitacao->status == 'avaliado' && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia'){
+            return view('solicitacao.planejamento.solicitante.operacao',['tipo'=>8,'id'=>$operacao->id,'status'=>$avaliacaoOperacao->status]);
 
         }
 
-        return view('solicitacao.solicitante.index', compact('solicitacao', 'instituicaos', 'grandeAreas', 'areas', 'subAreas'));
+        return view('solicitacao.planejamento.solicitante.operacao');
+    }
+    public function create_planejamento_finalizacao($solicitacao_id){
+        $solicitacao = Solicitacao::find($solicitacao_id);
+
+        if($solicitacao->status == 'avaliado' && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia'){
+            return view('solicitacao.planejamento.solicitante.eutanasia',['tipo'=>9,'id'=>$eutanasia->id,'status'=>$avaliacaoEutanasia->status]);
+
+        }
+        return view('solicitacao.planejamento.solicitante.eutanasia');
+    }
+    public function create_plamenento_resultado($solicitacao_id){
+        $solicitacao = Solicitacao::find($solicitacao_id);
+
+        if($solicitacao->status == 'avaliado' && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia'){
+            return view('solicitacao.planejamento.solicitante.resultado',['tipo'=>10,'id'=>$resultado->id,'status'=>$avaliacaoResultado->status]);
+        }
+
+        return view('solicitacao.planejamento.solicitante.resultado');
+    }
+
+    public function index_planejamento($modelo_animal_id)
+    {
+        $modelo_animal = ModeloAnimal::find($modelo_animal_id);
+        $planejamento = Planejamento::where('modelo_animal_id', $modelo_animal_id)->first();
+        $solicitacao = Solicitacao::find($modelo_animal->solicitacao_id);
+
+        //Componentes que requerem ter Planejamento
+        if ($planejamento != null) {
+            $condicoes_animal = CondicoesAnimal::where('planejamento_id', $planejamento->id)->first();
+            $procedimento = Procedimento::where('planejamento_id', $planejamento->id)->first();
+            $operacao = Operacao::where('planejamento_id', $planejamento->id)->first();
+            $eutanasia = Eutanasia::where('planejamento_id', $planejamento->id)->first();
+            $resultado = Resultado::where('planejamento_id', $planejamento->id)->first();
+        } else {
+            $condicoes_animal = null;
+            $procedimento = null;
+            $operacao = null;
+            $eutanasia = null;
+            $resultado = null;
+        }
+
+        if (Auth::user()->hasRole('Solicitante') && $solicitacao->status == 'avaliado' && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia') {
+            $avaliacao = Avaliacao::where('solicitacao_id', $solicitacao->id)->where('user_id', $solicitacao->avaliacao->first()->user_id)->first();
+            // Avaliações Individuais
+            $avaliacaoPlanejamento = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)->where('planejamento_id', $planejamento->id)->first();
+            $avaliacaoCondicoesAnimal = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)->where('condicoes_animal_id', $condicoes_animal->id)->first();
+            $avaliacaoProcedimento = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)->where('procedimento_id', $procedimento->id)->first();
+            $avaliacaoOperacao = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)->where('operacao_id', $operacao->id)->first();
+            $avaliacaoEutanasia = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)->where('eutanasia_id', $eutanasia->id)->first();
+            $avaliacaoResultado = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)->where('resultado_id', $resultado->id)->first();
+            $avaliacaoModeloAnimal = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)->where('modelo_animal_id', $modelo_animal->id)->first();
+
+            return view('solicitacao.planejamento.solicitante.index',
+                compact('modelo_animal', 'planejamento', 'solicitacao', 'condicoes_animal', 'procedimento', 'operacao', 'eutanasia', 'resultado', 'avaliacao',
+                    'avaliacaoPlanejamento', 'avaliacaoCondicoesAnimal', 'avaliacaoProcedimento', 'avaliacaoOperacao',
+                    'avaliacaoEutanasia', 'avaliacaoResultado', 'avaliacaoModeloAnimal'));
+        }
+
+        return view('solicitacao.planejamento.solicitante.index',
+            compact('modelo_animal', 'planejamento', 'solicitacao', 'condicoes_animal', 'procedimento', 'operacao', 'eutanasia', 'resultado'));
     }
 
     public function avaliarSolicitacao($solicitacao_id)
@@ -125,7 +282,7 @@ class SolicitacaoController extends Controller
         return view('avaliador.minhas_avaliacoes', compact('avaliacoes', 'horario'));
     }
 
-    public function inicio(Request $request)
+    public function inicio(Request $request)//apagar depois
     {
         $solicitacao = new Solicitacao();
         $solicitacao->tipo = $request->tipo;
@@ -217,7 +374,7 @@ class SolicitacaoController extends Controller
         if ($request->termo_responsabilidade_radio == "false")
             $request->termo_responsabilidade = null;
         $responsavel->termo_responsabilidade = $request->termo_responsabilidade;
-        
+
         if ($request->treinamento_file == null && $responsavel->treinamento_file != null)
             $request->treinamento_file = $responsavel->treinamento_file;
         if ($request->treinamento_radio == "false")
@@ -256,13 +413,13 @@ class SolicitacaoController extends Controller
     {
         $data = [
             'nome' => $request->colab_nome,
-            'cpf' => $request->colab_cpf, 
-            'treinamento' => $request->colab_treinamento, 
+            'cpf' => $request->colab_cpf,
+            'treinamento' => $request->colab_treinamento,
             'grau_escolaridade' => $request->colab_grau_escolaridade,
             'instituicao_id' => $request->colab_instituicao_id,
         ];
 
-     
+
         $responsavel = Solicitacao::find($request->solicitacao_id)->responsavel;
         if (isset($responsavel)) {
             $data['responsavel_id'] = $responsavel->id;
@@ -308,8 +465,8 @@ class SolicitacaoController extends Controller
     {
         $data = [
             'nome' => $request->colab_nome,
-            'cpf' => $request->colab_cpf, 
-            'treinamento' => $request->colab_treinamento, 
+            'cpf' => $request->colab_cpf,
+            'treinamento' => $request->colab_treinamento,
             'grau_escolaridade' => $request->colab_grau_escolaridade,
             'instituicao_id' => $request->colab_instituicao_id,
             'email' => $request->colab_email,
@@ -327,7 +484,7 @@ class SolicitacaoController extends Controller
         if($request->input('colab_treinamento_radio') == 'false'){
             $this->deletar_documento($colaborador->treinamento_file, 'colaborador/treinamentos/');
             $colaborador->treinamento_file = null;
-                
+
         }
 
         $nomes = [
@@ -492,7 +649,7 @@ class SolicitacaoController extends Controller
     {
         ModeloAnimal::find($id)->delete();
         return redirect()->back()->with('success', 'Modelo de animal excluído com sucesso.');
-    
+
     }
 
     public function atualizar_modelo_animal_tabela($solicitacao_id)
@@ -582,7 +739,7 @@ class SolicitacaoController extends Controller
         return Storage::download($path);
     }
 
-    
+
     public function downloadTermoResponsabilidadeColaborador($colaborador_id)
     {
         $colaborador = Colaborador::find($colaborador_id);
@@ -590,14 +747,14 @@ class SolicitacaoController extends Controller
         $this->verifyPath($path);
         return Storage::download($path);
     }
-    
+
     public function downloadTreinamento_fileResponsavel($responsavel_id){
         $responsavel = Responsavel::find($responsavel_id);
         $path = 'treinamento/' . $responsavel->treinamento_file;
         $this->verifyPath($path);
         return Storage::download($path);
     }
-    
+
     public function downloadAnexoAmostraPlanejamento($planejamento_id)
     {
         $planejamento = Planejamento::find($planejamento_id);
@@ -670,47 +827,7 @@ class SolicitacaoController extends Controller
     }
 
 
-    public function index_planejamento($modelo_animal_id)
-    {
-        $modelo_animal = ModeloAnimal::find($modelo_animal_id);
-        $planejamento = Planejamento::where('modelo_animal_id', $modelo_animal_id)->first();
-        $solicitacao = Solicitacao::find($modelo_animal->solicitacao_id);
 
-        //Componentes que requerem ter Planejamento
-        if ($planejamento != null) {
-            $condicoes_animal = CondicoesAnimal::where('planejamento_id', $planejamento->id)->first();
-            $procedimento = Procedimento::where('planejamento_id', $planejamento->id)->first();
-            $operacao = Operacao::where('planejamento_id', $planejamento->id)->first();
-            $eutanasia = Eutanasia::where('planejamento_id', $planejamento->id)->first();
-            $resultado = Resultado::where('planejamento_id', $planejamento->id)->first();
-        } else {
-            $condicoes_animal = null;
-            $procedimento = null;
-            $operacao = null;
-            $eutanasia = null;
-            $resultado = null;
-        }
-
-        if (Auth::user()->hasRole('Solicitante') && $solicitacao->status == 'avaliado' && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia') {
-            $avaliacao = Avaliacao::where('solicitacao_id', $solicitacao->id)->where('user_id', $solicitacao->avaliacao->first()->user_id)->first();
-            // Avaliações Individuais
-            $avaliacaoPlanejamento = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)->where('planejamento_id', $planejamento->id)->first();
-            $avaliacaoCondicoesAnimal = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)->where('condicoes_animal_id', $condicoes_animal->id)->first();
-            $avaliacaoProcedimento = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)->where('procedimento_id', $procedimento->id)->first();
-            $avaliacaoOperacao = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)->where('operacao_id', $operacao->id)->first();
-            $avaliacaoEutanasia = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)->where('eutanasia_id', $eutanasia->id)->first();
-            $avaliacaoResultado = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)->where('resultado_id', $resultado->id)->first();
-            $avaliacaoModeloAnimal = AvaliacaoIndividual::where('avaliacao_id', $avaliacao->id)->where('modelo_animal_id', $modelo_animal->id)->first();
-
-            return view('planejamento.solicitante.index',
-                compact('modelo_animal', 'planejamento', 'solicitacao', 'condicoes_animal', 'procedimento', 'operacao', 'eutanasia', 'resultado', 'avaliacao',
-                    'avaliacaoPlanejamento', 'avaliacaoCondicoesAnimal', 'avaliacaoProcedimento', 'avaliacaoOperacao',
-                    'avaliacaoEutanasia', 'avaliacaoResultado', 'avaliacaoModeloAnimal'));
-        }
-
-        return view('planejamento.solicitante.index',
-            compact('modelo_animal', 'planejamento', 'solicitacao', 'condicoes_animal', 'procedimento', 'operacao', 'eutanasia', 'resultado'));
-    }
 
     public function index_planejamento_adm($modelo_animal_id)
     {
@@ -1059,7 +1176,7 @@ class SolicitacaoController extends Controller
         $avaliadores = User::whereHas('roles', function (Builder $query) {
             $query->where('nome', 'Avaliador');
         })->get();
-        
+
         return view('admin.solicitacoes', compact('solicitacoes', 'avaliadores', 'avaliacoes', 'horario'));
     }
 

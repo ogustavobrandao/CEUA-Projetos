@@ -1,4 +1,7 @@
-<div class="card p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_2">
+@extends('layouts.formulario')
+
+@section('form')
+
     <div class="row">
         <div class="col-md-12" id="check-responsavel">
             @if (Auth::user()->hasRole('Avaliador') || Auth::user()->hasRole('Administrador'))
@@ -31,14 +34,13 @@
                         title="Adicionar Colaborador">
                         <i class="fa-solid fa-circle-plus fa-2xl"></i>
                         </button>
-                     
+
 
                     @endif
                 </h2>
             @endif
         </div>
     </div>
-</div>
 @include('solicitacao.colaborador.colaborador_cadastro_modal')
 <div id="dados_colaborador">
 
@@ -76,11 +78,11 @@
                                             Abrir
                                         </button>
                                         @include('solicitacao.colaborador.colaborador_edicao_modal_solicitante', ['solicitacao'=> $solicitacao, 'colaborador' => $colaborador])
-                                        
+
                                         <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalDeletar{{$colaborador->id}}">Deletar</button>
                                         @include('solicitacao.solicitante.deletar_colaborador_modal', ['colaborador' => $colaborador])
-                                        
-                                        
+
+
                                     </div>
                                 </td>
                             </tr>
@@ -124,7 +126,7 @@
         $("#colab_treinamento").show().find('input, textarea').prop('disabled', false);
         $("#colab_treinamento_file").show().find('input, textarea').prop('disabled', false);
         $("#divTreinamento").show().find('input, textarea').prop('disabled', false);
-        
+
     });
 
     $("#colab_treinamento_nao").click(function() {
@@ -158,13 +160,13 @@
             limparErros();
         });
     });
-    
+
     function limparErros() {
         $('.alert-danger').hide();
         $('select, input').removeClass('is-invalid');
     }
 
-    
+
 </script>
 @if($errors->any() && session()->has('falhaValidacao'))
     @php
@@ -175,15 +177,16 @@
         <script>
             $(document).ready(function() {
                 $('#modalAdicionarColaborador').modal('show');
-            
+
             });
         </script>
     @else
         <script>
             $(document).ready(function() {
                 $('#modalEditarColaborador{{session()->get('colaborador')}}').modal('show');
-            
+
             });
         </script>
     @endif
 @endif
+@endsection
