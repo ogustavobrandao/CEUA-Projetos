@@ -128,6 +128,25 @@ class AvaliacaoController extends Controller
         Mail::to($admin->email)->send(new SendNotificacaoColegiado($avaliacao->status, $admin));
         return redirect(route('solicitacao.avaliador.index'));
     }
+
+    public function devolverAvaliador($avaliacao_id){
+        $avaliacao = Avaliacao::find($avaliacao_id);
+        $solicitacao = Solicitacao::find($avaliacao->solicitacao_id);
+
+        $avaliacao->status = 'nao_realizado';
+        $solicitacao->status = 'avaliando';
+        $solicitacao->update();
+        $avaliacao->update();
+
+        $historico = new HistoricoSolicitacao();
+        $historico->solicitacao_id = $solicitacao->id;
+        $historico->status_solicitacao = 'devolvido_avaliador';
+        $historico->nome_usuario_modificador = Auth::user()->name;
+
+        $historico->save();
+
+        return redirect(route('solicitacao.admin.index'));
+    }
     public function aprovarSolicitacaoAdm(Request $request)
     {
         $solicitacao = Solicitacao::find($request->solicitacao_id);
