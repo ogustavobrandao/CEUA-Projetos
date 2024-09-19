@@ -21,6 +21,8 @@
                                 Não avaliado
                             @elseif($historico->status_solicitacao == 'aprovadaPendencia')
                                 Aprovado com Pendência
+                            @elseif($historico->status_solicitacao == 'devolvido_avaliador')
+                                Devolvido para o Avaliador
                             @else
                                 Reprovado
                             @endif

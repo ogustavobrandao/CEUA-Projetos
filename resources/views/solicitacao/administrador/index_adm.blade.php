@@ -10,21 +10,21 @@
                     <div class="card p-3 " style="border-radius: 10px 10px 0px 0px;" id="fundo_0">
                         <div class="row">
                             <div class="col-md-12">
-                                
+
                                 <h2 class="titulo" id="titulo_0">1. Dados Iniciais
                                     <a class="float-end" id="0_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
                                     <a class="float-end" id="0_btn_down" style="display: none"><i
                                             class="fa-solid fa-circle-chevron-down"></i></a>
                                 </h2>
-                                
+
                             </div>
                         </div>
                     </div>
                     @include('component.modal_fail')
                     <div id="dados_iniciais">
-                        
+
                         @include('solicitacao.administrador.solicitacao_adm')
-                        
+
                     </div>
                 </div>
                 <div class="mb-4">
@@ -36,42 +36,42 @@
                                     <a class="float-end" id="1_btn_down" style="display: none"><i
                                             class="fa-solid fa-circle-chevron-down"></i></a>
                                 </h2>
-                              
+
                             </div>
                         </div>
                     </div>
                     <div id="dados_responsavel">
-                       
+
                         @include('solicitacao.administrador.responsavel_adm')
-                        
+
 
                     </div>
                 </div>
                 <div class="mb-4">
-                    
+
                     @include('solicitacao.colaborador.form_adm', ['solicitacao' => $solicitacao])
-                    
+
 
                 </div>
                 <div class="mb-4">
                     <div class="card p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_3">
                         <div class="row">
                             <div class="col-md-12">
-                                
+
                                 <h2 class="titulo" id="titulo_3">4. Dados Complementares
                                     <a class="float-end" id="3_btn_up"><i class="fa-solid fa-circle-chevron-up"></i></a>
                                     <a class="float-end" id="3_btn_down" style="display: none"><i
                                             class="fa-solid fa-circle-chevron-down"></i></a>
                                 </h2>
-                                
+
 
                             </div>
                         </div>
                     </div>
                     <div id="dados_complementares">
-                       
+
                         @include('solicitacao.administrador.solicitacao_fim_adm')
-                       
+
 
                     </div>
                 </div>
@@ -109,9 +109,9 @@
                     <div class="card p-3 borda-bottom" style="border-radius: 10px 10px 0px 0px;" id="fundo_4">
                         <div class="row">
                             <div class="col-md-12">
-                                
+
                                     <h3 class="titulo" id="titulo_4">5. Dados dos Modelos Animais
-                               
+
 
                             </div>
                         </div>
@@ -153,7 +153,7 @@
                                                 @elseif ($modelo_animal->procedencia == 'outra_procedencia')
                                                     {{$modelo_animal->outra_procedencia}}
                                                 @endif
-                                
+
                                             </td>
                                             <td>
                                                 {{$modelo_animal->perfil->linhagem ?? 'Não preenchido'}}
@@ -164,7 +164,7 @@
                                             <td class="text-center">
                                                 <a class="btn btn-primary"
                                                     href="{{route('solicitacao.planejamento.index.adm', ['modelo_animal_id' => $modelo_animal->id])}}">Abrir</a>
-                                                   
+
                                             </td>
                                         </tr>
                                     @endforeach
@@ -182,20 +182,21 @@
                         <input type="hidden" id="dadosModeloAnimalAval" value="0">
 
                         <div class="row mt-4 row">
-                            <div class="col-3">
-                                
+                            <div class="col-2">
+
                                 <a type="button" class="btn btn-secondary w-100"
                                    href="{{ route('solicitacao.admin.index') }}">Voltar</a>
-                               
+
                             </div>
+
                             <div class="col-4 DivAporvado">
-                                
+
                                 {{-- Aprovar Solicitação --}}
                                 <a type="button" class="btn w-100 btn-success"
                                     data-toggle="modal" data-target="#aprovarModal"
                                     title="Aprovar Solicitação." id="aprovarAvaliacao">Aprovar</a>
 
-                                
+
 
                                 @if(($solicitacao->status == null  ||
                                     ($solicitacao->status == 'avaliado' && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia'))
@@ -209,8 +210,11 @@
 
                                 @endif
                             </div>
+                            <div class="col-3">
+                                <a class="btn btn-primary w-100" href="{{route('avaliacao.devolver.avaliador', ['avaliacao_id' => $avaliacao->id])}}">Devolver para Avaliador</a>
+                            </div>
                             <div class="col-3 DivAporvado">
-                                
+
                                 {{-- Reprovar Solicitação--}}
                                 <form method="POST" action="{{route('avaliador.solicitacao.reprovar')}}">
                                     @csrf
@@ -221,9 +225,8 @@
                                             id="repovar">Reprovar
                                     </button>
                                 </form>
-                                  
-                            </div>
 
+                            </div>
                         </div>
                 </div>
             </div>
@@ -253,13 +256,13 @@
                                         onclick="closeModal()">
                                     Fechar
                                 </button>
-                               
+
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
-            
+
             <!-- Modal Aprovar -->
             <div class="modal fade" id="aprovarModal" tabindex="-1" role="dialog"
                     aria-labelledby="aprovarModalLabel"
@@ -316,7 +319,7 @@
                     </div>
                 </div>
             </div>
-            
+
         </div>
     </div>
     <!-- Modal de confirmação-->
@@ -725,7 +728,7 @@
                     e.preventDefault();
                     var downloadLink = $(this).attr('href');
                     var verifyLink = $(this).data('path');
-        
+
                     $.ajax({
                         url: verifyLink,
                         method: 'GET',
@@ -743,21 +746,21 @@
                             window.URL.revokeObjectURL(url);
                         },
                         error: function(xhr, status) {
-        
+
                             if (status == 'error') {
                                 $('.modal').hide();
                                 $('body').removeClass('modal-open');
                                 $('body').css('padding-right', '');
                                 $('body').css('overflow', '');
                                 $('.modal-backdrop').remove();
-        
-        
+
+
                                 $('#failModal').modal('show');
                                 $('#failModal').find('.msg-fail').text(
                                     'Arquivo não encontrado, é necessário solicitar o reenvio!');
                                 setTimeout(function() {
                                     $('#failModal').modal('hide');
-        
+
                                 }, 2000)
                             }
                         }
@@ -765,5 +768,5 @@
                 });
             });
         </script>
-        
+
 @endsection

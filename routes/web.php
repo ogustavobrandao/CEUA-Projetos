@@ -58,7 +58,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 Route::group(['middleware' => ['auth', 'verified', 'checkRole:Administrador']], function () {
 
     route::get('/home/adm', [HomeController::class, 'perfilAdmin'])->name('perfil_adm');
-    
+
     //criação de usuário pelo adm
     Route::prefix('/usuarios')->controller(UsuarioController::class)->group(function(){
         Route::get('/', [UsuarioController::class, 'index'])->name('usuarios.index');
@@ -73,8 +73,8 @@ Route::group(['middleware' => ['auth', 'verified', 'checkRole:Administrador']], 
         Route::get('/index', 'index')->name('instituicao.index');
         Route::get('/{instituicao_id}/delete', 'delete')->name('instituicao.delete');
     });
-    
-   
+
+
 
     Route::get('/instituicao/{instituicao_id}/unidade/index', [UnidadeController::class, 'index'])->name('unidade.index');
     Route::post('/unidade/store', [UnidadeController::class, 'store'])->name('unidade.store');
@@ -97,6 +97,7 @@ Route::group(['middleware' => ['auth', 'verified', 'checkRole:Administrador']], 
     Route::get('/solicitacao/planejamento/index/adm/{modelo_animal_id}', [SolicitacaoController::class, 'index_planejamento_adm'])->name('solicitacao.planejamento.index.adm');
     Route::get('/solicitacao/modelo_animal_tabela/adm/{id}', [SolicitacaoController::class, 'atualizar_modelo_animal_tabela_adm'])->name('solicitacao.modelo_animal_tabela_adm');
     Route::post('/adm/aprovar', [AvaliacaoController::class, 'aprovarSolicitacaoAdm'])->name('adm.solicitacao.aprovar');
+    Route::get('/avaliacao/{avaliacao_id}/devolver', [AvaliacaoController::class, 'devolverAvaliador'])->name('avaliacao.devolver.avaliador');
 
 });
 
