@@ -141,12 +141,12 @@
 
                                 <h3 class="titulo" id="titulo_4">5. Dados dos Modelos Animais
 
-                                    @if (Auth::user()->hasRole('Solicitante') && $solicitacao->status == 'avaliado' && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia')
+                                    @if (Auth::user()->hasRole('Solicitante') && $solicitacao->status == null || $solicitacao->status == 'avaliado' && $solicitacao->avaliacao->first()->status == 'aprovadaPendencia')
                                         <a class="float-end " data-toggle="modal" data-target="#modeloAnimalModal"
                                             style="color: green" title="Adicionar Modelo Animal"><i
                                                 class="fa-solid fa-circle-plus fa-2xl"></i></a>
+                                    @endif
                                 </h3>
-                                @endif
 
                             </div>
                         </div>
