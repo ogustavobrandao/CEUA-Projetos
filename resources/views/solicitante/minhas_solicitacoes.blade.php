@@ -60,7 +60,7 @@
                                         </button>
                                         @include('solicitante.deletar_solicitacao_modal', ['solicitacao' => $solicitacao])
                                     </div>
-                                       
+
 
                                 @elseif(($solicitacao->status == "nao_avaliado"))
                                     {{--<a class="btn"
@@ -155,7 +155,7 @@
         </div>
     </div>
 
-    @include('solicitante.modal_tipo_solicitacao')
+    @include('solicitante.modal_suspensao')
 
     <script>
         $('.table').DataTable({
@@ -191,6 +191,6 @@
 
         $('.here').find('label').contents().unwrap();
         $('.search-bar-column').after('<div class="col-1 p-0 m-0 float-left search-img"><img src="{{asset('images/search.png')}}" height="42px" width="50px"><div>');
-        $('.search-img').after('<div class="col-3"><a data-toggle="modal" data-target="#solicitacaoModal" class="btn btn-secondary w-100" style="margin-top: 2%">Criar Solicitação</a><div>');
+        $('.search-img').after('<div class="col-3"><a data-bs-toggle="modal" data-bs-target="#encerramento" class="btn btn-secondary w-100" style="margin-top: 2%">Criar Solicitação</a><div>');
     </script>
 @endsection

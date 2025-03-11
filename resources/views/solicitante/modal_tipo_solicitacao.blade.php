@@ -46,7 +46,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Voltar</button>
-                    <button type="submit" class="btn btn-success">Criar</button>
+                    <button type="button" class="btn btn-success" disabled>Criar</button>
                 </div>
             </form>
         </div>
