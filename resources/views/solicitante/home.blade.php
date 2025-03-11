@@ -14,7 +14,7 @@
             <div class="row justify-content-center">
 
                 <div class="col-5">
-                    <a data-toggle="modal" data-target="#solicitacaoModal" href="#">
+                    <a data-bs-toggle="modal" data-bs-target="#encerramento" href="#">
                         <div class="text-center p-5 shadow caixaSelecao justify-content-center clickable"
                              style="background-color: #131833">
                             <div class="pt-4">
@@ -47,7 +47,7 @@
     </div>
 </div>
 
-@include('solicitante.modal_tipo_solicitacao')
+@include('solicitante.modal_suspensao')
 
 
 @endsection
