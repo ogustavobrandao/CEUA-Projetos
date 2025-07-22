@@ -36,6 +36,29 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="{{ asset ('css/app.css') }}">
+
+    <style>
+        .btn-redirect {
+            background-color: var(--bs-success);
+            color: #fff;
+            box-shadow: 0 0 0 rgba(25, 135, 84, 0.5);
+            animation: pulse-success 1.8s infinite;
+            border: none;
+        }
+
+        @keyframes pulse-success {
+            0% {
+                box-shadow: 0 0 0 0 rgba(25, 135, 84, 0.5);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(25, 135, 84, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(25, 135, 84, 0);
+            }
+        }
+
+    </style>
 </head>
 <body>
 
@@ -49,6 +72,33 @@
 </div>
 
 @include('layouts.components.navbar')
+
+
+<!-- Modal de Aviso -->
+<div class="modal fade" id="avisoModal" tabindex="-1" aria-labelledby="avisoModalLabel" data-bs-backdrop="static" data-bs-keyboard="false" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title" id="avisoModalLabel">Sistema Antigo</h5>
+            </div>
+            <div class="modal-body text-center">
+            <p class="fs-5 mb-3">Este sistema foi descontinuado.</p>
+            <p class="fs-6 mb-3">Você será redirecionado para o novo sistema em <span id="countdown">5</span> segundos.</p>
+
+            <!-- Barra de progresso -->
+            <div class="progress my-3" style="height: 15px;">
+                <div id="progressBar" class="progress-bar progress-bar-striped progress-bar-animated bg-danger" style="width: 0%; transition: width 0.8s ease-in-out;"></div>
+            </div>
+
+            <div class="d-flex mt-4 gap-3">
+                <button type="button" class="btn btn-outline-danger w-25" id="cancelarRedirect">Cancelar</button>
+                <a href="https://ceua.ufape.edu.br/" class="btn btn-redirect btn-lg w-75">Ir agora</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 @yield('login')
 @guest
     @yield('content')
@@ -67,6 +117,37 @@
 @include('layouts.components.footer')
 </body>
 </html>
+
+<script>
+    window.addEventListener("load", () => {
+        const modal = new bootstrap.Modal(document.getElementById('avisoModal'));
+        const countdownEl = document.getElementById("countdown");
+        const progressBar = document.getElementById("progressBar");
+        const btnCancelar = document.getElementById("cancelarRedirect");
+
+        let countdown = 5;
+        let interval;
+        modal.show();
+
+        interval = setInterval(() => {
+            countdown--;
+            countdownEl.textContent = countdown;
+            progressBar.style.width = `${(5 - countdown) / 5 * 100}%`;
+
+            if (countdown <= 0) {
+                clearInterval(interval);
+                window.location.href = "https://ceua.ufape.edu.br/";
+            }
+        }, 1000);
+
+        btnCancelar.addEventListener("click", () => {
+            clearInterval(interval);
+            modal.hide();
+        });
+    });
+</script>
+
+
 <script>
     if ($('#instituicao'))
         function unidades(id) {
